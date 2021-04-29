@@ -2,7 +2,7 @@ name: "Test du service : Devoirs"
 
 on:
   push:
-    branches: [amine]
+    branches: [master]
 
 jobs:
   test:

@@ -2,7 +2,7 @@ name: "Test du service : Gestion de comptes"
 
 on:
   push:
-    branches: [amine]
+    branches: [master]
 
 jobs:
   test:
