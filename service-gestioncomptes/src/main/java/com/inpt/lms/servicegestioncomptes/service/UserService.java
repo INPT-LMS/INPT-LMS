@@ -45,7 +45,6 @@ public class UserService {
          * On link les 2
          */
         user.setUserInfos(userInfos);
-        userInfos.setUser(user);
         userRepository.save(user);
         userInfosRepository.save(userInfos);
     }
@@ -80,13 +79,13 @@ public class UserService {
         userInfosRepository.delete(userInfos);
     }
 
+    // TODO return an encrypted password
     private String encryptPassword(String password){
-        // TODO return an encrypted password
         return password;
     }
 
+    // TODO une meilleure vérification
     private boolean verifyPassword(String password,String encryptedPassword){
-        // TODO une meilleure vérification
         return password == encryptedPassword;
     }
 }
