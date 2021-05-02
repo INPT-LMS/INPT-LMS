@@ -110,7 +110,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("It should update an existing User and his UserInfos")
-    void updateUser() {
+    void itShouldUpdateAnExistingUserAndHisUnderInfos() {
         // Given
         Long id = any();
 
@@ -140,7 +140,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("It should delete an existing User and his UserInfos")
-    void deleteUser() {
+    void itShouldDeleteAnExistingUserAndHisUserInfos() {
         // Given
         Long userId = 1l;
         Long userInfosId = 1l;
