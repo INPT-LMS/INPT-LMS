@@ -24,7 +24,7 @@ public class DevoirController {
    }
 
    @PostMapping("/devoir")
-   public String addDevoir(@RequestBody DevoirDTO devoirDTO){
+   public Devoir addDevoir(@RequestBody DevoirDTO devoirDTO){
       return devoirService.addDevoir(devoirDTO);
    }
 

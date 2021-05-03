@@ -49,7 +49,7 @@ public class DevoirService {
      * Fonction ajouter un devoir et ses informations
      * @return
      */
-    public String addDevoir(DevoirDTO devoirDTO){
+    public Devoir addDevoir(DevoirDTO devoirDTO){
         Devoir devoir = new Devoir();
 
         DevoirInfos devoirInfos = new DevoirInfos();
@@ -64,7 +64,8 @@ public class DevoirService {
         devoirInfosRepository.save(devoirInfos);
         devoir = devoirRepository.save(devoir);
 
-        return devoir.getId();
+        //return devoir.getId();
+        return devoir;
     }
 
     /**
@@ -96,11 +97,11 @@ public class DevoirService {
     /**
      * Fonction pour noter un devoir
      */
-    public DevoirReponse noterDevoir(String idDevoir, String idReponse, NoteDTO note){
+    public DevoirReponse noterDevoir(String idDevoir, String idReponse, NoteDTO noteDTO){
         Devoir devoir = devoirRepository.findById(idDevoir).orElseThrow(()->new RuntimeException());
         // TODO A proper error here
         DevoirReponse devoirReponse =  devoir.getReponses().stream().filter(reponse -> idReponse.equals(reponse.getId())).findFirst().orElseThrow(()->new RuntimeException());
-        devoirReponse.setNote(note.getNote());
+        devoirReponse.setNote(noteDTO.getNote());
         devoirReponseRepository.save(devoirReponse);
 
         return devoirReponse;

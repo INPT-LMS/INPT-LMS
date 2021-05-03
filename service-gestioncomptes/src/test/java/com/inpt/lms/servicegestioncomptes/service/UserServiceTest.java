@@ -21,18 +21,16 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 class UserServiceTest {
+    private UserService underTest;
 
     @Mock
     private UserRepository userRepository;
-
     @Mock
     private UserInfosRepository userInfosRepository;
 
-    private UserService underTest;
-
     @BeforeEach
     void setUp(){
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         underTest = new UserService(userRepository,userInfosRepository);
     }
 
