@@ -3,6 +3,7 @@ package inpt.lms.stockage.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +19,9 @@ public class FichierInfo {
 	protected LocalDateTime dateCreation;
 	protected String nom;
 	protected String chemin;
-	@OneToMany(mappedBy = "fichierInfo")
+	protected long size;
+	protected String contentType;
+	@OneToMany(mappedBy = "fichierInfo", cascade = CascadeType.REMOVE)
 	protected List<AssociationFichier> associations;
 	
 	public Long getId() {
@@ -57,4 +60,25 @@ public class FichierInfo {
 	public void setAssociations(List<AssociationFichier> associations) {
 		this.associations = associations;
 	}
+	/**
+	 * Retourne la taille du fichier en octets
+	 * @return Taille du fichier en octets
+	 */
+	public long getSize() {
+		return size;
+	}
+	/**
+	 * Change la taille du fichier
+	 * @param size Taille en octet
+	 */
+	public void setSize(long size) {
+		this.size = size;
+	}
+	public String getContentType() {
+		return contentType;
+	}
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+	
 }
