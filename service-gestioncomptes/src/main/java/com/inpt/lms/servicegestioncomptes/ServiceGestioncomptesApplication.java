@@ -9,5 +9,4 @@ public class ServiceGestioncomptesApplication {
     public static void main(String[] args) {
         SpringApplication.run(ServiceGestioncomptesApplication.class, args);
     }
-
 }
