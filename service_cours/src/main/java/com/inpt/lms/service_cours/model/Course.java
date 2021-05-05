@@ -4,8 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 @Entity
 public class Course implements Serializable{
 	@Id
@@ -13,8 +19,12 @@ public class Course implements Serializable{
 	private String courseName;
 	private String courseDescription ;
 	private String imageURL ;
+	 @ManyToOne(fetch = FetchType.LAZY, optional = false)
+	 @JoinColumn(name = "professorid", nullable = false)
 	private Professor owner ;
-	//private List<Member> students;
+	 @ManyToMany(mappedBy="courses" , fetch = FetchType.LAZY)
+	private List<Member> students;
+	
 	private Visibility visibility;
 	public Course() {
 		super();
