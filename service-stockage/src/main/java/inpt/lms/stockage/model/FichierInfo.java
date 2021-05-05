@@ -10,16 +10,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity
 public class FichierInfo {
+	public static interface Public{}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long id;
 	protected Long idProprietaire;
+	@JsonView(Public.class)
 	protected LocalDateTime dateCreation;
+	@JsonView(Public.class)
 	protected String nom;
 	protected String chemin;
+	@JsonView(Public.class)
 	protected long size;
+	@JsonView(Public.class)
 	protected String contentType;
 	@OneToMany(mappedBy = "fichierInfo", cascade = CascadeType.REMOVE)
 	protected List<AssociationFichier> associations;
@@ -79,6 +86,19 @@ public class FichierInfo {
 	}
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+	}
+	
+	/**
+	 * Fonction qui masque les proprietes non necessaires pour l'utilisateur.\n
+	 * Elle est necessaire à cause d'une incompatibilité entre l'annotation JsonView et
+	 * l'interface Page
+	 */
+	public static FichierInfo masquerProprietes(FichierInfo fInfo) {
+		fInfo.setAssociations(null);
+		fInfo.setChemin(null);
+		fInfo.setId(null);
+		fInfo.setIdProprietaire(null);
+		return fInfo;
 	}
 	
 }

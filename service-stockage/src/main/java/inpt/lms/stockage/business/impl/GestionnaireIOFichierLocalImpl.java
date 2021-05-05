@@ -27,7 +27,7 @@ public class GestionnaireIOFichierLocalImpl implements GestionnaireIOFichier {
 			throws IOException, FileTooBigException {
 		int sizeMb = fichier.length/1024/1024;
 		if (sizeMb > maxSize)
-			throw new FileTooBigException();
+			throw new FileTooBigException(maxSize);
 		
 		File location = getDossierStockage(directory,chemin);
 		

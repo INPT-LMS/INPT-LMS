@@ -9,13 +9,15 @@ import org.springframework.stereotype.Repository;
 import inpt.lms.stockage.model.FichierInfo;
 import inpt.lms.stockage.model.TypeAssociation;
 
+
+
 @Repository
 public interface FichierInfoDAO extends PagingAndSortingRepository<FichierInfo, Long> {
 
-	Page<FichierInfo> findByAssociations_IdCorrespondantAssociationAndAssociations_TypeAssociation(
-			String idCorrespodant,TypeAssociation type,Pageable pagination);
-	@Query("SELECT sum(fi.size) FROM FichierInfo fi WHERE fi.idProprietaire = ?1 "
-			+ "GROUP BY fi.idProprietaire ")
+	Page<FichierInfo> findAllByAssociations_IdCorrespondantAssociationAndAssociations_TypeAssociation(
+			String idCorrespondantAssocatin,TypeAssociation typeAssociation,Pageable pagination);
+	
+	@Query("SELECT SUM(fi.size) FROM FichierInfo fi WHERE fi.idProprietaire = ?1")
 	Long getUsedSpaceUser(Long idUtilisateur);
-
+	
 }

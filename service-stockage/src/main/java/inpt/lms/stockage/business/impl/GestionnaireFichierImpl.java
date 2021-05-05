@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import inpt.lms.stockage.business.interfaces.FichierEtInfo;
 import inpt.lms.stockage.business.interfaces.GestionnaireFichier;
 import inpt.lms.stockage.business.interfaces.GestionnaireIOFichier;
 import inpt.lms.stockage.business.interfaces.exceptions.FileTooBigException;
@@ -39,36 +40,72 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 	private FichierInfo recupererFichier(Long idFichier) throws NotFoundException {
 		Optional<FichierInfo> fInfo = fichierInfoDAO.findById(idFichier);
 		if (fInfo.isEmpty())
-			throw new NotFoundException("fichier");
+			throw new NotFoundException(NotFoundException.ERROR_FILE);
 		return fInfo.get();
 	}
-
-	@Override
-	public void ajoutDansSac(Long idUtilisateur, Long idFichier) throws NotFoundException{
-		FichierInfo fInfo = recupererFichier(idFichier);
+	
+	private AssociationFichier recupererAssociation(Long idAssoc) throws NotFoundException{
+		Optional<AssociationFichier> assoc = associationFichierDAO.findById(idAssoc);
+		if (assoc.isEmpty())
+			throw new NotFoundException(NotFoundException.ERROR_FILE);
+		return assoc.get();
+	}
+	
+	private AssociationFichier ajoutAssociation(String idCorrespondant, 
+			TypeAssociation type, FichierInfo fInfo) {
 		
 		AssociationFichier assoc = new AssociationFichier();
 		assoc.setFichierInfo(fInfo);
-		assoc.setTypeAssociation(TypeAssociation.SAC);
-		assoc.setIdCorrespondantAssociation(idUtilisateur.toString());
-		associationFichierDAO.save(assoc);
+		assoc.setTypeAssociation(type);
+		assoc.setIdCorrespondantAssociation(idCorrespondant);
+		return associationFichierDAO.save(assoc);
+	}
+	
+	private void retraitAssociation(Long idAssociation) throws NotFoundException{
+		if (!associationFichierDAO.existsById(idAssociation))
+			throw new NotFoundException(NotFoundException.ERROR_FILE);
+		associationFichierDAO.deleteById(idAssociation);
+	}
+
+	@Override
+	public AssociationFichier ajoutDansSac(Long idUtilisateur, Long idAssocFichier) throws NotFoundException{
+		
+		return ajoutAssociation(idUtilisateur.toString(),
+				TypeAssociation.SAC, recupererAssociation(idAssocFichier).getFichierInfo());
+	}
+	
+	@Override
+	public AssociationFichier ajoutDansCours(String idCours, Long idAssocFichier) throws NotFoundException {
+		return ajoutAssociation(idCours, TypeAssociation.COURS,
+				recupererAssociation(idAssocFichier).getFichierInfo());
+		
 	}
 
 	@Override
 	@Transactional(rollbackOn = IOException.class)
-	public void retraitSac(Long idUtilisateur, Long idFichier) throws NotFoundException, IOException {
-		FichierInfo fInfo = recupererFichier(idFichier);
-		associationFichierDAO.deleteByFichierInfo_IdAndTypeAssociation(idFichier,
-				TypeAssociation.SAC);
-		if (fInfo.getIdProprietaire().equals(idUtilisateur)) {
-			fichierInfoDAO.deleteById(idFichier);
-			gestionnaireIO.supprimerFichier(fInfo.getChemin());
+	public void retraitSac(Long idUtilisateur,Long idAssoc) 
+			throws NotFoundException, IOException {
+		Optional<AssociationFichier> assoc = associationFichierDAO.findById(idAssoc);
+		if (assoc.isEmpty())
+			throw new NotFoundException(NotFoundException.ERROR_FILE);
+		FichierInfo info = assoc.get().getFichierInfo();
+		retraitAssociation(idAssoc);	
+		if (idUtilisateur.equals(info.getIdProprietaire())) {
+			fichierInfoDAO.delete(info);
+			gestionnaireIO.supprimerFichier(info.getChemin());
 		}	
+	}
+	
+	@Override
+	public void retraitCours(Long idAssoc) throws NotFoundException {
+		retraitAssociation(idAssoc);
 	}
 
 	@Override
-	public void uploadFichierSac(Long idUtilisateur, byte[] fichier, String contentType, String nom, long size)
-			throws StorageLimitExceededException, FileTooBigException, IOException {
+	public AssociationFichier uploadFichierSac(Long idUtilisateur, byte[] fichier, 
+			String contentType, String nom, long size) 
+					throws StorageLimitExceededException, FileTooBigException,
+					IOException {
 		long usedSpace = getUsedSpace(idUtilisateur);
 		if (usedSpace + size > MAX_SPACE_PER_USER)
 			throw new StorageLimitExceededException();
@@ -88,26 +125,45 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 		assoc.setIdCorrespondantAssociation(idUtilisateur.toString());
 		assoc.setTypeAssociation(TypeAssociation.SAC);
 		assoc.setFichierInfo(fInfo);
-		associationFichierDAO.save(assoc);
+		return associationFichierDAO.save(assoc);
 	}
 
 	@Override
-	public Page<FichierInfo> getListeFichiersAssocies(String idAssocie, TypeAssociation typeAssociation,
+	public Page<AssociationFichier> getListeFichiersAssocies(String idAssocie, TypeAssociation typeAssociation,
 			Pageable pagination) {
-		return fichierInfoDAO.findByAssociations_IdCorrespondantAssociationAndAssociations_TypeAssociation(
-				idAssocie, typeAssociation, pagination);
+		return associationFichierDAO.findAllByIdCorrespondantAssociationAndTypeAssociation(
+						idAssocie, typeAssociation, pagination);
 	}
 
 	@Override
 	public FichierInfo getFichier(Long idFichier) throws NotFoundException {
 		return recupererFichier(idFichier);
 	}
-
+	
 	@Override
 	public Long getUsedSpace(Long idUtilisateur) {
-		return fichierInfoDAO.getUsedSpaceUser(idUtilisateur);
+		Long usedSpace = fichierInfoDAO.getUsedSpaceUser(idUtilisateur);
+		// Si l'utilisateur ne possede aucun fichier le resultat sera NULL (au lieu de 0)
+		return usedSpace == null ? 0 : usedSpace;
+	}
+	
+	@Override
+	public FichierEtInfo lireFichier(Long idAssoc) 
+			throws IOException, NotFoundException {
+		FichierEtInfo fichier = new FichierEtInfo();
+		
+		FichierInfo info = recupererAssociation(idAssoc).getFichierInfo();
+		fichier.setFichierInfo(info);
+		fichier.setFichierContenu(gestionnaireIO.lireFichier(info.getChemin()));
+		return fichier;
 	}
 
+	
+	@Override
+	public AssociationFichier getFichierByAssocId(Long idAssoc) throws NotFoundException{
+		return recupererAssociation(idAssoc);
+	}
+	
 	public FichierInfoDAO getFichierInfoDAO() {
 		return fichierInfoDAO;
 	}

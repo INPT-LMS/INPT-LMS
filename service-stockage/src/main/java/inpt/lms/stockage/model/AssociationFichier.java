@@ -8,14 +8,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity
 public class AssociationFichier {
+	public static interface Public{}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonView(Public.class)
 	protected Long id;
 	@ManyToOne
 	protected FichierInfo fichierInfo;
 	@Enumerated(EnumType.STRING)
+	@JsonView(Public.class)
 	protected TypeAssociation typeAssociation;
 	protected String idCorrespondantAssociation;
 	public Long getId() {
@@ -41,5 +46,16 @@ public class AssociationFichier {
 	}
 	public void setIdCorrespondantAssociation(String idCorrespondantAssociation) {
 		this.idCorrespondantAssociation = idCorrespondantAssociation;
+	}
+	
+	/**
+	 * Fonction qui masque les proprietes non necessaires pour l'utilisateur.\n
+	 * Elle est necessaire à cause d'une incompatibilité entre l'annotation JsonView et
+	 * l'interface Page
+	 */
+	public static AssociationFichier masquerProprietes(AssociationFichier assoc) {
+		assoc.setIdCorrespondantAssociation(null);
+		assoc.setFichierInfo(FichierInfo.masquerProprietes(assoc.getFichierInfo()));
+		return assoc;
 	}
 }

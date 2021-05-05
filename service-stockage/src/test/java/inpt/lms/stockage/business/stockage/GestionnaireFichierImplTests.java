@@ -59,6 +59,7 @@ class GestionnaireFichierImplTests {
 		fInfo.setSize(1000l);
 		
 		assoc = new AssociationFichier();
+		assoc.setId(5l);
 		assoc.setIdCorrespondantAssociation("10");
 		assoc.setTypeAssociation(TypeAssociation.SAC);
 		assoc.setFichierInfo(fInfo);
@@ -66,9 +67,9 @@ class GestionnaireFichierImplTests {
 	
 	@Test
 	void testShouldAddSac() throws NotFoundException {
-		when(fDAO.findById(1l)).thenReturn(Optional.of(fInfo));
+		when(assocDAO.findById(5l)).thenReturn(Optional.of(assoc));
 		
-		gFichier.ajoutDansSac(10l, 1l);
+		gFichier.ajoutDansSac(10l, 5l);
 		
 		ArgumentCaptor<AssociationFichier> assocCaptured = ArgumentCaptor.forClass(AssociationFichier.class);
 		verify(assocDAO).save(assocCaptured.capture());
@@ -81,39 +82,29 @@ class GestionnaireFichierImplTests {
 	
 	@Test
 	void testShouldThrowAddSac() throws NotFoundException {
-		when(fDAO.findById(1l)).thenReturn(Optional.empty());
+		when(assocDAO.findById(5l)).thenReturn(Optional.empty());
 		
-		assertThrows(NotFoundException.class, () -> gFichier.ajoutDansSac(10l, 1l));
-	}
-	
-	@Test
-	void testShouldRemoveSac() throws NotFoundException, IOException {
-		when(fDAO.findById(1l)).thenReturn(Optional.of(fInfo));
-
-		gFichier.retraitSac(10l, 1l);
-		
-		verify(assocDAO).deleteByFichierInfo_IdAndTypeAssociation(any(Long.class), any(TypeAssociation.class));
+		assertThrows(NotFoundException.class, () -> gFichier.ajoutDansSac(10l, 5l));
 	}
 	
 	@Test
 	void testShouldRemoveSacAndDelete() throws NotFoundException, IOException {
-		when(fDAO.findById(1l)).thenReturn(Optional.of(fInfo));
-		when(assocDAO.deleteByFichierInfo_IdAndTypeAssociation(any(Long.class), any(TypeAssociation.class)))
-			.thenReturn(1l);
+		when(assocDAO.findById(5l)).thenReturn(Optional.of(assoc));
+		when(assocDAO.existsById(5l)).thenReturn(true);
 		
-		gFichier.retraitSac(10l, 1l);
+		gFichier.retraitSac(10l, 5l);
 		
-		verify(gestionnaireIO).supprimerFichier(fInfo.getChemin());
-		verify(fDAO).deleteById(1l);
+		verify(assocDAO).deleteById(5l);
+		verify(gestionnaireIO).supprimerFichier(anyString());
+		verify(fDAO).delete(any(FichierInfo.class));
 	}
 	@Test
 	void testShouldThrowWhenDeleteFromSac() throws NotFoundException, IOException {
-		when(fDAO.findById(1l)).thenReturn(Optional.of(fInfo));
-		when(assocDAO.deleteByFichierInfo_IdAndTypeAssociation(any(Long.class), any(TypeAssociation.class)))
-			.thenReturn(1l);
+		when(assocDAO.findById(5l)).thenReturn(Optional.of(assoc));
+		when(assocDAO.existsById(5l)).thenReturn(true);
 		doThrow(IOException.class).when(gestionnaireIO).supprimerFichier(fInfo.getChemin());
 		
-		assertThrows(IOException.class, () -> gFichier.retraitSac(10l, 1l));
+		assertThrows(IOException.class, () -> gFichier.retraitSac(10l, 5l));
 	}
 	
 	@Test
