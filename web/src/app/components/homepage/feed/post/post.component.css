@@ -1,0 +1,29 @@
+h5 {
+  color: #0275b1;
+}
+
+.from {
+  color: #e57f84;
+  font-size: small;
+}
+
+.date {
+  font-size: small;
+}
+
+.read-more {
+  color: #4297a0;
+  text-decoration: none;
+}
+
+.card-footer {
+  background: white;
+}
+
+.fa-heart {
+  color: #e57f84;
+}
+
+.fa-comment-dots {
+  color: #0275b1;
+}
