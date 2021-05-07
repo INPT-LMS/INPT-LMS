@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO verification de l'identité
+// TODO Vérification de l'identité pour la suppression/Modification
 @Service
 @AllArgsConstructor
 
@@ -34,5 +34,20 @@ public class LikeService {
         publication.setLikes(likes);
         publicationRepository.save(publication);
         System.out.println("Like ajouté avec succèes");
+    }
+
+
+    public void supprimerLike(String idLike){
+        String idPublication = (likeRepository.findById(idLike).orElseThrow(()->new RuntimeException())).getIdPublication();
+        Publication publication = publicationRepository.findPublicationByid(idPublication);
+        List<Like> likes = publication.getLikes();
+        for(int i =0; i<likes.size();i++){
+            if (likes.get(i).getIdLike().equals(idLike)){
+                likes.remove(i);
+            }
+        }
+        likeRepository.deleteById(idLike);
+        publicationRepository.save(publication);
+        System.out.println("Like supprimé avec succèes");
     }
 }

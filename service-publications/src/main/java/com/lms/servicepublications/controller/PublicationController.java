@@ -21,29 +21,29 @@ public class PublicationController {
         return publication;
     }*/
 
-    @GetMapping("/publications")
+    @GetMapping("/publication")
     public List<Publication> getPublications(){
        List<Publication> publications = publicationService.recupererPublications();
         return publications;
     }
 
-    @GetMapping("/publications/{idCours}")
+    @GetMapping("/publication/{idCours}")
     public List<Publication> getPublicationsByCourse(@PathVariable String idCours){
         List<Publication> publications = publicationService.recupererPublicationsParCours(idCours);
         return publications;
     }
 
-    @PostMapping("/publications")
+    @PostMapping("/publication")
     public void addPublication(@RequestBody PublicationDTO publicationDTO){
         publicationService.ajouterPublication(publicationDTO);
     }
 
-    @DeleteMapping("publications/{idPublication}")
+    @DeleteMapping("publication/{idPublication}")
     public void removePublication(@PathVariable String idPublication){
         publicationService.supprimerPublication(idPublication);
     }
 
-    @PutMapping("publications/{idPublication}")
+    @PutMapping("publication/{idPublication}")
     public void updatePublication(@PathVariable String idPublication,@RequestBody PublicationDTO publicationDTO){
         publicationService.modifierPublication(idPublication,publicationDTO);
     }

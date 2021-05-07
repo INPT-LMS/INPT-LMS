@@ -12,10 +12,9 @@ import com.lms.servicepublications.repository.PublicationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-// TODO verification de l'identité
+// TODO Vérification de l'identité pour la suppression/Modification
 @Service
 @AllArgsConstructor
 
@@ -23,8 +22,6 @@ public class PublicationService {
 
     private final PublicationRepository publicationRepository;
     private final FichierRepository fichierRepository;
-    private final LikeRepository likeRepository;
-    private final CommentaireRepository commentaireRepository;
 
     /**
      * Fonction pour récupérer une publication
@@ -46,21 +43,7 @@ public class PublicationService {
     public void ajouterPublication(PublicationDTO publicationDTO){
         Publication publication = new Publication();
         publication.setContenuPublication(publicationDTO.getContenuPublication());
-        publication.setFichier(publicationDTO.getFichier());
         publication.setIdCours(publicationDTO.getIdCours());
-//
-//        List<Like> likes = new ArrayList();
-//        Like like = new Like();
-//        likes.add(like);
-//        publication.setLikes(likes);
-//
-//
-//        List<Commentaire> commentaires = new ArrayList();
-//        Commentaire commentaire = new Commentaire();
-//        commentaires.add(commentaire);
-//        publication.setCommentaires(commentaires);
-
-
         publication.setIdProprietaire(publicationDTO.getIdProprietaire());
         publicationRepository.insert(publication);
         System.out.println("publication ajoutée avec succées");
@@ -74,11 +57,6 @@ public class PublicationService {
     public Publication modifierPublication(String id,PublicationDTO publicationDTO){
         Publication publication = publicationRepository.findPublicationByid(id);
         publication.setContenuPublication(publicationDTO.getContenuPublication());
-        List<Like> likes = new ArrayList();
-        publication.setLikes(likes);
-        List<Commentaire> commentaires = new ArrayList();
-        publication.setCommentaires(commentaires);
-        publication.setFichier(publicationDTO.getFichier());
         publication.setIdCours(publicationDTO.getIdCours());
         publication.setIdProprietaire(publicationDTO.getIdProprietaire());
         System.out.println("publication modifiée avec succées");
