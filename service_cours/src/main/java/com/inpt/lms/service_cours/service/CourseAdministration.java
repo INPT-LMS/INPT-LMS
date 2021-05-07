@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public interface CourseAdministration {
     public Course createCourse(Course course, UUID ownerID);
-    public Course updateCourse(Course course , UUID ownerID);
-    public boolean deleteCourse(Course course, UUID ownerID);
+    public Course updateCourse(Course course );
+    public boolean deleteCourse(UUID courseID);
     public boolean addMembers(UUID courseID, ArrayList<UUID> memberIDs);
     public String retrieveMembers(UUID courseID , ArrayList<UUID> memberIDs);
 
