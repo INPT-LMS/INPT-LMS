@@ -6,10 +6,7 @@ import com.inpt.lms.service_cours.service.CourseAdministration;
 import com.inpt.lms.service_cours.service.CourseDatails;
 import com.inpt.lms.service_cours.service.CourseDetailsImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,5 +26,9 @@ public class MemberControl {
     @GetMapping("/course/{courseID}/members")
     public List<Member> getCourseMembers(@PathVariable UUID courseID){
         return courseDetails.getCourseMembers(courseID);
+    }
+    @DeleteMapping("/course/{courseID}/member/{memberID}")
+    public String retreiveMember(@PathVariable UUID courseID, @PathVariable UUID memberID){
+        return courseAdministration.retrieveMember(courseID,memberID);
     }
 }

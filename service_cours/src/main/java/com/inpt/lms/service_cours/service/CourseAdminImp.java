@@ -79,7 +79,24 @@ public class CourseAdminImp implements CourseAdministration{
 
     @Override
     public String retrieveMember(UUID courseID, UUID memberID) {
-        return null;
+        Member member = memberInterface.findById(memberID).orElse(new Member(memberID));
+
+        Optional<Course> course = courseInterface.findById(courseID);
+        if(course.isPresent()){
+            Course course1 = course.get();
+            List<Course> memberCourses = member.getCourses();
+            if(memberCourses.contains(course1)){
+               memberCourses.remove(course1);
+            }
+
+
+            course1.getStudents().remove(member);
+
+            memberInterface.save(member);
+            courseInterface.save(course1);
+            return "DELETED" ;
+        }
+        return "NOT DELETED";
     }
 
 
