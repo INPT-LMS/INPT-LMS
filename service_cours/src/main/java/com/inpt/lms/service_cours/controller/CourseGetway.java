@@ -1,6 +1,7 @@
 package com.inpt.lms.service_cours.controller;
 
 import com.inpt.lms.service_cours.model.Course;
+import com.inpt.lms.service_cours.model.Member;
 import com.inpt.lms.service_cours.service.CourseAdminImp;
 import com.inpt.lms.service_cours.service.CourseDetailsImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,16 @@ public class CourseGetway {
 	public boolean deleteCourse(@PathVariable UUID courseid){
 		return courseAdminImp.deleteCourse(courseid);
 	}
+	@GetMapping("/course/{courseid}/owner")
+	public UUID getCourseProfessor(@PathVariable UUID courseid){
+		return courseDetailsImp.getCourseProfessor(courseid);
+	}
+	@GetMapping("/course/{courseid}/owner/{ownerid}")
+	public boolean checkProfessor(@PathVariable UUID courseid,@PathVariable UUID ownerid){
+		return courseDetailsImp.isProfessor(courseid,ownerid);
+	}
+
+
 
 	
 }

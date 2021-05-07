@@ -11,7 +11,7 @@ public interface CourseDatails {
     public List<Member> getCourseMembers(UUID courseID);
     public List<Course> getStudentCourses(UUID studentID);
     public List<Course> getProfessorCourses(UUID professorID);
-    public boolean isProfessor(UUID courseID);
+    public boolean isProfessor(UUID courseID, UUID professorID);
 
     public UUID getCourseProfessor(UUID courseID);
     public List<Member> getBannedStudents(UUID courseID);

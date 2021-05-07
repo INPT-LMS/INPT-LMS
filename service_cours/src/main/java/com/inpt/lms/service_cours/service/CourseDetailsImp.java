@@ -23,8 +23,11 @@ public class CourseDetailsImp implements CourseDatails{
     CourseInterface courseInterface ;
     @Override
     public List<Course> getStudentCourses(UUID studentID) {
-
-        return null;
+        Optional<Member> memberOptional = memberInterface.findById(studentID);
+        if(memberOptional.isPresent()){
+            return memberOptional.get().getCourses();
+        }
+        return new ArrayList<>();
     }
 
     @Override
@@ -37,7 +40,13 @@ public class CourseDetailsImp implements CourseDatails{
     }
 
     @Override
-    public boolean isProfessor(UUID courseID) {
+    public boolean isProfessor(UUID courseID, UUID professorID) {
+        Optional<Course> optionalCourse = courseInterface.findById(courseID);
+        if(optionalCourse.isPresent()){
+            if(optionalCourse.get().getOwner().getProfessorID().equals(professorID)){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -52,6 +61,10 @@ public class CourseDetailsImp implements CourseDatails{
 
     @Override
     public UUID getCourseProfessor(UUID courseID) {
+        Optional<Course> courseOptional = courseInterface.findById(courseID);
+        if(courseOptional.isPresent()){
+            return courseOptional.get().getOwner().getProfessorID();
+        }
         return null;
     }
 
