@@ -2,10 +2,13 @@ package com.inpt.lms.servicegestioncomptes.service;
 
 import com.inpt.lms.servicegestioncomptes.dto.UserCredentialsDTO;
 import com.inpt.lms.servicegestioncomptes.dto.UserInfosDTO;
+import com.inpt.lms.servicegestioncomptes.exception.UserAlreadyExistsException;
+import com.inpt.lms.servicegestioncomptes.exception.UserNotFoundException;
 import com.inpt.lms.servicegestioncomptes.model.User;
 import com.inpt.lms.servicegestioncomptes.model.UserInfos;
 import com.inpt.lms.servicegestioncomptes.repository.UserInfosRepository;
 import com.inpt.lms.servicegestioncomptes.repository.UserRepository;
+import com.inpt.lms.servicegestioncomptes.util.JWTUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,16 +30,18 @@ class UserServiceTest {
     private UserRepository userRepository;
     @Mock
     private UserInfosRepository userInfosRepository;
+    @Mock
+    private JWTUtil jwtUtil;
 
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
-        underTest = new UserService(userRepository,userInfosRepository);
+        underTest = new UserService(userRepository,userInfosRepository,jwtUtil);
     }
 
     @Test
     @DisplayName("It should login an existing User")
-    void itShouldLoginAUser() {
+    void itShouldLoginAUser() throws UserNotFoundException {
         // Given
         String email = "amine@gmail.com";
         String password = "123456";
@@ -60,7 +65,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("It should create User and UserInfos objects from UserInfosDTO")
-    void itShouldCreateUserAndUserInfosFromUserInfosDTO() {
+    void itShouldCreateUserAndUserInfosFromUserInfosDTO() throws UserAlreadyExistsException {
         // Given
         UserInfosDTO userInfosDTO = new UserInfosDTO();
         userInfosDTO.setEmail("amine@gmail.com");
@@ -108,7 +113,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("It should update an existing User and his UserInfos")
-    void itShouldUpdateAnExistingUserAndHisUnderInfos() {
+    void itShouldUpdateAnExistingUserAndHisUnderInfos() throws UserNotFoundException {
         // Given
         Long id = any();
 
@@ -138,7 +143,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("It should delete an existing User and his UserInfos")
-    void itShouldDeleteAnExistingUserAndHisUserInfos() {
+    void itShouldDeleteAnExistingUserAndHisUserInfos() throws UserNotFoundException {
         // Given
         Long userId = 1l;
         Long userInfosId = 1l;
