@@ -1,6 +1,9 @@
 package com.inpt.lms.service_cours.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,13 +16,33 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Member implements Serializable {
 	@Id
-	private UUID memberID ;
+	private UUID memberID = UUID.randomUUID() ;
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	 @JoinTable
-	private List<Course> courses;
-	public Member() {
+	@JsonIgnore
+	private List<Course> courses = new ArrayList<>();
+	public Member(UUID memberID) {
 		super();
 	}
-	
 
+
+	public Member() {
+
+	}
+
+	public UUID getMemberID() {
+		return memberID;
+	}
+
+	public void setMemberID(UUID memberID) {
+		this.memberID = memberID;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
 }

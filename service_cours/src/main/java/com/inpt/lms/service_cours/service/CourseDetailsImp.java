@@ -3,6 +3,8 @@ package com.inpt.lms.service_cours.service;
 import com.inpt.lms.service_cours.model.Course;
 import com.inpt.lms.service_cours.model.Member;
 import com.inpt.lms.service_cours.model.Professor;
+import com.inpt.lms.service_cours.repository.CourseInterface;
+import com.inpt.lms.service_cours.repository.MemberInterface;
 import com.inpt.lms.service_cours.repository.ProfessorInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,13 @@ import java.util.UUID;
 public class CourseDetailsImp implements CourseDatails{
     @Autowired
     ProfessorInterface professorInterface;
+    @Autowired
+    MemberInterface memberInterface;
+    @Autowired
+    CourseInterface courseInterface ;
     @Override
     public List<Course> getStudentCourses(UUID studentID) {
+
         return null;
     }
 
@@ -36,7 +43,11 @@ public class CourseDetailsImp implements CourseDatails{
 
     @Override
     public List<Member> getCourseMembers(UUID courseID) {
-        return null;
+        Optional<Course> course = courseInterface.findById(courseID);
+        if(course.isPresent()){
+            return course.get().getStudents();
+        }
+        return null ;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +28,8 @@ public class Course implements Serializable{
 	 @JsonIgnore
 	private Professor owner ;
 	 @ManyToMany(mappedBy="courses" , fetch = FetchType.LAZY)
-	private List<Member> students;
+
+	private List<Member> students = new ArrayList<>();
 	
 	private Visibility visibility;
 	public Course() {
