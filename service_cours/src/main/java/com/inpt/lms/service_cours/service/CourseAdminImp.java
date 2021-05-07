@@ -32,10 +32,7 @@ public class CourseAdminImp implements CourseAdministration{
 
     }
 
-    @Override
-    public Course updateCourse(Course course) {
-        return null;
-    }
+
 
     @Override
     public boolean deleteCourse(UUID courseID) {

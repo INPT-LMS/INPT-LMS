@@ -30,5 +30,6 @@ public class CourseGetway {
 	public boolean deleteCourse(@PathVariable UUID courseid){
 		return courseAdminImp.deleteCourse(courseid);
 	}
+
 	
 }
