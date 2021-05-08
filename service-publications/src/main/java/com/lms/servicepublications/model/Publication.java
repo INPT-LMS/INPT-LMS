@@ -26,7 +26,7 @@ public class Publication {
     @CreatedDate
     private Date datePublication;
     private String contenuPublication;
-    private String fichier;
+    private List<Fichier> fichiers;
     private List<Commentaire> commentaires;
     private List<Like> likes;
 }
