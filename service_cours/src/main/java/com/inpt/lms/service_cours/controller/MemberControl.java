@@ -20,15 +20,18 @@ public class MemberControl {
 
     @PostMapping("/course/{courseID}/member/{memberID}")
     public boolean addMember(@PathVariable UUID courseID, @PathVariable UUID memberID){
+        //TODO verify if professor or course public
         return courseAdministration.addMember(courseID,memberID);
 
     }
     @GetMapping("/course/{courseID}/members")
     public List<Member> getCourseMembers(@PathVariable UUID courseID){
+        //TODO verify if professor or member or course public
         return courseDetails.getCourseMembers(courseID);
     }
     @DeleteMapping("/course/{courseID}/member/{memberID}")
     public String retreiveMember(@PathVariable UUID courseID, @PathVariable UUID memberID){
+        // TODO verify if professor
         return courseAdministration.retrieveMember(courseID,memberID);
     }
 }

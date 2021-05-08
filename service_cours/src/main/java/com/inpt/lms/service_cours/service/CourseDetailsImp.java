@@ -51,6 +51,21 @@ public class CourseDetailsImp implements CourseDatails{
     }
 
     @Override
+    public boolean isMember(UUID courseID, UUID userID) {
+        Optional<Course> courseOptional = courseInterface.findById(courseID);
+        if(courseOptional.isPresent()){
+            Optional<Member> optionalMember = memberInterface.findById(userID);
+            if(optionalMember.isPresent()){
+                Member member = optionalMember.get();
+                if(member.getCourses().contains(courseOptional.get())){
+                    return true ;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
     public List<Member> getCourseMembers(UUID courseID) {
         Optional<Course> course = courseInterface.findById(courseID);
         if(course.isPresent()){

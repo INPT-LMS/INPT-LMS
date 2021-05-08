@@ -20,6 +20,7 @@ public class VisibilityAdmin {
     }
     @PutMapping("/course/{courseid}/visibility/{visibilityid}")
     public Visibility setCourseVisibility(@PathVariable UUID courseid,@PathVariable int visibilityid){
+        //TODO verify if professor
         return courseVisibility.setCourseVisibility(courseid,visibilityid);
     }
 
