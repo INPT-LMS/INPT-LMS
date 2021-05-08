@@ -27,8 +27,6 @@ public class CourseAdminImp implements CourseAdministration{
         course.setOwner(creator);
         professorInterface.save(creator);
         courseInterface.save(course);
-
-
         return course;
 
     }

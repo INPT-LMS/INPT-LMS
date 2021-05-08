@@ -11,11 +11,16 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Visibility implements Serializable{
 	@Id
-	private int visibilityID;
-	private String name ;
+	private int visibilityID = 0;
+	private String name = "PUBLIC" ;
 	
 	public Visibility() {
 		super();
+	}
+
+	public Visibility(int visibilityID, String name) {
+		this.visibilityID = visibilityID;
+		this.name = name;
 	}
 
 	public int getVisibilityID() {

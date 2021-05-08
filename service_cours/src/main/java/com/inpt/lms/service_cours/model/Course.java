@@ -23,6 +23,9 @@ public class Course implements Serializable{
 	private String courseName;
 	private String courseDescription ;
 	private String imageURL ;
+	@ManyToOne
+	@JoinColumn
+	private Visibility visibility = new Visibility() ;
 	 @ManyToOne(fetch = FetchType.LAZY, optional = false)
 	 @JoinColumn(name = "professorid", nullable = false)
 	 @JsonIgnore
@@ -30,8 +33,7 @@ public class Course implements Serializable{
 	 @ManyToMany(mappedBy="courses" , fetch = FetchType.LAZY)
 
 	private List<Member> students = new ArrayList<>();
-	
-	private Visibility visibility;
+
 	public Course() {
 		super();
 	}

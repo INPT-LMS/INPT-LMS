@@ -8,7 +8,6 @@ import java.util.UUID;
 
 public interface CourseVisibility {
     public Visibility getCourseVisibility(UUID courseID);
-    public List<Course> getCoursesByVisibility(Visibility v);
-    public Visibility setCourseVisibility(UUID courseID , Visibility v);
-
+    public List<Course> getPublicCourses(Visibility v);
+    public Visibility setCourseVisibility(UUID courseID , int  visibilityID);
 }
