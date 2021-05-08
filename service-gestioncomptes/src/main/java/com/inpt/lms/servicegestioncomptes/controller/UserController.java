@@ -54,11 +54,11 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<ObjectNode> getUserInfos(@RequestHeader(name = "X-USER-ID") Long userId, @PathVariable Long id) {
+    public ResponseEntity<ObjectNode> getUserInfos(@PathVariable Long id) {
         ObjectNode objectNode = objectMapper.createObjectNode();
         UserInfosDTO userInfosDTO = null;
         try {
-           userInfosDTO = userService.getUserInfos(userId,id);
+           userInfosDTO = userService.getUserInfos(id);
         } catch (UserNotFoundException e) {
             objectNode.put("error",e.getMessage());
             return new ResponseEntity<>(objectNode,HttpStatus.NOT_FOUND);
@@ -70,6 +70,7 @@ public class UserController {
             objectNode.put("error","Server error");
             return new ResponseEntity<>(objectNode,HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
         ObjectNode userObjectNode = objectMapper.createObjectNode();
         userObjectNode.put("nom",userInfosDTO.getNom())
                 .put("prenom",userInfosDTO.getPrenom())

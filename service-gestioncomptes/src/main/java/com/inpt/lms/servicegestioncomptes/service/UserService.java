@@ -23,11 +23,7 @@ public class UserService {
     private final UserInfosRepository userInfosRepository;
     private final JWTUtil jwtUtil;
 
-    public UserInfosDTO getUserInfos(Long userId, Long id) throws UserNotFoundException, IllegalAccessError {
-        if(!userId.equals(id)){
-            throw new IllegalAccessError("You can't perform this action");
-        }
-
+    public UserInfosDTO getUserInfos(Long id) throws UserNotFoundException {
         User user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found"));
         UserInfos userInfos = user.getUserInfos();
 
