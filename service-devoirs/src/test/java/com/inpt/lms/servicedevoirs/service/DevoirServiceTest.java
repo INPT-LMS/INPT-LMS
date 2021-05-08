@@ -3,6 +3,8 @@ package com.inpt.lms.servicedevoirs.service;
 import com.inpt.lms.servicedevoirs.dto.DevoirDTO;
 import com.inpt.lms.servicedevoirs.dto.DevoirReponseDTO;
 import com.inpt.lms.servicedevoirs.dto.NoteDTO;
+import com.inpt.lms.servicedevoirs.exception.DevoirNotFoundException;
+import com.inpt.lms.servicedevoirs.exception.RenduNotFoundException;
 import com.inpt.lms.servicedevoirs.model.Devoir;
 import com.inpt.lms.servicedevoirs.model.DevoirInfos;
 import com.inpt.lms.servicedevoirs.model.DevoirReponse;
@@ -20,9 +22,9 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -47,7 +49,7 @@ class DevoirServiceTest {
 
     @Test
     @DisplayName("Doit récuperer un devoir existant")
-    void doitRecupererUnDevoir() {
+    void doitRecupererUnDevoir() throws DevoirNotFoundException {
         String idDevoir = any();
         Devoir devoir = new Devoir();
 
@@ -55,7 +57,10 @@ class DevoirServiceTest {
         given(devoirRepository.findById(idDevoir)).willReturn(Optional.of(devoir));
 
         // When
-        underTest.recupererDevoir(idDevoir);
+        // TODO Fix test
+        UUID courseId = null;
+        Long userId = null;
+        underTest.recupererDevoir(userId, courseId, idDevoir);
 
         // Then
         verify(devoirRepository).findById(idDevoir);
@@ -65,7 +70,10 @@ class DevoirServiceTest {
     @DisplayName("Doit récuperer tous les devoirs existants")
     void doitRecupererTousLesDevoirs() {
         // When
-        underTest.recupererDevoirs();
+        // TODO Fix tests
+        Long userId=null;
+        UUID courseId = null;
+        underTest.recupererDevoirs(userId, courseId);
 
         // Then
         verify(devoirRepository).findAll();
@@ -75,9 +83,12 @@ class DevoirServiceTest {
     @DisplayName("Doit ajouter un nouveau Devoir et DevoirInfos à partir du DevoirDTO")
     void doitAjouterUnNouveauDevoirEtDevoirInfosAPartirDuDTO() {
         // Given
+        // TODO Fix test
+        UUID courseId = null;
+        Long userId = null;
+
         DevoirDTO devoirDTO = new DevoirDTO();
         devoirDTO.setIdProprietaire("X");
-        devoirDTO.setIdCours("Y");
         devoirDTO.setContenu("Z");
         devoirDTO.setType("QUIZZ");
 
@@ -85,7 +96,7 @@ class DevoirServiceTest {
         devoirInfos.setContenu(devoirDTO.getContenu());
 
         Devoir devoir = new Devoir();
-        devoir.setIdCours(devoirDTO.getIdCours());
+        devoir.setIdCours(courseId);
         devoir.setType(devoirDTO.getType());
         devoir.setIdProprietaire(devoirDTO.getIdProprietaire());
         devoir.setDevoirInfos(devoirInfos);
@@ -93,7 +104,7 @@ class DevoirServiceTest {
         devoir.setDevoirInfos(devoirInfos);
 
         // When
-        underTest.addDevoir(devoirDTO);
+        underTest.addDevoir(userId, courseId, devoirDTO);
 
         // Then
         ArgumentCaptor<Devoir> devoirArgumentCaptor = ArgumentCaptor.forClass(Devoir.class);
@@ -112,7 +123,7 @@ class DevoirServiceTest {
 
     @Test
     @DisplayName("Doit rendre un devoir")
-    void doitRendreUnDevoir() {
+    void doitRendreUnDevoir() throws DevoirNotFoundException {
        // Given
         String idDevoir = any();
 
@@ -135,7 +146,10 @@ class DevoirServiceTest {
         devoirReponse.setNote(0);
 
         // When
-        underTest.rendreDevoir(idDevoir,devoirReponseDTO);
+        // TODO Fix test
+        Long userId = null;
+        UUID courseId = null;
+        underTest.rendreDevoir(userId, courseId, idDevoir,devoirReponseDTO);
 
         // Then
         verify(fichierRepository).save(f);
@@ -145,7 +159,7 @@ class DevoirServiceTest {
 
     @Test
     @DisplayName("Doit noter un devoir existant")
-    void doitNoterUnDevoirExistant() {
+    void doitNoterUnDevoirExistant() throws DevoirNotFoundException, RenduNotFoundException {
         // Given
         String idDevoir = "X";
         String idReponse = "Y";
@@ -163,7 +177,10 @@ class DevoirServiceTest {
         given(devoirRepository.findById(idDevoir)).willReturn(Optional.of(devoir));
 
         // When
-        underTest.noterDevoir(idDevoir,idReponse,noteDTO);
+        // TODO Fix test
+        UUID courseId = null;
+        Long userId = null;
+        underTest.noterDevoir(userId, courseId, idDevoir,idReponse,noteDTO);
 
         // Then
         verify(devoirReponseRepository).save(devoirReponse);

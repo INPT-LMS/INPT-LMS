@@ -3,6 +3,8 @@ package com.inpt.lms.servicedevoirs.service;
 import com.inpt.lms.servicedevoirs.dto.DevoirDTO;
 import com.inpt.lms.servicedevoirs.dto.DevoirReponseDTO;
 import com.inpt.lms.servicedevoirs.dto.NoteDTO;
+import com.inpt.lms.servicedevoirs.exception.DevoirNotFoundException;
+import com.inpt.lms.servicedevoirs.exception.RenduNotFoundException;
 import com.inpt.lms.servicedevoirs.model.Devoir;
 import com.inpt.lms.servicedevoirs.model.DevoirInfos;
 import com.inpt.lms.servicedevoirs.model.DevoirReponse;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -28,34 +31,41 @@ public class DevoirService {
 
     /**
      * Fonction pour récupérer un devoir
-     * @return
      */
-    public Devoir recupererDevoir(String idDevoir){
-        // TODO A proper error here
-        Devoir devoir = devoirRepository.findById(idDevoir).orElseThrow(()->new RuntimeException());
+    public Devoir recupererDevoir(Long userId, UUID courseId, String idDevoir) throws DevoirNotFoundException, IllegalAccessError{
+        if(!verifierAutorisation(userId,courseId)){
+            throw new IllegalAccessError("You cannot perform this action");
+        }
+        Devoir devoir = devoirRepository.findById(idDevoir).orElseThrow(()->new DevoirNotFoundException("Devoir introuvable"));
+
+
         return devoir;
     }
 
     /**
      * Fonction pour récupérer tout les devoirs
-     * @return
      */
-    public List<Devoir> recupererDevoirs(){
-        List<Devoir> devoirs = devoirRepository.findAll();
+    public List<Devoir> recupererDevoirs(Long userId, UUID courseId) throws IllegalAccessError{
+        if(!verifierAutorisation(userId,courseId)){
+            throw new IllegalAccessError("You cannot perform this action");
+        }
+        List<Devoir> devoirs = devoirRepository.findDevoirsByIdCours(courseId);
         return devoirs;
     }
 
     /**
      * Fonction ajouter un devoir et ses informations
-     * @return
      */
-    public Devoir addDevoir(DevoirDTO devoirDTO){
+    public Devoir addDevoir(Long userId, UUID courseId, DevoirDTO devoirDTO) throws IllegalAccessError {
         Devoir devoir = new Devoir();
+        if(!verifierAutorisation(userId,devoir.getIdCours())){
+            throw new IllegalAccessError("You cannot perform this action");
+        }
 
         DevoirInfos devoirInfos = new DevoirInfos();
         devoirInfos.setContenu(devoirDTO.getContenu());
 
-        devoir.setIdCours(devoirDTO.getIdCours());
+        devoir.setIdCours(courseId);
         devoir.setType(devoirDTO.getType());
         devoir.setIdProprietaire(devoirDTO.getIdProprietaire());
         devoir.setDevoirInfos(devoirInfos);
@@ -71,15 +81,19 @@ public class DevoirService {
     /**
      * Fonction pour rendre un devoir
      */
-    public DevoirReponse rendreDevoir(String idDevoir, DevoirReponseDTO devoirReponseDTO){
+    public DevoirReponse rendreDevoir(Long userId, UUID courseId, String idDevoir, DevoirReponseDTO devoirReponseDTO) throws DevoirNotFoundException,IllegalAccessError{
+        if(!verifierAutorisation(userId,courseId)){
+            throw new IllegalAccessError("You cannot perform this action");
+        }
+        Devoir devoir = devoirRepository.findById(idDevoir).orElseThrow(()->new DevoirNotFoundException("Devoir introuvable"));
+
+
         DevoirReponse devoirReponse = new DevoirReponse();
 
         Fichier f = new Fichier();
         f.setNom(devoirReponseDTO.getNomFichier());
 
 
-        // TODO A proper error here
-        Devoir devoir = devoirRepository.findById(idDevoir).orElseThrow(()->new RuntimeException());
 
         devoir.getReponses().add(devoirReponse);
 
@@ -97,17 +111,20 @@ public class DevoirService {
     /**
      * Fonction pour noter un devoir
      */
-    public DevoirReponse noterDevoir(String idDevoir, String idReponse, NoteDTO noteDTO){
-        Devoir devoir = devoirRepository.findById(idDevoir).orElseThrow(()->new RuntimeException());
-        // TODO A proper error here
-        DevoirReponse devoirReponse =  devoir.getReponses().stream().filter(reponse -> idReponse.equals(reponse.getId())).findFirst().orElseThrow(()->new RuntimeException());
+    public DevoirReponse noterDevoir(Long userId, UUID courseId, String idDevoir, String idReponse, NoteDTO noteDTO) throws DevoirNotFoundException, IllegalAccessError, RenduNotFoundException {
+        if(!verifierAutorisation(userId,courseId)){
+            throw new IllegalAccessError("You cannot perform this action");
+        }
+        Devoir devoir = devoirRepository.findById(idDevoir).orElseThrow(()->new DevoirNotFoundException("Devoir introuvable"));
+
+        DevoirReponse devoirReponse =  devoir.getReponses().stream().filter(reponse -> idReponse.equals(reponse.getId())).findFirst().orElseThrow(()->new RenduNotFoundException("Rendu introuvable"));
         devoirReponse.setNote(noteDTO.getNote());
         devoirReponseRepository.save(devoirReponse);
 
         return devoirReponse;
     }
 
-    private boolean verifierAutorisation(String idUser,String idCours){
+    private boolean verifierAutorisation(Long userId,UUID courseId){
         // TODO Contacter l'api cours pour vérifier autorisation
         return true;
     }
