@@ -4,19 +4,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/layout/navbar/navbar.component';
-import { FastLinksComponent } from './components/homepage/fast-links/fast-links.component';
-import { FeedComponent } from './components/homepage/feed/feed.component';
-import { AgendaComponent } from './components/homepage/agenda/agenda.component';
-import { LinkItemComponent } from './components/homepage/fast-links/link-item/link-item.component';
-import { CommentComponent } from './components/homepage/feed/post/comment/comment.component';
-import { PostComponent } from './components/homepage/feed/post/post.component';
-import { AgendaItemComponent } from './components/homepage/agenda/agenda-item/agenda-item.component';
-import { HomepageComponent } from './components/homepage/homepage.component';
-import { CourseComponent } from './components/course/course.component';
-import { CourseCoverComponent } from './components/course/course-cover/course-cover.component';
+import { FastLinksComponent } from './components/pages/homepage/fast-links/fast-links.component';
+import { FeedComponent } from './components/pages/homepage/feed/feed.component';
+import { AgendaComponent } from './components/pages/homepage/agenda/agenda.component';
+import { LinkItemComponent } from './components/pages/homepage/fast-links/link-item/link-item.component';
+import { CommentComponent } from './components/pages/homepage/feed/post/comment/comment.component';
+import { PostComponent } from './components/pages/homepage/feed/post/post.component';
+import { AgendaItemComponent } from './components/pages/homepage/agenda/agenda-item/agenda-item.component';
+import { HomepageComponent } from './components/pages/homepage/homepage.component';
+import { CourseComponent } from './components/pages/course/course.component';
+import { CourseCoverComponent } from './components/pages/course/course-cover/course-cover.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AboutCourseComponent } from './components/course/about-course/about-course.component';
-import { AddCourseComponent } from './components/course/add-course/add-course.component';
+import { AboutCourseComponent } from './components/pages/course/about-course/about-course.component';
+import { AddCourseComponent } from './components/pages/course/add-course/add-course.component';
+import { MessagingComponent } from './components/pages/messaging/messaging.component';
+import { MessagesComponent } from './components/pages/messaging/messages/messages.component';
+import { ConversationComponent } from './components/pages/messaging/conversation/conversation.component';
+import { FooterComponent } from './components/layout/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +38,10 @@ import { AddCourseComponent } from './components/course/add-course/add-course.co
     CourseCoverComponent,
     AboutCourseComponent,
     AddCourseComponent,
+    MessagingComponent,
+    MessagesComponent,
+    ConversationComponent,
+    FooterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule],
   providers: [],
