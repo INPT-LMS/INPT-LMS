@@ -5,6 +5,7 @@ import com.inpt.lms.service_cours.model.Member;
 import com.inpt.lms.service_cours.service.CourseAdminImp;
 import com.inpt.lms.service_cours.service.CourseDetailsImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,23 +22,27 @@ public class CourseGetway {
 
 	@GetMapping("/courses/owner/{ownerid}")
 	public List<Course> getProfessorCourses(@PathVariable UUID ownerid) {
-		//TODO verify if professor
+		//TODO verify authorization
+
 		return courseDetailsImp.getProfessorCourses(ownerid);
 	}
 	@PostMapping("/course/owner/")
 	public Course addCourse(@RequestBody Course course, @RequestHeader("X-USER-ID") UUID ownerid){
-		Course addedCours = courseAdminImp.createCourse(course,ownerid);
-		return addedCours;
+		return courseAdminImp.createCourse(course,ownerid);
 	}
 	@DeleteMapping("/course/{courseid}")
-	public boolean deleteCourse(@PathVariable UUID courseid){
-		//TODO verify if professor
-		return courseAdminImp.deleteCourse(courseid);
+	public boolean deleteCourse(@PathVariable UUID courseid , @RequestHeader("X-USER-ID") UUID userid){
+		if(courseDetailsImp.isProfessor(courseid,userid)){
+			return courseAdminImp.deleteCourse(courseid);
+		}
+		return false;
 	}
 	@GetMapping("/course/{courseid}/owner")
-	public UUID getCourseProfessor(@PathVariable UUID courseid){
-		//TODO verify if member
-		return courseDetailsImp.getCourseProfessor(courseid);
+	public UUID getCourseProfessor(@PathVariable UUID courseid , @RequestHeader("X-USER-ID") UUID userid){
+		if(courseDetailsImp.isMember(courseid,userid)){
+			return courseDetailsImp.getCourseProfessor(courseid);
+		}
+		return null ;
 	}
 	@GetMapping("/course/{courseid}/owner/{ownerid}")
 	public boolean checkProfessor(@PathVariable UUID courseid,@PathVariable UUID ownerid){
