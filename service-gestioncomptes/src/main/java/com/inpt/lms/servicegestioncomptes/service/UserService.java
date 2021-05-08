@@ -2,11 +2,15 @@ package com.inpt.lms.servicegestioncomptes.service;
 
 import com.inpt.lms.servicegestioncomptes.dto.UserCredentialsDTO;
 import com.inpt.lms.servicegestioncomptes.dto.UserInfosDTO;
+import com.inpt.lms.servicegestioncomptes.exception.UserAlreadyExistsException;
+import com.inpt.lms.servicegestioncomptes.exception.UserNotFoundException;
 import com.inpt.lms.servicegestioncomptes.model.User;
 import com.inpt.lms.servicegestioncomptes.model.UserInfos;
 import com.inpt.lms.servicegestioncomptes.repository.UserInfosRepository;
 import com.inpt.lms.servicegestioncomptes.repository.UserRepository;
+import com.inpt.lms.servicegestioncomptes.util.JWTUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,17 +19,15 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserInfosRepository userInfosRepository;
+    private final JWTUtil jwtUtil;
 
-    public boolean loginUser(UserCredentialsDTO userCredentials) {
-        // TODO User not found exception
-        User user = userRepository.findByEmail(userCredentials.getEmail()).orElseThrow(()-> new RuntimeException());
-        return verifyPassword(userCredentials.getPassword(),user.getPassword());
-    }
+    public User createUser(UserInfosDTO userInfosDTO) throws UserAlreadyExistsException {
+        // On vérifie si un utilisateur avec le même email n'existe pas déjà
+        boolean userExists =  userRepository.findByEmail(userInfosDTO.getEmail()).isPresent();
+        if(userExists){
+            throw new UserAlreadyExistsException("User already exists");
+        }
 
-    public void createUser(UserInfosDTO userInfosDTO) {
-        /**
-         * On définit d'abord les infos de l'utilisateur
-         */
         UserInfos userInfos = new UserInfos();
         userInfos.setNom(userInfosDTO.getNom());
         userInfos.setPrenom(userInfosDTO.getPrenom());
@@ -34,24 +36,24 @@ public class UserService {
         userInfos.setEtudieA(userInfosDTO.getEtudieA());
         userInfos.setLangue(userInfosDTO.getLangue());
 
-        /**
-         * Puis on définit l'utilisateur
-         */
         User user = new User();
         user.setEmail(userInfosDTO.getEmail());
         user.setPassword(encryptPassword(userInfosDTO.getPassword()));
 
-        /**
-         * On link les 2
-         */
         user.setUserInfos(userInfos);
         userRepository.save(user);
         userInfosRepository.save(userInfos);
+
+        return user;
     }
 
-    public void updateUser(Long id, UserInfosDTO userInfosDTO) {
-        // TODO User not found exception
-        User user = userRepository.findById(id).orElseThrow(()-> new RuntimeException());
+    public String loginUser(UserCredentialsDTO userCredentials) throws UserNotFoundException, BadCredentialsException{
+        User user = userRepository.findByEmail(userCredentials.getEmail()).orElseThrow(()-> new UserNotFoundException("User not found"));
+        return verifyPassword(userCredentials.getPassword(),user);
+    }
+
+    public void updateUser(Long id, UserInfosDTO userInfosDTO) throws UserNotFoundException {
+        User user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found"));
 
         // TODO Faire une meilleure mise à jour
         // Mise à jour des infos de l'utilisateur
@@ -71,8 +73,8 @@ public class UserService {
         userInfosRepository.save(userInfos);
     }
 
-    public void deleteUser(Long id) {
-        User user = userRepository.findById(id).orElseThrow(()-> new RuntimeException());
+    public void deleteUser(Long id) throws UserNotFoundException {
+        User user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found"));
         UserInfos userInfos = user.getUserInfos();
 
         userRepository.delete(user);
@@ -85,7 +87,12 @@ public class UserService {
     }
 
     // TODO une meilleure vérification
-    private boolean verifyPassword(String password,String encryptedPassword){
-        return password == encryptedPassword;
+    private String verifyPassword(String password,User user){
+        String encryptedPassword = user.getPassword();
+        if(password.equals(encryptedPassword)){
+            return jwtUtil.generateToken(user.getUserInfos());
+        }else {
+            throw new BadCredentialsException("Invalid email or password");
+        }
     }
 }
