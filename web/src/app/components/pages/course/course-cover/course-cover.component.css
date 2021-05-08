@@ -1,5 +1,5 @@
 .cover {
-  background-image: url("../../../../assets/cover.jpeg");
+  background-image: url("/assets/cover.jpeg");
 }
 
 .cover > div {
