@@ -21,6 +21,8 @@ public class RoutesConfiguration {
 						urls.getGestioncompte()))
 				.route(RouteCreatorUtil.getRoute("/account/register","/register",
 						urls.getGestioncompte()))
+				.route(RouteCreatorUtil.getRoute("/account/user/","/user/",
+						urls.getGestioncompte()))
 				.route(RouteCreatorUtil.getProtectedRoute("/account/","/",
 						urls.getGestioncompte(),tokenValidation))
 				.route(RouteCreatorUtil.getProtectedRoute("/assignment/","/",
