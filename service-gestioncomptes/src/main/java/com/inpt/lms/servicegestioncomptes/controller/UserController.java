@@ -7,6 +7,7 @@ import com.inpt.lms.servicegestioncomptes.dto.UserInfosDTO;
 import com.inpt.lms.servicegestioncomptes.exception.UserAlreadyExistsException;
 import com.inpt.lms.servicegestioncomptes.exception.UserNotFoundException;
 import com.inpt.lms.servicegestioncomptes.model.User;
+import com.inpt.lms.servicegestioncomptes.model.UserInfos;
 import com.inpt.lms.servicegestioncomptes.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -52,14 +53,53 @@ public class UserController {
         return new ResponseEntity<>(objectNode, HttpStatus.OK);
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<ObjectNode> getUserInfos(@RequestHeader(name = "X-USER-ID") Long userId, @PathVariable Long id) {
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        UserInfosDTO userInfosDTO = null;
+        try {
+           userInfosDTO = userService.getUserInfos(userId,id);
+        } catch (UserNotFoundException e) {
+            objectNode.put("error",e.getMessage());
+            return new ResponseEntity<>(objectNode,HttpStatus.NOT_FOUND);
+        } catch (IllegalAccessError e) {
+            objectNode.put("error",e.getMessage());
+            return new ResponseEntity<>(objectNode,HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            objectNode.put("error","Server error");
+            return new ResponseEntity<>(objectNode,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        ObjectNode userObjectNode = objectMapper.createObjectNode();
+        userObjectNode.put("nom",userInfosDTO.getNom())
+                .put("prenom",userInfosDTO.getPrenom())
+                .put("email",userInfosDTO.getEmail())
+                .put("langue",userInfosDTO.getLangue())
+                .put("estProfesseur",userInfosDTO.isEstProfesseur())
+                .put("enseigneA",userInfosDTO.getEnseigneA())
+                .put("etudieA",userInfosDTO.getEtudieA());
+
+        objectNode.put("message","User fetched");
+        objectNode.put("User",userObjectNode);
+
+        return new ResponseEntity<>(objectNode, HttpStatus.OK);
+    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<ObjectNode> updateUser(@RequestHeader(name = "X-USER-ID") Long userId, @PathVariable Long id,@RequestBody UserInfosDTO userInfosDTO) {
         ObjectNode objectNode = objectMapper.createObjectNode();
         try {
-            userService.updateUser(id,userInfosDTO);
+            userService.updateUser(userId,id,userInfosDTO);
         } catch (UserNotFoundException e) {
             objectNode.put("error",e.getMessage());
             return new ResponseEntity<>(objectNode,HttpStatus.NOT_FOUND);
+        } catch (IllegalAccessError e) {
+            objectNode.put("error",e.getMessage());
+            return new ResponseEntity<>(objectNode,HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            objectNode.put("error","Server error");
+            return new ResponseEntity<>(objectNode,HttpStatus.INTERNAL_SERVER_ERROR);
         }
         objectNode.put("message","User updated");
         return new ResponseEntity<>(objectNode, HttpStatus.OK);
@@ -69,12 +109,19 @@ public class UserController {
     public ResponseEntity<ObjectNode> deleteUser(@RequestHeader(name = "X-USER-ID") Long userId, @PathVariable Long id){
         ObjectNode objectNode = objectMapper.createObjectNode();
         try {
-            userService.deleteUser(id);
+            userService.deleteUser(userId,id);
         } catch (UserNotFoundException e) {
             objectNode.put("error",e.getMessage());
             return new ResponseEntity<>(objectNode,HttpStatus.NOT_FOUND);
+        } catch (IllegalAccessError e) {
+            objectNode.put("error",e.getMessage());
+            return new ResponseEntity<>(objectNode,HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            objectNode.put("error","Server error");
+            return new ResponseEntity<>(objectNode,HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        objectNode.put("message","User updated");
+        objectNode.put("message","User deleted");
         return new ResponseEntity<>(objectNode, HttpStatus.OK);
 
     }

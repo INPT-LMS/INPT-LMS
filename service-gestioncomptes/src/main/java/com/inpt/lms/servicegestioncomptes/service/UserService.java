@@ -11,15 +11,37 @@ import com.inpt.lms.servicegestioncomptes.repository.UserRepository;
 import com.inpt.lms.servicegestioncomptes.util.JWTUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class UserService {
 
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserInfosRepository userInfosRepository;
     private final JWTUtil jwtUtil;
+
+    public UserInfosDTO getUserInfos(Long userId, Long id) throws UserNotFoundException, IllegalAccessError {
+        if(!userId.equals(id)){
+            throw new IllegalAccessError("You can't perform this action");
+        }
+
+        User user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found"));
+        UserInfos userInfos = user.getUserInfos();
+
+        UserInfosDTO userInfosDTO = new UserInfosDTO();
+        userInfosDTO.setEmail(user.getEmail());
+        userInfosDTO.setNom(userInfos.getNom());
+        userInfosDTO.setPrenom(userInfos.getPrenom());
+        userInfosDTO.setLangue(userInfos.getLangue());
+        userInfosDTO.setEstProfesseur(userInfos.isEstProfesseur());
+        userInfosDTO.setEnseigneA(userInfos.getEnseigneA());
+        userInfosDTO.setEtudieA(userInfos.getEtudieA());
+
+        return userInfosDTO;
+    }
 
     public User createUser(UserInfosDTO userInfosDTO) throws UserAlreadyExistsException {
         // On vérifie si un utilisateur avec le même email n'existe pas déjà
@@ -52,7 +74,10 @@ public class UserService {
         return verifyPassword(userCredentials.getPassword(),user);
     }
 
-    public void updateUser(Long id, UserInfosDTO userInfosDTO) throws UserNotFoundException {
+    public void updateUser(Long userId, Long id, UserInfosDTO userInfosDTO) throws UserNotFoundException,IllegalAccessError {
+        if(!userId.equals(id)){
+            throw new IllegalAccessError("You can't perform this action");
+        }
         User user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found"));
 
         // TODO Faire une meilleure mise à jour
@@ -73,7 +98,11 @@ public class UserService {
         userInfosRepository.save(userInfos);
     }
 
-    public void deleteUser(Long id) throws UserNotFoundException {
+    public void deleteUser(Long userId, Long id) throws UserNotFoundException,IllegalAccessError {
+        if(!userId.equals(id)){
+            throw new IllegalAccessError("You can't perform this action");
+        }
+
         User user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found"));
         UserInfos userInfos = user.getUserInfos();
 
@@ -81,18 +110,18 @@ public class UserService {
         userInfosRepository.delete(userInfos);
     }
 
-    // TODO return an encrypted password
     private String encryptPassword(String password){
-        return password;
+        return passwordEncoder.encode(password);
     }
 
-    // TODO une meilleure vérification
     private String verifyPassword(String password,User user){
         String encryptedPassword = user.getPassword();
-        if(password.equals(encryptedPassword)){
+        if(passwordEncoder.matches(password,encryptedPassword)){
             return jwtUtil.generateToken(user.getUserInfos());
         }else {
             throw new BadCredentialsException("Invalid email or password");
         }
     }
+
+
 }
