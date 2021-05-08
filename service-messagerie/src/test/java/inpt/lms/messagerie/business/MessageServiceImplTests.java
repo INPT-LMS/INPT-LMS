@@ -48,7 +48,7 @@ class MessageServiceImplTests {
 	
 	// Ici on utilise l'annotation captor car on ne peut pas créer de capteur 
 	// avec les types génériques directement (on peut mais on ne pourra pas préciser
-	// le type
+	// le type)
 	@Captor
 	ArgumentCaptor<Iterable<Message>> capturedMessagesList;
 	

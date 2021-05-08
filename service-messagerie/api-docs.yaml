@@ -11,29 +11,48 @@ paths:
       tags:
       - messagerie-controller
       operationId: envoyerMessage
+      parameters:
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Message'
+              $ref: '#/components/schemas/MessageForm'
         required: true
       responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
         "404":
           description: Not Found
           content:
             '*/*':
               schema:
                 type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
         "200":
           description: OK
-  /messagerie/infos/{userId}:
+  /messagerie/infos:
     get:
       tags:
       - messagerie-controller
       operationId: getDiscussions
       parameters:
-      - name: userId
-        in: path
+      - name: X-USER-ID
+        in: header
         required: true
         schema:
           type: integer
@@ -44,8 +63,20 @@ paths:
         schema:
           $ref: '#/components/schemas/Pageable'
       responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
         "404":
           description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
           content:
             '*/*':
               schema:
@@ -56,21 +87,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PageDiscussion'
-  /messagerie/infos/{userId}/new:
+  /messagerie/infos/new:
     get:
       tags:
       - messagerie-controller
       operationId: getAllNewDiscussions
       parameters:
-      - name: userId
-        in: path
+      - name: X-USER-ID
+        in: header
         required: true
         schema:
           type: integer
           format: int64
       responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
         "404":
           description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
           content:
             '*/*':
               schema:
@@ -106,8 +149,20 @@ paths:
         schema:
           $ref: '#/components/schemas/Pageable'
       responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
         "404":
           description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
           content:
             '*/*':
               schema:
@@ -129,8 +184,8 @@ paths:
         required: true
         schema:
           type: string
-      - name: userId
-        in: query
+      - name: X-USER-ID
+        in: header
         required: true
         schema:
           type: integer
@@ -141,8 +196,20 @@ paths:
         schema:
           $ref: '#/components/schemas/Pageable'
       responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
         "404":
           description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
           content:
             '*/*':
               schema:
@@ -155,27 +222,19 @@ paths:
                 $ref: '#/components/schemas/PageMessage'
 components:
   schemas:
-    Message:
+    MessageForm:
+      required:
+      - contenu
+      - idDestinataire
       type: object
       properties:
-        id:
-          type: string
-        idDiscussion:
-          type: string
-        idEmetteur:
-          type: integer
-          format: int64
         idDestinataire:
           type: integer
           format: int64
-        date:
-          type: string
-          format: date-time
         contenu:
+          maxLength: 2147483647
+          minLength: 1
           type: string
-        lu:
-          type: boolean
-          writeOnly: true
     Pageable:
       type: object
       properties:
@@ -215,16 +274,10 @@ components:
           $ref: '#/components/schemas/Pageable'
         sort:
           $ref: '#/components/schemas/Sort'
-        number:
-          type: integer
-          format: int32
         first:
           type: boolean
         last:
           type: boolean
-        numberOfElements:
-          type: integer
-          format: int32
         size:
           type: integer
           format: int32
@@ -232,6 +285,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Discussion'
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
         empty:
           type: boolean
     Sort:
@@ -243,6 +302,27 @@ components:
           type: boolean
         empty:
           type: boolean
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+        idDiscussion:
+          type: string
+        idEmetteur:
+          type: integer
+          format: int64
+        idDestinataire:
+          type: integer
+          format: int64
+        date:
+          type: string
+          format: date-time
+        contenu:
+          type: string
+        lu:
+          type: boolean
+          writeOnly: true
     PageMessage:
       type: object
       properties:
@@ -256,16 +336,10 @@ components:
           $ref: '#/components/schemas/Pageable'
         sort:
           $ref: '#/components/schemas/Sort'
-        number:
-          type: integer
-          format: int32
         first:
           type: boolean
         last:
           type: boolean
-        numberOfElements:
-          type: integer
-          format: int32
         size:
           type: integer
           format: int32
@@ -273,5 +347,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Message'
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
         empty:
           type: boolean
