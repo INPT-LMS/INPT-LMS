@@ -1,0 +1,16 @@
+a {
+  text-decoration: none;
+  color: black;
+}
+
+label {
+  cursor: pointer;
+}
+
+.card {
+  background-color: #f8f8f8;
+}
+
+i {
+  color: #0275b1;
+}
