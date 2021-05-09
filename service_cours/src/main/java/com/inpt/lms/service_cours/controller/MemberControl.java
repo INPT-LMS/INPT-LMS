@@ -30,7 +30,8 @@ public class MemberControl {
         return courseDetails.getCourseMembers(courseID);
     }
     @DeleteMapping("/course/{courseID}/member/{memberID}")
-    public String retreiveMember(@PathVariable UUID courseID, @PathVariable UUID memberID ,@RequestHeader("X-USER-ID") UUID userid){
+    public String retreiveMember(@PathVariable UUID courseID, @PathVariable UUID memberID ,
+                                 @RequestHeader("X-USER-ID") UUID userid){
         if(courseDetails.isProfessor(courseID,userid)){
             return courseAdministration.retrieveMember(courseID,memberID);
         }
