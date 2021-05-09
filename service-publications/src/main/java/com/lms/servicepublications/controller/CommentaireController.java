@@ -22,4 +22,9 @@ public class CommentaireController {
     public void deleteCommentaire(@PathVariable String idCommentaire){
         commentaireService.supprimerCommentaire(idCommentaire);
     }
+
+    @PutMapping("/Comentaire/{idCommentaire}")
+    public void putCommentaire(@PathVariable String idCommentaire, @RequestBody CommentaireDTO commentaireDTO){
+        commentaireService.modifierCommentaire(idCommentaire, commentaireDTO);
+    }
 }

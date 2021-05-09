@@ -6,17 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="9707e749-5e18-4270-82c3-d5af339ae7b2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/ServicePublicationsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/ServicePublicationsApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/CommentaireController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/CommentaireController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/LikeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/LikeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/PublicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/PublicationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Commentaire.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Commentaire.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Fichier.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Fichier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Like.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Like.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Publication.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Publication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/CommentaireService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/CommentaireService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/LikeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/LikeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/PublicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/PublicationService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +93,8 @@
       <workItem from="1619732736719" duration="46000" />
       <workItem from="1620325770887" duration="2089000" />
       <workItem from="1620327892273" duration="19734000" />
-      <workItem from="1620417766932" duration="3007000" />
+      <workItem from="1620417766932" duration="4491000" />
+      <workItem from="1620504606457" duration="361000" />
     </task>
     <servers />
   </component>
