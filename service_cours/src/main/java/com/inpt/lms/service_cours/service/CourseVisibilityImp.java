@@ -17,7 +17,7 @@ public class CourseVisibilityImp implements CourseVisibility{
     @Autowired
     CourseInterface  courseInterface ;
     ArrayList<String> visibilitiess= new ArrayList<>(Arrays.asList("PUBLIC","CODE_ACCESS","PRIVATE"));
-    /*@PostConstruct
+    /* @PostConstruct
     public void setupVisibilities(){
         for(int i = 0 ; i<visibilitiess.size() ; i++){
             Visibility visibility = visibilityInterface.findById(i).orElse(new Visibility(i,visibilitiess.get(i)));

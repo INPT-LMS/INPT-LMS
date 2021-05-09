@@ -19,9 +19,10 @@ public class MemberControl {
     CourseAdministration courseAdministration;
 
     @PostMapping("/course/{courseID}/member/{memberID}")
-    public boolean addMember(@PathVariable UUID courseID, @PathVariable UUID memberID){
+    public boolean addMember(@PathVariable UUID courseID, @PathVariable UUID memberID,
+                             @RequestHeader("X-USER-ID") UUID userid){
         //TODO verify if professor or course public
-        return courseAdministration.addMember(courseID,memberID);
+        return courseAdministration.addMember(courseID,memberID,userid);
 
     }
     @GetMapping("/course/{courseID}/members")
