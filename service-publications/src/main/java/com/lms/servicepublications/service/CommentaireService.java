@@ -52,7 +52,9 @@ public class CommentaireService {
         System.out.println("Commentaire supprimé avec succèes");
     }
 
-  /*  public void modifierCommentaire(String id, CommentaireDTO commentaireDTO){
+    public void modifierCommentaire(String id, CommentaireDTO commentaireDTO){
         Commentaire commentaire = commentaireRepository.findById(id).orElseThrow(()->new RuntimeException());
-    }*/
+        commentaire.setContenuCommentaire(commentaireDTO.getContenuCommentaire());
+        System.out.println("Commentaire modifié avec succès");
+    }
 }

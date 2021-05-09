@@ -1,0 +1,357 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /messagerie/discussion:
+    post:
+      tags:
+      - messagerie-controller
+      operationId: envoyerMessage
+      parameters:
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageForm'
+        required: true
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+  /messagerie/infos:
+    get:
+      tags:
+      - messagerie-controller
+      operationId: getDiscussions
+      parameters:
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pagination
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageDiscussion'
+  /messagerie/infos/new:
+    get:
+      tags:
+      - messagerie-controller
+      operationId: getAllNewDiscussions
+      parameters:
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /messagerie/discussion/{discId}:
+    get:
+      tags:
+      - messagerie-controller
+      operationId: getDiscussionMessages
+      parameters:
+      - name: discId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pagination
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageMessage'
+  /messagerie/discussion/{discId}/new:
+    get:
+      tags:
+      - messagerie-controller
+      operationId: getDiscussionNewMessages
+      parameters:
+      - name: discId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pagination
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageMessage'
+components:
+  schemas:
+    MessageForm:
+      required:
+      - contenu
+      - idDestinataire
+      type: object
+      properties:
+        idDestinataire:
+          type: integer
+          format: int64
+        contenu:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
+    Discussion:
+      type: object
+      properties:
+        id:
+          type: string
+        idParticipant1:
+          type: integer
+          format: int64
+        idParticipant2:
+          type: integer
+          format: int64
+    PageDiscussion:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        sort:
+          $ref: '#/components/schemas/Sort'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Discussion'
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        empty:
+          type: boolean
+    Sort:
+      type: object
+      properties:
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+        empty:
+          type: boolean
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+        idDiscussion:
+          type: string
+        idEmetteur:
+          type: integer
+          format: int64
+        idDestinataire:
+          type: integer
+          format: int64
+        date:
+          type: string
+          format: date-time
+        contenu:
+          type: string
+        lu:
+          type: boolean
+          writeOnly: true
+    PageMessage:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        sort:
+          $ref: '#/components/schemas/Sort'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        empty:
+          type: boolean

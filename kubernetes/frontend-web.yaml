@@ -1,0 +1,57 @@
+# Deployment for the Angular containers/pods
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-deployment
+  labels:
+    app: angular-depl
+spec:
+  replicas: 2
+  selector:
+    # Has to match the container label
+    matchLabels:
+      app: angular-pod
+  template:
+    metadata:
+      labels:
+        app: angular-pod
+    spec:
+      containers:
+        - name: angular-pod
+          image: aminerachyd/projetlms-frontend-web
+          ports:
+            - containerPort: 80
+---
+# Service for the Angular containers/pods
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: angular-service
+  name: angular-service
+spec:
+  # Has to match the container label
+  selector:
+    app: angular-pod
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+---
+# Load balancer for the Angular containers/pods
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: angular-lb-service
+  name: angular-lb-service
+spec:
+  # Has to match the container label
+  selector:
+    app: angular-pod
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30000
+      protocol: TCP
+  type: LoadBalancer
