@@ -21,6 +21,11 @@ import { MessagingComponent } from './components/pages/messaging/messaging.compo
 import { MessagesComponent } from './components/pages/messaging/messages/messages.component';
 import { ConversationComponent } from './components/pages/messaging/conversation/conversation.component';
 import { FooterComponent } from './components/layout/footer/footer.component';
+import { AccountComponent } from './components/pages/account/account.component';
+import { SettingsComponent } from './components/pages/account/settings/settings.component';
+import { PersonalInformationComponent } from './components/pages/account/chosen-setting/personal-information/personal-information.component';
+import { SecurityComponent } from './components/pages/account/chosen-setting/security/security.component';
+import { LanguageComponent } from './components/pages/account/chosen-setting/language/language.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +47,11 @@ import { FooterComponent } from './components/layout/footer/footer.component';
     MessagesComponent,
     ConversationComponent,
     FooterComponent,
+    AccountComponent,
+    SettingsComponent,
+    PersonalInformationComponent,
+    SecurityComponent,
+    LanguageComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule],
   providers: [],
