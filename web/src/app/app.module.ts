@@ -26,6 +26,10 @@ import { SettingsComponent } from './components/pages/account/settings/settings.
 import { PersonalInformationComponent } from './components/pages/account/chosen-setting/personal-information/personal-information.component';
 import { SecurityComponent } from './components/pages/account/chosen-setting/security/security.component';
 import { LanguageComponent } from './components/pages/account/chosen-setting/language/language.component';
+import { SignupComponent } from './components/pages/signup/signup.component';
+import { SignupFormComponent } from './components/pages/signup/signup-form/signup-form.component';
+import { LoginComponent } from './components/pages/login/login.component';
+import { LoginFormComponent } from './components/pages/login/login-form/login-form.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +56,10 @@ import { LanguageComponent } from './components/pages/account/chosen-setting/lan
     PersonalInformationComponent,
     SecurityComponent,
     LanguageComponent,
+    SignupComponent,
+    SignupFormComponent,
+    LoginComponent,
+    LoginFormComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule],
   providers: [],

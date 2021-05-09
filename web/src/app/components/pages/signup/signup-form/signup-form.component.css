@@ -1,0 +1,13 @@
+.form-control {
+  background-color: #f2f8ff !important;
+}
+
+.btn-submit {
+  background-color: #0275b1;
+  color: white;
+}
+
+.btn-login {
+  border-color: #0275b1;
+  color: #0275b1;
+}

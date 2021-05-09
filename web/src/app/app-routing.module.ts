@@ -6,10 +6,14 @@ import { PersonalInformationComponent } from './components/pages/account/chosen-
 import { SecurityComponent } from './components/pages/account/chosen-setting/security/security.component';
 import { CourseComponent } from './components/pages/course/course.component';
 import { HomepageComponent } from './components/pages/homepage/homepage.component';
+import { LoginComponent } from './components/pages/login/login.component';
 import { MessagingComponent } from './components/pages/messaging/messaging.component';
+import { SignupComponent } from './components/pages/signup/signup.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'feed', pathMatch: 'full' },
+  { path: 'signup', component: SignupComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'feed', component: HomepageComponent },
   { path: 'course', component: CourseComponent },
   { path: 'messaging', component: MessagingComponent },
