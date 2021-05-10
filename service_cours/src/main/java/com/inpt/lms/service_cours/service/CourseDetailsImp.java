@@ -22,7 +22,7 @@ public class CourseDetailsImp implements CourseDatails{
     @Autowired
     CourseInterface courseInterface ;
     @Override
-    public List<Course> getStudentCourses(UUID studentID) {
+    public List<Course> getStudentCourses(long studentID) {
         Optional<Member> memberOptional = memberInterface.findById(studentID);
         if(memberOptional.isPresent()){
             return memberOptional.get().getCourses();
@@ -31,7 +31,7 @@ public class CourseDetailsImp implements CourseDatails{
     }
 
     @Override
-    public List<Course> getProfessorCourses(UUID professorID) {
+    public List<Course> getProfessorCourses(long professorID) {
         Optional<Professor> owner = professorInterface.findById(professorID);
         if(owner.isPresent()){
             return owner.get().getOwnedCourses();
@@ -40,10 +40,10 @@ public class CourseDetailsImp implements CourseDatails{
     }
 
     @Override
-    public boolean isProfessor(UUID courseID, UUID professorID) {
+    public boolean isProfessor(UUID courseID, long professorID) {
         Optional<Course> optionalCourse = courseInterface.findById(courseID);
         if(optionalCourse.isPresent()){
-            if(optionalCourse.get().getOwner().getProfessorID().equals(professorID)){
+            if(optionalCourse.get().getOwner().getProfessorID() == (professorID)){
                 return true;
             }
         }
@@ -51,7 +51,7 @@ public class CourseDetailsImp implements CourseDatails{
     }
 
     @Override
-    public boolean isMember(UUID courseID, UUID userID) {
+    public boolean isMember(UUID courseID, long userID) {
         Optional<Course> courseOptional = courseInterface.findById(courseID);
         if(courseOptional.isPresent()){
             Optional<Member> optionalMember = memberInterface.findById(userID);
@@ -75,12 +75,12 @@ public class CourseDetailsImp implements CourseDatails{
     }
 
     @Override
-    public UUID getCourseProfessor(UUID courseID) {
+    public long getCourseProfessor(UUID courseID) {
         Optional<Course> courseOptional = courseInterface.findById(courseID);
         if(courseOptional.isPresent()){
             return courseOptional.get().getOwner().getProfessorID();
         }
-        return null;
+        return 0;
     }
 
     @Override

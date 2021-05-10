@@ -19,8 +19,8 @@ public class MemberControl {
     CourseAdministration courseAdministration;
 
     @PostMapping("/course/{courseID}/member/{memberID}")
-    public boolean addMember(@PathVariable UUID courseID, @PathVariable UUID memberID,
-                             @RequestHeader("X-USER-ID") UUID userid){
+    public boolean addMember(@PathVariable UUID courseID, @PathVariable long memberID,
+                             @RequestHeader("X-USER-ID") long userid){
 
         return courseAdministration.addMember(courseID,memberID,userid);
 
@@ -31,8 +31,8 @@ public class MemberControl {
         return courseDetails.getCourseMembers(courseID);
     }
     @DeleteMapping("/course/{courseID}/member/{memberID}")
-    public String retreiveMember(@PathVariable UUID courseID, @PathVariable UUID memberID ,
-                                 @RequestHeader("X-USER-ID") UUID userid){
+    public String retreiveMember(@PathVariable UUID courseID, @PathVariable long memberID ,
+                                 @RequestHeader("X-USER-ID") long userid){
         if(courseDetails.isProfessor(courseID,userid)){
             return courseAdministration.retrieveMember(courseID,memberID);
         }

@@ -17,13 +17,16 @@ public class CourseVisibilityImp implements CourseVisibility{
     @Autowired
     CourseInterface  courseInterface ;
     ArrayList<String> visibilitiess= new ArrayList<>(Arrays.asList("PUBLIC","CODE_ACCESS","PRIVATE"));
-    /* @PostConstruct
+     @PostConstruct
     public void setupVisibilities(){
         for(int i = 0 ; i<visibilitiess.size() ; i++){
-            Visibility visibility = visibilityInterface.findById(i).orElse(new Visibility(i,visibilitiess.get(i)));
-            visibilityInterface.save(visibility);
+            Optional<Visibility> visibility = visibilityInterface.findById(i);
+            if(!visibility.isPresent()){
+                Visibility visibility1 = new Visibility(i,visibilitiess.get(i));
+                visibilityInterface.save(visibility1);
+            }
         }
-    } */
+    }
     @Override
     public Visibility getCourseVisibility(UUID courseID) {
         return courseInterface.findById(courseID).get().getVisibility();

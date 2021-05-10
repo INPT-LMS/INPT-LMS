@@ -16,12 +16,12 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Member implements Serializable {
 	@Id
-	private UUID memberID = UUID.randomUUID() ;
+	private long memberID = 0 ;
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	 @JoinTable
 	@JsonIgnore
 	private List<Course> courses = new ArrayList<>();
-	public Member(UUID memberID) {
+	public Member(long memberID) {
 		super();
 	}
 
@@ -30,11 +30,11 @@ public class Member implements Serializable {
 
 	}
 
-	public UUID getMemberID() {
+	public long getMemberID() {
 		return memberID;
 	}
 
-	public void setMemberID(UUID memberID) {
+	public void setMemberID(long memberID) {
 		this.memberID = memberID;
 	}
 
