@@ -5,6 +5,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+
 @Service
 public class JWTUtil {
     private String SECRET_JWT="secret";
@@ -14,7 +16,7 @@ public class JWTUtil {
     }
 
     // TODO Vérifier date expiration - validité
-    private String createToken(Long subject ){
-        return Jwts.builder().claim("userId",subject).signWith(SignatureAlgorithm.HS256,SECRET_JWT).compact();
+    private String createToken(Long subject){
+        return Jwts.builder().claim("userId",subject).signWith(SignatureAlgorithm.HS512,SECRET_JWT.getBytes(StandardCharsets.UTF_8)).compact();
     }
 }
