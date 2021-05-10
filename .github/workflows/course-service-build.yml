@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ wadii ]
+  pull_request:
+    branches: [ wadii ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to dockerhub
+      env: 
+        DOCKER_USER: ${{secrets.DOCKERHUB_USER_WADII}}
+        DOCKER_PASS: ${{secrets.DOCKERHUB_PASS_WADII}}
+      run: docker login -u $DOCKER_USER -p $DOCKER_PASS 
+    - name: Build the image
+      run: docker build . --file Dockerfile --tag wmordy/courseService:$(date +%s)
+    - name: Push the image to dockerhub 
+      run: docker push ${{secrets.DOCKER_USER}}/course-microservice
