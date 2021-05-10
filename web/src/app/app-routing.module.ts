@@ -11,10 +11,10 @@ import { MessagingComponent } from './components/pages/messaging/messaging.compo
 import { SignupComponent } from './components/pages/signup/signup.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'feed', pathMatch: 'full' },
-  { path: 'signup', component: SignupComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'feed', component: HomepageComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'course', component: CourseComponent },
   { path: 'messaging', component: MessagingComponent },
   {

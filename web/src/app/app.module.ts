@@ -30,6 +30,9 @@ import { SignupComponent } from './components/pages/signup/signup.component';
 import { SignupFormComponent } from './components/pages/signup/signup-form/signup-form.component';
 import { LoginComponent } from './components/pages/login/login.component';
 import { LoginFormComponent } from './components/pages/login/login-form/login-form.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ApiInterceptor } from './utils/api.interceptor';
 
 @NgModule({
   declarations: [
@@ -61,8 +64,21 @@ import { LoginFormComponent } from './components/pages/login/login-form/login-fo
     LoginComponent,
     LoginFormComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, NgbModule],
-  providers: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
