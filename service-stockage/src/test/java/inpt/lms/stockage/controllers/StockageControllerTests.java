@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import inpt.lms.stockage.authorization.AuthorizationService;
 import inpt.lms.stockage.business.interfaces.GestionnaireFichier;
 import inpt.lms.stockage.business.interfaces.exceptions.NotFoundException;
 import inpt.lms.stockage.model.AssociationFichier;
@@ -25,6 +26,8 @@ class StockageControllerTests {
 	public MockMvc mockServeur;
 	@MockBean
 	public GestionnaireFichier gestionnaireFichier;
+	@MockBean
+	public AuthorizationService authService;
 
 	@Test
 	void shouldGet404ForAddCours() throws Exception {
@@ -32,6 +35,7 @@ class StockageControllerTests {
 				.ajoutDansCours("e45", 17l);
 		mockServeur.perform(post("/storage/class/e45/files")
 				.content("{\"assocId\": 17}")
+				.header("X-USER-ID", 17l)
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().is(404));
 	}
@@ -45,6 +49,7 @@ class StockageControllerTests {
 		
 		mockServeur.perform(post("/storage/class/e45/files")
 				.content("{\"assocId\": 17}")
+				.header("X-USER-ID", 17l)
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().is(200))
 				.andExpect(content().json("{id: 17}",true));

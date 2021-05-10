@@ -1,12 +1,22 @@
 {"properties": [
   {
-    "name": "inpt.lms.stockage.maxSize",
-    "type": "java.lang.Integer",
-    "description": "Taille maximum d'un fichier en MiB"
-  },
-  {
     "name": "inpt.lms.stockage.directory",
     "type": "java.lang.String",
     "description": "Dossier ou emplacement où sont stockés les fichiers"
+  },
+  {
+    "name": "inpt.lms.stockage.local",
+    "type": "java.lang.Boolean",
+    "description": "Boolean qui détermine si le mode local doit être utilisé"
+  },
+  {
+    "name": "inpt.lms.stockage.max-size",
+    "type": "java.lang.Integer",
+    "description": "Taille maximum d'un fichier en bytes"
+  },
+  {
+    "name": "inpt.lms.url.service.cours",
+    "type": "java.lang.String",
+    "description": "Url du service cours"
   }
 ]}

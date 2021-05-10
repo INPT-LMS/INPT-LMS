@@ -17,19 +17,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.util.FileSystemUtils;
 
 import inpt.lms.stockage.business.impl.GestionnaireIOFichierLocalImpl;
-import inpt.lms.stockage.business.interfaces.GestionnaireIOFichier;
-import inpt.lms.stockage.business.interfaces.exceptions.FileTooBigException;
+import inpt.lms.stockage.controller.exceptions.FileTooBigException;
 
 
 
 class IOFichierLocalImplTests {
 	public File testFolder;
-	public GestionnaireIOFichier gFichier;
+	public GestionnaireIOFichierLocalImpl gFichier;
 	
 	@BeforeEach
 	void setup() throws IOException {
 		testFolder = Files.createTempDirectory("test").toFile();
-		gFichier = new GestionnaireIOFichierLocalImpl(1,testFolder.getAbsolutePath());
+		gFichier = new GestionnaireIOFichierLocalImpl(testFolder.getAbsolutePath());
 	}
 	
 	@AfterEach
@@ -46,15 +45,6 @@ class IOFichierLocalImplTests {
 		
 		File[] files = testFolder.listFiles();
 		assertEquals(1,files.length);
-	}
-	
-	@Test
-	void testShouldThrowTooBig(){
-		byte[] fakeFile = new byte[1024*1024*2];
-		new Random().nextBytes(fakeFile);
-		
-		assertThrows(FileTooBigException.class, 
-				() -> gFichier.ecrireFichier(fakeFile, "dossier-image",""));
 	}
 	
 	@Test

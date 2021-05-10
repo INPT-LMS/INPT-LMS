@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import inpt.lms.stockage.business.interfaces.FichierEtInfo;
 import inpt.lms.stockage.business.interfaces.GestionnaireFichier;
 import inpt.lms.stockage.business.interfaces.GestionnaireIOFichier;
-import inpt.lms.stockage.business.interfaces.exceptions.FileTooBigException;
 import inpt.lms.stockage.business.interfaces.exceptions.NotFoundException;
 import inpt.lms.stockage.business.interfaces.exceptions.StorageLimitExceededException;
 import inpt.lms.stockage.dao.AssociationFichierDAO;
@@ -35,7 +34,7 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 	protected AssociationFichierDAO associationFichierDAO;
 	@Autowired
 	protected GestionnaireIOFichier gestionnaireIO;
-	public static final long MAX_SPACE_PER_USER = 256000000; // 500 MiB
+	public static final long MAX_SPACE_PER_USER = 25600000; // 50 MiB
 	
 	private FichierInfo recupererFichier(Long idFichier) throws NotFoundException {
 		Optional<FichierInfo> fInfo = fichierInfoDAO.findById(idFichier);
@@ -100,12 +99,22 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 	public void retraitCours(Long idAssoc) throws NotFoundException {
 		retraitAssociation(idAssoc);
 	}
+	
+	@Override
+	public AssociationFichier ajoutDansPublication(String idPublication, Long idAssocFichier) throws NotFoundException {
+		return ajoutAssociation(idPublication, TypeAssociation.PUBLICATION,
+				recupererAssociation(idAssocFichier).getFichierInfo());
+	}
+
+	@Override
+	public void retraitPublication(Long idAssoc) throws NotFoundException {
+		retraitAssociation(idAssoc);	
+	}
 
 	@Override
 	public AssociationFichier uploadFichierSac(Long idUtilisateur, byte[] fichier, 
 			String contentType, String nom, long size) 
-					throws StorageLimitExceededException, FileTooBigException,
-					IOException {
+					throws StorageLimitExceededException,IOException {
 		long usedSpace = getUsedSpace(idUtilisateur);
 		if (usedSpace + size > MAX_SPACE_PER_USER)
 			throw new StorageLimitExceededException();

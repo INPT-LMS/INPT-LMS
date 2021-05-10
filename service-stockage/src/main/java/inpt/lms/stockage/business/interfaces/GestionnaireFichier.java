@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import inpt.lms.stockage.business.interfaces.exceptions.FileTooBigException;
 import inpt.lms.stockage.business.interfaces.exceptions.NotFoundException;
 import inpt.lms.stockage.business.interfaces.exceptions.StorageLimitExceededException;
 import inpt.lms.stockage.model.AssociationFichier;
@@ -52,6 +51,23 @@ public interface GestionnaireFichier {
 	 */
 	void retraitCours(Long idAssoc) throws NotFoundException;
 	
+	/**
+	 * Ajoute un fichier dans une publciation
+	 * @param idPublication l'identifiant de la publication
+	 * @param idAssocFichier l'identifiant du fichier dans un cours ou une publication
+	 * @throws NotFoundException Si le fichier n'est pas trouvé
+	 * @return Les informations sur le fichier ajouté
+	 */
+	AssociationFichier ajoutDansPublication(String idPublication, Long idAssocFichier) 
+			throws NotFoundException;
+	
+	/**
+	 * Retire un fichier d'une publication
+	 * @param idAssoc l'identifiant de l'association
+	 * @throws NotFoundException Si le fichier n'est pas trouvé
+	 */
+	void retraitPublication(Long idAssoc) throws NotFoundException;
+	
 
 	/**
 	 * Enregistre physiquement le fichier dans un espace de stockage. Il est automatiquement
@@ -64,12 +80,11 @@ public interface GestionnaireFichier {
 	 * @return Les informations sur le fichier ajoute
 	 * @throws StorageLimitExceededException Si l'utilisateur a atteint ou dépasse sa 
 	 * limite de stockage
-	 * @throws FileTooBigException Si le fichier est trop grand
 	 * @throws IOException Si une erreur d'écriture est survenue
 	 * 
 	 */
 	AssociationFichier uploadFichierSac(Long idUtilisateur, byte[] fichier, String contentType, String nom, long size) 
-			throws StorageLimitExceededException,FileTooBigException, IOException;
+			throws StorageLimitExceededException, IOException;
 	
 	
 	/**

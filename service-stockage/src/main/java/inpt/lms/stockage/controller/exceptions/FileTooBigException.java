@@ -1,4 +1,4 @@
-package inpt.lms.stockage.business.interfaces.exceptions;
+package inpt.lms.stockage.controller.exceptions;
 
 public class FileTooBigException extends Exception {
 	/**

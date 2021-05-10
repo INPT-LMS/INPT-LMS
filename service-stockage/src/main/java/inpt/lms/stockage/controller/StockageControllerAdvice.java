@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import inpt.lms.stockage.business.interfaces.exceptions.FileTooBigException;
 import inpt.lms.stockage.business.interfaces.exceptions.NotFoundException;
 import inpt.lms.stockage.business.interfaces.exceptions.StorageLimitExceededException;
+import inpt.lms.stockage.controller.exceptions.FileTooBigException;
+import inpt.lms.stockage.controller.exceptions.UnauthorizedException;
+import inpt.lms.stockage.proxies.ProxyUnavailableException;
 
 @RestControllerAdvice
 public class StockageControllerAdvice {
@@ -37,5 +39,20 @@ public class StockageControllerAdvice {
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	public ResponseEntity<String> handleTooBigException(StorageLimitExceededException e){
 		return new ResponseEntity<>("No space left in user storage", HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(UnauthorizedException.class)
+	@ResponseStatus(code = HttpStatus.FORBIDDEN)
+	public ResponseEntity<String> handleUnauthorizedException(UnauthorizedException e){
+		return new ResponseEntity<>("You don't have the right to do this",
+				HttpStatus.FORBIDDEN);
+	}
+	
+	@ExceptionHandler(ProxyUnavailableException.class)
+	@ResponseStatus(code = HttpStatus.SERVICE_UNAVAILABLE)
+	public ResponseEntity<String> handleProxyUnvailableException(
+			ProxyUnavailableException e){
+		return new ResponseEntity<>("Server error please retry later",
+				HttpStatus.SERVICE_UNAVAILABLE);
 	}
 }

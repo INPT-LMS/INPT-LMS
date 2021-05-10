@@ -3,7 +3,8 @@ package inpt.lms.stockage.business.stockage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -23,7 +24,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import inpt.lms.stockage.business.impl.GestionnaireFichierImpl;
 import inpt.lms.stockage.business.interfaces.GestionnaireIOFichier;
-import inpt.lms.stockage.business.interfaces.exceptions.FileTooBigException;
 import inpt.lms.stockage.business.interfaces.exceptions.NotFoundException;
 import inpt.lms.stockage.business.interfaces.exceptions.StorageLimitExceededException;
 import inpt.lms.stockage.dao.AssociationFichierDAO;
@@ -108,7 +108,7 @@ class GestionnaireFichierImplTests {
 	}
 	
 	@Test
-	void testShouldUploadFile() throws StorageLimitExceededException, FileTooBigException, IOException {
+	void testShouldUploadFile() throws StorageLimitExceededException, IOException {
 		byte[] fakeFile = new byte[20];
 		new Random().nextBytes(fakeFile);
 		when(gestionnaireIO.ecrireFichier(any(), anyString(), anyString())).thenReturn("path/test");
@@ -125,7 +125,7 @@ class GestionnaireFichierImplTests {
 	}
 	
 	@Test
-	void testShouldThrowLimitExceed() throws StorageLimitExceededException, FileTooBigException, IOException {
+	void testShouldThrowLimitExceed() throws StorageLimitExceededException, IOException {
 		when(fDAO.getUsedSpaceUser(10l)).thenReturn(GestionnaireFichierImpl.MAX_SPACE_PER_USER+1);
 		byte[] fakeFile = new byte[20];
 		new Random().nextBytes(fakeFile);

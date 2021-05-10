@@ -5,29 +5,25 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import inpt.lms.stockage.business.interfaces.GestionnaireIOFichier;
-import inpt.lms.stockage.business.interfaces.exceptions.FileTooBigException;
 
 
 /**
  * Implementation du gestionnaire qui utilise le disque local
  */
-@Service
+
 public class GestionnaireIOFichierLocalImpl implements GestionnaireIOFichier {
-	@Value("${inpt.lms.stockage.maxSize}")
-	protected long maxSize;
-	@Value("${inpt.lms.stockage.directory}")
 	protected String directory;
+
+	public GestionnaireIOFichierLocalImpl() {}
+	
+	public GestionnaireIOFichierLocalImpl(String directory) {
+		this.directory = directory;
+	}
 
 	@Override
 	public String ecrireFichier(byte[] fichier, String chemin, String nom)
-			throws IOException, FileTooBigException {
-		int sizeMb = fichier.length/1024/1024;
-		if (sizeMb > maxSize)
-			throw new FileTooBigException(maxSize);
+			throws IOException {
 		
 		File location = getDossierStockage(directory,chemin);
 		
@@ -56,14 +52,6 @@ public class GestionnaireIOFichierLocalImpl implements GestionnaireIOFichier {
 		Files.delete(Path.of(chemin));	
 	}
 
-	public long getMaxSize() {
-		return maxSize;
-	}
-
-	public void setMaxSize(long maxSize) {
-		this.maxSize = maxSize;
-	}
-
 	public String getDirectory() {
 		return directory;
 	}
@@ -71,11 +59,4 @@ public class GestionnaireIOFichierLocalImpl implements GestionnaireIOFichier {
 	public void setDirectory(String directory) {
 		this.directory = directory;
 	}
-
-	public GestionnaireIOFichierLocalImpl(long maxSize, String directory) {
-		this.maxSize = maxSize;
-		this.directory = directory;
-	}
-	
-	public GestionnaireIOFichierLocalImpl() {}
 }
