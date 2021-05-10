@@ -1,0 +1,12 @@
+* {
+  color: #0275b1;
+}
+
+.title {
+  text-decoration: none;
+}
+
+nav {
+  border-bottom: 1px solid #c7c8cd;
+  background-color: #fff;
+}

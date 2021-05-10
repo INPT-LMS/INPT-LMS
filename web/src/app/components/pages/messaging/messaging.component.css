@@ -1,0 +1,13 @@
+.messaging-color {
+  background-color: #f9feff;
+}
+.container {
+  max-width: 80%;
+}
+#messages {
+  flex: 1;
+}
+
+#conversation {
+  flex: 2;
+}
