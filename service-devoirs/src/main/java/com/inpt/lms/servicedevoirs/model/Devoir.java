@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,7 +16,7 @@ import java.util.List;
 public class Devoir {
     @Id
     private String id;
-    private String idCours;
+    private UUID idCours;
     private String idProprietaire;
     private String type;
     private DevoirInfos devoirInfos;

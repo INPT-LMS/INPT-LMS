@@ -17,6 +17,7 @@ public class DevoirInfos {
     @Id
     private String id;
     private String contenu;
+    // FIXME la date ne default pas
     @CreatedDate
     private Date dateCreation;
 }
