@@ -1,0 +1,34 @@
+<div class="container pt-5">
+  <h2 class="text-center">Welcome</h2>
+  <form class="my-4" [formGroup]="signupForm" (ngSubmit)="onSubmit($event)">
+    <div class="form-group">
+      <label>First name</label>
+      <input type="text" class="form-control" formControlName="nom" />
+    </div>
+    <div class="form-group">
+      <label>Last name</label>
+      <input type="text" class="form-control" formControlName="prenom" />
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="text" class="form-control" formControlName="email" />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" class="form-control" formControlName="password" />
+    </div>
+    <div class="form-group">
+      <label>Confirm password</label>
+      <input
+        type="password"
+        class="form-control"
+        formControlName="verifyPassword"
+      />
+    </div>
+    <input type="submit" class="btn btn-submit w-100" value="Sign up" />
+  </form>
+  <span class="d-block text-center mt-5">Already have an account ?</span>
+  <div class="text-center mt-3">
+    <a href="/login" class="btn btn-login">Go to login</a>
+  </div>
+</div>

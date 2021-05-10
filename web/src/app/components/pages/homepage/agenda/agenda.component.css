@@ -1,0 +1,10 @@
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.show-all {
+  font-size: small;
+  text-decoration: none;
+  color: #0275b1;
+}

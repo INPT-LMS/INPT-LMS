@@ -1,0 +1,21 @@
+a {
+  text-decoration: none;
+  color: black;
+}
+
+input {
+  width: 15rem;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.card-footer {
+  padding-bottom: 0;
+}
+
+.message {
+  background-color: white;
+  font-size: small;
+}

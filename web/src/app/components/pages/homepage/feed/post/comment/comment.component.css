@@ -1,0 +1,16 @@
+.comment {
+  background-color: #f2f8ff;
+}
+
+.card-title {
+  font-size: small;
+  color: #0275b1;
+}
+
+.comment-body {
+  font-size: small;
+}
+
+.fa-heart {
+  color: #e57f84;
+}
