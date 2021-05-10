@@ -2,10 +2,8 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ wadii ]
-  pull_request:
-    branches: [ wadii ]
-
+    branches: [ master ]
+ 
 jobs:
 
   build:
