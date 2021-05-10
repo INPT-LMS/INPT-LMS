@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -32,11 +33,13 @@ class UserServiceTest {
     private UserInfosRepository userInfosRepository;
     @Mock
     private JWTUtil jwtUtil;
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
-        underTest = new UserService(userRepository,userInfosRepository,jwtUtil);
+        underTest = new UserService(passwordEncoder,userRepository,userInfosRepository,jwtUtil);
     }
 
     @Test
@@ -116,6 +119,8 @@ class UserServiceTest {
     void itShouldUpdateAnExistingUserAndHisUnderInfos() throws UserNotFoundException {
         // Given
         Long id = any();
+        // TODO Fix test
+        Long userId=null;
 
         UserInfosDTO userInfosDTO = new UserInfosDTO();
         userInfosDTO.setEmail("amine@gmail.com");
@@ -134,7 +139,7 @@ class UserServiceTest {
         given(userRepository.findById(id)).willReturn(Optional.of(user));
 
         // When
-        underTest.updateUser(id,userInfosDTO);
+        underTest.updateUser(userId, id,userInfosDTO);
 
         // Then
         verify(userRepository).save(user);
@@ -145,18 +150,20 @@ class UserServiceTest {
     @DisplayName("It should delete an existing User and his UserInfos")
     void itShouldDeleteAnExistingUserAndHisUserInfos() throws UserNotFoundException {
         // Given
-        Long userId = 1l;
+        Long id = 1l;
         Long userInfosId = 1l;
+        // TODO Fix test
+        Long userId=null;
 
         User user = new User();
         UserInfos userInfos = new UserInfos();
         user.setUserInfos(userInfos);
 
-        given(userRepository.findById(userId)).willReturn(Optional.of(user));
+        given(userRepository.findById(id)).willReturn(Optional.of(user));
         given(userInfosRepository.findById(userInfosId)).willReturn(Optional.of(userInfos));
 
         // When
-        underTest.deleteUser(userId);
+        underTest.deleteUser(userId,id);
 
         // Then
         verify(userRepository).delete(user);
