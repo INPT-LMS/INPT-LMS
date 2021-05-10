@@ -70,13 +70,12 @@ class DevoirServiceTest {
     @DisplayName("Doit récuperer tous les devoirs existants")
     void doitRecupererTousLesDevoirs() {
         // When
-        // TODO Fix tests
-        Long userId=null;
-        UUID courseId = null;
+        Long userId=1l;
+        UUID courseId = UUID.randomUUID();
         underTest.recupererDevoirs(userId, courseId);
 
         // Then
-        verify(devoirRepository).findAll();
+        verify(devoirRepository).findDevoirsByIdCours(courseId);
     }
 
     @Test

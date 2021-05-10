@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-// TODO Verifier autorisation
 @RestController
 @AllArgsConstructor
 public class DevoirController {
