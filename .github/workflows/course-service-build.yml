@@ -19,6 +19,6 @@ jobs:
       run: docker login -u $DOCKER_USER -p $DOCKER_PASS 
     - name: Build the image
       working-directory: ./service-service_cours
-      run: docker build . --file Dockerfile --tag wmordy/courseService:$(date +%s)
+      run: docker build .  --tag wmordy/courseService:$(date +%s)
     - name: Push the image to dockerhub 
       run: docker push ${{secrets.DOCKER_USER}}/course-microservice
