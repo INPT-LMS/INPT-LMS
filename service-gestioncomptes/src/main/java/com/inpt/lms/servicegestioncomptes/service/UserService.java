@@ -106,11 +106,11 @@ public class UserService {
         userInfosRepository.delete(userInfos);
     }
 
-    private String encryptPassword(String password){
+    public String encryptPassword(String password){
         return passwordEncoder.encode(password);
     }
 
-    private String verifyPassword(String password,User user){
+    public String verifyPassword(String password,User user){
         String encryptedPassword = user.getPassword();
         if(passwordEncoder.matches(password,encryptedPassword)){
             return jwtUtil.generateToken(user.getUserInfos());

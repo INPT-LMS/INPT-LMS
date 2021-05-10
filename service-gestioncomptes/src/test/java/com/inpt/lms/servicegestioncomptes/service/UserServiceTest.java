@@ -9,18 +9,21 @@ import com.inpt.lms.servicegestioncomptes.model.UserInfos;
 import com.inpt.lms.servicegestioncomptes.repository.UserInfosRepository;
 import com.inpt.lms.servicegestioncomptes.repository.UserRepository;
 import com.inpt.lms.servicegestioncomptes.util.JWTUtil;
+import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -48,16 +51,20 @@ class UserServiceTest {
         // Given
         String email = "amine@gmail.com";
         String password = "123456";
+        String encPassword = "654321";
+
+        given(passwordEncoder.encode(password)).willReturn(encPassword);
 
         User user = new User();
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(encPassword);
 
         UserCredentialsDTO userCredentialsDTO = new UserCredentialsDTO();
-        userCredentialsDTO.setEmail(user.getEmail());
-        userCredentialsDTO.setPassword(user.getPassword());
+        userCredentialsDTO.setEmail(email);
+        userCredentialsDTO.setPassword(password);
 
         given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.of(user));
+        given(passwordEncoder.matches(password,encPassword)).willReturn(true);
 
         // When
         underTest.loginUser(userCredentialsDTO);
@@ -91,7 +98,7 @@ class UserServiceTest {
 
         User user = new User();
         user.setEmail("amine@gmail.com");
-        user.setPassword("123456");
+        user.setPassword(underTest.encryptPassword("123456"));
 
         user.setUserInfos(userInfos);
         //userInfos.setUser(user);
@@ -118,9 +125,8 @@ class UserServiceTest {
     @DisplayName("It should update an existing User and his UserInfos")
     void itShouldUpdateAnExistingUserAndHisUnderInfos() throws UserNotFoundException {
         // Given
-        Long id = any();
-        // TODO Fix test
-        Long userId=null;
+        Long id = 1l;
+        Long userId=1l;
 
         UserInfosDTO userInfosDTO = new UserInfosDTO();
         userInfosDTO.setEmail("amine@gmail.com");
@@ -152,8 +158,7 @@ class UserServiceTest {
         // Given
         Long id = 1l;
         Long userInfosId = 1l;
-        // TODO Fix test
-        Long userId=null;
+        Long userId=1l;
 
         User user = new User();
         UserInfos userInfos = new UserInfos();
