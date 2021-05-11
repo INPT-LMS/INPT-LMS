@@ -55,20 +55,26 @@ public class CourseAdminImp implements CourseAdministration{
 
     @Override
     public boolean addMember(UUID courseID, long memberID,long ownerID) {
-        Member member = memberInterface.findById(memberID).orElse(new Member(memberID));
-
+        Optional<Member> member = memberInterface.findById(memberID);
+        Member member1 = new Member();
+        if(!member.isPresent()){
+            member1.setMemberID(memberID);
+        }
+        else {
+            member1 = member.get();
+        }
         Optional<Course> course = courseInterface.findById(courseID);
         if(course.isPresent()){
             Course course1 = course.get();
-            List<Course> memberCourses = member.getCourses();
+            List<Course> memberCourses = member1.getCourses();
             if(memberCourses.contains(course1)){
                 return true ;
             }
             if( course1.getOwner().equals(professorInterface.findById(ownerID).orElse(null)) || course1.getVisibility().getVisibilityID() == 0){
                 memberCourses.add(course1);
-                member.setCourses(memberCourses);
-                course1.getStudents().add(member);
-                memberInterface.save(member);
+                member1.setCourses(memberCourses);
+                course1.getStudents().add(member1);
+                memberInterface.save(member1);
                 courseInterface.save(course1);
                 return true ;
             }

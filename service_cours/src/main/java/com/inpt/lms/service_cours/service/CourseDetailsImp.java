@@ -75,6 +75,20 @@ public class CourseDetailsImp implements CourseDatails{
     }
 
     @Override
+    public List<Member> getCourseMembers(UUID courseID, long ownerID) {
+        Optional<Course> course = courseInterface.findById(courseID);
+        if(course.isPresent()){
+            if( course.get().getOwner().equals(professorInterface.findById(ownerID).orElse(null))
+                    || course.get().getVisibility().getVisibilityID() == 0
+                    || course.get().getStudents().contains(memberInterface.findById(ownerID).orElse(null)) ){
+                return course.get().getStudents();
+            }
+
+        }
+        return null ;
+    }
+
+    @Override
     public long getCourseProfessor(UUID courseID) {
         Optional<Course> courseOptional = courseInterface.findById(courseID);
         if(courseOptional.isPresent()){

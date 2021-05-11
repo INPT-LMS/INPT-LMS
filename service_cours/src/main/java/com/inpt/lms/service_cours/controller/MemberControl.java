@@ -6,11 +6,13 @@ import com.inpt.lms.service_cours.service.CourseAdministration;
 import com.inpt.lms.service_cours.service.CourseDatails;
 import com.inpt.lms.service_cours.service.CourseDetailsImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
-
+@RequestMapping("/public/")
 @RestController
 public class MemberControl {
     @Autowired
@@ -26,17 +28,17 @@ public class MemberControl {
 
     }
     @GetMapping("/course/{courseID}/members")
-    public List<Member> getCourseMembers(@PathVariable UUID courseID){
-        //TODO verify if professor or member or course public
-        return courseDetails.getCourseMembers(courseID);
+    public List<Member> getCourseMembers(@PathVariable UUID courseID, @RequestHeader("X-USER-ID") long userid){
+
+        return courseDetails.getCourseMembers(courseID,userid);
     }
     @DeleteMapping("/course/{courseID}/member/{memberID}")
-    public String retreiveMember(@PathVariable UUID courseID, @PathVariable long memberID ,
+    public Serializable retreiveMember(@PathVariable UUID courseID, @PathVariable long memberID ,
                                  @RequestHeader("X-USER-ID") long userid){
         if(courseDetails.isProfessor(courseID,userid)){
             return courseAdministration.retrieveMember(courseID,memberID);
         }
 
-        return null;
+        return HttpStatus.UNAUTHORIZED;
     }
 }

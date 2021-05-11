@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-
+@RequestMapping("/public/")
 @RestController
 public class CourseGetway {
 	@Autowired
@@ -19,10 +19,8 @@ public class CourseGetway {
 	@Autowired
 	CourseDetailsImp courseDetailsImp;
 
-	@GetMapping("/courses/owner/{ownerid}")
-	public List<Course> getProfessorCourses(@PathVariable long ownerid) {
-		//TODO verify authorization
-
+	@GetMapping("/courses/owner/")
+	public List<Course> getProfessorCourses( @RequestHeader("X-USER-ID") long ownerid) {
 		return courseDetailsImp.getProfessorCourses(ownerid);
 	}
 	@PostMapping("/course/owner/")
@@ -43,11 +41,11 @@ public class CourseGetway {
 		}
 		return HttpStatus.UNAUTHORIZED ;
 	}
-	@GetMapping("/course/{courseid}/owner/{ownerid}")
+	/* @GetMapping("/course/{courseid}/owner/{ownerid}")
 	public boolean checkProfessor(@PathVariable UUID courseid,@PathVariable long ownerid){
-		//TODO verify if member
+
 		return courseDetailsImp.isProfessor(courseid,ownerid);
-	}
+	} */
 
 
 
