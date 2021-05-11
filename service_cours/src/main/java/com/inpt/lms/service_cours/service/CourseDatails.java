@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public interface CourseDatails {
     public List<Member> getCourseMembers(UUID courseID);
+    public List<Member> getCourseMembers(UUID courseID, long ownerID);
     public List<Course> getStudentCourses(long studentID);
     public List<Course> getProfessorCourses(long professorID);
     public boolean isProfessor(UUID courseID, long professorID);

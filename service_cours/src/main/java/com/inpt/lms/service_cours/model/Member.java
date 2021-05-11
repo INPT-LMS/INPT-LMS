@@ -16,7 +16,7 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Member implements Serializable {
 	@Id
-	private long memberID = 0 ;
+	private long memberID ;
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	 @JoinTable
 	@JsonIgnore
