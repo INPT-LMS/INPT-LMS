@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -33,6 +33,7 @@ import { LoginFormComponent } from './components/pages/login/login-form/login-fo
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiInterceptor } from './utils/api.interceptor';
+import { MyErrorsHandler } from './utils/myerrorshandler';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,10 @@ import { ApiInterceptor } from './utils/api.interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptor,
       multi: true,
+    },
+    {
+      provide: ErrorHandler,
+      useClass: MyErrorsHandler,
     },
   ],
   bootstrap: [AppComponent],

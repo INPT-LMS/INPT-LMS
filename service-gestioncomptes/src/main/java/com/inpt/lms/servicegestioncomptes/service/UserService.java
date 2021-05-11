@@ -2,6 +2,7 @@ package com.inpt.lms.servicegestioncomptes.service;
 
 import com.inpt.lms.servicegestioncomptes.dto.UserCredentialsDTO;
 import com.inpt.lms.servicegestioncomptes.dto.UserInfosDTO;
+import com.inpt.lms.servicegestioncomptes.exception.NotEnoughInformationsException;
 import com.inpt.lms.servicegestioncomptes.exception.UserAlreadyExistsException;
 import com.inpt.lms.servicegestioncomptes.exception.UserNotFoundException;
 import com.inpt.lms.servicegestioncomptes.model.User;
@@ -39,10 +40,14 @@ public class UserService {
         return userInfosDTO;
     }
 
-    public User createUser(UserInfosDTO userInfosDTO) throws UserAlreadyExistsException {
+    public User createUser(UserInfosDTO userInfosDTO) throws UserAlreadyExistsException,NotEnoughInformationsException {
+        // On vérifie si on a de bonnes données envoyées par le client
+        if(userInfosDTO.getEmail().isEmpty() || userInfosDTO.getPassword().isEmpty() || userInfosDTO.getNom().isEmpty() || userInfosDTO.getPrenom().isEmpty()){
+            throw new NotEnoughInformationsException("You didn't give enough information");
+        }
         // On vérifie si un utilisateur avec le même email n'existe pas déjà
         boolean userExists =  userRepository.findByEmail(userInfosDTO.getEmail()).isPresent();
-        if(userExists){
+        if(userExists ){
             throw new UserAlreadyExistsException("User already exists");
         }
 

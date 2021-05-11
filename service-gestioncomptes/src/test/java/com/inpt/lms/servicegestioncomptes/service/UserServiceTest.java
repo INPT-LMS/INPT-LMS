@@ -2,6 +2,7 @@ package com.inpt.lms.servicegestioncomptes.service;
 
 import com.inpt.lms.servicegestioncomptes.dto.UserCredentialsDTO;
 import com.inpt.lms.servicegestioncomptes.dto.UserInfosDTO;
+import com.inpt.lms.servicegestioncomptes.exception.NotEnoughInformationsException;
 import com.inpt.lms.servicegestioncomptes.exception.UserAlreadyExistsException;
 import com.inpt.lms.servicegestioncomptes.exception.UserNotFoundException;
 import com.inpt.lms.servicegestioncomptes.model.User;
@@ -75,7 +76,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("It should create User and UserInfos objects from UserInfosDTO")
-    void itShouldCreateUserAndUserInfosFromUserInfosDTO() throws UserAlreadyExistsException {
+    void itShouldCreateUserAndUserInfosFromUserInfosDTO() throws UserAlreadyExistsException, NotEnoughInformationsException {
         // Given
         UserInfosDTO userInfosDTO = new UserInfosDTO();
         userInfosDTO.setEmail("amine@gmail.com");

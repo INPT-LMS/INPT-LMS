@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ErrorHandler, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-signup-form',
@@ -19,20 +20,37 @@ export class SignupFormComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
+    private localStorageService: LocalStorageService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private errorHandler: ErrorHandler
   ) {}
 
   ngOnInit(): void {}
 
-  // TODO Enregistrer le token
-  // TODO Vérifier le cas d'erreur
   // Signup the user
   onSubmit(event: Event) {
     event.preventDefault();
 
-    this.accountService.signupUser(this.signupForm.value).subscribe();
+    const { password, verifyPassword } = this.signupForm.value;
+    if (password !== verifyPassword) {
+      console.log({ error: "Passwords don't match" });
+      return;
+    }
 
-    this.router.navigate(['/feed']);
+    this.accountService
+      .signupUser(this.signupForm.value)
+      .subscribe((response: any) => {
+        if (response.error) {
+          this.errorHandler.handleError(response);
+          return;
+        }
+
+        console.log(response);
+        const { userToken, message } = response;
+
+        this.router.navigate(['/login']);
+        return;
+      });
   }
 }

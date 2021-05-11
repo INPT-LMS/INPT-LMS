@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ErrorHandler, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AccountService } from 'src/app/services/account.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-login-form',
@@ -16,20 +18,31 @@ export class LoginFormComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
+    private localStorageService: LocalStorageService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private errorHandler: ErrorHandler
   ) {}
 
   ngOnInit(): void {}
 
-  // TODO Enregistrer le token
-  // TODO Vérifier le cas d'erreur
   // Login the user
   onSubmit(event: Event) {
     event.preventDefault();
 
-    this.accountService.loginUser(this.loginForm.value).subscribe();
+    this.accountService
+      .loginUser(this.loginForm.value)
+      .subscribe((response: any) => {
+        if (response.error) {
+          this.errorHandler.handleError(response);
+          return;
+        }
 
-    this.router.navigate(['/feed']);
+        const { userToken, message } = response;
+        this.localStorageService.set('userToken', userToken);
+
+        this.router.navigate(['/feed']);
+        return;
+      });
   }
 }

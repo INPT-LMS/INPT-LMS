@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { of, throwError } from 'rxjs';
 
 interface User {
   id: number;
@@ -43,7 +43,10 @@ export class AccountService {
       })
       .pipe(
         catchError((err) => {
-          return of(err);
+          return of({
+            error: err.error.error,
+            status: err.status,
+          });
         })
       );
   }
@@ -61,7 +64,10 @@ export class AccountService {
       })
       .pipe(
         catchError((err) => {
-          return of(err);
+          return of({
+            error: err.error.error,
+            status: err.status,
+          });
         })
       );
   }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.inpt.lms.servicegestioncomptes.dto.UserCredentialsDTO;
 import com.inpt.lms.servicegestioncomptes.dto.UserInfosDTO;
+import com.inpt.lms.servicegestioncomptes.exception.NotEnoughInformationsException;
 import com.inpt.lms.servicegestioncomptes.exception.UserAlreadyExistsException;
 import com.inpt.lms.servicegestioncomptes.exception.UserNotFoundException;
 import com.inpt.lms.servicegestioncomptes.model.User;
@@ -48,6 +49,9 @@ public class UserController {
         } catch (UserAlreadyExistsException e) {
             objectNode.put("error",e.getMessage());
             return new ResponseEntity<>(objectNode, HttpStatus.CONFLICT);
+        } catch (NotEnoughInformationsException e) {
+            objectNode.put("error",e.getMessage());
+            return new ResponseEntity<>(objectNode, HttpStatus.UNAUTHORIZED);
         }
         objectNode.put("message","User created").put("userId",user.getId());
         return new ResponseEntity<>(objectNode, HttpStatus.OK);
