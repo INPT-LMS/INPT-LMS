@@ -4,7 +4,7 @@ import java.io.IOException;
 
 /**
  * Interface qui définit les méthodes pour manipuler physiquement (écrire ou lire sur
- * le disque par exemple) les fichiers.\n L'endroit où les données sont stockées n'est 
+ * le disque par exemple) les fichiers.<br /> L'endroit où les données sont stockées n'est 
  * pas défini (disque, espace cloud, etc)
  *
  */

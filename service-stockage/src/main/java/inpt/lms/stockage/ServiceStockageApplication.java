@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 import com.amazonaws.regions.Regions;
@@ -14,8 +15,9 @@ import inpt.lms.stockage.business.impl.GestionnaireIOFichierAWSImpl;
 import inpt.lms.stockage.business.impl.GestionnaireIOFichierLocalImpl;
 import inpt.lms.stockage.business.interfaces.GestionnaireIOFichier;
 
+@EnableFeignClients
 @SpringBootApplication
-public class ServiceStockageApplication {
+public class ServiceStockageApplication{
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceStockageApplication.class, args);
@@ -47,6 +49,5 @@ public class ServiceStockageApplication {
 			@Value("${inpt.lms.stockage.directory}") String directory) {
 		
 		return new GestionnaireIOFichierLocalImpl(directory);
-	}
-	
+	}	
 }

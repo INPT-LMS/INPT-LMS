@@ -1,4 +1,4 @@
-package inpt.lms.stockage.business.stockage;
+package inpt.lms.stockage.business;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

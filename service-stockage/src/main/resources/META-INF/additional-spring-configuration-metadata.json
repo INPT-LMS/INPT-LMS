@@ -18,5 +18,10 @@
     "name": "inpt.lms.url.service.cours",
     "type": "java.lang.String",
     "description": "Url du service cours"
+  },
+  {
+    "name": "inpt.lms.url.service.publication",
+    "type": "java.lang.String",
+    "description": "Url du service publication"
   }
 ]}
