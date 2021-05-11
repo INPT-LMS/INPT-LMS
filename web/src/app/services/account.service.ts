@@ -27,7 +27,10 @@ export class AccountService {
   getUser(userId: number) {
     return this.http.get(`/account/update/${userId}`).pipe(
       catchError((err) => {
-        return of(err);
+        return of({
+          error: err.error.error,
+          status: err.status,
+        });
       })
     );
   }
@@ -79,7 +82,10 @@ export class AccountService {
   updateUser(user: User) {
     return this.http.put(`/account/update/${user.id}`, { ...user }).pipe(
       catchError((err) => {
-        return of(err);
+        return of({
+          error: err.error.error,
+          status: err.status,
+        });
       })
     );
   }
@@ -91,7 +97,10 @@ export class AccountService {
   deleteUser(userId: number) {
     return this.http.delete(`/account/update/${userId}`).pipe(
       catchError((err) => {
-        return of(err);
+        return of({
+          error: err.error.error,
+          status: err.status,
+        });
       })
     );
   }

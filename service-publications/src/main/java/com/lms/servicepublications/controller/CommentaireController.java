@@ -23,7 +23,7 @@ public class CommentaireController {
         commentaireService.supprimerCommentaire(idCommentaire);
     }
 
-    @PutMapping("/Comentaire/{idCommentaire}")
+    @PutMapping("/comentaire/{idCommentaire}")
     public void putCommentaire(@PathVariable String idCommentaire, @RequestBody CommentaireDTO commentaireDTO){
         commentaireService.modifierCommentaire(idCommentaire, commentaireDTO);
     }
