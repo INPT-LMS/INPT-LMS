@@ -22,7 +22,7 @@ public class CourseAdminImp implements CourseAdministration{
     @Autowired
     MemberInterface memberInterface ;
     @Override
-    public Course createCourse(Course course, UUID ownerID) {
+    public Course createCourse(Course course, long ownerID) {
         Professor creator = professorInterface.findById(ownerID).orElse(new Professor(ownerID));
         course.setOwner(creator);
         professorInterface.save(creator);
@@ -54,7 +54,7 @@ public class CourseAdminImp implements CourseAdministration{
     }
 
     @Override
-    public boolean addMember(UUID courseID, UUID memberID,UUID ownerID) {
+    public boolean addMember(UUID courseID, long memberID,long ownerID) {
         Member member = memberInterface.findById(memberID).orElse(new Member(memberID));
 
         Optional<Course> course = courseInterface.findById(courseID);
@@ -77,7 +77,7 @@ public class CourseAdminImp implements CourseAdministration{
     }
 
     @Override
-    public String retrieveMember(UUID courseID, UUID memberID) {
+    public String retrieveMember(UUID courseID, long memberID) {
         Member member = memberInterface.findById(memberID).orElse(new Member(memberID));
 
         Optional<Course> course = courseInterface.findById(courseID);

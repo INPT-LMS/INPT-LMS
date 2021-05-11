@@ -19,7 +19,7 @@ public class VisibilityAdmin {
         return courseVisibility.getCourseVisibility(courseid);
     }
     @PutMapping("/course/{courseid}/visibility/{visibilityid}")
-    public Visibility setCourseVisibility(@PathVariable UUID courseid,@PathVariable int visibilityid, @RequestHeader("X-USER-ID") UUID userid){
+    public Visibility setCourseVisibility(@PathVariable UUID courseid,@PathVariable int visibilityid, @RequestHeader("X-USER-ID") long userid){
         if(courseDatails.isProfessor(courseid,userid)){
             return courseVisibility.setCourseVisibility(courseid,visibilityid);
         }

@@ -14,12 +14,12 @@ import javax.persistence.OneToMany;
 @Entity
 public class Professor implements Serializable{
 	@Id
-	private UUID professorID ;
+	private long professorID ;
 	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
 	
 	private List<Course> ownedCourses;
-	public Professor(@JsonProperty UUID professorID){
+	public Professor(@JsonProperty long professorID){
 		this.professorID = professorID;
 	}
 
@@ -28,11 +28,11 @@ public class Professor implements Serializable{
 
 	}
 
-	public UUID getProfessorID() {
+	public long getProfessorID() {
 		return professorID;
 	}
 
-	public void setProfessorID(UUID professorID) {
+	public void setProfessorID(long professorID) {
 		this.professorID = professorID;
 	}
 
