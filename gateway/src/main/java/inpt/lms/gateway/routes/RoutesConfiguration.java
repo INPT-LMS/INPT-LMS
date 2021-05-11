@@ -29,7 +29,7 @@ public class RoutesConfiguration {
 						urls.getDevoir(),tokenValidation))
 				.route(RouteCreatorUtil.getProtectedRoute("/post/","/",
 						urls.getPublication(),tokenValidation))
-				.route(RouteCreatorUtil.getProtectedRoute("/class/","/",
+				.route(RouteCreatorUtil.getProtectedRoute("/class/","/public/",
 						urls.getCours(),tokenValidation))
 				.build();
 	}
