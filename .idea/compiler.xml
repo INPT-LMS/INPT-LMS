@@ -7,15 +7,27 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="service-devoirs" />
+        <module name="service-gestioncomptes" />
         <module name="service-publications" />
+        <module name="service-messagerie" />
+        <module name="gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="gateway" target="11" />
+      <module name="service-devoirs" target="11" />
+      <module name="service-gestioncomptes" target="11" />
+      <module name="service-messagerie" target="11" />
       <module name="service-publications" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="gateway" options="-parameters" />
+      <module name="service-devoirs" options="-parameters" />
+      <module name="service-gestioncomptes" options="-parameters" />
+      <module name="service-messagerie" options="-parameters" />
       <module name="service-publications" options="-parameters" />
     </option>
   </component>
