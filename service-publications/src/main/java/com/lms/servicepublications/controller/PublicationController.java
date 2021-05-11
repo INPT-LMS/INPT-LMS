@@ -2,6 +2,7 @@ package com.lms.servicepublications.controller;
 
 
 import com.lms.servicepublications.dto.PublicationDTO;
+import com.lms.servicepublications.exceptions.BadRequestException;
 import com.lms.servicepublications.model.Publication;
 import com.lms.servicepublications.service.PublicationService;
 import lombok.AllArgsConstructor;
@@ -15,11 +16,11 @@ public class PublicationController {
 
     private PublicationService publicationService;
 
-   /* @GetMapping("/publications/{idPublication}")
+    @GetMapping("/publication/{idPublication}")
     public Publication getPublication(@PathVariable String idPublication){
         Publication publication = publicationService.recupererPublication(idPublication);
         return publication;
-    }*/
+    }
 
     @GetMapping("/publication")
     public List<Publication> getPublications(){
@@ -27,24 +28,30 @@ public class PublicationController {
         return publications;
     }
 
-    @GetMapping("/publication/{idCours}")
-    public List<Publication> getPublicationsByCourse(@PathVariable String idCours){
-        List<Publication> publications = publicationService.recupererPublicationsParCours(idCours);
-        return publications;
-    }
+//    @GetMapping("/publication/{idCours}")
+//    public List<Publication> getPublicationsByCourse(@PathVariable String idCours){
+//
+//        List<Publication> publications = publicationService.recupererPublicationsParCours(idCours);
+//        return publications;
+//    }
 
     @PostMapping("/publication")
-    public void addPublication(@RequestBody PublicationDTO publicationDTO){
-        publicationService.ajouterPublication(publicationDTO);
+    public String addPublication(@RequestBody PublicationDTO publicationDTO){
+        return publicationService.ajouterPublication(publicationDTO);
     }
 
     @DeleteMapping("publication/{idPublication}")
-    public void removePublication(@PathVariable String idPublication){
-        publicationService.supprimerPublication(idPublication);
+    public String removePublication(@RequestHeader("X-USER-ID") String id_user, @PathVariable String idPublication){
+        return publicationService.supprimerPublication(id_user, idPublication);
     }
 
     @PutMapping("publication/{idPublication}")
-    public void updatePublication(@PathVariable String idPublication,@RequestBody PublicationDTO publicationDTO){
-        publicationService.modifierPublication(idPublication,publicationDTO);
+    public String updatePublication(@PathVariable String idPublication,
+                                  @RequestBody PublicationDTO publicationDTO,
+                                  @RequestHeader(value = "X-USER-ID", required = false) String id_user){
+        if(id_user == null) throw new BadRequestException("X-USER-ID is missing");
+        return publicationService.modifierPublication(id_user, idPublication, publicationDTO);
+
+
     }
 }

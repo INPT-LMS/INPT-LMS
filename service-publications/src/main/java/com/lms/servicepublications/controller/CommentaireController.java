@@ -1,6 +1,7 @@
 package com.lms.servicepublications.controller;
 
 import com.lms.servicepublications.dto.CommentaireDTO;
+import com.lms.servicepublications.exceptions.BadRequestException;
 import com.lms.servicepublications.service.CommentaireService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,17 +15,21 @@ public class CommentaireController {
     private CommentaireService commentaireService;
 
     @PostMapping("/commentaire")
-    public void addLike(@RequestBody CommentaireDTO commentaireDTO){
-        commentaireService.ajouterCommentaire(commentaireDTO);
+    public String addCommentaore(@RequestBody(required = false) CommentaireDTO commentaireDTO){
+        if(commentaireDTO==null) throw new BadRequestException("Body is missing");
+        return commentaireService.ajouterCommentaire(commentaireDTO);
     }
 
     @DeleteMapping("/commentaire/{idCommentaire}")
-    public void deleteCommentaire(@PathVariable String idCommentaire){
-        commentaireService.supprimerCommentaire(idCommentaire);
+    public String deleteCommentaire(@RequestHeader(value = "X-USER-ID", required = false) String id_user,
+                                    @PathVariable String idCommentaire){
+        return commentaireService.supprimerCommentaire(id_user, idCommentaire);
     }
 
     @PutMapping("/Comentaire/{idCommentaire}")
-    public void putCommentaire(@PathVariable String idCommentaire, @RequestBody CommentaireDTO commentaireDTO){
-        commentaireService.modifierCommentaire(idCommentaire, commentaireDTO);
+    public String putCommentaire(@RequestHeader(value = "X-USER-ID", required = false) String id_user,
+                                 @PathVariable String idCommentaire,
+                                 @RequestBody CommentaireDTO commentaireDTO){
+        return commentaireService.modifierCommentaire(id_user, idCommentaire, commentaireDTO);
     }
 }
