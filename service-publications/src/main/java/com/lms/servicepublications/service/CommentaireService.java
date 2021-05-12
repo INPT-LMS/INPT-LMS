@@ -3,6 +3,7 @@ import com.lms.servicepublications.dto.CommentaireDTO;
 import com.lms.servicepublications.exceptions.RessourceNotFoundException;
 import com.lms.servicepublications.exceptions.UnauthorizedException;
 import com.lms.servicepublications.model.Commentaire;
+import com.lms.servicepublications.model.Like;
 import com.lms.servicepublications.model.Publication;
 import com.lms.servicepublications.repository.CommentaireRepository;
 import com.lms.servicepublications.repository.PublicationRepository;
@@ -25,14 +26,26 @@ public class CommentaireService {
      * Fonction pour ajouter un commentaire
      * @return String
      */
-    public String ajouterCommentaire(CommentaireDTO commentaireDTO){
+    public String ajouterCommentaire(String id_user, CommentaireDTO commentaireDTO){
+        Publication publication = publicationRepository.findById(commentaireDTO.getIdPublication()).orElseThrow(() -> new RessourceNotFoundException("Publication not found"));
         Commentaire commentaire = new Commentaire();
+        commentaire.setIdProprietaire(id_user);
+        commentaire.setIdPublication(commentaireDTO.getIdPublication());
         commentaire.setContenuCommentaire(commentaireDTO.getContenuCommentaire());
         commentaireRepository.insert(commentaire);
-        Publication publication = publicationRepository.findPublicationByid(commentaireDTO.getIdPublication());
-        List<Commentaire> commentaires = new ArrayList();
-        commentaires.add(commentaire);
-        publication.setCommentaires(commentaires);
+
+
+        if(publication.getCommentaires() == null){
+            List<Commentaire> commentaires = new ArrayList<>();
+            commentaires.add(commentaire);
+            publication.setCommentaires(commentaires);
+        }
+        else{
+            List<Commentaire> commentaires = publication.getCommentaires();
+            commentaires.add(commentaire);
+            publication.setCommentaires(commentaires);
+        }
+
         publicationRepository.save(publication);
         return "Commentaire ajouté avec succèes";
     }
@@ -43,15 +56,15 @@ public class CommentaireService {
      */
     public String supprimerCommentaire(String id_user, String idCommentaire) {
         Commentaire commentaire = (commentaireRepository.findById(idCommentaire).orElseThrow(() -> new RessourceNotFoundException("Comment not found")));
-        String idPublication = commentaire.getIdPublication();
         if(!commentaire.getIdProprietaire().equals(id_user)) throw new UnauthorizedException("Action not authorized");
-        Publication publication = publicationRepository.findById(idPublication).orElseThrow(() -> new RessourceNotFoundException("Publication not found"));
+        Publication publication = publicationRepository.findById(commentaire.getIdPublication()).orElseThrow(() -> new RessourceNotFoundException("Publication not found"));
         List<Commentaire> commentaires = publication.getCommentaires();
         for (int i = 0; i < commentaires.size(); i++) {
             if (commentaires.get(i).getIdCommentaire().equals(idCommentaire)) {
                 commentaires.remove(i);
             }
         }
+        publication.setCommentaires(commentaires);
         commentaireRepository.deleteById(idCommentaire);
         publicationRepository.save(publication);
         return "Commentaire supprimé avec succèes";
@@ -67,5 +80,9 @@ public class CommentaireService {
         commentaire.setContenuCommentaire(commentaireDTO.getContenuCommentaire());
         commentaireRepository.save(commentaire);
         return "Commentaire modifié avec succès";
+    }
+
+    public void supprimerCommentairesInPublication(List<Commentaire> commentaires) {
+        commentaireRepository.deleteAll(commentaires);
     }
 }

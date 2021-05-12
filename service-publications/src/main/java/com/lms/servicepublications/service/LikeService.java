@@ -21,19 +21,24 @@ public class LikeService {
     private PublicationRepository publicationRepository;
 
 
-    public String ajouterLike(LikeDTO likeDTO){
+    public String ajouterLike(String user_id, LikeDTO likeDTO){
         Like like = new Like();
-        like.setIdProprietaire(likeDTO.getIdProprietaire());
+        like.setIdProprietaire(user_id);
         like.setIdPublication(likeDTO.getIdPublication());
-
         likeRepository.insert(like);
+        Publication publication = publicationRepository.findById(likeDTO.getIdPublication()).orElseThrow(()->new RessourceNotFoundException("Publication not found"));
 
-        Publication publication = publicationRepository.findPublicationByid(likeDTO.getIdPublication());
+        if(publication.getLikes() == null){
+            List<Like> likes = new ArrayList<>();
+            likes.add(like);
+            publication.setLikes(likes);
+        }
+        else{
+            List<Like> likes = publication.getLikes();
+            likes.add(like);
+            publication.setLikes(likes);
+        }
 
-        List<Like> likes = new ArrayList();
-
-        likes.add(like);
-        publication.setLikes(likes);
         publicationRepository.save(publication);
         return "Like ajouté avec succèes";
     }
@@ -53,5 +58,9 @@ public class LikeService {
         likeRepository.deleteById(idLike);
         publicationRepository.save(publication);
         return "Like supprimé avec succèes";
+    }
+
+    public void supprimerLikesInPublication(List<Like> likes){
+        likeRepository.deleteAll(likes);
     }
 }

@@ -5,382 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9707e749-5e18-4270-82c3-d5af339ae7b2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/ExceptionHandler/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/exceptions/BadRequestException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/exceptions/RessourceNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/exceptions/UnauthorizedException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/response/ExceptionResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_5_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jknack_handlebars_4_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_tomakehurst_wiremock_jre8_standalone_2_27_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_javaewah_JavaEWAH_1_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_h2database_h2_1_4_200.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_ibm_icu_icu4j_4_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jcraft_jsch_0_1_55.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jcraft_jsch_agentproxy_core_0_0_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jcraft_jsch_agentproxy_jsch_0_0_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jcraft_jsch_agentproxy_sshagent_0_0_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jcraft_jsch_agentproxy_usocket_jna_0_0_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jcraft_jzlib_1_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_rackspace_eclipse_webtools_sourceediting_org_eclipse_wst_xml_xpath2_processor_2_1_100.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_activation_jakarta_activation_1_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_istack_istack_commons_runtime_3_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_toomuchcoding_jsonassert_jsonassert_0_5_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_zaxxer_HikariCP_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_beanutils_commons_beanutils_1_9_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_fileupload_commons_fileupload_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__de_flapdoodle_embed_de_flapdoodle_embed_mongo_2_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__de_flapdoodle_embed_de_flapdoodle_embed_process_2_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__dk_brics_automaton_automaton_1_11_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__edu_princeton_cup_java_cup_10k.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_openfeign_feign_core_10_10_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_openfeign_feign_slf4j_10_10_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_openfeign_form_feign_form_3_8_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_github_openfeign_form_feign_form_spring_3_8_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_0_9_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_api_0_11_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_impl_0_11_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_jackson_0_11_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_buffer_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_dns_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_http2_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_http_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_socks_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_common_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_proxy_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_dns_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_dns_native_macos_osx_x86_64_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_epoll_linux_x86_64_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_unix_common_4_1_63_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_addons_reactor_extra_3_4_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_netty_reactor_netty_core_1_0_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_netty_reactor_netty_http_1_0_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_reactor_core_3_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_persistence_jakarta_persistence_api_2_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_transaction_jakarta_transaction_api_1_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_annotation_javax_annotation_api_1_3_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_inject_javax_inject_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_23.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_4_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_4_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_platform_4_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jna_jna_platform_4_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_javacrumbs_json_unit_json_unit_assertj_2_19_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_javacrumbs_json_unit_json_unit_core_2_19_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_javacrumbs_json_unit_json_unit_json_path_2_19_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_compress_1_18.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_text_1_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_maven_resolver_maven_resolver_api_1_4_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_9_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_atteo_evo_inflector_1_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_groovy_groovy_2_5_14.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_groovy_groovy_json_2_5_14.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_groovy_groovy_nio_2_5_14.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_groovy_groovy_xml_2_5_14.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_dom4j_dom4j_2_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jdt_core_compiler_ecj_4_4_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jgit_org_eclipse_jgit_5_1_3_201810200350_r.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_jaxb_runtime_2_3_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_txw2_2_3_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_common_hibernate_commons_annotations_5_1_2_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_core_5_4_30_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_validator_hibernate_validator_6_1_7_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_javassist_javassist_3_27_0_GA.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_jandex_2_2_3_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_4_1_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_reactivestreams_reactive_streams_1_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springdoc_springdoc_openapi_data_rest_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springdoc_springdoc_openapi_hateoas_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_configuration_processor_2_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_aop_2_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_jdbc_2_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_jpa_2_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_2_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_reactor_netty_2_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_validation_2_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_webflux_2_4_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_contract_converters_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_contract_shade_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_contract_spec_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_contract_spec_groovy_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_contract_spec_java_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_contract_stub_runner_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_contract_verifier_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_contract_wiremock_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_function_compiler_3_0_6_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_gateway_server_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_openfeign_core_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_starter_contract_stub_runner_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_starter_gateway_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_cloud_spring_cloud_starter_openfeign_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_jdbc_2_1_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_jpa_2_4_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_relational_2_1_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_rest_core_3_4_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_hateoas_spring_hateoas_1_2_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_plugin_spring_plugin_core_2_0_0_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_core_5_4_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aspects_5_3_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_5_3_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_orm_5_3_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webflux_5_3_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/gateway.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/inpt/lms/gateway/GatewayApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/inpt/lms/gateway/filters/TokenValidationFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/inpt/lms/gateway/routes/RouteCreatorUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/inpt/lms/gateway/routes/RoutesConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/inpt/lms/gateway/routes/UrlsProperties.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/META-INF/additional-spring-configuration-metadata.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/test/java/inpt/lms/gateway/GatewayTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/ServiceDevoirsApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/controller/DevoirController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/dto/DevoirDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/dto/DevoirReponseDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/dto/NoteDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/model/Devoir.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/model/DevoirInfos.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/model/DevoirReponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/model/Fichier.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/repository/DevoirInfosRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/repository/DevoirReponseRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/repository/DevoirRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/repository/FichierRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/java/com/inpt/lms/servicedevoirs/service/DevoirService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/test/java/com/inpt/lms/servicedevoirs/ServiceDevoirsApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/test/java/com/inpt/lms/servicedevoirs/service/DevoirServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-devoirs/src/test/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/ServiceGestioncomptesApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/controller/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/dto/UserCredentialsDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/dto/UserInfosDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/exception/UserAlreadyExistsException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/exception/UserNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/model/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/model/UserInfos.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/repository/UserInfosRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/repository/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/service/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/util/JWTUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/test/java/com/inpt/lms/servicegestioncomptes/ServiceGestioncomptesApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/test/java/com/inpt/lms/servicegestioncomptes/repository/UserRepositoryTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/test/java/com/inpt/lms/servicegestioncomptes/service/UserServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/test/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/api-docs.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/service-messagerie.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/ServiceMessagerieApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/business/impl/MessagerieServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/business/interfaces/MessagerieService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/business/interfaces/exceptions/NotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/controllers/MessagerieController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/controllers/MessagerieControllerAdvice.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/dao/CustomMessageDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/dao/CustomMessageDAOImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/dao/DiscussionDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/dao/MessageDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/forms/MessageForm.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/model/Discussion.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/model/Message.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/proxies/CustomErrorDecoder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/proxies/GestionCompteProxyService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/proxies/NoSuchUserException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/proxies/ProxyUnavailableException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/resources/META-INF/additional-spring-configuration-metadata.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-messagerie/src/test/java/inpt/lms/messagerie/business/MessageServiceImplTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/CommentaireController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/CommentaireController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/LikeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/LikeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/PublicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/PublicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/dto/CommentaireDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/dto/CommentaireDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/dto/LikeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/dto/LikeDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/dto/PublicationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/dto/PublicationDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/repository/CommentaireRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/repository/CommentaireRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/CommentaireService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/CommentaireService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/LikeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/LikeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/PublicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/PublicationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/.browserslistrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/.dockerignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/angular.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/e2e/protractor.conf.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/e2e/src/app.e2e-spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/e2e/src/app.po.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/e2e/tsconfig.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/karma.conf.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/nginx.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/app-routing.module.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/app.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/app.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/app.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/app.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/app.module.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/layout/footer/footer.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/layout/footer/footer.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/layout/footer/footer.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/layout/footer/footer.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/layout/navbar/navbar.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/layout/navbar/navbar.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/layout/navbar/navbar.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/layout/navbar/navbar.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/account.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/account.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/account.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/account.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/language/language.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/language/language.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/language/language.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/language/language.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/personal-information/personal-information.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/personal-information/personal-information.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/personal-information/personal-information.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/personal-information/personal-information.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/security/security.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/security/security.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/security/security.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/security/security.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/settings/settings.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/settings/settings.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/settings/settings.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/settings/settings.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/about-course/about-course.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/about-course/about-course.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/about-course/about-course.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/about-course/about-course.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/add-course/add-course.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/add-course/add-course.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/add-course/add-course.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/add-course/add-course.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/course-cover/course-cover.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/course-cover/course-cover.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/course-cover/course-cover.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/course-cover/course-cover.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/course.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/course.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/course.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/course/course.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/agenda/agenda-item/agenda-item.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/agenda/agenda-item/agenda-item.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/agenda/agenda-item/agenda-item.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/agenda/agenda-item/agenda-item.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/agenda/agenda.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/agenda/agenda.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/agenda/agenda.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/agenda/agenda.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/fast-links/fast-links.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/fast-links/fast-links.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/fast-links/fast-links.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/fast-links/fast-links.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/fast-links/link-item/link-item.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/fast-links/link-item/link-item.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/fast-links/link-item/link-item.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/fast-links/link-item/link-item.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/feed/feed.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/feed/feed.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/feed/feed.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/feed/feed.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/feed/post/comment/comment.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/feed/post/comment/comment.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/feed/post/comment/comment.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/feed/post/comment/comment.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/feed/post/post.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/feed/post/post.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/feed/post/post.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/feed/post/post.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/homepage.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/homepage.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/homepage.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/homepage/homepage.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/login/login-form/login-form.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/login/login-form/login-form.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/login/login-form/login-form.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/login/login-form/login-form.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/login/login.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/login/login.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/login/login.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/login/login.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/conversation/conversation.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/conversation/conversation.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/conversation/conversation.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/conversation/conversation.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/messages/messages.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/messages/messages.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/messages/messages.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/messages/messages.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/messaging.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/messaging.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/messaging.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/messaging.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/signup/signup-form/signup-form.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/signup/signup-form/signup-form.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/signup/signup-form/signup-form.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/signup/signup-form/signup-form.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/signup/signup.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/signup/signup.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/signup/signup.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/signup/signup.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/assets/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/assets/cover.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/assets/study-girl.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/environments/environment.prod.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/environments/environment.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/polyfills.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/test.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/tsconfig.app.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/tsconfig.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/tsconfig.spec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/tslint.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -419,7 +54,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="jdk.selected.JAVA_MODULE" value="11" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/gateway" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/service-publications" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -427,6 +62,11 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="Docker" />
     <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Mohammed Aymane\Documents\GitHub\INPT-LMS\service-publications" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
@@ -445,19 +85,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -570,7 +197,8 @@
       <workItem from="1620679447201" duration="5014000" />
       <workItem from="1620684764179" duration="2900000" />
       <workItem from="1620763476191" duration="1327000" />
-      <workItem from="1620764856084" duration="7929000" />
+      <workItem from="1620764856084" duration="12324000" />
+      <workItem from="1620777308305" duration="2595000" />
     </task>
     <servers />
   </component>

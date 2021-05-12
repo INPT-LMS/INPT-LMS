@@ -36,12 +36,15 @@ public class PublicationController {
 //    }
 
     @PostMapping("/publication")
-    public String addPublication(@RequestBody PublicationDTO publicationDTO){
-        return publicationService.ajouterPublication(publicationDTO);
+    public String addPublication(@RequestHeader(value = "X-USER-ID", required = false) String id_user,
+            @RequestBody PublicationDTO publicationDTO){
+        if(id_user == null || id_user.equals(null)) throw new BadRequestException("User id is missing");
+        return publicationService.ajouterPublication(id_user, publicationDTO);
     }
 
     @DeleteMapping("publication/{idPublication}")
-    public String removePublication(@RequestHeader("X-USER-ID") String id_user, @PathVariable String idPublication){
+    public String removePublication(@RequestHeader(value = "X-USER-ID", required = false) String id_user, @PathVariable String idPublication){
+        if(id_user == null || id_user.equals(null)) throw new BadRequestException("User id is missing");
         return publicationService.supprimerPublication(id_user, idPublication);
     }
 
@@ -49,7 +52,7 @@ public class PublicationController {
     public String updatePublication(@PathVariable String idPublication,
                                   @RequestBody PublicationDTO publicationDTO,
                                   @RequestHeader(value = "X-USER-ID", required = false) String id_user){
-        if(id_user == null) throw new BadRequestException("X-USER-ID is missing");
+        if(id_user == null || id_user.equals("")) throw new BadRequestException("User id is missing");
         return publicationService.modifierPublication(id_user, idPublication, publicationDTO);
 
 
