@@ -2,17 +2,16 @@ package com.lms.servicepublications.service;
 
 
 import com.lms.servicepublications.dto.PublicationDTO;
-import com.lms.servicepublications.exceptions.RessourceNotFoundException;
+import com.lms.servicepublications.exceptions.ResourceNotFoundException;
 import com.lms.servicepublications.exceptions.UnauthorizedException;
 import com.lms.servicepublications.model.Commentaire;
 import com.lms.servicepublications.model.Like;
 import com.lms.servicepublications.model.Publication;
-import com.lms.servicepublications.repository.CommentaireRepository;
 import com.lms.servicepublications.repository.PublicationRepository;
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.text.StrBuilder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,7 +30,7 @@ public class PublicationService {
      * @return Publication
      */
     public Publication recupererPublication(String id_publication){
-        return publicationRepository.findById(id_publication).orElseThrow(()->new RessourceNotFoundException("Requested publication is not found."));
+        return publicationRepository.findById(id_publication).orElseThrow(()->new ResourceNotFoundException("Requested publication is not found."));
     }
 
     /**
@@ -54,13 +53,14 @@ public class PublicationService {
      * Fonction pour ajouter une publications
      * @return String
      */
-    public String ajouterPublication(String id_user, PublicationDTO publicationDTO){
+    public Publication ajouterPublication(String id_user, PublicationDTO publicationDTO){
         Publication publication = new Publication();
         publication.setContenuPublication(publicationDTO.getContenuPublication());
         publication.setIdCours(publicationDTO.getIdCours());
         publication.setIdProprietaire(id_user);
-        publicationRepository.insert(publication);
-        return "Publication ajoutée avec succées";
+        publication.setCommentaires(new ArrayList<Commentaire>());
+        publication.setLikes(new ArrayList<Like>());
+        return publicationRepository.insert(publication);
     }
 
 
@@ -82,12 +82,11 @@ public class PublicationService {
      * Fonction pour modifier une publications par son id
      * @return String
      */
-    public String modifierPublication(String user_id,String publication_id,PublicationDTO publicationDTO){
-        Publication publication = publicationRepository.findById(publication_id).orElseThrow(()->new RessourceNotFoundException("Requested publication is not found."));
+    public Publication modifierPublication(String user_id,String publication_id,PublicationDTO publicationDTO){
+        Publication publication = publicationRepository.findById(publication_id).orElseThrow(()->new ResourceNotFoundException("Requested publication is not found."));
         if(!publication.getIdProprietaire().equals(user_id)) throw new UnauthorizedException("Action not authorized");
         publication.setContenuPublication(publicationDTO.getContenuPublication());
         publication.setIdCours(publicationDTO.getIdCours());
-        publicationRepository.save(publication);
-        return "Publication modifiée aves succès";
+        return publicationRepository.save(publication);
     }
 }

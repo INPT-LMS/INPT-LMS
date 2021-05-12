@@ -4,7 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9707e749-5e18-4270-82c3-d5af339ae7b2" name="Default Changelist" comment="" />
+    <list default="true" id="9707e749-5e18-4270-82c3-d5af339ae7b2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/exceptions/ResourceAlreadyExists.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/ExceptionHandler/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/ExceptionHandler/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/CommentaireController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/CommentaireController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/LikeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/LikeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/PublicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/PublicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/dto/PublicationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/dto/PublicationDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/exceptions/RessourceNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/exceptions/ResourceNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Commentaire.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Commentaire.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Like.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Like.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Publication.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Publication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/repository/LikeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/repository/LikeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/CommentaireService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/CommentaireService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/LikeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/LikeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/PublicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/PublicationService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,6 +59,7 @@
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="jdk.selected.JAVA_MODULE" value="11" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/service-publications" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -64,13 +81,45 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Unnamed" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="spring-boot:build-image" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/service-publications" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
     <configuration name="ServicePublicationsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="service-publications" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.lms.servicepublications.ServicePublicationsApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.ServicePublicationsApplication" />
+      <item itemvalue="Maven.Unnamed" />
+      <item itemvalue="Spring Boot.ServicePublicationsApplication" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ServicePublicationsApplication" />
@@ -93,6 +142,8 @@
       <workItem from="1620787719222" duration="208000" />
       <workItem from="1620787943398" duration="551000" />
       <workItem from="1620788978949" duration="119000" />
+      <workItem from="1620832479031" duration="7899000" />
+      <workItem from="1620840467664" duration="986000" />
     </task>
     <servers />
   </component>
