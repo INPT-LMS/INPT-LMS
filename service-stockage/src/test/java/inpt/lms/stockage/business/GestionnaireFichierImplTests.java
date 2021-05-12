@@ -89,7 +89,8 @@ class GestionnaireFichierImplTests {
 	
 	@Test
 	void testShouldRemoveSacAndDelete() throws NotFoundException, IOException {
-		when(assocDAO.findById(5l)).thenReturn(Optional.of(assoc));
+		when(assocDAO.findByIdAndIdCorrespondantAssociationAndTypeAssociation(
+				5l, "10", TypeAssociation.SAC)).thenReturn(Optional.of(assoc));
 		when(assocDAO.existsById(5l)).thenReturn(true);
 		
 		gFichier.retraitSac(10l, 5l);
@@ -100,7 +101,8 @@ class GestionnaireFichierImplTests {
 	}
 	@Test
 	void testShouldThrowWhenDeleteFromSac() throws NotFoundException, IOException {
-		when(assocDAO.findById(5l)).thenReturn(Optional.of(assoc));
+		when(assocDAO.findByIdAndIdCorrespondantAssociationAndTypeAssociation(
+				5l, "10", TypeAssociation.SAC)).thenReturn(Optional.of(assoc));
 		when(assocDAO.existsById(5l)).thenReturn(true);
 		doThrow(IOException.class).when(gestionnaireIO).supprimerFichier(fInfo.getChemin());
 		

@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import inpt.lms.stockage.authorization.AuthorizationService;
 import inpt.lms.stockage.business.interfaces.GestionnaireFichier;
 import inpt.lms.stockage.business.interfaces.exceptions.NotFoundException;
 import inpt.lms.stockage.business.interfaces.exceptions.StorageLimitExceededException;
@@ -31,6 +30,7 @@ import inpt.lms.stockage.model.AssociationFichier;
 import inpt.lms.stockage.model.TypeAssociation;
 import inpt.lms.stockage.util.ControllerResponseUtils;
 
+
 @RestController
 @RequestMapping(path = "/storage/user", produces = "application/json",
 consumes = "application/json")
@@ -39,10 +39,10 @@ public class SacStockageController {
 	protected long maxSize;
 	@Autowired
 	protected GestionnaireFichier gestionnaireFichier;
-	@Autowired
-	protected AuthorizationService authService;
 	
-	@PostMapping("files")
+	// FIXME : Desactivation temporaire de la route en attendant une meilleure 
+	// méthode d'autorisation
+	//@PostMapping("files")
 	@JsonView(AssociationFichier.Public.class)
 	public AssociationFichier ajoutFichierSac(@RequestBody ParamAssocId assocId, 
 			@RequestHeader(name = "X-USER-ID") long userId) throws NotFoundException{
@@ -53,7 +53,6 @@ public class SacStockageController {
 	public void retraitFichierSac(@PathVariable Long assocId,
 			@RequestHeader(name = "X-USER-ID") long userId) 
 					throws NotFoundException, IOException{
-		
 		gestionnaireFichier.retraitSac(userId,assocId);
 	}
 	
@@ -68,14 +67,19 @@ public class SacStockageController {
 	@GetMapping("files/{assocId}/info")
 	@JsonView(AssociationFichier.Public.class)
 	public AssociationFichier getInfoFichierSac(@PathVariable Long assocId,
-			@RequestHeader(name = "X-USER-ID") long userId) throws NotFoundException{
+			@RequestHeader(name = "X-USER-ID") long userId) 
+					throws NotFoundException{
+		gestionnaireFichier.isAssociationPresent(assocId, 
+				String.valueOf(userId), TypeAssociation.SAC);
 		return gestionnaireFichier.getFichierByAssocId(assocId);
 	}
 	
 	@GetMapping("files/{assocId}")
 	public ResponseEntity<byte[]> getFichierSac(@PathVariable Long assocId,
-			@RequestHeader(name = "X-USER-ID") long userId) throws NotFoundException, IOException{
-		
+			@RequestHeader(name = "X-USER-ID") long userId)
+					throws NotFoundException, IOException{
+		gestionnaireFichier.isAssociationPresent(assocId, 
+				String.valueOf(userId), TypeAssociation.SAC);
 		return ControllerResponseUtils.lireFichier(
 				gestionnaireFichier.lireFichier(assocId));
 	}

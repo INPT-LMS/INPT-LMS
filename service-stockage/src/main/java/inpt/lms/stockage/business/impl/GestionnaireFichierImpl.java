@@ -65,6 +65,14 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 			throw new NotFoundException(NotFoundException.ERROR_FILE);
 		associationFichierDAO.deleteById(idAssociation);
 	}
+	
+	@Override
+	public void isAssociationPresent(Long idAssoc, String idAssocie,
+			TypeAssociation typeAssociation) throws NotFoundException{
+		if (!associationFichierDAO.existsByIdAndIdCorrespondantAssociationAndTypeAssociation(
+				idAssoc, idAssocie, typeAssociation))
+			throw new NotFoundException(NotFoundException.ERROR_FILE);
+	}
 
 	@Override
 	public AssociationFichier ajoutDansSac(Long idUtilisateur, Long idAssocFichier) throws NotFoundException{
@@ -84,10 +92,11 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 	@Transactional(rollbackOn = IOException.class)
 	public void retraitSac(Long idUtilisateur,Long idAssoc) 
 			throws NotFoundException, IOException {
-		Optional<AssociationFichier> assoc = associationFichierDAO.findById(idAssoc);
-		if (assoc.isEmpty())
-			throw new NotFoundException(NotFoundException.ERROR_FILE);
-		FichierInfo info = assoc.get().getFichierInfo();
+		AssociationFichier assoc = 
+				associationFichierDAO.findByIdAndIdCorrespondantAssociationAndTypeAssociation(
+						idAssoc, idUtilisateur.toString(),TypeAssociation.SAC).orElseThrow(
+						() -> new NotFoundException(NotFoundException.ERROR_FILE));
+		FichierInfo info = assoc.getFichierInfo();
 		retraitAssociation(idAssoc);	
 		if (idUtilisateur.equals(info.getIdProprietaire())) {
 			fichierInfoDAO.delete(info);
@@ -96,7 +105,8 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 	}
 	
 	@Override
-	public void retraitCours(Long idAssoc) throws NotFoundException {
+	public void retraitCours(Long idAssoc,String idCours) throws NotFoundException {
+		isAssociationPresent(idAssoc, idCours, TypeAssociation.COURS);
 		retraitAssociation(idAssoc);
 	}
 	
@@ -107,7 +117,9 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 	}
 
 	@Override
-	public void retraitPublication(Long idAssoc) throws NotFoundException {
+	public void retraitPublication(Long idAssoc,String idPublication) 
+			throws NotFoundException {
+		isAssociationPresent(idAssoc, idPublication, TypeAssociation.PUBLICATION);
 		retraitAssociation(idAssoc);	
 	}
 
