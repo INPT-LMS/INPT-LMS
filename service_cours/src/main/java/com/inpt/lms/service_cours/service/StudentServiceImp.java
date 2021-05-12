@@ -16,9 +16,6 @@ public class StudentServiceImp implements StudentService{
     @Override
     public List<Course> getStudentCourses(long ownerID) {
         Optional<Member> memberOptional = memberInterface.findById(ownerID);
-        if(memberOptional.isPresent()){
-            return memberOptional.get().getCourses();
-        }
-       return null;
+        return memberOptional.map(Member::getCourses).orElse(null);
     }
 }
