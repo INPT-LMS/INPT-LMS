@@ -9,5 +9,4 @@ public class CommentaireDTO {
 
     private String idPublication;
     private String contenuCommentaire;
-    private String idProprietaire;
 }
