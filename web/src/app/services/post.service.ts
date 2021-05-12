@@ -36,10 +36,7 @@ const COMMENT_BASE_URL = '/post/commentaire';
   providedIn: 'root',
 })
 export class PostService {
-  constructor(
-    private http: HttpClient,
-    private localStorageService: LocalStorageService
-  ) {}
+  constructor(private http: HttpClient) {}
 
   /**
    * Récupère toutes les publications

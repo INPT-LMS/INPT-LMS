@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '../services/local-storage.service';
 
+// XXX Lien de la gateway
 const API_LINK = 'http://localhost:8080';
 
 @Injectable()

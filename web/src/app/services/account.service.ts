@@ -75,7 +75,6 @@ export class AccountService {
       );
   }
 
-  // TODO vérifer autorisation
   /**
    * Mise à jour d'un utilisateur, a besoin d'autorisation
    */
@@ -90,7 +89,6 @@ export class AccountService {
     );
   }
 
-  // TODO vérifer autorisation
   /**
    * Supprime un utilisateur, a besoin d'autorisation
    */
