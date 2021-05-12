@@ -5,21 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9707e749-5e18-4270-82c3-d5af339ae7b2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/exceptions/ResourceAlreadyExists.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/ExceptionHandler/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/ExceptionHandler/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/CommentaireController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/CommentaireController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/LikeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/LikeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/PublicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/PublicationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/dto/PublicationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/dto/PublicationDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/exceptions/RessourceNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/exceptions/ResourceNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Commentaire.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Commentaire.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Like.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Like.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Publication.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Publication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/repository/LikeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/repository/LikeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/CommentaireService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/CommentaireService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/LikeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/LikeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/PublicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/PublicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +54,7 @@
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
-  <component name="RunManager" selected="Spring Boot.ServicePublicationsApplication">
+  <component name="RunManager" selected="Maven.Create docker container">
     <configuration name="ServicePublicationsApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.LMS.servicepublications.ServicePublicationsApplication" />
       <module name="service-publications" />
@@ -81,7 +68,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Unnamed" type="MavenRunConfiguration" factoryName="Maven">
+    <configuration name="Create docker container" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
         <option name="myRunnerSettings" />
@@ -117,7 +104,7 @@
     </configuration>
     <list>
       <item itemvalue="Application.ServicePublicationsApplication" />
-      <item itemvalue="Maven.Unnamed" />
+      <item itemvalue="Maven.Create docker container" />
       <item itemvalue="Spring Boot.ServicePublicationsApplication" />
     </list>
     <recent_temporary>
@@ -143,7 +130,7 @@
       <workItem from="1620787943398" duration="551000" />
       <workItem from="1620788978949" duration="119000" />
       <workItem from="1620832479031" duration="7899000" />
-      <workItem from="1620840467664" duration="986000" />
+      <workItem from="1620840467664" duration="4331000" />
     </task>
     <servers />
   </component>
