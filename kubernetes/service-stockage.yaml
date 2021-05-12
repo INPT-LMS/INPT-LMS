@@ -2,26 +2,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: comptes-deployment
+  name: stockage-deployment
   labels:
-    app: comptes-depl
+    app: stockage-depl
 spec:
   replicas: 2
   selector:
     # Has to match the container label
     matchLabels:
-      app: comptes-pod
+      app: stockage-pod
   template:
     metadata:
       labels:
-        app: comptes-pod
+        app: stockage-pod
     spec:
       containers:
-        - name: comptes-pod
-          image: aminerachyd/projetlms-gestioncomptes
+        - name: stockage-pod
+          image: tobadarichard/service-stockage
           env:
             - name: SERVER_PORT
               value: "8080"
+            - name: AWS_ACCESS_KEY_ID
+              value: "AKIATEP4X7GD2UXKHBOC"
+            - name: AWS_SECRET_ACCESS_KEY
+              value: "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"
           ports:
             - containerPort: 8080
 ---
@@ -30,12 +34,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: comptes-service
-  name: comptes-service
+    app: stockage-service
+  name: stockage-service
 spec:
   # Has to match the container label
   selector:
-    app: comptes-pod
+    app: stockage-pod
   ports:
     - port: 80
       targetPort: 8080
