@@ -137,8 +137,8 @@ paths:
         required: true
         schema:
           type: string
-      - name: X-USER-ID
-        in: header
+      - name: userId
+        in: query
         required: true
         schema:
           type: integer
@@ -272,18 +272,12 @@ components:
           format: int64
         pageable:
           $ref: '#/components/schemas/Pageable'
+        sort:
+          $ref: '#/components/schemas/Sort'
         first:
           type: boolean
         last:
           type: boolean
-        number:
-          type: integer
-          format: int32
-        sort:
-          $ref: '#/components/schemas/Sort'
-        numberOfElements:
-          type: integer
-          format: int32
         size:
           type: integer
           format: int32
@@ -291,6 +285,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Discussion'
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
         empty:
           type: boolean
     Sort:
@@ -334,18 +334,12 @@ components:
           format: int64
         pageable:
           $ref: '#/components/schemas/Pageable'
+        sort:
+          $ref: '#/components/schemas/Sort'
         first:
           type: boolean
         last:
           type: boolean
-        number:
-          type: integer
-          format: int32
-        sort:
-          $ref: '#/components/schemas/Sort'
-        numberOfElements:
-          type: integer
-          format: int32
         size:
           type: integer
           format: int32
@@ -353,5 +347,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Message'
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
         empty:
           type: boolean
