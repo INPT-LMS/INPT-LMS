@@ -14,6 +14,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import inpt.lms.stockage.business.impl.GestionnaireIOFichierAWSImpl;
 import inpt.lms.stockage.business.impl.GestionnaireIOFichierLocalImpl;
 import inpt.lms.stockage.business.interfaces.GestionnaireIOFichier;
+import inpt.lms.stockage.proxies.CustomErrorDecoder;
 
 @EnableFeignClients
 @SpringBootApplication
@@ -49,5 +50,10 @@ public class ServiceStockageApplication{
 			@Value("${inpt.lms.stockage.directory}") String directory) {
 		
 		return new GestionnaireIOFichierLocalImpl(directory);
-	}	
+	}
+	
+	@Bean
+	public CustomErrorDecoder getErrorDecoder() {
+		return new CustomErrorDecoder();
+	}
 }

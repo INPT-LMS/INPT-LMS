@@ -47,9 +47,10 @@ public interface GestionnaireFichier {
 	/**
 	 * Retire un fichier de l'espace de stockage d'un cours
 	 * @param idAssoc l'identifiant de l'association
+	 * @param idCours l'identifiant du cours
 	 * @throws NotFoundException Si le fichier n'est pas trouvé
 	 */
-	void retraitCours(Long idAssoc) throws NotFoundException;
+	void retraitCours(Long idAssoc, String idCours) throws NotFoundException;
 	
 	/**
 	 * Ajoute un fichier dans une publciation
@@ -64,9 +65,10 @@ public interface GestionnaireFichier {
 	/**
 	 * Retire un fichier d'une publication
 	 * @param idAssoc l'identifiant de l'association
+	 * @param publicationId L'id de la publication
 	 * @throws NotFoundException Si le fichier n'est pas trouvé
 	 */
-	void retraitPublication(Long idAssoc) throws NotFoundException;
+	void retraitPublication(Long idAssoc, String publicationId) throws NotFoundException;
 	
 
 	/**
@@ -127,5 +129,15 @@ public interface GestionnaireFichier {
 	 * @throws IOException Si une erreur se produit lors de la lecture
 	 * @throws NotFoundException Si le fichier n'est pas trouvé
 	 */
-	FichierEtInfo lireFichier(Long idAssoc)  throws IOException,NotFoundException;	
+	FichierEtInfo lireFichier(Long idAssoc)  throws IOException,NotFoundException;
+
+	/**
+	 * Vérifie l'existence d'une association
+	 * @param idAssoc
+	 * @param idAssocie
+	 * @param typeAssociation
+	 * @throws NotFoundException
+	 */
+	void isAssociationPresent(Long idAssoc, String idAssocie, TypeAssociation typeAssociation)
+			throws NotFoundException;	
 }

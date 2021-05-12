@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "publication",url = "${inpt.lms.url.service.publication}")
 public interface GestionPublicationProxy {
-	@GetMapping("/publications/{idPublication}")
+	@GetMapping("/publication/{idPublication}")
     public Publication getPublication(@PathVariable String idPublication);
 }

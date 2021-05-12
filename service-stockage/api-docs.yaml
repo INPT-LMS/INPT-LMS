@@ -1,0 +1,1015 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /storage/user/upload:
+    post:
+      tags:
+      - sac-stockage-controller
+      operationId: uploadFichierSac
+      parameters:
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                fichier:
+                  type: string
+                  format: binary
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociationFichier'
+  /storage/publication/{publicationId}/files:
+    get:
+      tags:
+      - publication-stockage-controller
+      operationId: listerFichiersPublication
+      parameters:
+      - name: publicationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pagination
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageAssociationFichier'
+    post:
+      tags:
+      - publication-stockage-controller
+      operationId: ajoutFichierPublication
+      parameters:
+      - name: publicationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParamAssocId_Public'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociationFichier_Public'
+  /storage/class/{coursId}/files:
+    get:
+      tags:
+      - class-stockage-controller
+      operationId: listerFichiersCours
+      parameters:
+      - name: coursId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pagination
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageAssociationFichier'
+    post:
+      tags:
+      - class-stockage-controller
+      operationId: ajoutFichierCours
+      parameters:
+      - name: coursId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParamAssocId_Public'
+        required: true
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociationFichier_Public'
+  /storage/user/files:
+    get:
+      tags:
+      - sac-stockage-controller
+      operationId: listerFichiersSac
+      parameters:
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: pagination
+        in: query
+        required: true
+        schema:
+          $ref: '#/components/schemas/Pageable'
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageAssociationFichier'
+  /storage/user/files/{assocId}:
+    get:
+      tags:
+      - sac-stockage-controller
+      operationId: getFichierSac
+      parameters:
+      - name: assocId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: byte
+    delete:
+      tags:
+      - sac-stockage-controller
+      operationId: retraitFichierSac
+      parameters:
+      - name: assocId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+  /storage/user/files/{assocId}/info:
+    get:
+      tags:
+      - sac-stockage-controller
+      operationId: getInfoFichierSac
+      parameters:
+      - name: assocId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociationFichier_Public'
+  /storage/publication/{publicationId}/files/{assocId}:
+    get:
+      tags:
+      - publication-stockage-controller
+      operationId: getFichierpublication
+      parameters:
+      - name: assocId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: publicationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: byte
+    delete:
+      tags:
+      - publication-stockage-controller
+      operationId: retraitFichierPublication
+      parameters:
+      - name: assocId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: publicationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+  /storage/publication/{publicationId}/files/{assocId}/info:
+    get:
+      tags:
+      - publication-stockage-controller
+      operationId: getInfoFichierpublication
+      parameters:
+      - name: assocId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: publicationId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociationFichier_Public'
+  /storage/class/{coursId}/files/{assocId}:
+    get:
+      tags:
+      - class-stockage-controller
+      operationId: getFichierCours
+      parameters:
+      - name: assocId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: coursId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: byte
+    delete:
+      tags:
+      - class-stockage-controller
+      operationId: retraitFichierCours
+      parameters:
+      - name: assocId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: coursId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+  /storage/class/{coursId}/files/{assocId}/info:
+    get:
+      tags:
+      - class-stockage-controller
+      operationId: getInfoFichierCours
+      parameters:
+      - name: assocId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: coursId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociationFichier_Public'
+components:
+  schemas:
+    AssociationFichier:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        fichierInfo:
+          $ref: '#/components/schemas/FichierInfo'
+        typeAssociation:
+          type: string
+          enum:
+          - COURS
+          - PUBLICATION
+          - DEVOIR
+          - SAC
+        idCorrespondantAssociation:
+          type: string
+    FichierInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        idProprietaire:
+          type: integer
+          format: int64
+        dateCreation:
+          type: string
+          format: date-time
+        nom:
+          type: string
+        chemin:
+          type: string
+        size:
+          type: integer
+          format: int64
+        contentType:
+          type: string
+        associations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssociationFichier'
+    ParamAssocId_Public:
+      required:
+      - assocId
+      type: object
+      properties:
+        assocId:
+          type: integer
+          format: int64
+    AssociationFichier_Public:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        fichierInfo:
+          $ref: '#/components/schemas/FichierInfo_Public'
+        typeAssociation:
+          type: string
+          enum:
+          - COURS
+          - PUBLICATION
+          - DEVOIR
+          - SAC
+        idCorrespondantAssociation:
+          type: string
+    FichierInfo_Public:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        idProprietaire:
+          type: integer
+          format: int64
+        chemin:
+          type: string
+        associations:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssociationFichier_Public'
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
+    PageAssociationFichier:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        sort:
+          $ref: '#/components/schemas/Sort'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssociationFichier'
+        empty:
+          type: boolean
+    Sort:
+      type: object
+      properties:
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+        empty:
+          type: boolean
