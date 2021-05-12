@@ -1,19 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { of, throwError } from 'rxjs';
-
-interface User {
-  id: number;
-  nom: string;
-  prenom: string;
-  email: string;
-  password: string;
-  estProfesseur: boolean;
-  enseigneA: string;
-  etudieA: string;
-  langue: string;
-}
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { User } from '../utils/Types';
 
 @Injectable({
   providedIn: 'root',
@@ -25,9 +14,12 @@ export class AccountService {
    * Récupérer un utilisateur
    */
   getUser(userId: number) {
-    return this.http.get(`/account/update/${userId}`).pipe(
+    return this.http.get(`/account/user/${userId}`).pipe(
       catchError((err) => {
-        return of(err);
+        return of({
+          error: err.error.error,
+          status: err.status,
+        });
       })
     );
   }
@@ -72,26 +64,30 @@ export class AccountService {
       );
   }
 
-  // TODO vérifer autorisation
   /**
    * Mise à jour d'un utilisateur, a besoin d'autorisation
    */
   updateUser(user: User) {
     return this.http.put(`/account/update/${user.id}`, { ...user }).pipe(
       catchError((err) => {
-        return of(err);
+        return of({
+          error: err.error.error,
+          status: err.status,
+        });
       })
     );
   }
 
-  // TODO vérifer autorisation
   /**
    * Supprime un utilisateur, a besoin d'autorisation
    */
   deleteUser(userId: number) {
     return this.http.delete(`/account/update/${userId}`).pipe(
       catchError((err) => {
-        return of(err);
+        return of({
+          error: err.error.error,
+          status: err.status,
+        });
       })
     );
   }

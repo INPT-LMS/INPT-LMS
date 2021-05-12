@@ -1,9 +1,17 @@
 import { Component, ErrorHandler, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { LOGIN_USER, USER_ERROR } from 'src/app/actiontypes/types';
 import { AccountService } from 'src/app/services/account.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { User } from 'src/app/utils/Types';
+
+interface AppState {
+  user: User;
+  error: string;
+}
 
 @Component({
   selector: 'app-login-form',
@@ -11,6 +19,7 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
   styleUrls: ['./login-form.component.css'],
 })
 export class LoginFormComponent implements OnInit {
+  user: Observable<User>;
   loginForm = this.formBuilder.group({
     email: '',
     password: '',
@@ -21,8 +30,11 @@ export class LoginFormComponent implements OnInit {
     private localStorageService: LocalStorageService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private errorHandler: ErrorHandler
-  ) {}
+    private errorHandler: ErrorHandler,
+    private store: Store<AppState>
+  ) {
+    this.user = this.store.select('user');
+  }
 
   ngOnInit(): void {}
 
@@ -33,14 +45,25 @@ export class LoginFormComponent implements OnInit {
     this.accountService
       .loginUser(this.loginForm.value)
       .subscribe((response: any) => {
-        if (response.error) {
+        if (response.error || !response.user) {
           this.errorHandler.handleError(response);
+          this.store.dispatch({ type: USER_ERROR, payload: response.error });
           return;
         }
 
-        const { userToken, message } = response;
-        this.localStorageService.set('userToken', userToken);
+        const {
+          user: { id, email, token },
+          message,
+        } = response;
+        this.localStorageService.set('userToken', token);
 
+        // TODO dispatch user infos
+        const payload = {
+          id,
+          email,
+        };
+
+        this.store.dispatch({ type: LOGIN_USER, payload: payload });
         this.router.navigate(['/feed']);
         return;
       });

@@ -1,0 +1,47 @@
+# Deployment for the containers/pods
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stockage-deployment
+  labels:
+    app: stockage-depl
+spec:
+  replicas: 1
+  # replicas: 2
+  selector:
+    # Has to match the container label
+    matchLabels:
+      app: stockage-pod
+  template:
+    metadata:
+      labels:
+        app: stockage-pod
+    spec:
+      containers:
+        - name: stockage-pod
+          image: tobadarichard/service-stockage
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+            - name: AWS_ACCESS_KEY_ID
+              value: "AKIATEP4X7GD2UXKHBOC"
+            - name: AWS_SECRET_ACCESS_KEY
+              value: "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"
+          ports:
+            - containerPort: 8080
+---
+# Service for the containers/pods
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: stockage-service
+  name: stockage-service
+spec:
+  # Has to match the container label
+  selector:
+    app: stockage-pod
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
