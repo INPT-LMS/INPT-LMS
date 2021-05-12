@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AssignmentService } from 'src/app/services/assignment.service';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({

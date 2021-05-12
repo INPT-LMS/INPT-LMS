@@ -1,19 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { of, throwError } from 'rxjs';
-
-interface User {
-  id: number;
-  nom: string;
-  prenom: string;
-  email: string;
-  password: string;
-  estProfesseur: boolean;
-  enseigneA: string;
-  etudieA: string;
-  langue: string;
-}
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { User } from '../utils/Types';
 
 @Injectable({
   providedIn: 'root',

@@ -25,10 +25,10 @@ public class UserController {
 
     @PostMapping("/auth")
     public ResponseEntity<ObjectNode> loginUser(@RequestBody UserCredentialsDTO userCredentials){
-        String token = null;
+        UserInfosDTO userInfosDTO = null;
         ObjectNode objectNode = objectMapper.createObjectNode();
         try {
-            token = userService.loginUser(userCredentials);
+            userInfosDTO = userService.loginUser(userCredentials);
         } catch (UserNotFoundException e) {
             objectNode.put("error",e.getMessage());
             return new ResponseEntity<>(objectNode,HttpStatus.NOT_FOUND);
@@ -36,7 +36,16 @@ public class UserController {
             objectNode.put("error",e.getMessage());
             return new ResponseEntity<>(objectNode,HttpStatus.UNAUTHORIZED);
         }
-        objectNode.put("message","User logged in").put("userToken",token);
+
+        ObjectNode userObjectNode = objectMapper.createObjectNode();
+        userObjectNode
+                .put("id",userInfosDTO.getId())
+                .put("email",userInfosDTO.getEmail())
+                .put("token",userInfosDTO.getToken());
+
+        objectNode.put("message","User logged in");
+        objectNode.put("user",userObjectNode);
+
         return new ResponseEntity<>(objectNode,HttpStatus.OK);
     }
 
@@ -85,7 +94,7 @@ public class UserController {
                 .put("etudieA",userInfosDTO.getEtudieA());
 
         objectNode.put("message","User fetched");
-        objectNode.put("User",userObjectNode);
+        objectNode.put("user",userObjectNode);
 
         return new ResponseEntity<>(objectNode, HttpStatus.OK);
     }

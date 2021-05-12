@@ -127,7 +127,7 @@ export class StorageService {
    */
   uploadFichierSac(file: File) {
     const data = new FormData();
-    data.append('file', file);
+    data.append('fichier', file);
     this.http.post(`${PUBLICATION_BASE_URL}/upload`, data).pipe(
       catchError((err) => {
         return of(err);

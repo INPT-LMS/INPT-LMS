@@ -70,7 +70,7 @@ public class UserService {
         return user;
     }
 
-    public String loginUser(UserCredentialsDTO userCredentials) throws UserNotFoundException, BadCredentialsException{
+    public UserInfosDTO loginUser(UserCredentialsDTO userCredentials) throws UserNotFoundException, BadCredentialsException{
         User user = userRepository.findByEmail(userCredentials.getEmail()).orElseThrow(()-> new UserNotFoundException("User not found"));
         return verifyPassword(userCredentials.getPassword(),user);
     }
@@ -115,10 +115,15 @@ public class UserService {
         return passwordEncoder.encode(password);
     }
 
-    public String verifyPassword(String password,User user){
+    public UserInfosDTO verifyPassword(String password,User user){
+        UserInfosDTO userInfosDTO = new UserInfosDTO();
         String encryptedPassword = user.getPassword();
         if(passwordEncoder.matches(password,encryptedPassword)){
-            return jwtUtil.generateToken(user.getUserInfos());
+            String token = jwtUtil.generateToken(user.getUserInfos());
+            userInfosDTO.setToken(token);
+            userInfosDTO.setId(user.getId());
+            userInfosDTO.setEmail(user.getEmail());
+            return userInfosDTO;
         }else {
             throw new BadCredentialsException("Invalid email or password");
         }
