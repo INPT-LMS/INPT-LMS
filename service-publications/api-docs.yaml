@@ -1,0 +1,317 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /publication/{idPublication}:
+    get:
+      tags:
+      - publication-controller
+      operationId: getPublication
+      parameters:
+      - name: idPublication
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Publication'
+    put:
+      tags:
+      - publication-controller
+      operationId: updatePublication
+      parameters:
+      - name: idPublication
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-USER-ID
+        in: header
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicationDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+    delete:
+      tags:
+      - publication-controller
+      operationId: removePublication
+      parameters:
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: idPublication
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /Comentaire/{idCommentaire}:
+    put:
+      tags:
+      - commentaire-controller
+      operationId: putCommentaire
+      parameters:
+      - name: X-USER-ID
+        in: header
+        required: false
+        schema:
+          type: string
+      - name: idCommentaire
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentaireDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /publication:
+    get:
+      tags:
+      - publication-controller
+      operationId: getPublications
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Publication'
+    post:
+      tags:
+      - publication-controller
+      operationId: addPublication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicationDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /like:
+    post:
+      tags:
+      - like-controller
+      operationId: postLike
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LikeDTO'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /commentaire:
+    post:
+      tags:
+      - commentaire-controller
+      operationId: addCommentaore
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentaireDTO'
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /like/{idLike}:
+    delete:
+      tags:
+      - like-controller
+      operationId: deleteLike
+      parameters:
+      - name: X-USER-ID
+        in: header
+        required: false
+        schema:
+          type: string
+      - name: idLike
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /commentaire/{idCommentaire}:
+    delete:
+      tags:
+      - commentaire-controller
+      operationId: deleteCommentaire
+      parameters:
+      - name: X-USER-ID
+        in: header
+        required: false
+        schema:
+          type: string
+      - name: idCommentaire
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+components:
+  schemas:
+    Like:
+      type: object
+      properties:
+        idLike:
+          type: string
+        idPublication:
+          type: string
+        dateLike:
+          type: string
+          format: date-time
+        idProprietaire:
+          type: string
+    PublicationDTO:
+      type: object
+      properties:
+        idProprietaire:
+          type: string
+        idCours:
+          type: string
+        contenuPublication:
+          type: string
+        fichier:
+          type: string
+        commentaire:
+          type: string
+        likes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Like'
+    CommentaireDTO:
+      type: object
+      properties:
+        idPublication:
+          type: string
+        contenuCommentaire:
+          type: string
+        idProprietaire:
+          type: string
+    LikeDTO:
+      type: object
+      properties:
+        idPublication:
+          type: string
+        idProprietaire:
+          type: string
+    Commentaire:
+      type: object
+      properties:
+        idCommentaire:
+          type: string
+        idPublication:
+          type: string
+        dateCommentaire:
+          type: string
+          format: date-time
+        contenuCommentaire:
+          type: string
+        idProprietaire:
+          type: string
+    Fichier:
+      type: object
+      properties:
+        id:
+          type: string
+        idPublication:
+          type: string
+        dateUpload:
+          type: string
+          format: date-time
+        lienFichier:
+          type: string
+        idProprietaire:
+          type: string
+    Publication:
+      type: object
+      properties:
+        id:
+          type: string
+        idProprietaire:
+          type: string
+        idCours:
+          type: string
+        datePublication:
+          type: string
+          format: date-time
+        contenuPublication:
+          type: string
+        fichiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fichier'
+        commentaires:
+          type: array
+          items:
+            $ref: '#/components/schemas/Commentaire'
+        likes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Like'
