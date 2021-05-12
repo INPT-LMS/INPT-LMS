@@ -74,13 +74,13 @@ public class SacStockageController {
 	
 	@GetMapping("files/{assocId}")
 	public ResponseEntity<byte[]> getFichierSac(@PathVariable Long assocId,
-			@PathVariable Long userId) throws NotFoundException, IOException{
+			@RequestHeader(name = "X-USER-ID") long userId) throws NotFoundException, IOException{
 		
 		return ControllerResponseUtils.lireFichier(
 				gestionnaireFichier.lireFichier(assocId));
 	}
 	
-	@PostMapping(path = "files", consumes = "multipart/form-data")
+	@PostMapping(path = "upload", consumes = "multipart/form-data")
 	public AssociationFichier uploadFichierSac(@RequestParam MultipartFile fichier,
 			@RequestHeader(name = "X-USER-ID") long userId) throws IOException,
 				StorageLimitExceededException, FileTooBigException{
