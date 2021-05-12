@@ -14,7 +14,7 @@ export class AccountService {
    * Récupérer un utilisateur
    */
   getUser(userId: number) {
-    return this.http.get(`/account/update/${userId}`).pipe(
+    return this.http.get(`/account/user/${userId}`).pipe(
       catchError((err) => {
         return of({
           error: err.error.error,

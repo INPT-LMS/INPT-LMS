@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from 'src/app/services/post.service';
+import { Publication } from 'src/app/utils/Types';
 
 @Component({
   selector: 'app-feed',
@@ -7,11 +8,16 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./feed.component.css'],
 })
 export class FeedComponent implements OnInit {
-  constructor(private postService: PostService) {}
+  posts: Publication[];
+
+  constructor(private postService: PostService) {
+    this.posts = [];
+  }
 
   ngOnInit(): void {
     this.postService.getAllPublications().subscribe((response: any) => {
       console.log(response);
+      this.posts = response;
     });
   }
 }

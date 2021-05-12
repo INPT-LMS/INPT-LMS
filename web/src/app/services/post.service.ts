@@ -2,30 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
-interface Publication {
-  idPublication: string;
-  idProprietaire: string;
-  idCours: string;
-  coutenuPublication: string;
-  fichier: string;
-  commentaire: Commentaire[];
-  likes: Like[];
-}
-
-interface Commentaire {
-  idCommentaire: string;
-  idPublication: string;
-  idProprietaire: string;
-  contenu: string;
-}
-
-interface Like {
-  idLike: string;
-  idPublication: string;
-  idProprietaire: string;
-  dateLike: Date;
-}
+import { Like, Publication, Commentaire } from '../utils/Types';
 
 const PUBLICATION_BASE_URL = '/post/publication';
 const LIKE_BASE_URL = '/post/like';

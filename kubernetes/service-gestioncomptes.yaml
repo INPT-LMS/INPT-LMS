@@ -6,7 +6,8 @@ metadata:
   labels:
     app: comptes-depl
 spec:
-  replicas: 2
+  replicas: 1
+  # replicas: 2
   selector:
     # Has to match the container label
     matchLabels:

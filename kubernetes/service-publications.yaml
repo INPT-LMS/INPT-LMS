@@ -2,24 +2,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: devoirs-deployment
+  name: posts-deployment
   labels:
-    app: devoirs-depl
+    app: posts-depl
 spec:
   replicas: 1
   # replicas: 2
   selector:
     # Has to match the container label
     matchLabels:
-      app: devoirs-pod
+      app: posts-pod
   template:
     metadata:
       labels:
-        app: devoirs-pod
+        app: posts-pod
     spec:
       containers:
-        - name: devoirs-pod
-          image: aminerachyd/projetlms-devoirs
+        - name: posts-pod
+          image: mohammedaymane/service-publications
           env:
             - name: SERVER_PORT
               value: "8080"
@@ -31,12 +31,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: devoirs-service
-  name: devoirs-service
+    app: posts-service
+  name: posts-service
 spec:
   # Has to match the container label
   selector:
-    app: devoirs-pod
+    app: posts-pod
   ports:
     - port: 80
       targetPort: 8080
