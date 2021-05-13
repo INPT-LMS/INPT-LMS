@@ -1,5 +1,7 @@
 package com.lms.servicepublications.service;
 import com.lms.servicepublications.dto.LikeDTO;
+import com.lms.servicepublications.exceptions.RessourceNotFoundException;
+import com.lms.servicepublications.exceptions.UnauthorizedException;
 import com.lms.servicepublications.model.Like;
 import com.lms.servicepublications.model.Publication;
 import com.lms.servicepublications.repository.LikeRepository;
@@ -19,27 +21,34 @@ public class LikeService {
     private PublicationRepository publicationRepository;
 
 
-    public void ajouterLike(LikeDTO likeDTO){
+    public String ajouterLike(String user_id, LikeDTO likeDTO){
         Like like = new Like();
-        like.setIdProprietaire(likeDTO.getIdProprietaire());
+        like.setIdProprietaire(user_id);
         like.setIdPublication(likeDTO.getIdPublication());
-
         likeRepository.insert(like);
+        Publication publication = publicationRepository.findById(likeDTO.getIdPublication()).orElseThrow(()->new RessourceNotFoundException("Publication not found"));
 
-        Publication publication = publicationRepository.findPublicationByid(likeDTO.getIdPublication());
+        if(publication.getLikes() == null){
+            List<Like> likes = new ArrayList<>();
+            likes.add(like);
+            publication.setLikes(likes);
+        }
+        else{
+            List<Like> likes = publication.getLikes();
+            likes.add(like);
+            publication.setLikes(likes);
+        }
 
-        List<Like> likes = new ArrayList();
-
-        likes.add(like);
-        publication.setLikes(likes);
         publicationRepository.save(publication);
-        System.out.println("Like ajouté avec succèes");
+        return "Like ajouté avec succèes";
     }
 
 
-    public void supprimerLike(String idLike){
-        String idPublication = (likeRepository.findById(idLike).orElseThrow(()->new RuntimeException())).getIdPublication();
-        Publication publication = publicationRepository.findPublicationByid(idPublication);
+    public String supprimerLike(String id_user, String idLike){
+        Like like = likeRepository.findById(idLike).orElseThrow(()->new RessourceNotFoundException("Like not found"));
+        String idPublication = like.getIdPublication();
+        if(!like.getIdProprietaire().equals(id_user)) throw new UnauthorizedException("Action not authorized");
+        Publication publication = publicationRepository.findById(idPublication).orElseThrow(()->new RessourceNotFoundException("Publication not found"));
         List<Like> likes = publication.getLikes();
         for(int i =0; i<likes.size();i++){
             if (likes.get(i).getIdLike().equals(idLike)){
@@ -48,6 +57,10 @@ public class LikeService {
         }
         likeRepository.deleteById(idLike);
         publicationRepository.save(publication);
-        System.out.println("Like supprimé avec succèes");
+        return "Like supprimé avec succèes";
+    }
+
+    public void supprimerLikesInPublication(List<Like> likes){
+        likeRepository.deleteAll(likes);
     }
 }
