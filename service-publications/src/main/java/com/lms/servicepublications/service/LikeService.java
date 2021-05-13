@@ -1,5 +1,4 @@
 package com.lms.servicepublications.service;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.lms.servicepublications.dto.LikeDTO;
 import com.lms.servicepublications.exceptions.ResourceAlreadyExists;
 import com.lms.servicepublications.exceptions.ResourceNotFoundException;
