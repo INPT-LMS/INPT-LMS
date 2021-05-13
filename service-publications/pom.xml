@@ -86,10 +86,6 @@
                     <pullPolicy>IF_NOT_PRESENT</pullPolicy>
                 </configuration>
             </plugin>
-
-
-
-
         </plugins>
     </build>
 

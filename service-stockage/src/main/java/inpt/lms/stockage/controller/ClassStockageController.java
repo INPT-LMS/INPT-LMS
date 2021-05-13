@@ -56,6 +56,8 @@ public class ClassStockageController {
 			@RequestBody @Valid ParamAssocId assocId, 
 			@RequestHeader(name = "X-USER-ID") long userId) throws NotFoundException, UnauthorizedException, ProxyUnavailableException{
 		authService.isClassOwner(getCoursUUID(coursId), userId);
+		gestionnaireFichier.isAssociationPresent(assocId.getAssocId(), 
+				String.valueOf(userId), TypeAssociation.SAC);
 		return gestionnaireFichier.ajoutDansCours(coursId, assocId.getAssocId());
 	}
 	
@@ -64,7 +66,7 @@ public class ClassStockageController {
 			@PathVariable String coursId, @RequestHeader(name = "X-USER-ID") long userId)
 					throws NotFoundException, UnauthorizedException, ProxyUnavailableException{
 		authService.isClassOwner(getCoursUUID(coursId), userId);
-		gestionnaireFichier.retraitCours(assocId);
+		gestionnaireFichier.retraitCours(assocId,coursId);
 	}
 
 	@GetMapping("{coursId}/files")
@@ -83,6 +85,8 @@ public class ClassStockageController {
 			@PathVariable String coursId,@RequestHeader(name = "X-USER-ID") long userId)
 					throws NotFoundException, UnauthorizedException, ProxyUnavailableException{
 		authService.isClassMemberOrOwner(getCoursUUID(coursId), userId);
+		gestionnaireFichier.isAssociationPresent(assocId, 
+				coursId, TypeAssociation.COURS);
 		return gestionnaireFichier.getFichierByAssocId(assocId);
 	}
 
@@ -91,6 +95,8 @@ public class ClassStockageController {
 			@PathVariable String coursId,@RequestHeader(name = "X-USER-ID") long userId)
 					throws NotFoundException, IOException, UnauthorizedException, ProxyUnavailableException{
 		authService.isClassMemberOrOwner(getCoursUUID(coursId), userId);
+		gestionnaireFichier.isAssociationPresent(assocId, 
+				coursId, TypeAssociation.COURS);
 		return ControllerResponseUtils.lireFichier(
 				gestionnaireFichier.lireFichier(assocId));
 	}

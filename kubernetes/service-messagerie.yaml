@@ -1,0 +1,43 @@
+# Deployment for the containers/pods
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: messagerie-deployment
+  labels:
+    app: messagerie-depl
+spec:
+  replicas: 1
+  # replicas: 2
+  selector:
+    # Has to match the container label
+    matchLabels:
+      app: messagerie-pod
+  template:
+    metadata:
+      labels:
+        app: messagerie-pod
+    spec:
+      containers:
+        - name: messagerie-pod
+          image: tobadarichard/service-mesagerie
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+          ports:
+            - containerPort: 8080
+---
+# Service for the containers/pods
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: messagerie-service
+  name: messagerie-service
+spec:
+  # Has to match the container label
+  selector:
+    app: messagerie-pod
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP

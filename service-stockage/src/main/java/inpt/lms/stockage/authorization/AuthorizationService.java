@@ -14,6 +14,7 @@ import inpt.lms.stockage.proxies.course.Member;
 import inpt.lms.stockage.proxies.publication.GestionPublicationProxy;
 import inpt.lms.stockage.proxies.publication.Publication;
 
+//TODO : refactoring
 @Service
 public class AuthorizationService {
 	@Autowired
