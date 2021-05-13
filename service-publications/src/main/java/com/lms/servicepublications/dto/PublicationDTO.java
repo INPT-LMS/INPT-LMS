@@ -9,7 +9,7 @@ import java.util.List;
 public class PublicationDTO {
     private String idCours;
     private String contenuPublication;
-    private String fichier;
+   // private String fichier;
     private String commentaire;
     private List<Like> likes;
 }
