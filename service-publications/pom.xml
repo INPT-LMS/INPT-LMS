@@ -81,7 +81,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <image>
-                        <name>service-publications:latest</name>
+                        <name>service-publications</name>
                     </image>
                     <pullPolicy>IF_NOT_PRESENT</pullPolicy>
                 </configuration>
