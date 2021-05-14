@@ -67,21 +67,27 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
     ];
     return Scaffold(
       appBar: AppBar(
+        backwardsCompatibility: false,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.blue,
         title: Text("LMS"),
         actions: [
-          IconButton(icon: Icon(Icons.home,color: Colors.blue),
+          IconButton(icon: Icon(Icons.home),
               tooltip: "Accueil",
               onPressed: () => {}
           ),
-          IconButton(icon: Icon(Icons.add_alert_rounded,color: Colors.blue),
+          IconButton(icon: Icon(Icons.add_alert_rounded),
               tooltip: "Alertes",
               onPressed: () => {}
           ),
-          IconButton(icon: Icon(Icons.mail,color: Colors.blue),
+          IconButton(icon: Icon(Icons.mail),
               tooltip: "Messages",
-              onPressed: () => {}
-          ),
-          IconButton(icon: Icon(Icons.settings,color: Colors.blue),
+              onPressed: () => {
+            if (ModalRoute.of(context).settings.name != "/messages"){
+              Navigator.pushNamed(context, "/messages")
+            }
+          }),
+          IconButton(icon: Icon(Icons.settings),
               tooltip: "Parametres",
               onPressed: () => {}
           ),

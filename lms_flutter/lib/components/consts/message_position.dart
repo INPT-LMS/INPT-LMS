@@ -1,0 +1,3 @@
+enum MessagePosition{
+  emetteur,destinataire
+}
