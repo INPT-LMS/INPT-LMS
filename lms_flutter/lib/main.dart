@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lms_flutter/LoginPage.dart';
+import 'package:lms_flutter/SignUpPage.dart';
 import 'package:lms_flutter/screens/discussion_screen.dart';
 import 'package:lms_flutter/screens/home_screen.dart';
 import 'package:lms_flutter/screens/messagerie_screen.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/login',
         routes: {
           '/login' : (context) => LoginPage(),
+          '/signup' : (context) => SignUpPage(),
           '/home' : (context) => HomeScreen(),
           '/messages': (context) => MessagerieScreen(),
           '/discussion': (context) => DiscussionScreen()

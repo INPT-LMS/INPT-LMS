@@ -1,11 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key key}) : super(key: key);
+class SignUpPage extends StatelessWidget {
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
 
       body: SingleChildScrollView(
         child: Container(
@@ -25,7 +26,7 @@ class LoginPage extends StatelessWidget {
               Container(
                 padding: EdgeInsets.fromLTRB(0, 51, 0, 0),
                 child:  TextFormField(
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.name,
                   cursorColor: Theme.of(context).cursorColor,
                   decoration: InputDecoration(
                     fillColor: Color.fromRGBO(242, 248, 255, 1),
@@ -36,7 +37,7 @@ class LoginPage extends StatelessWidget {
                             bottomLeft: Radius.circular(24)
                         )
                     ),
-                    labelText: 'Email',
+                    labelText: 'Full name',
 
                     labelStyle: TextStyle(
 
@@ -49,7 +50,32 @@ class LoginPage extends StatelessWidget {
 
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(0, 51, 0, 0),
+                padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+                child:  TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  cursorColor: Theme.of(context).cursorColor,
+                  decoration: InputDecoration(
+                    fillColor: Color.fromRGBO(242, 248, 255, 1),
+                    filled: true,
+                    border: UnderlineInputBorder(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(24),
+                            bottomLeft: Radius.circular(24)
+                        )
+                    ),
+                    labelText: 'Email',
+                    labelStyle: TextStyle(
+
+                      color:  Color.fromRGBO(47, 80, 97, 1),
+                    ),
+
+
+                  ),
+                ),
+
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
                 child:  TextFormField(
                   obscureText: true,
                   cursorColor: Theme.of(context).cursorColor,
@@ -74,10 +100,35 @@ class LoginPage extends StatelessWidget {
 
               ),
               Container(
+                padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+                child:  TextFormField(
+                  obscureText: true,
+                  cursorColor: Theme.of(context).cursorColor,
+                  decoration: InputDecoration(
+                    fillColor: Color.fromRGBO(242, 248, 255, 1),
+                    filled: true,
+                    border: UnderlineInputBorder(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(24),
+                            bottomLeft: Radius.circular(24)
+                        )
+                    ),
+                    labelText: 'Confirm Password',
+                    labelStyle: TextStyle(
+
+                      color:  Color.fromRGBO(47, 80, 97, 1),
+                    ),
+
+
+                  ),
+                ),
+
+              ),
+              Container(
                 width: 343,
                 height: 67,
                 margin: EdgeInsets.only(
-                    top: 51
+                    top: 24
                 ),
                 child: ElevatedButton(
 
@@ -92,9 +143,9 @@ class LoginPage extends StatelessWidget {
                     onPrimary: Colors.white, // foreground
                   ),
                   onPressed: () {Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);},
+                      .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);},
                   child: Text(
-                    'Login',
+                    'Sign UP',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 32
@@ -109,10 +160,10 @@ class LoginPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                        "Not having an account yet?"
+                        " having an account yet?"
                     ),
                     Text(
-                        "Create one"
+                        "Log into it"
                     ),
                   ],
                 ),
@@ -125,7 +176,11 @@ class LoginPage extends StatelessWidget {
                 ),
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
+
+
+
                       shape: RoundedRectangleBorder(
+
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(24),
                               bottomLeft: Radius.circular(24)
@@ -139,9 +194,9 @@ class LoginPage extends StatelessWidget {
                     // foreground
                   ),
                   onPressed: () {Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/signup', (Route<dynamic> route) => false);},
+                      .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);},
                   child: Text(
-                    'Go to SignUP',
+                    'Go to Login',
                     style: TextStyle(
                         color: Color(0xff0275B1),
                         fontSize: 32
