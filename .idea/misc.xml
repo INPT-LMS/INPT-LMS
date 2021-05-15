@@ -5,6 +5,10 @@
       <list>
         <option value="$PROJECT_DIR$/gateway/pom.xml" />
         <option value="$PROJECT_DIR$/service-publications/pom.xml" />
+        <option value="$PROJECT_DIR$/service-gestioncomptes/pom.xml" />
+        <option value="$PROJECT_DIR$/service-stockage/pom.xml" />
+        <option value="$PROJECT_DIR$/service_cours/pom.xml" />
+        <option value="$PROJECT_DIR$/service-devoirs/pom.xml" />
       </list>
     </option>
   </component>
