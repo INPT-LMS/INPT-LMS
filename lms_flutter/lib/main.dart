@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lms_flutter/LoginPage.dart';
-import 'package:lms_flutter/SignUpPage.dart';
+import 'package:lms_flutter/screens/CoursePage.dart';
+import 'package:lms_flutter/screens/LoginPage.dart';
+import 'package:lms_flutter/screens/SignUpPage.dart';
 import 'package:lms_flutter/screens/discussion_screen.dart';
 import 'package:lms_flutter/screens/home_screen.dart';
 import 'package:lms_flutter/screens/messagerie_screen.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
           '/login' : (context) => LoginPage(),
           '/signup' : (context) => SignUpPage(),
           '/home' : (context) => HomeScreen(),
+          '/course' : (context) => CoursePage(),
           '/messages': (context) => MessagerieScreen(),
           '/discussion': (context) => DiscussionScreen()
         }

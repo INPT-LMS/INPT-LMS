@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/consts/custom_colors.dart';
+import 'package:lms_flutter/screens/CoursePage.dart';
 
 import 'comment.dart';
 
@@ -19,8 +20,14 @@ class Post extends StatelessWidget {
       child: Column(children: [
         Padding(
           padding: const EdgeInsets.all(5),
-          child: Row(children: [
-            CircleAvatar(backgroundImage: AssetImage("images/pic.jpg")),
+          child: Row(
+              
+              children: [
+            GestureDetector(
+              onTap: () {Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/course', (Route<dynamic> route) => false);},
+
+                child: CircleAvatar( backgroundImage: AssetImage("images/pic.jpg",))),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 20),
