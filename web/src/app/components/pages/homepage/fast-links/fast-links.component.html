@@ -3,10 +3,10 @@
   <hr />
   <ul>
     <li>
-      <app-link-item></app-link-item>
-      <app-link-item></app-link-item>
-      <app-link-item></app-link-item>
-      <app-link-item></app-link-item>
+      <app-link-item
+        *ngFor="let course of courses"
+        [course]="course"
+      ></app-link-item>
     </li>
   </ul>
 </div>

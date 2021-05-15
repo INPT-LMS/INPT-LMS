@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="postForm" (ngSubmit)="onSubmit($event)">
   <div class="card">
     <div class="card-body">
       <div class="d-flex align-items-start">
@@ -10,6 +10,7 @@
               class="form-control"
               placeholder="Express yourself ..."
               rows="3"
+              formControlName="content"
             ></textarea>
           </div>
         </div>

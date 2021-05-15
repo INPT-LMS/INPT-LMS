@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.component.html',
-  styleUrls: ['./agenda.component.css']
+  styleUrls: ['./agenda.component.css'],
 })
 export class AgendaComponent implements OnInit {
+  @Input()
+  devoirs: any[];
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
+    this.devoirs = [];
   }
 
+  ngOnInit(): void {}
 }

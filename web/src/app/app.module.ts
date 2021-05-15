@@ -18,7 +18,7 @@ import { CourseComponent } from './components/pages/course/course.component';
 import { CourseCoverComponent } from './components/pages/course/course-cover/course-cover.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AboutCourseComponent } from './components/pages/course/about-course/about-course.component';
-import { AddCourseComponent } from './components/pages/course/add-course/add-course.component';
+import { AddPostComponent } from './components/pages/course/add-post/add-post.component';
 import { MessagingComponent } from './components/pages/messaging/messaging.component';
 import { MessagesComponent } from './components/pages/messaging/messages/messages.component';
 import { ConversationComponent } from './components/pages/messaging/conversation/conversation.component';
@@ -54,7 +54,7 @@ import { environment } from 'src/environments/environment';
     CourseComponent,
     CourseCoverComponent,
     AboutCourseComponent,
-    AddCourseComponent,
+    AddPostComponent,
     MessagingComponent,
     MessagesComponent,
     ConversationComponent,
