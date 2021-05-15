@@ -65,7 +65,7 @@ public class MessagerieController {
 			@Valid @RequestBody  MessageForm messageForm) 
 					throws ProxyUnavailableException{
 		try {
-			compteService.userExists(userId);
+			compteService.userExists(messageForm.getIdDestinataire());
 		} catch (RetryableException e) {
 			throw new ProxyUnavailableException();
 		}
