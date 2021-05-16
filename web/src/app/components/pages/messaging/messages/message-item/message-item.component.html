@@ -1,0 +1,22 @@
+<a
+  [routerLink]="['/messaging', messageItem.id]"
+  [state]="{ conversation: messageItem, otherUser: otherUser }"
+  routerLinkActive="router-link-active"
+>
+  <div class="message card-footer">
+    <div class="d-flex align-items-start">
+      <!-- Profile pic -->
+      <img
+        class="rounded-circle"
+        width="40px"
+        src="https://picsum.photos/200"
+        alt=""
+      />
+      <div class="mx-3 align-self-center flex-grow-1">
+        <h6 class="card-title">{{ otherUser.nom }} {{ otherUser.prenom }}</h6>
+        <!-- Message -->
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+      </div>
+    </div>
+  </div>
+</a>

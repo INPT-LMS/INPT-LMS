@@ -38,6 +38,7 @@ import { ApiInterceptor } from './utils/api.interceptor';
 import { MyErrorsHandler } from './utils/myerrorshandler';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { MessageItemComponent } from './components/pages/messaging/messages/message-item/message-item.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { environment } from 'src/environments/environment';
     SignupFormComponent,
     LoginComponent,
     LoginFormComponent,
+    MessageItemComponent,
   ],
   imports: [
     BrowserModule,

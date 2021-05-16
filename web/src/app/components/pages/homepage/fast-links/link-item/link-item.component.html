@@ -1,6 +1,6 @@
 <!-- TODO icone et images à changer dynamiquement -->
 <a
-  [routerLink]="['/course/{{ course.courseID }}']"
+  [routerLink]="['/course', course.courseID]"
   [state]="{ class: course }"
   routerLinkActive="router-link-active"
 >

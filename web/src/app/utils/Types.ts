@@ -1,3 +1,5 @@
+import { NumberLiteralType } from 'typescript';
+
 export type User = {
   id?: number;
   nom?: string;
@@ -50,4 +52,19 @@ export interface Like {
   idProprietaire?: number;
   idPublication?: string;
   dateLike?: Date;
+}
+
+export interface Conversation {
+  id: string;
+  idParticipant1: number;
+  idParticipant2: number;
+}
+
+export interface Message {
+  id?: string;
+  contenu?: string;
+  date?: Date;
+  idDestinataire?: number;
+  idEmetteur?: number;
+  idDiscussion?: string;
 }

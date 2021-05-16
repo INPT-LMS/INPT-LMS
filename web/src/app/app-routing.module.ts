@@ -7,6 +7,7 @@ import { SecurityComponent } from './components/pages/account/chosen-setting/sec
 import { CourseComponent } from './components/pages/course/course.component';
 import { HomepageComponent } from './components/pages/homepage/homepage.component';
 import { LoginComponent } from './components/pages/login/login.component';
+import { ConversationComponent } from './components/pages/messaging/conversation/conversation.component';
 import { MessagingComponent } from './components/pages/messaging/messaging.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
 
@@ -16,7 +17,11 @@ const routes: Routes = [
   { path: 'feed', component: HomepageComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'course/:id', component: CourseComponent },
-  { path: 'messaging', component: MessagingComponent },
+  {
+    path: 'messaging',
+    component: MessagingComponent,
+    children: [{ path: ':id', component: ConversationComponent }],
+  },
   {
     path: 'account',
     component: AccountComponent,

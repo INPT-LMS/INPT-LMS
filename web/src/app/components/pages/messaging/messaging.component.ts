@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
+// FIXME Chercher un utilisateur pour lui envoyer une message
+// FIXME State update après avoir envoyé un message
+// FIXME Recevoir les messages
+
 @Component({
   selector: 'app-messaging',
   templateUrl: './messaging.component.html',

@@ -10,7 +10,9 @@
       />
       <div class="mx-3 align-self-center flex-grow-1">
         <!-- Profile -->
-        <h5 class="card-title">John Doe</h5>
+        <h5 class="card-title" *ngIf="otherUser">
+          {{ otherUser.nom }} {{ otherUser.prenom }}
+        </h5>
       </div>
       <div class="d-flex menu-icons">
         <button class="btn">
@@ -29,64 +31,60 @@
   <!-- conversation -->
   <div class="conversation card-footer">
     <div class="d-flex flex-column align-items-start">
-      <!-- His message -->
-      <div class="mx-3 align-self-start flex-grow-1 his-message mb-4">
-        <p class="his-message-body">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta,
-          natus.
-        </p>
-        <span class="date text-muted">15:20</span>
-      </div>
-      <!-- My message -->
-      <div
-        class="d-flex flex-column align-self-end flex-grow-1 my-message mb-4 mx-3"
-      >
-        <p class="my-message-body">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta,
-          natus.
-        </p>
-        <div class="d-flex align-self-end">
-          <i class="fa fa-check-double mt-1 mr-1"></i>
-          <span class="date text-muted">15:20</span>
-        </div>
-      </div>
-      <!-- His message -->
-      <div class="mx-3 align-self-start flex-grow-1 his-message mb-4">
-        <p class="his-message-body">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta,
-          natus.
-        </p>
-        <span class="date text-muted">15:20</span>
-      </div>
-      <!-- My message -->
-      <div
-        class="d-flex flex-column align-self-end flex-grow-1 my-message mb-4 mx-3"
-      >
-        <p class="my-message-body">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta,
-          natus.
-        </p>
-        <div class="d-flex align-self-end">
-          <i class="fa fa-check-double mt-1 mr-1"></i>
-          <span class="date text-muted">15:20</span>
-        </div>
-      </div>
+      <ng-container *ngFor="let message of messages">
+        <ng-container *ngIf="message.idEmetteur == otherUser.id">
+          <!-- His message -->
+          <div class="mx-3 align-self-start flex-grow-1 his-message mb-4">
+            <p class="his-message-body">
+              {{ message.contenu }}
+            </p>
+            <span class="date text-muted">
+              {{ message.date | date }}
+            </span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="message.idDestinataire == otherUser.id">
+          <!-- My message -->
+          <div
+            class="
+              d-flex
+              flex-column
+              align-self-end
+              flex-grow-1
+              my-message
+              mb-4
+              mx-3
+            "
+          >
+            <p class="my-message-body">
+              {{ message.contenu }}
+            </p>
+            <div class="d-flex align-self-end">
+              <i class="fa fa-check-double mt-1 mr-1"></i>
+              <span class="date text-muted">
+                {{ message.date | date }}
+              </span>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
     </div>
   </div>
 
-  <div class="card-footer d-flex align-items-center">
-    <form class="w-100">
+  <form class="w-100" [formGroup]="messageForm" (ngSubmit)="onSubmit($event)">
+    <div class="card-footer d-flex align-items-center">
       <textarea
         class="form-control your-message"
+        formControlName="message"
         placeholder="Ecris ton message ..."
       ></textarea>
-    </form>
-    <!-- Options -->
-    <a href="/messaging">
-      <i class="fa fa-paperclip mx-2"></i>
-    </a>
-    <a href="/messaging">
-      <i class="fas fa-paper-plane mx-2"></i>
-    </a>
-  </div>
+      <!-- Options -->
+      <button class="btn link">
+        <i class="fa fa-paperclip mx-2"></i>
+      </button>
+      <button type="submit" class="btn link">
+        <i class="fas fa-paper-plane mx-2"></i>
+      </button>
+    </div>
+  </form>
 </div>
