@@ -20,6 +20,7 @@ spec:
       containers:
         - name: devoirs-pod
           image: aminerachyd/projetlms-devoirs
+          imagePullPolicy: Always
           env:
             - name: SERVER_PORT
               value: "8080"

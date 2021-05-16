@@ -20,6 +20,7 @@ spec:
       containers:
         - name: messagerie-pod
           image: tobadarichard/service-mesagerie
+          imagePullPolicy: Always
           env:
             - name: SERVER_PORT
               value: "8080"
