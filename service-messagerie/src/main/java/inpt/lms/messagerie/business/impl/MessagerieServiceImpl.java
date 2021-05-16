@@ -47,6 +47,7 @@ public class MessagerieServiceImpl implements MessagerieService {
 				discussionDAO.findOneByIdParticipant1AndIdParticipant2(
 						participant1, participant2);
 		Discussion discussion;
+		
 		if (findDiscussion.isEmpty()) {
 			discussion = new Discussion();
 			discussion.setIdParticipant1(participant1);
@@ -55,11 +56,16 @@ public class MessagerieServiceImpl implements MessagerieService {
 		}
 		else
 			discussion = findDiscussion.get();
+		LocalDateTime now = LocalDateTime.now();
 		message.setId(null);
 		message.setIdDiscussion(discussion.getId());
-		message.setDate(LocalDateTime.now());
+		message.setDate(now);
 		message.setLu(false);
-		messageDAO.save(message);
+		message = messageDAO.save(message);
+		
+		discussion.setLastMessage(message);
+		discussion.setLastUpdate(now);
+		discussionDAO.save(discussion);
 	}
 	
 	@Override
