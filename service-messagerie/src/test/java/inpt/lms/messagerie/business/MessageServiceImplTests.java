@@ -87,7 +87,7 @@ class MessageServiceImplTests {
 		messagerieService.envoyerMessage(messageTest);
 		
 		ArgumentCaptor<Message> captured = ArgumentCaptor.forClass(Message.class);
-		verify(discussionDAO, times(0)).save(any(Discussion.class));
+		verify(discussionDAO, times(1)).save(any(Discussion.class));
 		verify(messageDAO).save(captured.capture());
 		assertEquals(disc.getId(),captured.getValue().getIdDiscussion());
 	}

@@ -23,6 +23,7 @@ import inpt.lms.messagerie.forms.MessageForm;
 import inpt.lms.messagerie.model.Discussion;
 import inpt.lms.messagerie.model.Message;
 import inpt.lms.messagerie.proxies.GestionCompteProxyService;
+import inpt.lms.messagerie.proxies.NoSuchUserException;
 import inpt.lms.messagerie.proxies.ProxyUnavailableException;
 
 @RestController
@@ -63,7 +64,9 @@ public class MessagerieController {
 	@PostMapping(path="/discussion",consumes=MediaType.APPLICATION_JSON_VALUE)
 	public void envoyerMessage(@RequestHeader(name = "X-USER-ID") long userId,
 			@Valid @RequestBody  MessageForm messageForm) 
-					throws ProxyUnavailableException{
+					throws ProxyUnavailableException, NoSuchUserException{
+		if (messageForm.getIdDestinataire().equals(userId))
+			throw new NoSuchUserException();
 		try {
 			compteService.userExists(messageForm.getIdDestinataire());
 		} catch (RetryableException e) {
