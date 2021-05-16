@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:lms_flutter/components/course_elements/AddPost.dart';
 import 'package:lms_flutter/components/course_elements/course_settings.dart';
 import 'package:lms_flutter/components/posts/post.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
@@ -53,6 +54,11 @@ class _CoursePageState extends State<CoursePage> {
                       )]
                     ),
                     ),
+                Container(
+                  padding: EdgeInsets.all(24),
+                  child: AddPost(),
+                )
+                ,
 
                   Column(
                     children: <Widget> [for(var post in posts) Post()],
