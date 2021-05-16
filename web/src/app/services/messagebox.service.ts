@@ -2,14 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
-interface MessageForm {
-  idDestinataire: number;
-  contenu: string;
-}
+import { Message } from '../utils/Types';
 
 const DISCUSSION_BASE_URL = '/messagebox/discussion';
-const INFOS_BASE_URL = '/messagebox/discussion';
+const INFOS_BASE_URL = '/messagebox/infos';
 
 @Injectable({
   providedIn: 'root',
@@ -20,19 +16,21 @@ export class MessageboxService {
   /**
    * Envoyer un message à un destinataire
    */
-  sendMessage(message: MessageForm) {
-    this.http.post(`${DISCUSSION_BASE_URL}`, message).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+  sendMessage({ idDestinataire, contenu }: Message) {
+    return this.http
+      .post(`${DISCUSSION_BASE_URL}`, { idDestinataire, contenu })
+      .pipe(
+        catchError((err) => {
+          return of(err);
+        })
+      );
   }
 
   /**
    * Récupérer les messages d'une discussion
    */
-  getMessages(discId: string) {
-    this.http.get(`${DISCUSSION_BASE_URL}/${discId}`).pipe(
+  getMessages(discId: string, page: number = 0) {
+    return this.http.get(`${DISCUSSION_BASE_URL}/${discId}?page=${page}`).pipe(
       catchError((err) => {
         return of(err);
       })
@@ -43,7 +41,7 @@ export class MessageboxService {
    * Récupérer les nouveaux messages d'une discussion
    */
   getNewMessages(discId: string) {
-    this.http.get(`${DISCUSSION_BASE_URL}/${discId}/new`).pipe(
+    return this.http.get(`${DISCUSSION_BASE_URL}/${discId}/new`).pipe(
       catchError((err) => {
         return of(err);
       })
@@ -53,8 +51,8 @@ export class MessageboxService {
   /**
    * Récupère toutes les discussions
    */
-  getDiscussions() {
-    this.http.get(`${INFOS_BASE_URL}`).pipe(
+  getDiscussions(page: number = 0) {
+    return this.http.get(`${INFOS_BASE_URL}?page=${page}`).pipe(
       catchError((err) => {
         return of(err);
       })
@@ -65,7 +63,7 @@ export class MessageboxService {
    * Récupère toutes les discussions
    */
   getNewDiscussions() {
-    this.http.get(`${INFOS_BASE_URL}/new`).pipe(
+    return this.http.get(`${INFOS_BASE_URL}/new`).pipe(
       catchError((err) => {
         return of(err);
       })

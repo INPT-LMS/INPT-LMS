@@ -16,7 +16,6 @@ export class FeedComponent implements OnInit {
 
   ngOnInit(): void {
     this.postService.getAllPublications().subscribe((response: any) => {
-      console.log(response);
       this.posts = response;
     });
   }

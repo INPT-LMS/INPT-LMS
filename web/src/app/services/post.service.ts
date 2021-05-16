@@ -52,7 +52,7 @@ export class PostService {
    */
   updatePublication(publication: Publication) {
     return this.http
-      .put(`${PUBLICATION_BASE_URL}/${publication.idPublication}`, publication)
+      .put(`${PUBLICATION_BASE_URL}/${publication.id}`, publication)
       .pipe(
         catchError((err) => {
           return of(err);

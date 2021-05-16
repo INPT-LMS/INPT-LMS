@@ -22,6 +22,17 @@ export class ClassService {
   /**
    * Récupère tous les cours d'un prof
    */
+  getAllStudentCourses() {
+    return this.http.get(`${BASE_URL}/student/courses`).pipe(
+      catchError((err) => {
+        return of(err);
+      })
+    );
+  }
+
+  /**
+   * Récupère tous les cours d'un prof
+   */
   getAllProfessorCourses() {
     return this.http.get(`${BASE_URL}/courses/owner`).pipe(
       catchError((err) => {
@@ -33,7 +44,7 @@ export class ClassService {
   /**
    * Ajoute un cours
    */
-  addCourse(course: Course) {
+  addCourseForAdmin(course: Course) {
     return this.http.post(`${BASE_URL}/course/owner`, course).pipe(
       catchError((err) => {
         return of(err);
@@ -44,7 +55,7 @@ export class ClassService {
   /**
    * Récupère un seul cours
    */
-  getCourse(courseID: string) {
+  getCourseForAdmin(courseID: string) {
     return this.http.get(`${BASE_URL}/course/${courseID}/owner`).pipe(
       catchError((err) => {
         return of(err);

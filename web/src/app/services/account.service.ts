@@ -79,6 +79,30 @@ export class AccountService {
   }
 
   /**
+   * Mise à jour d'un utilisateur, a besoin d'autorisation
+   */
+  updateUserPassword({
+    userId,
+    oldPassword,
+    newPassword,
+  }: {
+    userId: number;
+    oldPassword: string;
+    newPassword: string;
+  }) {
+    return this.http
+      .put(`/account/update/password/${userId}`, { oldPassword, newPassword })
+      .pipe(
+        catchError((err) => {
+          return of({
+            error: err.error.error,
+            status: err.status,
+          });
+        })
+      );
+  }
+
+  /**
    * Supprime un utilisateur, a besoin d'autorisation
    */
   deleteUser(userId: number) {

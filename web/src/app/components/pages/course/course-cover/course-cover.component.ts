@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-course-cover',
   templateUrl: './course-cover.component.html',
-  styleUrls: ['./course-cover.component.css']
+  styleUrls: ['./course-cover.component.css'],
 })
 export class CourseCoverComponent implements OnInit {
+  @Input()
+  title: string;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
+    this.title = '';
   }
 
+  ngOnInit(): void {}
 }

@@ -27,7 +27,12 @@
     <!-- TODO Big publication -->
     <!-- <a href="#" class="read-more">Read more</a> -->
   </div>
-  <img class="card-img-bottom" src="https://via.placeholder.com/150" alt="" />
+  <img
+    *ngIf="post.image != undefined"
+    class="card-img-bottom"
+    src="https://via.placeholder.com/150"
+    alt=""
+  />
   <div class="card-footer d-flex">
     <!-- Number of likes -->
     <div class="d-flex align-items-center">

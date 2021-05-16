@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-about-course',
   templateUrl: './about-course.component.html',
-  styleUrls: ['./about-course.component.css']
+  styleUrls: ['./about-course.component.css'],
 })
 export class AboutCourseComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  @Input()
+  about: string;
+  constructor() {
+    this.about = '';
   }
 
+  ngOnInit(): void {}
 }

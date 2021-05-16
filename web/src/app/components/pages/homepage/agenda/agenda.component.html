@@ -3,9 +3,7 @@
   <hr />
   <ul>
     <li>
-      <app-agenda-item></app-agenda-item>
-      <app-agenda-item></app-agenda-item>
-      <app-agenda-item></app-agenda-item>
+      <app-agenda-item *ngFor="let devoir of devoirs"></app-agenda-item>
     </li>
   </ul>
   <a href="#" class="show-all">Show all (4)</a>

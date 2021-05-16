@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Class } from 'src/app/utils/Types';
 
 @Component({
   selector: 'app-link-item',
   templateUrl: './link-item.component.html',
-  styleUrls: ['./link-item.component.css']
+  styleUrls: ['./link-item.component.css'],
 })
 export class LinkItemComponent implements OnInit {
+  @Input()
+  course: Class;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
+    this.course = {};
   }
 
+  ngOnInit(): void {}
 }

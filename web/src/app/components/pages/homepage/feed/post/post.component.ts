@@ -11,20 +11,13 @@ import { User, Publication, Like } from 'src/app/utils/Types';
 })
 export class PostComponent implements OnInit {
   @Input()
-  post: Publication;
+  public post: Publication;
   user: User;
   class: any;
-  myLike: {
-    id: string;
-    isLiked: boolean;
-  } = {
-    id: '',
-    isLiked: false,
-  };
+  myLike: Like;
 
   constructor(
     private accountService: AccountService,
-    private classService: ClassService,
     private postService: PostService
   ) {
     this.post = {
@@ -33,6 +26,7 @@ export class PostComponent implements OnInit {
     };
     this.user = {};
     this.class = {};
+    this.myLike = {};
   }
 
   ngOnInit(): void {
@@ -41,45 +35,62 @@ export class PostComponent implements OnInit {
       .subscribe((res: any) => {
         this.user = res.user;
       });
-    this.classService
-      .getCourse(<string>this.post.idCours)
-      .subscribe((res: any) => {
-        console.log(res);
-        // this.user = res.user;
-      });
-    this.myLike.isLiked = !!this.post.likes?.find(
+
+    // this.classService
+    //   .getCourse(<string>this.post.idCours)
+    //   .subscribe((res: any) => {
+    //     console.log(res);
+    //     // this.user = res.user;
+    //   });
+    const like = this.post.likes?.find(
       (like) => like.idProprietaire == this.user.id
     );
+
+    if (like) {
+      this.myLike = like;
+
+      // console.log('my like', this.myLike);
+    }
   }
 
   like() {
-    const idPub = <string>this.post.idPublication;
-    if (!this.myLike.isLiked) {
+    const idPub = this.post.id;
+    if (!idPub) {
+      // TODO Une erreur à gérer ici
+      return;
+    }
+    if (!this.myLike.idLike) {
       this.postService
         .addLike({ idPublication: idPub })
         .subscribe((res: any) => {
-          console.log(res);
+          // console.log(res);
           // TODO Vérifier les champs des likes
           const like: Like = {
             idPublication: idPub,
           };
           this.post.likes!.push(like);
+          this.myLike = {};
         });
     } else {
-      this.postService.deleteLike(this.myLike.id).subscribe((res: any) => {
-        console.log(res);
+      this.postService.deleteLike(this.myLike.idLike).subscribe((res: any) => {
+        // console.log(res);
+        this.myLike = {};
       });
     }
   }
 
   comment() {
+    if (!this.post.id) {
+      // TODO Une erreur à gérer ici
+      return;
+    }
     this.postService
       .addCommentaire({
         contenu: '',
-        idPublication: <string>this.post.idPublication,
+        idPublication: this.post.id,
       })
       .subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
       });
   }
 }

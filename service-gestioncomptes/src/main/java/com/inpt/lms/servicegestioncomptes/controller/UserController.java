@@ -2,6 +2,7 @@ package com.inpt.lms.servicegestioncomptes.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.inpt.lms.servicegestioncomptes.dto.PasswordUpdateDTO;
 import com.inpt.lms.servicegestioncomptes.dto.UserCredentialsDTO;
 import com.inpt.lms.servicegestioncomptes.dto.UserInfosDTO;
 import com.inpt.lms.servicegestioncomptes.exception.NotEnoughInformationsException;
@@ -118,6 +119,30 @@ public class UserController {
         objectNode.put("message","User updated");
         return new ResponseEntity<>(objectNode, HttpStatus.OK);
     }
+
+    @PutMapping("/update/password/{id}")
+    public ResponseEntity<ObjectNode> updateUserPassword(@RequestHeader(name = "X-USER-ID") Long userId, @PathVariable Long id,@RequestBody PasswordUpdateDTO passwordUpdateDTO) {
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        try {
+            userService.updateUserPassword(userId,id,passwordUpdateDTO.getOldPassword(),passwordUpdateDTO.getNewPassword());
+        } catch (UserNotFoundException e) {
+            objectNode.put("error",e.getMessage());
+            return new ResponseEntity<>(objectNode,HttpStatus.NOT_FOUND);
+        } catch (IllegalAccessError e) {
+            objectNode.put("error",e.getMessage());
+            return new ResponseEntity<>(objectNode,HttpStatus.UNAUTHORIZED);
+        } catch (BadCredentialsException e) {
+            objectNode.put("error",e.getMessage());
+            return new ResponseEntity<>(objectNode,HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            objectNode.put("error","Server error");
+            return new ResponseEntity<>(objectNode,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        objectNode.put("message","User updated");
+        return new ResponseEntity<>(objectNode, HttpStatus.OK);
+    }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ObjectNode> deleteUser(@RequestHeader(name = "X-USER-ID") Long userId, @PathVariable Long id){

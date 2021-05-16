@@ -25,7 +25,7 @@ public class UserService {
     private final JWTUtil jwtUtil;
 
     public UserInfosDTO getUserInfos(Long id) throws UserNotFoundException {
-        User user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
         UserInfos userInfos = user.getUserInfos();
 
         UserInfosDTO userInfosDTO = new UserInfosDTO();
@@ -40,14 +40,14 @@ public class UserService {
         return userInfosDTO;
     }
 
-    public User createUser(UserInfosDTO userInfosDTO) throws UserAlreadyExistsException,NotEnoughInformationsException {
+    public User createUser(UserInfosDTO userInfosDTO) throws UserAlreadyExistsException, NotEnoughInformationsException {
         // On vérifie si on a de bonnes données envoyées par le client
-        if(userInfosDTO.getEmail().isEmpty() || userInfosDTO.getPassword().isEmpty() || userInfosDTO.getNom().isEmpty() || userInfosDTO.getPrenom().isEmpty()){
+        if (userInfosDTO.getEmail().isEmpty() || userInfosDTO.getPassword().isEmpty() || userInfosDTO.getNom().isEmpty() || userInfosDTO.getPrenom().isEmpty()) {
             throw new NotEnoughInformationsException("You didn't give enough information");
         }
         // On vérifie si un utilisateur avec le même email n'existe pas déjà
-        boolean userExists =  userRepository.findByEmail(userInfosDTO.getEmail()).isPresent();
-        if(userExists ){
+        boolean userExists = userRepository.findByEmail(userInfosDTO.getEmail()).isPresent();
+        if (userExists) {
             throw new UserAlreadyExistsException("User already exists");
         }
 
@@ -70,18 +70,17 @@ public class UserService {
         return user;
     }
 
-    public UserInfosDTO loginUser(UserCredentialsDTO userCredentials) throws UserNotFoundException, BadCredentialsException{
-        User user = userRepository.findByEmail(userCredentials.getEmail()).orElseThrow(()-> new UserNotFoundException("User not found"));
-        return verifyPassword(userCredentials.getPassword(),user);
+    public UserInfosDTO loginUser(UserCredentialsDTO userCredentials) throws UserNotFoundException, BadCredentialsException {
+        User user = userRepository.findByEmail(userCredentials.getEmail()).orElseThrow(() -> new UserNotFoundException("User not found"));
+        return verifyPassword(userCredentials.getPassword(), user);
     }
 
-    public void updateUser(Long userId, Long id, UserInfosDTO userInfosDTO) throws UserNotFoundException,IllegalAccessError {
-        if(!userId.equals(id)){
+    public void updateUser(Long userId, Long id, UserInfosDTO userInfosDTO) throws UserNotFoundException, IllegalAccessError {
+        if (!userId.equals(id)) {
             throw new IllegalAccessError("You can't perform this action");
         }
-        User user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        // TODO Faire une meilleure mise à jour
         // Mise à jour des infos de l'utilisateur
         UserInfos userInfos = user.getUserInfos();
         userInfos.setNom(userInfosDTO.getNom());
@@ -93,38 +92,53 @@ public class UserService {
 
         // Mise à jour des credentials aussi
         user.setEmail(userInfosDTO.getEmail());
-        user.setPassword(encryptPassword(userInfosDTO.getPassword()));
 
         userRepository.save(user);
         userInfosRepository.save(userInfos);
     }
 
-    public void deleteUser(Long userId, Long id) throws UserNotFoundException,IllegalAccessError {
-        if(!userId.equals(id)){
+    public void updateUserPassword(Long userId, Long id, String oldPassword, String newPassword) throws UserNotFoundException, BadCredentialsException, IllegalAccessError {
+        if (!userId.equals(id)) {
+            throw new IllegalAccessError("You can't perform this action");
+        }
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        try {
+            verifyPassword(oldPassword, user);
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException("Wrong password");
+        }
+
+        user.setPassword(encryptPassword(newPassword));
+        userRepository.save(user);
+    }
+
+    public void deleteUser(Long userId, Long id) throws UserNotFoundException, IllegalAccessError {
+        if (!userId.equals(id)) {
             throw new IllegalAccessError("You can't perform this action");
         }
 
-        User user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
         UserInfos userInfos = user.getUserInfos();
 
         userRepository.delete(user);
         userInfosRepository.delete(userInfos);
     }
 
-    public String encryptPassword(String password){
+    public String encryptPassword(String password) {
         return passwordEncoder.encode(password);
     }
 
-    public UserInfosDTO verifyPassword(String password,User user){
+    public UserInfosDTO verifyPassword(String password, User user) {
         UserInfosDTO userInfosDTO = new UserInfosDTO();
         String encryptedPassword = user.getPassword();
-        if(passwordEncoder.matches(password,encryptedPassword)){
+        if (passwordEncoder.matches(password, encryptedPassword)) {
             String token = jwtUtil.generateToken(user.getUserInfos());
             userInfosDTO.setToken(token);
             userInfosDTO.setId(user.getId());
             userInfosDTO.setEmail(user.getEmail());
             return userInfosDTO;
-        }else {
+        } else {
             throw new BadCredentialsException("Invalid email or password");
         }
     }
