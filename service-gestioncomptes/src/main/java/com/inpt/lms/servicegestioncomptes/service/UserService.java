@@ -142,6 +142,4 @@ public class UserService {
             throw new BadCredentialsException("Invalid email or password");
         }
     }
-
-
 }
