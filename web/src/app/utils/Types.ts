@@ -63,7 +63,7 @@ export interface Conversation {
 export interface Message {
   id?: string;
   contenu?: string;
-  date?: Date;
+  date?: string;
   idDestinataire?: number;
   idEmetteur?: number;
   idDiscussion?: string;

@@ -5,7 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9707e749-5e18-4270-82c3-d5af339ae7b2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/dto/PasswordUpdateDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_0_9_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-gestioncomptes/src/main/java/com/inpt/lms/servicegestioncomptes/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-messagerie/service-messagerie.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/business/impl/MessagerieServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/business/impl/MessagerieServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/controllers/MessagerieController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/controllers/MessagerieController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/controllers/MessagerieControllerAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/controllers/MessagerieControllerAdvice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/dao/CustomMessageDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/dao/CustomMessageDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/model/Discussion.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-messagerie/src/main/java/inpt/lms/messagerie/model/Discussion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-messagerie/src/test/java/inpt/lms/messagerie/business/MessageServiceImplTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-messagerie/src/test/java/inpt/lms/messagerie/business/MessageServiceImplTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/language/language.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/language/language.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/language/language.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/language/language.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/personal-information/personal-information.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/personal-information/personal-information.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/personal-information/personal-information.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/personal-information/personal-information.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/security/security.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/security/security.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/security/security.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/components/pages/account/chosen-setting/security/security.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/account/settings/settings.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/components/pages/account/settings/settings.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/conversation/conversation.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/components/pages/messaging/conversation/conversation.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/conversation/conversation.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/components/pages/messaging/conversation/conversation.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/conversation/conversation.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/components/pages/messaging/conversation/conversation.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/components/pages/messaging/messaging.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/components/pages/messaging/messaging.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/services/account.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/services/account.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/services/messagebox.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/services/messagebox.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/app/utils/Types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/app/utils/Types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +90,11 @@
     <property name="settings.editor.selected.configurable" value="Docker" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.inpt.lms.servicegestioncomptes.dto" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -82,15 +116,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -254,6 +286,7 @@
       <workItem from="1620788978949" duration="119000" />
       <workItem from="1620789518189" duration="143000" />
       <workItem from="1621090299933" duration="4977000" />
+      <workItem from="1621174700259" duration="5056000" />
     </task>
     <servers />
   </component>

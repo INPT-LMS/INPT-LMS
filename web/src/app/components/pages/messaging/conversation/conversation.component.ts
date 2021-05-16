@@ -50,13 +50,20 @@ export class ConversationComponent implements OnInit {
   onSubmit(event: Event) {
     event.preventDefault();
 
-    this.messageboxService
-      .sendMessage({
-        contenu: this.messageForm.value.message,
-        idDestinataire: this.otherUser.id!,
-      })
-      .subscribe((res: any) => {
-        console.log(res);
-      });
+    const date = new Date();
+
+    const newMessage: Message = {
+      contenu: this.messageForm.value.message,
+      idDestinataire: this.otherUser.id!,
+      date: date.toString(),
+    };
+
+    this.messageboxService.sendMessage(newMessage).subscribe((res: any) => {
+      console.log(res);
+
+      this.messages.push(newMessage);
+
+      this.messageForm.reset();
+    });
   }
 }

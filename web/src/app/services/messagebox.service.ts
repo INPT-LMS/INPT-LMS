@@ -2,11 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
-interface MessageForm {
-  idDestinataire: number;
-  contenu: string;
-}
+import { Message } from '../utils/Types';
 
 const DISCUSSION_BASE_URL = '/messagebox/discussion';
 const INFOS_BASE_URL = '/messagebox/infos';
@@ -20,12 +16,14 @@ export class MessageboxService {
   /**
    * Envoyer un message à un destinataire
    */
-  sendMessage(message: MessageForm) {
-    return this.http.post(`${DISCUSSION_BASE_URL}`, message).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+  sendMessage({ idDestinataire, contenu }: Message) {
+    return this.http
+      .post(`${DISCUSSION_BASE_URL}`, { idDestinataire, contenu })
+      .pipe(
+        catchError((err) => {
+          return of(err);
+        })
+      );
   }
 
   /**

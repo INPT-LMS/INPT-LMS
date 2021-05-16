@@ -19,8 +19,8 @@ public class CustomMessageDAOImpl implements CustomMessageDAO {
 	public List<String> getAllDiscussionsWithNewMessage(long idDestinataire) {
 		return template.query(Message.class)
 				.distinct("idDiscussion")
-				.matching(query(where("idDestinataire").is(idDestinataire)))
-				.matching(query(where("lu").is(false)))
+				.matching(query(where("idDestinataire").is(idDestinataire)
+						.and("lu").is(false)))
 				.as(String.class)
 				.all();
 	}

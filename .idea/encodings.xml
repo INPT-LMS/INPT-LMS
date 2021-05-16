@@ -11,5 +11,9 @@
     <file url="file://$PROJECT_DIR$/service-messagerie/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-publications/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-publications/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-stockage/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-stockage/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service_cours/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service_cours/src/main/resources" charset="UTF-8" />
   </component>
 </project>

@@ -30,7 +30,7 @@
 
   <!-- conversation -->
   <div class="conversation card-footer">
-    <div class="d-flex flex-column align-items-start">
+    <div class="d-flex conversation-inner flex-column align-items-start">
       <ng-container *ngFor="let message of messages">
         <ng-container *ngIf="message.idEmetteur == otherUser.id">
           <!-- His message -->
