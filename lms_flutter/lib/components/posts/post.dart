@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/consts/custom_colors.dart';
-import 'package:lms_flutter/screens/CoursePage.dart';
 
 import 'comment.dart';
 
@@ -10,48 +9,48 @@ class Post extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       decoration: BoxDecoration(
           border: Border.all(color: CustomColors.LIGHT_BLACK),
-          borderRadius: BorderRadius.all(
-              Radius.circular(5.0)
-          )
-      ),
+          borderRadius: BorderRadius.all(Radius.circular(5.0))),
       child: Column(children: [
         Padding(
           padding: const EdgeInsets.all(5),
-          child: Row(
-              
-              children: [
-            GestureDetector(
-              onTap: () {Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/profile', (Route<dynamic> route) => false);},
-
-                child: CircleAvatar( backgroundImage: AssetImage("images/pic.jpg",))),
+          child: Row(children: [
+            GestureDetector(child: CircleAvatar(backgroundImage: AssetImage("images/pic.jpg")),onTap: (){
+              Navigator.pushNamed(context, "/profile");
+            }),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Oscar Mingueza",style: TextStyle(fontSize: 15)),
-                      GestureDetector(
-                        onTap: () {Navigator.of(context)
-                            .pushNamedAndRemoveUntil('/course', (Route<dynamic> route) => false);},
-                        child: Text("from: Flutter course community",
-                        style: TextStyle(fontSize: 15,color: Colors.red)),
-                      )
-                    ]
-                )
-              ),
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Oscar Mingueza", style: TextStyle(fontSize: 15)),
+                        GestureDetector(
+                            onTap: () {
+                              if (ModalRoute.of(context).settings.name !=
+                                  "/course") {
+                                Navigator.pushNamed(context, "/course");
+                              }
+                            },
+                            child: Text("from: Flutter course community",
+                                style:
+                                    TextStyle(fontSize: 15, color: Colors.red)))
+                      ])),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Text("14 juin 2021",style: TextStyle(fontSize: 12),))
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  "14 juin 2021",
+                  style: TextStyle(fontSize: 12),
+                ))
           ]),
         ),
         Container(
           margin: EdgeInsets.all(10),
-          child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+          child: Text(
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
               "Curabitur consequat lacus ut magna lobortis, in convallis neque aliquet."
               " In id placerat sapien. Nunc accumsan velit congue ante sodales, "
               "vitae accumsan ligula faucibus. Nulla ligula felis, placerat ut turpis et, "
@@ -62,10 +61,12 @@ class Post extends StatelessWidget {
               "Curabitur consequat dolor laoreet eros porta sollicitudin. Nam rutrum est eget rutrum pretium."),
         ),
         Row(children: [
-          IconButton(icon: Icon(Icons.favorite,color: Colors.red), onPressed: (){}),
-          Container(margin: EdgeInsets.only(left: 5),child: Text("15")),
-          IconButton(icon: Icon(Icons.comment,color: Colors.blue), onPressed: (){}),
-          Container(margin: EdgeInsets.only(left: 5),child: Text("2"))
+          IconButton(
+              icon: Icon(Icons.favorite, color: Colors.red), onPressed: () {}),
+          Container(margin: EdgeInsets.only(left: 5), child: Text("15")),
+          IconButton(
+              icon: Icon(Icons.comment, color: Colors.blue), onPressed: () {}),
+          Container(margin: EdgeInsets.only(left: 5), child: Text("2"))
         ]),
         Comment()
       ]),

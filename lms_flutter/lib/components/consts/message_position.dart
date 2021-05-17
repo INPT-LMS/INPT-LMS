@@ -1,3 +1,1 @@
-enum MessagePosition{
-  emetteur,destinataire
-}
+enum MessagePosition { emetteur, destinataire }
