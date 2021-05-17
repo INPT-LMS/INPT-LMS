@@ -11,7 +11,9 @@ import org.springframework.data.annotation.Id;
 public class Discussion {
 	@Id
 	protected String id;
+	protected String nomParticipant1;
 	protected long idParticipant1;
+	protected String nomParticipant2;
 	protected long idParticipant2;
 	protected Message lastMessage;
 	protected LocalDateTime lastUpdate;
@@ -44,5 +46,17 @@ public class Discussion {
 	}
 	public void setLastUpdate(LocalDateTime lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+	public String getNomParticipant1() {
+		return nomParticipant1;
+	}
+	public void setNomParticipant1(String nomParticipant1) {
+		this.nomParticipant1 = nomParticipant1;
+	}
+	public String getNomParticipant2() {
+		return nomParticipant2;
+	}
+	public void setNomParticipant2(String nomParticipant2) {
+		this.nomParticipant2 = nomParticipant2;
 	}
 }

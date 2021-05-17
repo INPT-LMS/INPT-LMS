@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface GestionCompteProxyService {
 	
 	@GetMapping("/user/{id}")
-	public void userExists(@PathVariable long id);
+	public UserWrapper getUserInfos(@PathVariable long id);
 }
