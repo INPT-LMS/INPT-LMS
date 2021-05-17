@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/course_elements/course_settings.dart';
 import 'package:lms_flutter/components/profile/CoverPic.dart';
+import 'package:lms_flutter/components/profile/ProfileCourseSection.dart';
 import 'package:lms_flutter/components/profile/ProfilePic.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 
@@ -47,15 +48,17 @@ class _ProfileState extends State<Profile> {
             ),
             Container(
               padding: EdgeInsets.only(
-                top: 12
+                top: 8
               ),
               child: Text(
-                  "Profile Name",
+                  "Flan Fertellan",
                    style: TextStyle(
-                   fontSize: 24
+                   fontSize: 24,
+
                    ),
               ),
-            )
+            ),
+            CourseSection(),
           ],
         )
       )
