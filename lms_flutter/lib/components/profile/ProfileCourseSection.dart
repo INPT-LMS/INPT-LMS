@@ -41,48 +41,20 @@ class _CourseSectionState extends State<CourseSection> {
               color: Color(0xff0275B1),
             ),
           ),
-          Padding(
+
+
+          for(var i = 0 ; i< 5 ; i ++ )
+
+            Padding(
             padding: const EdgeInsets.all(12.0),
-            child: Text(
-                "Course 1",
-              style: TextStyle(
-                fontSize: 18
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(
-              "Course 1",
-              style: TextStyle(
-                  fontSize: 18
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(
-              "Course 1",
-              style: TextStyle(
-                  fontSize: 18
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(
-              "Course 2",
-              style: TextStyle(
-                  fontSize: 18
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(
-              "Course 3",
-              style: TextStyle(
-                  fontSize: 18
+            child: GestureDetector(
+              onTap: () {Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/course', (Route<dynamic> route) => false);},
+              child: Text(
+                "Course ${i}",
+                style: TextStyle(
+                    fontSize: 18
+                ),
               ),
             ),
           ),
