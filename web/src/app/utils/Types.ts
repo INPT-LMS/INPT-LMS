@@ -44,11 +44,11 @@ export interface Commentaire {
   idCommentaire?: string;
   idPublication: string;
   idProprietaire?: number;
-  contenu: string;
+  contenuCommentaire: string;
 }
 
 export interface Like {
-  idLike?: string;
+  id?: string;
   idProprietaire?: number;
   idPublication?: string;
   dateLike?: Date;
