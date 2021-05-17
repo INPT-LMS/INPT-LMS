@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lms_flutter/screens/CoursePage.dart';
 import 'package:lms_flutter/screens/LoginPage.dart';
+import 'package:lms_flutter/screens/ProfilePage.dart';
 import 'package:lms_flutter/screens/SignUpPage.dart';
 import 'package:lms_flutter/screens/discussion_screen.dart';
 import 'package:lms_flutter/screens/home_screen.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
           '/signup' : (context) => SignUpPage(),
           '/home' : (context) => HomeScreen(),
           '/course' : (context) => CoursePage(),
+          '/profile' : (context) => Profile(),
           '/messages': (context) => MessagerieScreen(),
           '/discussion': (context) => DiscussionScreen()
         }

@@ -25,7 +25,7 @@ class Post extends StatelessWidget {
               children: [
             GestureDetector(
               onTap: () {Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/course', (Route<dynamic> route) => false);},
+                    .pushNamedAndRemoveUntil('/profile', (Route<dynamic> route) => false);},
 
                 child: CircleAvatar( backgroundImage: AssetImage("images/pic.jpg",))),
             Expanded(
@@ -34,8 +34,12 @@ class Post extends StatelessWidget {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Oscar Mingueza",style: TextStyle(fontSize: 15)),
-                      Text("from: Flutter course community",
-                      style: TextStyle(fontSize: 15,color: Colors.red))
+                      GestureDetector(
+                        onTap: () {Navigator.of(context)
+                            .pushNamedAndRemoveUntil('/course', (Route<dynamic> route) => false);},
+                        child: Text("from: Flutter course community",
+                        style: TextStyle(fontSize: 15,color: Colors.red)),
+                      )
                     ]
                 )
               ),
