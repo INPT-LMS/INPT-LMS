@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,6 +35,10 @@ import inpt.lms.messagerie.dao.DiscussionDAO;
 import inpt.lms.messagerie.dao.MessageDAO;
 import inpt.lms.messagerie.model.Discussion;
 import inpt.lms.messagerie.model.Message;
+import inpt.lms.messagerie.proxies.GestionCompteProxyService;
+import inpt.lms.messagerie.proxies.NoSuchUserException;
+import inpt.lms.messagerie.proxies.UserInfos;
+import inpt.lms.messagerie.proxies.UserWrapper;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -42,6 +47,8 @@ class MessageServiceImplTests {
 	public MessageDAO messageDAO;
 	@Mock
 	public DiscussionDAO discussionDAO;
+	@Mock
+	public GestionCompteProxyService gestionCompte;
 	@InjectMocks
 	public MessagerieServiceImpl messagerieService;
 	public Message messageTest;
@@ -61,9 +68,12 @@ class MessageServiceImplTests {
 	}
 	
 	@Test
-	void testShouldAddMessageAndCreateDiscussion() {
+	void testShouldAddMessageAndCreateDiscussion() throws NoSuchUserException {
+		UserWrapper mockWrapper = mock(UserWrapper.class);
+		when(mockWrapper.getUser()).thenReturn(mock(UserInfos.class));
 		when(discussionDAO.findOneByIdParticipant1AndIdParticipant2(
 				5, 10)).thenReturn(Optional.empty());
+		when(gestionCompte.getUserInfos(any(Long.class))).thenReturn(mockWrapper);
 		
 		Discussion disc = new Discussion();
 		disc.setId("idTest");
@@ -77,7 +87,7 @@ class MessageServiceImplTests {
 	}
 	
 	@Test
-	void testShouldAddMessage() {
+	void testShouldAddMessage() throws NoSuchUserException {
 		Discussion disc = new Discussion();
 		disc.setId("idTest");
 		when(discussionDAO.findOneByIdParticipant1AndIdParticipant2(

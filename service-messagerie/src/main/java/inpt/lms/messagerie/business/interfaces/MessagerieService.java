@@ -8,10 +8,11 @@ import org.springframework.data.domain.Pageable;
 import inpt.lms.messagerie.business.interfaces.exceptions.NotFoundException;
 import inpt.lms.messagerie.model.Discussion;
 import inpt.lms.messagerie.model.Message;
+import inpt.lms.messagerie.proxies.NoSuchUserException;
 
 public interface MessagerieService {
 
-	void envoyerMessage(Message message);
+	void envoyerMessage(Message message) throws NoSuchUserException;
 
 	Page<Discussion> getDiscussionsUtilisateur(long idUtilisateur, Pageable pagination);
 
