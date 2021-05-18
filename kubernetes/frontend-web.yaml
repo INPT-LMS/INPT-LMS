@@ -20,6 +20,7 @@ spec:
       containers:
         - name: angular-pod
           image: aminerachyd/projetlms-frontend-web
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
 ---

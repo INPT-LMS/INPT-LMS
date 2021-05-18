@@ -1,7 +1,13 @@
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
     <div
-      class="d-flex align-items-center justify-content-around collapse navbar-collapse"
+      class="
+        d-flex
+        align-items-center
+        justify-content-around
+        collapse
+        navbar-collapse
+      "
     >
       <a class="title mt-1" href="/feed">
         <h3>LMS</h3>
@@ -53,9 +59,21 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/account">
+          <!-- <a class="nav-link active" aria-current="page" href="/account">
             <i class="fas fa-user-circle"></i>
-          </a>
+          </a> -->
+          <div ngbDropdown class="d-inline-block settings">
+            <button class="btn link" ngbDropdownToggle>
+              <i class="fas fa-user-circle"></i>
+            </button>
+            <div ngbDropdownMenu>
+              <a href="/account" ngbDropdownItem>Paramètres</a>
+              <hr />
+              <button (click)="onClick($event)" ngbDropdownItem>
+                Se déconnecter
+              </button>
+            </div>
+          </div>
         </li>
       </ul>
     </div>
