@@ -38,10 +38,8 @@ public class PublicationController {
     }
 
     @GetMapping("/publication/cours")
-    public HashMap<UUID,List<Publication>> getPublicationsByCourses2(@RequestHeader(value = "X-USER-ID") Long id_user){
+    public HashMap<UUID,List<Publication>> getFeed(@RequestHeader(value = "X-USER-ID") Long id_user){
         List<CoursBean> coursBeans = coursProxy.getIdCoursByStudent(id_user);
-        System.out.println("************************************************");
-        System.out.println("ceci est coursBeans : "+coursBeans);
         return publicationService.recupererPublicationsParCours2(coursBeans);
     }
 
