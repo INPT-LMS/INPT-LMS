@@ -1,6 +1,10 @@
 <a
   [routerLink]="['/messaging', messageItem.id]"
-  [state]="{ conversation: messageItem, otherUser: otherUser }"
+  [state]="{
+    conversation: messageItem,
+    otherUser: otherUser,
+    otherUserId: otherUserId
+  }"
   routerLinkActive="router-link-active"
 >
   <div class="message card-footer">
@@ -13,9 +17,12 @@
         alt=""
       />
       <div class="mx-3 align-self-center flex-grow-1">
-        <h6 class="card-title">{{ otherUser.nom }} {{ otherUser.prenom }}</h6>
+        <!-- <h6 class="card-title">{{ otherUser.nom }} {{ otherUser.prenom }}</h6> -->
+        <h6 class="card-title">{{ otherUser }}</h6>
         <!-- Message -->
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+        <p>
+          {{ messageItem.lastMessage?.contenu! }}
+        </p>
       </div>
     </div>
   </div>

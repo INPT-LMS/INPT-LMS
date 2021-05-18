@@ -11,7 +11,7 @@
       <div class="mx-3 align-self-center flex-grow-1">
         <!-- Profile -->
         <h5 class="card-title" *ngIf="otherUser">
-          {{ otherUser.nom }} {{ otherUser.prenom }}
+          {{ otherUser }}
         </h5>
       </div>
       <div class="d-flex menu-icons">
@@ -32,7 +32,7 @@
   <div class="conversation card-footer">
     <div class="d-flex conversation-inner flex-column align-items-start">
       <ng-container *ngFor="let message of messages">
-        <ng-container *ngIf="message.idEmetteur == otherUser.id">
+        <ng-container *ngIf="message.idEmetteur == otherUserId">
           <!-- His message -->
           <div class="mx-3 align-self-start flex-grow-1 his-message mb-4">
             <p class="his-message-body">
@@ -43,7 +43,7 @@
             </span>
           </div>
         </ng-container>
-        <ng-container *ngIf="message.idDestinataire == otherUser.id">
+        <ng-container *ngIf="message.idDestinataire == otherUserId">
           <!-- My message -->
           <div
             class="

@@ -56,8 +56,11 @@ export interface Like {
 
 export interface Conversation {
   id: string;
+  nomParticipant1: string;
+  nomParticipant2: string;
   idParticipant1: number;
   idParticipant2: number;
+  lastMessage?: Message;
 }
 
 export interface Message {
