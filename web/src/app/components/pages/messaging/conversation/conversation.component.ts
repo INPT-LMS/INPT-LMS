@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageboxService } from 'src/app/services/messagebox.service';
-import { Conversation, User, Message } from 'src/app/utils/Types';
+import { Conversation, Message } from 'src/app/utils/Types';
 
 @Component({
   selector: 'app-conversation',
@@ -11,7 +11,8 @@ import { Conversation, User, Message } from 'src/app/utils/Types';
 })
 export class ConversationComponent implements OnInit {
   conversation: Conversation;
-  otherUser: User;
+  otherUser: string;
+  otherUserId: number;
   messages: Message[];
   messageForm = this.formBuilder.group({
     message: '',
@@ -25,10 +26,13 @@ export class ConversationComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.conversation = {
       id: '',
+      nomParticipant1: '',
+      nomParticipant2: '',
       idParticipant1: -1,
       idParticipant2: -1,
     };
-    this.otherUser = {};
+    this.otherUser = '';
+    this.otherUserId = -1;
     this.messages = [];
   }
 
@@ -39,11 +43,14 @@ export class ConversationComponent implements OnInit {
 
     this.conversation = history.state.conversation;
     this.otherUser = history.state.otherUser;
+    this.otherUserId = history.state.otherUserId;
 
     this.messageboxService
       .getMessages(this.conversation.id)
       .subscribe((res: any) => {
         this.messages = res.content;
+        console.log(this.messages);
+        console.log(this.otherUserId);
       });
   }
 
@@ -54,7 +61,7 @@ export class ConversationComponent implements OnInit {
 
     const newMessage: Message = {
       contenu: this.messageForm.value.message,
-      idDestinataire: this.otherUser.id!,
+      idDestinataire: this.otherUserId,
       date: date.toString(),
     };
 

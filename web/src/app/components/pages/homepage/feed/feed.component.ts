@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PostService } from 'src/app/services/post.service';
-import { Publication } from 'src/app/utils/Types';
+import { Class, Publication } from 'src/app/utils/Types';
 
 @Component({
   selector: 'app-feed',
@@ -8,15 +8,36 @@ import { Publication } from 'src/app/utils/Types';
   styleUrls: ['./feed.component.css'],
 })
 export class FeedComponent implements OnInit {
+  @Input()
+  class: Class;
   posts: Publication[];
 
   constructor(private postService: PostService) {
+    this.class = {};
     this.posts = [];
   }
 
   ngOnInit(): void {
-    this.postService.getAllPublications().subscribe((response: any) => {
-      this.posts = response;
-    });
+    if (this.class.courseID) {
+      console.log("Publications d'un cours");
+      this.postService
+        .getClassPublications(this.class.courseID)
+        .subscribe((response: any) => {
+          console.log(response);
+          this.posts = response;
+        });
+    } else {
+      console.log('Publications du feed');
+      this.postService.getFeedPublications().subscribe((response: any) => {
+        // Publications par cours
+        const postsByCourses = Object.values(response);
+
+        postsByCourses.forEach((course: any) => {
+          course.forEach((post: Publication) => {
+            this.posts.push(post);
+          });
+        });
+      });
+    }
   }
 }

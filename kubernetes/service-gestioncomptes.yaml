@@ -20,6 +20,7 @@ spec:
       containers:
         - name: comptes-pod
           image: aminerachyd/projetlms-gestioncomptes
+          imagePullPolicy: Always
           env:
             - name: SERVER_PORT
               value: "8080"

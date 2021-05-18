@@ -7,9 +7,9 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '../services/local-storage.service';
+import { environment } from 'src/environments/environment';
 
-// XXX Lien de la gateway
-const API_LINK = 'http://localhost:8080';
+const API_LINK = environment.gatewayURL;
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {

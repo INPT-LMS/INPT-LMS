@@ -20,6 +20,7 @@ spec:
       containers:
         - name: stockage-pod
           image: tobadarichard/service-stockage
+          imagePullPolicy: Always
           env:
             - name: SERVER_PORT
               value: "8080"

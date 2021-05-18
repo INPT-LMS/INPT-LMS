@@ -1,42 +1,50 @@
 package com.lms.servicepublications.controller;
 
 
+import com.lms.servicepublications.beans.CoursBean;
 import com.lms.servicepublications.dto.PublicationDTO;
 import com.lms.servicepublications.exceptions.BadRequestException;
 import com.lms.servicepublications.model.Publication;
+import com.lms.servicepublications.proxies.CoursProxy;
 import com.lms.servicepublications.service.PublicationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
 public class PublicationController {
 
-    private PublicationService publicationService;
+    private final CoursProxy coursProxy;
+    private final PublicationService publicationService;
 
     @GetMapping("/publication/{idPublication}")
     public Publication getPublication(@PathVariable String idPublication){
-        Publication publication = publicationService.recupererPublication(idPublication);
-        return publication;
+        return publicationService.recupererPublication(idPublication);
     }
 
     @GetMapping("/publication")
     public List<Publication> getPublications(){
-       List<Publication> publications = publicationService.recupererPublications();
-        return publications;
+        return publicationService.recupererPublications();
     }
 
-//    @GetMapping("/publication/{idCours}")
-//    public List<Publication> getPublicationsByCourse(@PathVariable String idCours){
-//
-//        List<Publication> publications = publicationService.recupererPublicationsParCours(idCours);
-//        return publications;
-//    }
+    @GetMapping("/publication/cours/{idCours}")
+    public List<Publication> getPublicationsByCourse(@PathVariable UUID idCours){
+        return publicationService.recupererPublicationsParCours(idCours);
+    }
+
+    @GetMapping("/publication/cours")
+    public HashMap<UUID,List<Publication>> getFeed(@RequestHeader(value = "X-USER-ID") Long id_user){
+        List<CoursBean> coursBeans = coursProxy.getIdCoursByStudent(id_user);
+        return publicationService.recupererPublicationsParCours2(coursBeans);
+    }
 
     @PostMapping("/publication")
-    public Publication addPublication(@RequestHeader(value = "X-USER-ID", required = false) String id_user,
+    public Publication addPublication(@RequestHeader(value = "X-USER-ID", required = false) Long id_user,
             @RequestBody PublicationDTO publicationDTO){
         if(id_user == null || id_user.equals(null)) throw new BadRequestException("User id is missing");
         return publicationService.ajouterPublication(id_user, publicationDTO);
@@ -51,7 +59,7 @@ public class PublicationController {
     @PutMapping("publication/{idPublication}")
     public Publication updatePublication(@PathVariable String idPublication,
                                   @RequestBody PublicationDTO publicationDTO,
-                                  @RequestHeader(value = "X-USER-ID", required = false) String id_user){
+                                  @RequestHeader(value = "X-USER-ID", required = false) Long id_user){
         if(id_user == null || id_user.equals("")) throw new BadRequestException("User id is missing");
         return publicationService.modifierPublication(id_user, idPublication, publicationDTO);
 

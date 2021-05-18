@@ -20,6 +20,7 @@ spec:
       containers:
         - name: gateway-pod
           image: tobadarichard/gateway
+          imagePullPolicy: Always
           env:
             - name: SERVER_PORT
               value: "8080"
@@ -31,6 +32,8 @@ spec:
               value: "http://comptes-service"
             - name: INPT_LMS_URL_SERVICE_DEVOIR_
               value: "http://devoirs-service"
+            - name: INPT_LMS_URL_SERVICE_COURS
+              value: "http://cours-service"
             - name: INPT_LMS_URL_SERVICE_PUBLICATION
               value: "http://posts-service"
             - name: INPT_LMS_URL_FRONT_END

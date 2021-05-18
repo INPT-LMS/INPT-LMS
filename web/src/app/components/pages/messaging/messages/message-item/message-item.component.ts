@@ -11,30 +11,34 @@ import { Conversation, User } from 'src/app/utils/Types';
 export class MessageItemComponent implements OnInit {
   @Input()
   messageItem: Conversation;
-  otherUser: User;
+  otherUser: string;
+  otherUserId: number;
 
-  constructor(
-    private accountService: AccountService,
-    private localStorageService: LocalStorageService
-  ) {
+  constructor(private localStorageService: LocalStorageService) {
     this.messageItem = {
       id: '',
+      nomParticipant1: '',
+      nomParticipant2: '',
       idParticipant1: -1,
       idParticipant2: -1,
+      lastMessage: {
+        contenu: '',
+      },
     };
-    this.otherUser = {};
+    this.otherUser = '';
+    this.otherUserId = -1;
   }
 
   ngOnInit(): void {
-    const otherUserId =
+    this.otherUserId =
       this.messageItem.idParticipant1 !==
       parseInt(this.localStorageService.get('userId')!)
         ? this.messageItem.idParticipant1
         : this.messageItem.idParticipant2;
 
-    this.accountService.getUser(otherUserId).subscribe((res: any) => {
-      this.otherUser = res.user;
-      this.otherUser.id = otherUserId;
-    });
+    this.otherUser =
+      this.otherUserId === this.messageItem.idParticipant1
+        ? this.messageItem.nomParticipant1
+        : this.messageItem.nomParticipant2;
   }
 }

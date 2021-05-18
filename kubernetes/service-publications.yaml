@@ -20,6 +20,7 @@ spec:
       containers:
         - name: posts-pod
           image: mohammedaymane/service-publications
+          imagePullPolicy: Always
           env:
             - name: SERVER_PORT
               value: "8080"

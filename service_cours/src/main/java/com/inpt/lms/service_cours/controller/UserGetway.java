@@ -15,6 +15,5 @@ public class UserGetway {
     @GetMapping("/student/courses")
     public List<Course> getStudentCourses(@RequestHeader("X-USER-ID") long userID){
         return studentService.getStudentCourses(userID);
-
     }
 }

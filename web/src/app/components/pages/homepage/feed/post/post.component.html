@@ -36,7 +36,11 @@
   <div class="card-footer d-flex">
     <!-- Number of likes -->
     <div class="d-flex align-items-center">
-      <button (click)="like()" class="btn btn-link">
+      <button
+        (click)="like()"
+        [ngClass]="{ 'btn-danger': isLiked }"
+        class="btn btn-link"
+      >
         <i class="fa fa-heart"></i>
       </button>
       <span class="number text-muted mx-2">{{
@@ -54,6 +58,22 @@
     </div>
   </div>
   <!-- comments -->
-  <app-comment *ngFor="let commentaire of post.commentaires"></app-comment>
+  <app-comment
+    *ngFor="let commentaire of post.commentaires"
+    [commentaire]="commentaire"
+  ></app-comment>
+  <form class="w-100" [formGroup]="commentForm" (ngSubmit)="onSubmit($event)">
+    <div class="card-footer d-flex align-items-center">
+      <textarea
+        class="form-control your-message"
+        formControlName="comment"
+        placeholder="Ecris ton commentaire ..."
+      ></textarea>
+      <button type="submit" class="btn link">
+        <i class="fas fa-paper-plane mx-2"></i>
+      </button>
+    </div>
+  </form>
 </div>
+
 <hr />
