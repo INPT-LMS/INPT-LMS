@@ -19,16 +19,24 @@ export class FeedComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.class.courseID) {
-      // TODO Publications d'un cours
       console.log("Publications d'un cours");
-      this.postService.getAllPublications().subscribe((response: any) => {
-        this.posts = response;
-      });
+      this.postService
+        .getClassPublications(this.class.courseID)
+        .subscribe((response: any) => {
+          console.log(response);
+          this.posts = response;
+        });
     } else {
-      // TODO Publications du feed
       console.log('Publications du feed');
-      this.postService.getAllPublications().subscribe((response: any) => {
-        this.posts = response;
+      this.postService.getFeedPublications().subscribe((response: any) => {
+        // Publications par cours
+        const postsByCourses = Object.values(response);
+
+        postsByCourses.forEach((course: any) => {
+          course.forEach((post: Publication) => {
+            this.posts.push(post);
+          });
+        });
       });
     }
   }

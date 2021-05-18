@@ -15,10 +15,21 @@ export class PostService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Récupère toutes les publications
+   * Récupère toutes les publications dans les cours où l'utilisateur est enregistré
    */
-  getAllPublications() {
-    return this.http.get(`${PUBLICATION_BASE_URL}`).pipe(
+  getFeedPublications() {
+    return this.http.get(`${PUBLICATION_BASE_URL}/cours`).pipe(
+      catchError((err) => {
+        return of(err);
+      })
+    );
+  }
+
+  /**
+   * Récupère toutes les publications d'un cours particulier
+   */
+  getClassPublications(classId: string) {
+    return this.http.get(`${PUBLICATION_BASE_URL}/cours/${classId}`).pipe(
       catchError((err) => {
         return of(err);
       })
