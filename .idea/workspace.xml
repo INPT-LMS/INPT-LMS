@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9707e749-5e18-4270-82c3-d5af339ae7b2" name="Default Changelist" comment="" />
+    <list default="true" id="9707e749-5e18-4270-82c3-d5af339ae7b2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/beans/CoursBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/proxies/CoursProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/ServicePublicationsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/ServicePublicationsApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/PublicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/controller/PublicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/dto/PublicationDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/dto/PublicationDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Publication.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/model/Publication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/repository/PublicationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/repository/PublicationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/PublicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service-publications/src/main/java/com/lms/servicepublications/service/PublicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service_cours/src/main/java/com/inpt/lms/service_cours/controller/UserGetway.java" beforeDir="false" afterPath="$PROJECT_DIR$/service_cours/src/main/java/com/inpt/lms/service_cours/controller/UserGetway.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,7 +73,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GatewayApplication">
+  <component name="RunManager" selected="Spring Boot.ServiceGestioncomptesApplication">
     <configuration name="ServicePublicationsApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.LMS.servicepublications.ServicePublicationsApplication" />
       <module name="service-publications" />
@@ -72,21 +87,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="gateway" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -94,6 +114,33 @@
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
       <module name="gateway" />
       <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -131,7 +178,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServiceCoursApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <configuration name="ServiceCoursApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
       <module name="service_cours" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.inpt.lms.service_cours.ServiceCoursApplication" />
       <method v="2">
@@ -152,7 +199,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServicePublicationsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <configuration name="ServiceMessagerieApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="service-messagerie" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="inpt.lms.messagerie.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="inpt.lms.messagerie.ServiceMessagerieApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServicePublicationsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
       <module name="service-publications" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.lms.servicepublications.ServicePublicationsApplication" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -174,12 +234,16 @@
       <item itemvalue="Spring Boot.GatewayApplication" />
       <item itemvalue="Spring Boot.ServiceDevoirsApplication" />
       <item itemvalue="Spring Boot.ServiceGestioncomptesApplication" />
-      <item itemvalue="Spring Boot.ServicePublicationsApplication" />
       <item itemvalue="Spring Boot.ServiceStockageApplication" />
       <item itemvalue="Spring Boot.ServiceCoursApplication" />
+      <item itemvalue="Spring Boot.ServicePublicationsApplication" />
+      <item itemvalue="Spring Boot.ServiceMessagerieApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.ServiceCoursApplication" />
+        <item itemvalue="Spring Boot.ServicePublicationsApplication" />
+        <item itemvalue="Spring Boot.ServiceMessagerieApplication" />
         <item itemvalue="Application.ServicePublicationsApplication" />
       </list>
     </recent_temporary>
@@ -207,6 +271,11 @@
       <workItem from="1621031744599" duration="118000" />
       <workItem from="1621113866110" duration="572000" />
       <workItem from="1621114607472" duration="1460000" />
+      <workItem from="1621126684696" duration="742000" />
+      <workItem from="1621280567425" duration="531000" />
+      <workItem from="1621281120336" duration="1664000" />
+      <workItem from="1621283507502" duration="4811000" />
+      <workItem from="1621341803653" duration="5221000" />
     </task>
     <servers />
   </component>
@@ -227,5 +296,15 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
