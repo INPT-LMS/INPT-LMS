@@ -5,7 +5,6 @@ import { catchError } from 'rxjs/operators';
 
 const BASE_URL = '/class';
 
-// TODO Fix entities
 interface Course {
   courseID: string;
   courseName: string;

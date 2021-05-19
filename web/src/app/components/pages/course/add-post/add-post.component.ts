@@ -28,7 +28,6 @@ export class AddPostComponent implements OnInit {
     console.log(this.class);
   }
 
-  // TODO Add publication
   onSubmit(event: Event) {
     event.preventDefault();
 
