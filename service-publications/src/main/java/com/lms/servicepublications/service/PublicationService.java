@@ -55,12 +55,16 @@ public class PublicationService {
 
     public HashMap<UUID,List<Publication>> recupererPublicationsParCours2(List<CoursBean> cours){
         HashMap<UUID,List<Publication>> PublicationsParCours = new HashMap<>();
-
+        if(!(cours==null)){
         for(int i = 0;i<cours.size();i++){
+            if(!(cours.get(i) ==null)){
             PublicationsParCours.put(cours.get(i).getCourseID(),publicationRepository.findByidCoursOrderByDatePublicationDesc(cours.get(i).getCourseID()));
             //  PublicationsParCours.put(cours.get(i).getCourseID(),publicationRepository.findByidCoursOrderByDatePublicationDesc(cours.get(i).getCourseID()).subList(0,limit-1));
         }
+        }
          return PublicationsParCours;
+        }
+        return PublicationsParCours;
     }
 
     /**
