@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  gatewayURL: 'http://gateway-service',
+  gatewayURL: 'http://164.90.255.229',
 };

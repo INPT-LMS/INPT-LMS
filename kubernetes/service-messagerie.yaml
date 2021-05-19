@@ -22,6 +22,8 @@ spec:
           image: tobadarichard/service-mesagerie
           imagePullPolicy: Always
           env:
+            - name: SPRING_DATA_MONGODB_URI
+              value: "mongodb+srv://admin:admin@cluster0.e7mo0.mongodb.net/messagebox?retryWrites=true&w=majority"
             - name: SERVER_PORT
               value: "8080"
           ports:
