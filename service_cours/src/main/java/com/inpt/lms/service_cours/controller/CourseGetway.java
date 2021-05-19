@@ -19,11 +19,11 @@ public class CourseGetway {
 	@Autowired
 	CourseDetailsImp courseDetailsImp;
 
-	@GetMapping("/courses/owner/")
+	@GetMapping("/courses/owner")
 	public List<Course> getProfessorCourses( @RequestHeader("X-USER-ID") long ownerid) {
 		return courseDetailsImp.getProfessorCourses(ownerid);
 	}
-	@PostMapping("/course/owner/")
+	@PostMapping("/course/owner")
 	public Course addCourse(@RequestBody Course course, @RequestHeader("X-USER-ID") long ownerid){
 		return courseAdminImp.createCourse(course,ownerid);
 	}
