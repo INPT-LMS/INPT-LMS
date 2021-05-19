@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/consts/custom_colors.dart';
+import 'package:lms_flutter/model/posts/post_data.dart';
 
 import 'comment.dart';
 
 class Post extends StatelessWidget {
-  const Post({Key key}) : super(key: key);
+  PostData postData;
+  Post(this.postData, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +19,12 @@ class Post extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(5),
           child: Row(children: [
-            GestureDetector(child: CircleAvatar(backgroundImage: AssetImage("images/pic.jpg")),onTap: (){
-              Navigator.pushNamed(context, "/profile");
-            }),
+            GestureDetector(
+                child:
+                    CircleAvatar(backgroundImage: AssetImage("images/pic.jpg")),
+                onTap: () {
+                  Navigator.pushNamed(context, "/profile");
+                }),
             Expanded(
               child: Padding(
                   padding: const EdgeInsets.only(left: 20),

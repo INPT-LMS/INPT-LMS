@@ -60,7 +60,8 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
           title: Text('Se deconnecter'),
           onTap: () {
             getIt.get<AuthService>().logout();
-            Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
+            Navigator.pushNamedAndRemoveUntil(
+                context, "/login", (route) => false);
           }),
     ];
     return Scaffold(

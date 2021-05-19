@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lms_flutter/components/consts/custom_colors.dart';
-import 'package:lms_flutter/components/consts/message_position.dart';
-import 'package:lms_flutter/model/messages/message_data.dart';
+import 'package:lms_flutter/model/discussions/message_data.dart';
+import 'package:lms_flutter/screens/view_models/infos_model.dart';
+import 'package:provider/provider.dart';
 
 class Message extends StatelessWidget {
-  MessagePosition position;
   MessageData data;
-  Message(this.data, {Key key, this.position}) : super(key: key);
+  Message(this.data, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var isEmetteur = position == MessagePosition.emetteur;
+    var infos = Provider.of<InfosModel>(context, listen: false).userInfos;
+    var isEmetteur = infos.id == data.idEmetteur;
     return Align(
       alignment: isEmetteur ? Alignment.topRight : Alignment.topLeft,
       child: Container(

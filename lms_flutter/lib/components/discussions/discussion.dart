@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:lms_flutter/model/messages/discussion_data.dart';
+import 'package:lms_flutter/model/discussions/discussion_data.dart';
+import 'package:lms_flutter/screens/view_models/infos_model.dart';
+import 'package:provider/provider.dart';
 
 class Discussion extends StatelessWidget {
   DiscussionData data;
-  int userId;
   Discussion(
-    this.data,
-    this.userId, {
+    this.data, {
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var infos = Provider.of<InfosModel>(context, listen: false).userInfos;
     return ListTile(
-      title: Text(data.idParticipant1 == userId
+      title: Text(data.idParticipant1 == infos.id
           ? data.nomParticipant2
           : data.nomParticipant1),
       subtitle: Text(

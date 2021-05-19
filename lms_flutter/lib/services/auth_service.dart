@@ -23,9 +23,9 @@ class AuthService {
         : null;
   }
 
-  Future<http.Response> login(String email, String password) {
+  Future<bool> login(String email, String password) {
     int userId;
-    Future<http.Response> request = http
+    return http
         .post(Uri.parse(BaseUrl.URL_GATEWAY + "/account/auth"),
             headers: <String, String>{"Content-Type": "application/json"},
             body: jsonEncode(
@@ -50,19 +50,20 @@ class AuthService {
         default:
           throw UnknownException();
       }
-    });
-    request.then((response) {
+    }).then((response) {
       if (response.statusCode == 200) {
-        var infos = UserInfos.fromJson(jsonDecode(response.body));
+        var infos = UserInfos.fromJson(jsonDecode(response.body)["user"]);
         infos.id = userId;
         sharedPreferences.setString("userInfos", jsonEncode(infos));
+        return true;
       } else {
         sharedPreferences.remove("userToken");
+        return false;
       }
     }, onError: (e) {
       sharedPreferences.remove("userToken");
+      return false;
     });
-    return request;
   }
 
   Future<http.Response> register(UserRegisterForm form) {

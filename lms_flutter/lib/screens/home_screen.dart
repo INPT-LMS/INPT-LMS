@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lms_flutter/screens/liste_data.dart';
+import 'package:lms_flutter/components/posts/post.dart';
+import 'package:lms_flutter/model/posts/post_data.dart';
+import 'package:lms_flutter/screens/liste/liste_data.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 import 'package:lms_flutter/services/data_list/post_list_service.dart';
+import 'package:provider/provider.dart';
+
+import 'view_models/liste_data_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -14,6 +19,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseScaffoldAppBar(
-        body: ListeData(service: PostListService(), numberPerPage: 5));
+        body: ChangeNotifierProvider(
+            create: (context) => ListDataModel<PostData>(
+                <PostData>[], <Widget>[], (postData) => Post(postData)),
+            child: ListeData<PostData>(PostListService(), false)));
   }
 }

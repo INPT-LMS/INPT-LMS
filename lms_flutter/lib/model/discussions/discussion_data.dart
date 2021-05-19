@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:lms_flutter/model/messages/message_data.dart';
+import 'package:lms_flutter/model/discussions/message_data.dart';
 
 part 'discussion_data.g.dart';
 

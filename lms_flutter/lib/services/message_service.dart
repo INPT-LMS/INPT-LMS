@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:lms_flutter/model/consts/base_url.dart';
-import 'package:lms_flutter/model/messages/message_data.dart';
+import 'package:lms_flutter/model/discussions/message_data.dart';
 import 'package:lms_flutter/model/pagination/pagination_discussion.dart';
 import 'package:lms_flutter/model/pagination/pagination_message.dart';
 import 'package:lms_flutter/services/exceptions/authentication_exception.dart';
+import 'package:lms_flutter/services/exceptions/network_exception.dart';
 import 'package:lms_flutter/services/exceptions/not_found_exception.dart';
 import 'package:lms_flutter/services/exceptions/unknown_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,7 +51,11 @@ class MessageService {
   Future<List<String>> getDiscussionHasNewMessage() {
     loadToken();
     Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/messagebox/infos/new");
-    return http.get(url, headers: headers).then(
+
+    return http.get(url, headers: headers).timeout(Duration(seconds: 5),
+        onTimeout: () {
+      throw NetworkException();
+    }).then(
         (response) => jsonDecode(handleException(response)) as List<String>);
   }
 
@@ -58,7 +63,10 @@ class MessageService {
     loadToken();
     Uri url = Uri.parse(BaseUrl.URL_GATEWAY +
         "/messagebox/infos?page=$page&size=$size&sort=lastUpdate,desc");
-    return http.get(url, headers: headers).then((response) =>
+    return http.get(url, headers: headers).timeout(Duration(seconds: 5),
+        onTimeout: () {
+      throw NetworkException();
+    }).then((response) =>
         PaginationDiscussion.fromJson(jsonDecode(handleException(response))));
   }
 
@@ -67,7 +75,10 @@ class MessageService {
     loadToken();
     Uri url = Uri.parse(BaseUrl.URL_GATEWAY +
         "/messagebox/discussion/$discId?page=$page&size=$size&sort=date,desc");
-    return http.get(url, headers: headers).then((response) =>
+    return http.get(url, headers: headers).timeout(Duration(seconds: 5),
+        onTimeout: () {
+      throw NetworkException();
+    }).then((response) =>
         PaginationMessage.fromJson(jsonDecode(handleException(response))));
   }
 
@@ -76,8 +87,10 @@ class MessageService {
     Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/messagebox/discussion");
     return http
         .post(url, body: jsonEncode(message), headers: headers)
-        .then((value) {
-      if (value.statusCode != 200) throw "erreur";
+        .timeout(Duration(seconds: 5), onTimeout: () {
+      throw NetworkException();
+    }).then((value) {
+      if (value.statusCode != 200) throw UnknownException();
     });
   }
 }

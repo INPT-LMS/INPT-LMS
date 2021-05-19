@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/services/exceptions/authentication_exception.dart';
 import 'package:lms_flutter/services/exceptions/not_found_exception.dart';
 import 'package:lms_flutter/services/service_locator.dart';
+import 'package:provider/provider.dart';
 
 import '../services/auth_service.dart';
 
@@ -98,19 +100,18 @@ class _LoginPageState extends State<LoginPage> {
                     onPrimary: Colors.white, // foreground
                   ),
                   onPressed: () {
-                    getIt
-                        .get<AuthService>()
+                    var authService = getIt.get<AuthService>();
+                    authService
                         .login(mailController.text, passwordController.text)
-                        .then((response) {
-                      switch (response.statusCode) {
-                        case 200:
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/home', (Route<dynamic> route) => false);
-                          break;
-                        default:
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Une erreur s'est produite")));
-                      }
+                        .then((isOk) {
+                      if (isOk) {
+                        Provider.of<InfosModel>(context, listen: false)
+                            .userInfos = authService.userInfos;
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            '/home', (Route<dynamic> route) => false);
+                      } else
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("Une erreur s'est produite")));
                     }, onError: (e) {
                       if (e is AuthenticationException ||
                           e is NotFoundException)

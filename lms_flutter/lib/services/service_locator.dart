@@ -7,10 +7,14 @@ import 'message_service.dart';
 final getIt = GetIt.instance;
 
 void setup() async {
-  getIt.registerSingletonAsync<AuthService>(() async {
-    return AuthService(await SharedPreferences.getInstance());
-  });
-  getIt.registerSingletonAsync<MessageService>(() async {
-    return MessageService(await SharedPreferences.getInstance());
-  });
+  getIt.registerSingletonAsync<SharedPreferences>(
+      () => SharedPreferences.getInstance());
+
+  getIt.registerSingletonWithDependencies<AuthService>(
+      () => AuthService(getIt.get<SharedPreferences>()),
+      dependsOn: [SharedPreferences]);
+
+  getIt.registerSingletonWithDependencies<MessageService>(
+      () => MessageService(getIt.get<SharedPreferences>()),
+      dependsOn: [SharedPreferences]);
 }
