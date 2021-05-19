@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { catchError } from 'rxjs/operators';
 import { ClassService } from 'src/app/services/class.service';
 import { Class } from 'src/app/utils/Types';
 
@@ -16,7 +17,6 @@ export class FastLinksComponent implements OnInit {
 
   ngOnInit(): void {
     this.classService.getAllStudentCourses().subscribe((res: any) => {
-      // console.log(res);
       this.courses = res;
     });
   }
