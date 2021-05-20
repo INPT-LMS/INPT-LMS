@@ -12,6 +12,8 @@ import { CourseComponent } from '../course.component';
 export class AddPostComponent implements OnInit {
   @Input()
   class: Class;
+  @Input()
+  posts: Publication[];
 
   postForm = this.formBuilder.group({
     content: '',
@@ -22,6 +24,7 @@ export class AddPostComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.class = {};
+    this.posts = [];
   }
 
   ngOnInit(): void {
@@ -37,8 +40,11 @@ export class AddPostComponent implements OnInit {
       contenuPublication: content,
     };
     console.log(publication);
-    this.postService.addPublication(publication).subscribe((res: any) => {
-      console.log(res);
-    });
+    this.postService
+      .addPublication(publication)
+      .subscribe((res: Publication) => {
+        console.log(res);
+        this.posts.unshift(res);
+      });
   }
 }
