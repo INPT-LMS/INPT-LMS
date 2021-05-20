@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class CommentaireController {
 
-    private CommentaireService commentaireService;
+    private final CommentaireService commentaireService;
 
     @PostMapping("/commentaire")
-    public Commentaire addCommentaore(@RequestHeader(value = "X-USER-ID", required = false) String id_user,
+    public Commentaire addCommentaore(@RequestHeader(value = "X-USER-ID", required = false) Long id_user,
                                       @RequestBody(required = false) CommentaireDTO commentaireDTO){
-        if(id_user == null || id_user.equals("")) throw new BadRequestException("User id is missing");
+        if(id_user == null) throw new BadRequestException("User id is missing");
         if(commentaireDTO==null) throw new BadRequestException("Body is missing");
         return commentaireService.ajouterCommentaire(id_user, commentaireDTO);
     }

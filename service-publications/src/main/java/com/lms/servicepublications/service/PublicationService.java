@@ -49,19 +49,18 @@ public class PublicationService {
      * @return Publication
      */
     public List<Publication> recupererPublicationsParCours(UUID idCours){
-         List<Publication> publication = publicationRepository.findByidCoursOrderByDatePublicationDesc(idCours);
-         return publication;
+        return publicationRepository.findByidCoursOrderByDatePublicationDesc(idCours);
     }
 
     public HashMap<UUID,List<Publication>> recupererPublicationsParCours2(List<CoursBean> cours){
         HashMap<UUID,List<Publication>> PublicationsParCours = new HashMap<>();
         if(!(cours==null)){
-        for(int i = 0;i<cours.size();i++){
-            if(!(cours.get(i) ==null)){
-            PublicationsParCours.put(cours.get(i).getCourseID(),publicationRepository.findByidCoursOrderByDatePublicationDesc(cours.get(i).getCourseID()));
-            //  PublicationsParCours.put(cours.get(i).getCourseID(),publicationRepository.findByidCoursOrderByDatePublicationDesc(cours.get(i).getCourseID()).subList(0,limit-1));
-        }
-        }
+            for (CoursBean cour : cours) {
+                if (!(cour == null)) {
+                    PublicationsParCours.put(cour.getCourseID(), publicationRepository.findByidCoursOrderByDatePublicationDesc(cour.getCourseID()));
+                    //  PublicationsParCours.put(cours.get(i).getCourseID(),publicationRepository.findByidCoursOrderByDatePublicationDesc(cours.get(i).getCourseID()).subList(0,limit-1));
+                }
+            }
          return PublicationsParCours;
         }
         return PublicationsParCours;
@@ -86,7 +85,7 @@ public class PublicationService {
      * Fonction pour supprimer une publications par son id
      * @return String
      */
-    public String supprimerPublication(String id_user, String idPublication){
+    public String supprimerPublication(long id_user, String idPublication){
         Publication publication = publicationRepository.findPublicationByid(idPublication);
         if(!publication.getIdProprietaire().equals(id_user)) throw new UnauthorizedException("Action not authorized");
         commentaireService.supprimerCommentairesInPublication(publication.getCommentaires());

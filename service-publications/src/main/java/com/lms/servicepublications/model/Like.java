@@ -21,7 +21,7 @@ public class Like {
     private String idPublication;
     @CreatedDate
     private Date dateLike;
-    private String idProprietaire;
+    private Long idProprietaire;
 
 
 

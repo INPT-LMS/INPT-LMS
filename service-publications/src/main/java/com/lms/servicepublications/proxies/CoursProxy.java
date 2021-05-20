@@ -11,5 +11,5 @@ import java.util.List;
 public interface CoursProxy {
 
     @GetMapping("/public/student/courses")
-    public List<CoursBean> getIdCoursByStudent(@RequestHeader("X-USER-ID") long userID);
+    List<CoursBean> getIdCoursByStudent(@RequestHeader("X-USER-ID") long userID);
 }

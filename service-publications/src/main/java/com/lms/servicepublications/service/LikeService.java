@@ -17,11 +17,11 @@ import java.util.List;
 @AllArgsConstructor
 
 public class LikeService {
-    private LikeRepository likeRepository;
-    private PublicationRepository publicationRepository;
+    private final LikeRepository likeRepository;
+    private final PublicationRepository publicationRepository;
 
 
-    public Like ajouterLike(String user_id, LikeDTO likeDTO){
+    public Like ajouterLike(Long user_id, LikeDTO likeDTO){
         if(likeRepository.existsByIdProprietaireAndIdPublication(user_id, likeDTO.getIdPublication())) throw new ResourceAlreadyExists("You've already liked this post");
         Publication publication = publicationRepository.findById(likeDTO.getIdPublication()).orElseThrow(()->new ResourceNotFoundException("Publication not found"));
         Like like = new Like();
@@ -36,7 +36,7 @@ public class LikeService {
     }
 
 
-    public String supprimerLike(String id_user, String idLike){
+    public String supprimerLike(Long id_user, String idLike){
         Like like = likeRepository.findById(idLike).orElseThrow(()->new ResourceNotFoundException("Like not found"));
         String idPublication = like.getIdPublication();
         if(!like.getIdProprietaire().equals(id_user)) throw new UnauthorizedException("Action not authorized");
