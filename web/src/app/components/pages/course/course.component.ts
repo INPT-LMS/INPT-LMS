@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
-import { Class } from 'src/app/utils/Types';
+import { PostService } from 'src/app/services/post.service';
+import { Class, Publication } from 'src/app/utils/Types';
 
 @Component({
   selector: 'app-course',
@@ -10,11 +11,14 @@ import { Class } from 'src/app/utils/Types';
 })
 export class CourseComponent implements OnInit {
   class: Class;
+  posts: Publication[];
 
   constructor(
+    private postService: PostService,
     private localStorageService: LocalStorageService,
     private router: Router
   ) {
+    this.posts = [];
     this.class = {
       devoirs: [],
     };
@@ -26,5 +30,10 @@ export class CourseComponent implements OnInit {
     }
 
     this.class = history.state.class;
+    this.postService
+      .getClassPublications(this.class.courseID!)
+      .subscribe((response: any) => {
+        this.posts = response;
+      });
   }
 }

@@ -24,6 +24,9 @@ spec:
           env:
             - name: SERVER_PORT
               value: "8080"
+            - name: INPT_LMS_URL_SERVICE_COURS
+              value: "http://cours-service"
+
           ports:
             - containerPort: 8080
 ---

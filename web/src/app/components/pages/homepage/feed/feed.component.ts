@@ -10,34 +10,13 @@ import { Class, Publication } from 'src/app/utils/Types';
 export class FeedComponent implements OnInit {
   @Input()
   class: Class;
+  @Input()
   posts: Publication[];
 
-  constructor(private postService: PostService) {
+  constructor() {
     this.class = {};
     this.posts = [];
   }
 
-  ngOnInit(): void {
-    if (this.class.courseID) {
-      console.log("Publications d'un cours");
-      this.postService
-        .getClassPublications(this.class.courseID)
-        .subscribe((response: any) => {
-          console.log(response);
-          this.posts = response;
-        });
-    } else {
-      console.log('Publications du feed');
-      this.postService.getFeedPublications().subscribe((response: any) => {
-        // Publications par cours
-        const postsByCourses = Object.values(response);
-
-        postsByCourses.forEach((course: any) => {
-          course.forEach((post: Publication) => {
-            this.posts.push(post);
-          });
-        });
-      });
-    }
-  }
+  ngOnInit(): void {}
 }
