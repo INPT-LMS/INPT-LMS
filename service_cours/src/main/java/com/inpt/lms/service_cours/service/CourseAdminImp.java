@@ -23,9 +23,17 @@ public class CourseAdminImp implements CourseAdministration{
     MemberInterface memberInterface ;
     @Override
     public Course createCourse(Course course, long ownerID) {
-        Professor creator = professorInterface.findById(ownerID).orElse(new Professor(ownerID));
-        course.setOwner(creator);
-        courseInterface.save(course);
+        Optional<Professor> creator = professorInterface.findById(ownerID);
+        Professor creator1 = new Professor();
+        if(creator.isPresent()){
+            creator1 = creator.get();
+        }
+        else {
+            creator1.setProfessorID(ownerID);
+        }
+        professorInterface.save(creator1);
+        course.setOwner(creator1);
+
 
         Optional<Member> member = memberInterface.findById(ownerID);
         Member member1 = new Member();
@@ -42,7 +50,7 @@ public class CourseAdminImp implements CourseAdministration{
         member1.getCourses().add(course);
         memberInterface.save(member1);
 
-        professorInterface.save(creator);
+        courseInterface.save(course);
         return course;
     }
 
