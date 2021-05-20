@@ -87,15 +87,15 @@ import { AddCourseItemComponent } from './components/pages/homepage/fast-links/a
     }),
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: ApiInterceptor,
-    //   multi: true,
-    // },
-    // {
-    //   provide: ErrorHandler,
-    //   useClass: MyErrorsHandler,
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
+      multi: true,
+    },
+    {
+      provide: ErrorHandler,
+      useClass: MyErrorsHandler,
+    },
   ],
   bootstrap: [AppComponent],
 })
