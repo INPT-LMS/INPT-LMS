@@ -25,10 +25,25 @@ public class CourseAdminImp implements CourseAdministration{
     public Course createCourse(Course course, long ownerID) {
         Professor creator = professorInterface.findById(ownerID).orElse(new Professor(ownerID));
         course.setOwner(creator);
-        professorInterface.save(creator);
         courseInterface.save(course);
-        return course;
 
+        Optional<Member> member = memberInterface.findById(ownerID);
+        Member member1 = new Member();
+        if(!member.isPresent()){
+            member1.setMemberID(ownerID);
+        }
+        else {
+            member1 = member.get();
+        }
+
+        List<Member> students = course.getStudents();
+        students.add(member1);
+
+        member1.getCourses().add(course);
+        memberInterface.save(member1);
+
+        professorInterface.save(creator);
+        return course;
     }
 
 
