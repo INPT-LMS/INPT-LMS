@@ -22,7 +22,7 @@ public class LikeService {
 
 
     public Like ajouterLike(String user_id, LikeDTO likeDTO){
-        if(likeRepository.existsByIdProprietaire(user_id)) throw new ResourceAlreadyExists("You've already liked this post");
+        if(likeRepository.existsByIdProprietaireAndIdPublication(user_id, likeDTO.getIdPublication())) throw new ResourceAlreadyExists("You've already liked this post");
         Publication publication = publicationRepository.findById(likeDTO.getIdPublication()).orElseThrow(()->new ResourceNotFoundException("Publication not found"));
         Like like = new Like();
         like.setIdProprietaire(user_id);

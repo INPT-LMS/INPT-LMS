@@ -34,6 +34,16 @@ spec:
               value: "AKIATEP4X7GD2UXKHBOC"
             - name: AWS_SECRET_ACCESS_KEY
               value: "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"
+            - name: INPT_LMS_URL_SERVICE_COURS
+              value: "http://cours-service"
+            - name: INPT_LMS_URL_PUBLICATION_COURS
+              value: "http://posts-service"
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://database-lms-gestioncomptes.cdbanxnsyfzq.us-east-2.rds.amazonaws.com:3306/stockage"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "stockage"
+            - name: spring_datasource_PASSWORD
+              value: "stockage"
           ports:
             - containerPort: 8080
 ---

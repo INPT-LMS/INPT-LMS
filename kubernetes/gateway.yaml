@@ -37,7 +37,7 @@ spec:
             - name: INPT_LMS_URL_SERVICE_PUBLICATION
               value: "http://posts-service"
             - name: INPT_LMS_URL_FRONT_END
-              value: "http://167.172.12.223"
+              value: "http://167.172.12.22"
           ports:
             - containerPort: 8080
 ---

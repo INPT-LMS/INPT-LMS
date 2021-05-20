@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 
-@FeignClient(name = "cours", url="localhost:8306/public")
+@FeignClient(name = "cours", url="${inpt.lms.url.service.cours}")
 public interface CoursProxy {
 
-    @GetMapping("student/courses")
+    @GetMapping("/public/student/courses")
     public List<CoursBean> getIdCoursByStudent(@RequestHeader("X-USER-ID") long userID);
 }
