@@ -65,6 +65,7 @@ public class CourseAdminImp implements CourseAdministration{
         }
         Optional<Course> course = courseInterface.findById(courseID);
         if(course.isPresent()){
+            System.out.println("found course");
             Course course1 = course.get();
             List<Course> memberCourses = member1.getCourses();
             if(memberCourses.contains(course1)){
