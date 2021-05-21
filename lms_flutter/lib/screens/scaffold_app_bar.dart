@@ -92,7 +92,10 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
           IconButton(
               icon: Icon(Icons.settings),
               tooltip: "Parametres",
-              onPressed: () => {}),
+              onPressed: () => {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+              '/settings', (Route<dynamic> route) => false)
+              }),
         ],
       ),
       drawer: Drawer(
