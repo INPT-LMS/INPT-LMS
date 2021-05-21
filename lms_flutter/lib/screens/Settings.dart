@@ -15,30 +15,38 @@ class _SettingsCompState extends State<SettingsComp> {
   @override
   Widget build(BuildContext context) {
     return BaseScaffoldAppBar(
-      body: Column(
-        children: [
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.only(
+                top: 24
+              ),
+                child: ProfilePic()),
           Container(
-            padding: EdgeInsets.only(
-              top: 24
-            ),
-              child: ProfilePic()),
-        Container(
-          padding: EdgeInsets.all(12),
-          child: Text("Hello, My name",
-          style: TextStyle(
-            fontSize: 24
-          ),),
-        ),
-          Container(
-            padding: EdgeInsets.all(24),
-            child: ExpansionTile(
-              title: Text("Settings category"),
-              children: [
-                for(var i = 0 ; i < 3 ; i++)  SettingsElement()
-              ],
-            ),
+            padding: EdgeInsets.all(12),
+            child: Text("Hello, My name",
+            style: TextStyle(
+              fontSize: 24
+            ),),
           ),
-        ],
+            Container(
+
+              padding: EdgeInsets.all(24),
+              child: ExpansionTile(
+                title: Text("Settings category"),
+                children: [
+                 ListView(
+                   shrinkWrap: true,
+                   children: [
+                     for(var i = 0 ; i < 3 ; i++)  SettingsElement()
+                   ],
+                 )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
