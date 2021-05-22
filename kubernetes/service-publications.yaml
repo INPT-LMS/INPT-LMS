@@ -23,7 +23,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: SERVER_PORT
-              value: "8080"
+              value: "8305"
           ports:
             - containerPort: 8080
 ---
