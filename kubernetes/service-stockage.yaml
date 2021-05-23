@@ -31,9 +31,9 @@ spec:
             - name: SPRING_DATASOURCE_PASSWORD
               value: "stockage"
             - name: AWS_ACCESS_KEY_ID
-              value: "AKIATEP4X7GD2UXKHBOC"
+              value: ""
             - name: AWS_SECRET_ACCESS_KEY
-              value: "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"
+              value: ""
             - name: INPT_LMS_URL_SERVICE_COURS
               value: "http://cours-service"
             - name: INPT_LMS_URL_PUBLICATION_COURS

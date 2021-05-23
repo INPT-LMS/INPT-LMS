@@ -22,7 +22,7 @@ public class Commentaire {
     @CreatedDate
     private Date dateCommentaire;
     private String contenuCommentaire;
-    private String idProprietaire;
+    private Long idProprietaire;
 
 
 

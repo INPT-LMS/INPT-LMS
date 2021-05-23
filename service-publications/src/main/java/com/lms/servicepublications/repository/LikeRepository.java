@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LikeRepository extends MongoRepository<Like, String> {
     boolean existsByIdProprietaire(String idProprietaire);
-    boolean existsByIdProprietaireAndIdPublication(String idProprietaire, String idPublication);
+    boolean existsByIdProprietaireAndIdPublication(Long idProprietaire, String idPublication);
 }
