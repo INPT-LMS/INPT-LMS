@@ -20,18 +20,22 @@ export class HomepageComponent implements OnInit {
     this.posts = [];
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (!this.localStorageService.get('userToken')) {
       this.router.navigate(['/']);
     }
-    this.postService.getFeedPublications().subscribe((response: any) => {
-      const postsByCourses = Object.values(response);
+
+    try {
+      const res = await this.postService.getFeedPublications();
+      const postsByCourses = Object.values(res);
 
       postsByCourses.forEach((course: any) => {
         course.forEach((post: Publication) => {
           this.posts.push(post);
         });
       });
-    });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

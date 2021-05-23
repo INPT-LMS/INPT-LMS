@@ -25,18 +25,9 @@ export class AssignmentService {
    * Récupère tous les devoirs d'un cours
    */
   getDevoirsForClass(classId: string) {
-    let headers = new HttpHeaders();
-    headers.append('Authorization', 'Bearer ' + 'tst');
-    this.httpOptions = {
-      headers: headers,
-    };
     return this.http
       .get(`/assignment/devoirs/${classId}`, this.httpOptions)
-      .pipe(
-        catchError((err) => {
-          return of(err);
-        })
-      );
+      .toPromise();
   }
 
   /**
@@ -45,11 +36,7 @@ export class AssignmentService {
   getDevoir(classId: string, devoirId: number) {
     return this.http
       .get(`/assignment/devoirs/${classId}/${devoirId}`, this.httpOptions)
-      .pipe(
-        catchError((err) => {
-          return of(err);
-        })
-      );
+      .toPromise();
   }
 
   /**
@@ -58,11 +45,7 @@ export class AssignmentService {
   addDevoir(classId: string, devoir: Devoir) {
     return this.http
       .post(`/assignment/devoirs/${classId}`, devoir, this.httpOptions)
-      .pipe(
-        catchError((err) => {
-          return of(err);
-        })
-      );
+      .toPromise();
   }
 
   /**
@@ -75,11 +58,7 @@ export class AssignmentService {
         renduDevoir,
         this.httpOptions
       )
-      .pipe(
-        catchError((err) => {
-          return of(err);
-        })
-      );
+      .toPromise();
   }
 
   /**
@@ -97,10 +76,6 @@ export class AssignmentService {
         note,
         this.httpOptions
       )
-      .pipe(
-        catchError((err) => {
-          return of(err);
-        })
-      );
+      .toPromise();
   }
 }

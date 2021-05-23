@@ -39,47 +39,51 @@ export class PostComponent implements OnInit {
     this.isLiked = false;
   }
 
-  ngOnInit(): void {
-    this.accountService
-      .getUser(<number>this.post.idProprietaire)
-      .subscribe((res: any) => {
-        this.user = res.user;
-      });
+  async ngOnInit(): Promise<void> {
+    const idProprietaire = this.post.idProprietaire!;
+    try {
+      const res: any = await this.accountService.getUser(idProprietaire);
+      this.user = res.user;
+    } catch (error: any) {
+      console.log('error:' + error.message);
+    }
 
     const myId = parseInt(this.localStorageService.get('userId')!);
     this.myLike = this.post.likes?.find((like) => like.idProprietaire == myId);
     this.isLiked = !!this.myLike;
   }
 
-  like() {
+  async like() {
     const idPub = this.post.id;
-    if (!this.isLiked && !this.myLike?.id) {
-      this.postService
-        .addLike({ idPublication: idPub })
-        .subscribe((res: any) => {
-          this.myLike = {
-            id: res.id,
-            dateLike: res.dateLike,
-            idProprietaire: res.idProprietaire,
-            idPublication: res.idPublication,
-          };
-          this.post.likes!.push(this.myLike);
-          this.isLiked = true;
+    try {
+      if (!this.isLiked && !this.myLike?.id) {
+        const res: any = await this.postService.addLike({
+          idPublication: idPub,
         });
-    } else {
-      this.postService.deleteLike(this.myLike!.id!).subscribe((res: any) => {
+        this.myLike = {
+          id: res.id,
+          dateLike: res.dateLike,
+          idProprietaire: res.idProprietaire,
+          idPublication: res.idPublication,
+        };
+        this.post.likes!.push(this.myLike);
+        this.isLiked = true;
+      } else {
+        const res: any = await this.postService.deleteLike(this.myLike!.id!);
         this.post.likes = this.post.likes?.filter((like) => {
           like.id != this.myLike!.id!;
         });
         this.isLiked = false;
         this.myLike = {};
-      });
+      }
+      console.log(this.post.likes);
+      console.log(this.myLike);
+    } catch (error) {
+      console.log(error);
     }
-    console.log(this.post.likes);
-    console.log(this.myLike);
   }
 
-  onSubmit(event: Event) {
+  async onSubmit(event: Event) {
     event.preventDefault();
 
     const idProprietaire = parseInt(this.localStorageService.get('userId')!);
@@ -92,8 +96,11 @@ export class PostComponent implements OnInit {
       contenuCommentaire,
     };
 
-    this.postService.addCommentaire(payload).subscribe((res: any) => {
+    try {
+      const res = await this.postService.addCommentaire(payload);
       this.post.commentaires?.unshift(payload);
-    });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

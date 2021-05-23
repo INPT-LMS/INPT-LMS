@@ -39,34 +39,36 @@ export class LoginFormComponent implements OnInit {
   ngOnInit(): void {}
 
   // Login the user
-  onSubmit(event: Event) {
+  async onSubmit(event: Event) {
     event.preventDefault();
 
-    this.accountService
-      .loginUser(this.loginForm.value)
-      .subscribe((response: any) => {
-        if (response.error || !response.user) {
-          this.errorHandler.handleError(response);
-          this.store.dispatch({ type: USER_ERROR, payload: response.error });
-          return;
-        }
+    try {
+      const res: any = await this.accountService.loginUser(
+        this.loginForm.value
+      );
+      if (res.error || !res.user) {
+        this.store.dispatch({ type: USER_ERROR, payload: res.error });
+        throw res.error;
+      }
 
-        const {
-          user: { id, email, token },
-          message,
-        } = response;
-        this.localStorageService.set('userToken', token);
-        this.localStorageService.set('userId', id);
+      const {
+        user: { id, email, token },
+        message,
+      } = res;
+      this.localStorageService.set('userToken', token);
+      this.localStorageService.set('userId', id);
 
-        // TODO dispatch user infos
-        const payload = {
-          id,
-          email,
-        };
+      // TODO dispatch user infos
+      const payload = {
+        id,
+        email,
+      };
 
-        this.store.dispatch({ type: LOGIN_USER, payload: payload });
-        this.router.navigate(['/feed']);
-        return;
-      });
+      this.store.dispatch({ type: LOGIN_USER, payload: payload });
+      this.router.navigate(['/feed']);
+      return;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

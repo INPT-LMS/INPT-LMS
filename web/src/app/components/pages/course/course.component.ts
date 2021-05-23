@@ -24,16 +24,20 @@ export class CourseComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (!this.localStorageService.get('userToken') || !history.state.class) {
       this.router.navigate(['/']);
     }
 
     this.class = history.state.class;
-    this.postService
-      .getClassPublications(this.class.courseID!)
-      .subscribe((response: any) => {
-        this.posts = response;
-      });
+
+    try {
+      const res: any = await this.postService.getClassPublications(
+        this.class.courseID!
+      );
+      this.posts = res;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

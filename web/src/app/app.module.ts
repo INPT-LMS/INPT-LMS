@@ -92,10 +92,10 @@ import { AddCourseItemComponent } from './components/pages/homepage/fast-links/a
       useClass: ApiInterceptor,
       multi: true,
     },
-    {
-      provide: ErrorHandler,
-      useClass: MyErrorsHandler,
-    },
+    // {
+    //   provide: ErrorHandler,
+    //   useClass: MyErrorsHandler,
+    // },
   ],
   bootstrap: [AppComponent],
 })
