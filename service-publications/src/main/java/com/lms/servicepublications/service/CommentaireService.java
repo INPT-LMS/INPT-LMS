@@ -16,15 +16,15 @@ import java.util.List;
 @AllArgsConstructor
 public class CommentaireService {
 
-    private CommentaireRepository commentaireRepository;
-    private PublicationRepository publicationRepository;
+    private final CommentaireRepository commentaireRepository;
+    private final PublicationRepository publicationRepository;
 
 
     /**
      * Fonction pour ajouter un commentaire
      * @return String
      */
-    public Commentaire ajouterCommentaire(String id_user, CommentaireDTO commentaireDTO){
+    public Commentaire ajouterCommentaire(Long id_user, CommentaireDTO commentaireDTO){
         Publication publication = publicationRepository.findById(commentaireDTO.getIdPublication()).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
         Commentaire commentaire = new Commentaire();
         commentaire.setIdProprietaire(id_user);
