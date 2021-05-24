@@ -10,6 +10,8 @@ import com.lms.servicepublications.model.Like;
 import com.lms.servicepublications.model.Publication;
 import com.lms.servicepublications.repository.PublicationRepository;
 import lombok.AllArgsConstructor;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -86,12 +88,12 @@ public class PublicationService {
      * @return String
      */
     public String supprimerPublication(long id_user, String idPublication){
-        Publication publication = publicationRepository.findPublicationByid(idPublication);
-        if(!publication.getIdProprietaire().equals(id_user)) throw new UnauthorizedException("Action not authorized");
+        Publication publication = publicationRepository.findById(idPublication).orElseThrow(()->new ResourceNotFoundException("Requested publication is not found."));
+        if(!(publication.getIdProprietaire().equals(id_user))) throw new UnauthorizedException("Action not authorized");
         commentaireService.supprimerCommentairesInPublication(publication.getCommentaires());
         likeService.supprimerLikesInPublication(publication.getLikes());
         publicationRepository.deleteById(idPublication);
-        return "Publication supprimée avec succées";
+        return "{\"Message\":\"Publication supprimée avec succès\"}";
     }
 
 

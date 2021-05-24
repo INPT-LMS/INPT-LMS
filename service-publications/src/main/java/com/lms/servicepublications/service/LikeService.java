@@ -49,7 +49,7 @@ public class LikeService {
         }
         likeRepository.deleteById(idLike);
         publicationRepository.save(publication);
-        return "Like supprimé avec succèes";
+        return "{\"Message\":\"Like supprimé avec succès\"}";
     }
 
     public void supprimerLikesInPublication(List<Like> likes){
