@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AccountService } from 'src/app/services/account.service';
 import { ClassService } from 'src/app/services/class.service';
@@ -16,11 +16,14 @@ export class PostComponent implements OnInit {
     comment: '',
   });
   @Input()
+  deletePostById: (_: string) => void = (_: string) => {};
+  @Input()
   post: Publication;
   user: User;
   class: any;
   myLike?: Like;
   isLiked: boolean;
+  myPost: boolean;
 
   constructor(
     private accountService: AccountService,
@@ -37,6 +40,7 @@ export class PostComponent implements OnInit {
     this.class = {};
     this.myLike = {};
     this.isLiked = false;
+    this.myPost = false;
   }
 
   async ngOnInit(): Promise<void> {
@@ -49,6 +53,8 @@ export class PostComponent implements OnInit {
     }
 
     const myId = parseInt(this.localStorageService.get('userId')!);
+    this.myPost = this.post.idProprietaire === myId;
+
     this.myLike = this.post.likes?.find((like) => like.idProprietaire == myId);
     this.isLiked = !!this.myLike;
   }
@@ -76,10 +82,21 @@ export class PostComponent implements OnInit {
         this.isLiked = false;
         this.myLike = {};
       }
-      console.log(this.post.likes);
-      console.log(this.myLike);
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async deletePost() {
+    const postId = this.post.id!;
+    try {
+      const res = await this.postService.deletePublication(postId);
+      this.deletePostById(postId);
+    } catch (error) {
+      // FIXME Le client reçoit une erreur même si la suppression passe quand même
+      console.log(error);
+    } finally {
+      this.deletePostById(postId);
     }
   }
 
@@ -97,7 +114,7 @@ export class PostComponent implements OnInit {
     };
 
     try {
-      const res = await this.postService.addCommentaire(payload);
+      await this.postService.addCommentaire(payload);
       this.post.commentaires?.unshift(payload);
     } catch (error) {
       console.log(error);

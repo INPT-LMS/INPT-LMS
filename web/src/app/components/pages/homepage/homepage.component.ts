@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { PostService } from 'src/app/services/post.service';
@@ -10,6 +10,7 @@ import { Publication } from 'src/app/utils/Types';
   styleUrls: ['./homepage.component.css'],
 })
 export class HomepageComponent implements OnInit {
+  @Output()
   posts: Publication[];
 
   constructor(

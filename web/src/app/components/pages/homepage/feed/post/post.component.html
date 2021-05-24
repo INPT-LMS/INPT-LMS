@@ -19,6 +19,16 @@
       <span class="date mt-2 text-muted">
         {{ post.datePublication | date }}
       </span>
+
+      <!-- Options menu -->
+      <div *ngIf="myPost" ngbDropdown class="d-inline-block settings">
+        <button class="btn link" ngbDropdownToggle></button>
+        <div ngbDropdownMenu>
+          <button (click)="deletePost()" ngbDropdownItem>
+            Supprimer la publication
+          </button>
+        </div>
+      </div>
     </div>
     <p class="card-text mt-4">
       <!-- body -->
