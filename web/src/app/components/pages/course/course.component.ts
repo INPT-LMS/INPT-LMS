@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ClassService } from 'src/app/services/class.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { PostService } from 'src/app/services/post.service';
 import { Class, Publication } from 'src/app/utils/Types';
@@ -15,6 +16,7 @@ export class CourseComponent implements OnInit {
 
   constructor(
     private postService: PostService,
+    private classService: ClassService,
     private localStorageService: LocalStorageService,
     private router: Router
   ) {
@@ -36,6 +38,21 @@ export class CourseComponent implements OnInit {
         this.class.courseID!
       );
       this.posts = res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async deleteClass() {
+    try {
+      const res: any = await this.classService.deleteCourse(
+        this.class.courseID!
+      );
+      if (res === true) {
+        this.router.navigate(['/']);
+      } else {
+        throw 'An error occured';
+      }
     } catch (error) {
       console.log(error);
     }

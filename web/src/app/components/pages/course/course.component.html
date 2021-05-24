@@ -1,5 +1,6 @@
 <app-course-cover
   [title]="class.courseName ? class.courseName : ''"
+  [deleteClass]="deleteClass.bind(this)"
 ></app-course-cover>
 <div class="course-color">
   <div class="container">
