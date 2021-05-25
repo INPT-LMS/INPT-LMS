@@ -1,15 +1,19 @@
 <div class="comment card-footer">
   <div class="d-flex align-items-start">
     <!-- Profile pic -->
-    <img
-      class="rounded-circle"
-      width="40px"
-      src="https://picsum.photos/200"
-      alt=""
-    />
+    <app-user-link [userId]="user.id!">
+      <img
+        class="rounded-circle"
+        width="40px"
+        src="https://picsum.photos/200"
+        alt=""
+      />
+    </app-user-link>
     <div class="mx-3 align-self-center flex-grow-1">
       <!-- Profile -->
-      <h6 class="card-title">{{ user.nom }} {{ user.prenom }}</h6>
+      <app-user-link [userId]="user.id!">
+        <h6 class="card-title">{{ user.nom }} {{ user.prenom }}</h6>
+      </app-user-link>
       <!-- Course -->
       <p class="comment-body">
         {{ commentaire.contenuCommentaire }}

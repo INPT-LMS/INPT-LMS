@@ -1,32 +1,36 @@
 <div class="card">
   <div class="card-body">
-    <div class="d-flex align-items-start">
+    <div class="d-flex justify-content-between align-items-start">
       <!-- Profile pic -->
-      <img
-        class="rounded-circle"
-        width="70px"
-        src="https://picsum.photos/200"
-        alt=""
-      />
-      <div class="mx-3 align-self-center flex-grow-1">
-        <!-- Profile -->
-        <!-- <h5 class="card-title">John Doe</h5> -->
-        <h5 class="card-title">{{ user.nom }} {{ user.prenom }}</h5>
-        <!-- TODO fetch course -->
-        <!-- <span class="from">from : {{ class.courseName }}</span> -->
-      </div>
-      <!-- Date -->
-      <span class="date mt-2 text-muted">
-        {{ post.datePublication | date }}
-      </span>
 
-      <!-- Options menu -->
-      <div *ngIf="myPost" ngbDropdown class="d-inline-block settings">
-        <button class="btn link" ngbDropdownToggle></button>
-        <div ngbDropdownMenu>
-          <button (click)="deletePost()" ngbDropdownItem>
-            Supprimer la publication
-          </button>
+      <app-user-link [userId]="post.idProprietaire!">
+        <img
+          class="rounded-circle"
+          width="70px"
+          src="https://picsum.photos/200"
+          alt=""
+        />
+        <div class="mx-3 align-self-center flex-grow-1">
+          <!-- Profile -->
+          <h5 class="card-title">{{ user.nom }} {{ user.prenom }}</h5>
+          <!-- TODO fetch course -->
+          <!-- <span class="from">from : {{ class.courseName }}</span> -->
+        </div>
+      </app-user-link>
+      <div class="d-flex">
+        <!-- Date -->
+        <span class="date mt-2 text-muted">
+          {{ post.datePublication | date }}
+        </span>
+
+        <!-- Options menu -->
+        <div *ngIf="myPost" ngbDropdown class="d-inline-block settings">
+          <button class="btn link" ngbDropdownToggle></button>
+          <div ngbDropdownMenu>
+            <button (click)="deletePost()" ngbDropdownItem>
+              Supprimer la publication
+            </button>
+          </div>
         </div>
       </div>
     </div>

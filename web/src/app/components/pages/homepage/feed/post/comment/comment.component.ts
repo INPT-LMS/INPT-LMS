@@ -25,6 +25,7 @@ export class CommentComponent implements OnInit {
     try {
       const res: any = await this.accountService.getUser(userId);
       this.user = res.user;
+      this.user.id = userId;
     } catch (error) {
       console.log(error);
     }

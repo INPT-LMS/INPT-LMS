@@ -10,6 +10,7 @@ import { LoginComponent } from './components/pages/login/login.component';
 import { ConversationComponent } from './components/pages/messaging/conversation/conversation.component';
 import { MessagingComponent } from './components/pages/messaging/messaging.component';
 import { SignupComponent } from './components/pages/signup/signup.component';
+import { UserComponent } from './components/pages/user/user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,6 +22,11 @@ const routes: Routes = [
     path: 'messaging',
     component: MessagingComponent,
     children: [{ path: ':id', component: ConversationComponent }],
+  },
+  {
+    path: 'user',
+    component: UserComponent,
+    children: [{ path: ':id', component: UserComponent }],
   },
   {
     path: 'account',

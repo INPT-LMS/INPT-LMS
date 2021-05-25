@@ -40,6 +40,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { MessageItemComponent } from './components/pages/messaging/messages/message-item/message-item.component';
 import { AddCourseItemComponent } from './components/pages/homepage/fast-links/add-course-item/add-course-item.component';
+import { UserComponent } from './components/pages/user/user.component';
+import { UserLinkComponent } from './components/user-link/user-link.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,8 @@ import { AddCourseItemComponent } from './components/pages/homepage/fast-links/a
     LoginFormComponent,
     MessageItemComponent,
     AddCourseItemComponent,
+    UserComponent,
+    UserLinkComponent,
   ],
   imports: [
     BrowserModule,
