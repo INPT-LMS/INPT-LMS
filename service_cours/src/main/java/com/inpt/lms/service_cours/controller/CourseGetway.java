@@ -26,8 +26,11 @@ public class CourseGetway {
 		return courseDetailsImp.getProfessorCourses(ownerid);
 	}
 	@GetMapping("/course/{courseID}")
-	public Course getCourseByID( @PathVariable UUID courseID,@RequestHeader("X-USER-ID") long userID) {
-		return courseVisibility.getCourseByID(courseID,userID);
+	public Serializable getCourseByID(@PathVariable UUID courseID, @RequestHeader("X-USER-ID") long userID) {
+		if(courseDetailsImp.isMember(courseID,userID)){
+			courseVisibility.getCourseByID(courseID,userID);
+		}
+		return HttpStatus.UNAUTHORIZED;
 	}
 	@PostMapping("/course/owner")
 	public Course addCourse(@RequestBody Course course, @RequestHeader("X-USER-ID") long ownerid){
