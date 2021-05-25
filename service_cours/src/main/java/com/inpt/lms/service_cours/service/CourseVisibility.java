@@ -9,5 +9,6 @@ import java.util.UUID;
 public interface CourseVisibility {
     public Visibility getCourseVisibility(UUID courseID);
     public List<Course> getPublicCourses(Visibility v);
+    public Course getCourseByID(UUID courseID,long userID);
     public Visibility setCourseVisibility(UUID courseID , int  visibilityID);
 }

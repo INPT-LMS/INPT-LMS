@@ -54,6 +54,10 @@ public class CourseAdminImp implements CourseAdministration{
         return course;
     }
 
+    @Override
+    public List<Course> getAllCourses() {
+        return courseInterface.findAll();
+    }
 
 
     @Override
