@@ -25,7 +25,7 @@ public class Course implements Serializable{
 	 @JoinColumn(name = "professorid", nullable = false)
 	 @JsonIgnore
 	private Professor owner ;
-	 @ManyToMany(mappedBy="courses" , fetch = FetchType.LAZY)
+	 @ManyToMany(mappedBy="courses" , fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
 	private Set<Member> students = new HashSet<>();
 
 	public Course() {
