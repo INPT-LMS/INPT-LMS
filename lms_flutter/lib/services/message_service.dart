@@ -5,48 +5,14 @@ import 'package:lms_flutter/model/consts/base_url.dart';
 import 'package:lms_flutter/model/discussions/message_data.dart';
 import 'package:lms_flutter/model/pagination/pagination_discussion.dart';
 import 'package:lms_flutter/model/pagination/pagination_message.dart';
-import 'package:lms_flutter/services/exceptions/authentication_exception.dart';
 import 'package:lms_flutter/services/exceptions/network_exception.dart';
-import 'package:lms_flutter/services/exceptions/not_found_exception.dart';
 import 'package:lms_flutter/services/exceptions/unknown_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MessageService {
-  SharedPreferences sharedPreferences;
-  String token;
-  Map<String, String> headers;
+import 'base_service.dart';
 
-  MessageService(this.sharedPreferences);
-
-  void loadToken() {
-    if (token != null) {
-      return;
-    } else if (!sharedPreferences.containsKey("userToken")) {
-      throw new AuthenticationException();
-    } else {
-      token = sharedPreferences.getString("userToken");
-      headers = <String, String>{
-        "Content-Type": "application/json; charset=UTF-8",
-        "Authorization": "Bearer $token"
-      };
-    }
-  }
-
-  String handleException(http.Response response) {
-    switch (response.statusCode) {
-      case 200:
-        return utf8.decode(response.bodyBytes);
-        break;
-      case 401:
-        throw AuthenticationException();
-        break;
-      case 404:
-        throw NotFoundException();
-        break;
-      default:
-        throw UnknownException();
-    }
-  }
+class MessageService extends BaseService{
+  MessageService(SharedPreferences sharedPreferences) : super(sharedPreferences);
 
   Future<List<String>> getDiscussionHasNewMessage() {
     loadToken();

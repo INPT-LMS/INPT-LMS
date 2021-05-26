@@ -4,12 +4,12 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lms_flutter/mock_components/mock_home_screen.dart';
 import 'package:lms_flutter/screens/CoursePage.dart';
 import 'package:lms_flutter/screens/LoginPage.dart';
 import 'package:lms_flutter/screens/ProfilePage.dart';
 import 'package:lms_flutter/screens/SignUpPage.dart';
 import 'package:lms_flutter/screens/discussion_screen.dart';
-import 'package:lms_flutter/screens/home_screen.dart';
 import 'package:lms_flutter/screens/liste_discussion_screen.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/services/auth_service.dart';
@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
           '/login': (context) => LoginPage(),
           '/signup': (context) => SignUpPage(),
-          '/home': (context) => HomeScreen(),
+          '/home': (context) => HomeScreenStatique(),
           '/course': (context) => CoursePage(),
           '/profile': (context) => Profile(),
           '/messages': (context) => ListeDiscussionScreen(),

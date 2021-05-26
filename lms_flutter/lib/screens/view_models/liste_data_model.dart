@@ -7,6 +7,13 @@ class ListDataModel<T> extends ChangeNotifier {
 
   ListDataModel(this.listeData, this.listeWidgets, this.dataToWidget);
 
+  void deleteWhere(bool Function(T item) findWhere) {
+    var index = listeData.indexWhere(findWhere);
+    listeData.removeAt(index);
+    listeWidgets.removeAt(index);
+    notifyListeners();
+  }
+
   void addFirst(T item) {
     listeData.insert(0, item);
     listeWidgets.insert(0, dataToWidget(item));

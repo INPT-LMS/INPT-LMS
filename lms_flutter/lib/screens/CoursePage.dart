@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:lms_flutter/components/course_elements/AddPost.dart';
 import 'package:lms_flutter/components/course_elements/course_settings.dart';
-import 'package:lms_flutter/components/posts/post.dart';
-import 'package:lms_flutter/model/posts/post_data.dart';
+import 'package:lms_flutter/mock_components/mock_post.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 
 class CoursePage extends StatefulWidget {
@@ -16,7 +15,6 @@ class CoursePage extends StatefulWidget {
 }
 
 class _CoursePageState extends State<CoursePage> {
-  var posts = ["Post 1 ", "Post 2 ", "Post 3"];
   @override
   Widget build(BuildContext context) {
     return BaseScaffoldAppBar(
@@ -56,8 +54,8 @@ class _CoursePageState extends State<CoursePage> {
                   child: AddPost(),
                 ),
                 Column(
-                  children: <Widget>[for (var post in posts) Post(PostData())],
-                )
+                    children: List<PostStatique>.generate(
+                        3, (index) => PostStatique()))
               ],
             ),
           ),

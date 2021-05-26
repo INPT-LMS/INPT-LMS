@@ -1,8 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:lms_flutter/components/consts/custom_colors.dart';
-import 'package:lms_flutter/model/posts/post_data.dart';
+import 'dart:convert';
 
-import 'comment.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:lms_flutter/components/consts/custom_colors.dart';
+import 'package:lms_flutter/components/posts/like_comment.dart';
+import 'package:lms_flutter/model/posts/post_data.dart';
+import 'package:lms_flutter/screens/view_models/infos_model.dart';
+import 'package:lms_flutter/screens/view_models/liste_data_model.dart';
+import 'package:lms_flutter/services/auth_service.dart';
+import 'package:lms_flutter/services/post_service.dart';
+import 'package:lms_flutter/services/service_locator.dart';
+import 'package:provider/provider.dart';
 
 class Post extends StatelessWidget {
   PostData postData;
@@ -10,12 +18,18 @@ class Post extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var infos = Provider.of<InfosModel>(context, listen: false).userInfos;
+    var authService = getIt.get<AuthService>();
+    var postService = getIt.get<PostService>();
+    var userLike = postData.likes.firstWhere(
+        (like) => like.idProprietaire == infos.id,
+        orElse: () => null);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       decoration: BoxDecoration(
           border: Border.all(color: CustomColors.LIGHT_BLACK),
           borderRadius: BorderRadius.all(Radius.circular(5.0))),
-      child: Column(children: [
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Padding(
           padding: const EdgeInsets.all(5),
           child: Row(children: [
@@ -31,7 +45,15 @@ class Post extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Oscar Mingueza", style: TextStyle(fontSize: 15)),
+                        FutureBuilder(
+                            builder: (context, snapshot) => Text(
+                                snapshot.hasData ? snapshot.data : "",
+                                style: TextStyle(fontSize: 15)),
+                            future: authService
+                                .getUserInfos(postData.idProprietaire)
+                                .then((response) =>
+                                    jsonDecode(response.body)["user"]["nom"]
+                                        as String)),
                         GestureDetector(
                             onTap: () {
                               if (ModalRoute.of(context).settings.name !=
@@ -39,41 +61,43 @@ class Post extends StatelessWidget {
                                 Navigator.pushNamed(context, "/course");
                               }
                             },
-                            child: Text("from: Flutter course community",
-                                style:
-                                    TextStyle(fontSize: 15, color: Colors.red)))
+                            child: FutureBuilder(
+                                builder: (context, snapshot) => Text(
+                                    snapshot.hasData
+                                        ? "Course ${snapshot.data}"
+                                        : "",
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.red)),
+                                future: Future<String>(() async {
+                                  //TODO recuperer le nom du cours
+                                  await Future.delayed(Duration(seconds: 2));
+                                  return "test cours";
+                                })))
                       ])),
             ),
             Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Text(
-                  "14 juin 2021",
+                  DateFormat.yMd().add_Hm().format(postData.datePublication),
                   style: TextStyle(fontSize: 12),
                 ))
           ]),
         ),
         Container(
-          margin: EdgeInsets.all(10),
-          child: Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-              "Curabitur consequat lacus ut magna lobortis, in convallis neque aliquet."
-              " In id placerat sapien. Nunc accumsan velit congue ante sodales, "
-              "vitae accumsan ligula faucibus. Nulla ligula felis, placerat ut turpis et, "
-              "rhoncus imperdiet ex. Curabitur fermentum magna vel lacinia accumsan. "
-              "Nullam pharetra magna in leo dignissim, eu condimentum libero venenatis. "
-              "Vestibulum cursus risus nibh, ac convallis neque malesuada quis. "
-              "Etiam consectetur risus elementum viverra lobortis. Etiam ut ipsum sed lacus consequat finibus. "
-              "Curabitur consequat dolor laoreet eros porta sollicitudin. Nam rutrum est eget rutrum pretium."),
-        ),
-        Row(children: [
-          IconButton(
-              icon: Icon(Icons.favorite, color: Colors.red), onPressed: () {}),
-          Container(margin: EdgeInsets.only(left: 5), child: Text("15")),
-          IconButton(
-              icon: Icon(Icons.comment, color: Colors.blue), onPressed: () {}),
-          Container(margin: EdgeInsets.only(left: 5), child: Text("2"))
-        ]),
-        Comment()
+            margin: EdgeInsets.all(10),
+            child: Text(postData.contenuPublication)),
+        if (postData.idProprietaire == infos.id)
+          TextButton(
+              child: Text("Supprimer", style: TextStyle(color: Colors.red)),
+              onPressed: () {
+                postService.removePost(postData.id).then((value) {
+                  var listModele = Provider.of<ListDataModel<PostData>>(context,
+                      listen: false);
+                  listModele.deleteWhere((item) => item.id == postData.id);
+                });
+              }),
+        LikeComment(
+            postData.id, postData.likes.length, userLike, postData.commentaires)
       ]),
     );
   }
