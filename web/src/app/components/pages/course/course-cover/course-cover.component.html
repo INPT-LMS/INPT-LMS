@@ -7,8 +7,15 @@
       </button>
       <div ngbDropdownMenu>
         <button ngbDropdownItem>Contact Professor</button>
+        <a
+          class="btn link"
+          [routerLink]="['/course', classId, 'members']"
+          [state]="{ classId: classId }"
+          routerLinkActive="router-link-active"
+          ngbDropdownItem
+          >Members</a
+        >
         <button ngbDropdownItem>Share Course</button>
-        <button ngbDropdownItem>Members</button>
         <button ngbDropdownItem>Edit Course</button>
         <button ngbDropdownItem (click)="deleteClass()">
           <span class="text-danger">Delete Course</span>

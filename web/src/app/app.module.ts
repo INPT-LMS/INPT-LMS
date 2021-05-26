@@ -42,6 +42,11 @@ import { MessageItemComponent } from './components/pages/messaging/messages/mess
 import { AddCourseItemComponent } from './components/pages/homepage/fast-links/add-course-item/add-course-item.component';
 import { UserComponent } from './components/pages/user/user.component';
 import { UserLinkComponent } from './components/user-link/user-link.component';
+import { CourseFeedComponent } from './components/pages/course/course-feed/course-feed.component';
+import { CourseMembersComponent } from './components/pages/course/course-members/course-members.component';
+import { CourseMembersListComponent } from './components/pages/course/course-members/course-members-list/course-members-list.component';
+import { CourseMembersListItemComponent } from './components/pages/course/course-members/course-members-list/course-members-list-item/course-members-list-item.component';
+import { AddMemberComponent } from './components/pages/course/course-members/add-member/add-member.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +81,11 @@ import { UserLinkComponent } from './components/user-link/user-link.component';
     AddCourseItemComponent,
     UserComponent,
     UserLinkComponent,
+    CourseFeedComponent,
+    CourseMembersComponent,
+    CourseMembersListComponent,
+    CourseMembersListItemComponent,
+    AddMemberComponent,
   ],
   imports: [
     BrowserModule,

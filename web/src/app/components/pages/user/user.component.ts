@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
-import { User } from 'src/app/utils/Types';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { MessageboxService } from 'src/app/services/messagebox.service';
+import { Message, User } from 'src/app/utils/Types';
 
 @Component({
   selector: 'app-user',
@@ -11,7 +14,18 @@ import { User } from 'src/app/utils/Types';
 export class UserComponent implements OnInit {
   @Input()
   user: User = {};
-  constructor(private accountService: AccountService, private router: Router) {}
+  isMe: boolean = true;
+  messageForm = this.formBuilder.group({
+    message: '',
+  });
+
+  constructor(
+    private accountService: AccountService,
+    private localStorageService: LocalStorageService,
+    private messageboxService: MessageboxService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {}
 
   async ngOnInit(): Promise<void> {
     const userId = parseInt(this.router.url.split('/').slice(-1)[0]);
@@ -26,9 +40,37 @@ export class UserComponent implements OnInit {
       this.user = res.user;
       this.user.id = userId;
     } catch (error) {
-      console.log(error);
+      if (error.status === 404) {
+        // Utilisateur introuvable
+        console.log('Error: ' + error.statusText);
+        this.router.navigate(['/']);
+      } else {
+        console.log(error);
+      }
     }
 
-    console.log(this.user);
+    const myId = parseInt(this.localStorageService.get('userId')!);
+    this.isMe = userId === myId;
+
+    console.log(this.isMe);
+  }
+
+  async onSubmit(event: Event) {
+    event.preventDefault();
+
+    const date = new Date();
+
+    const newMessage: Message = {
+      contenu: this.messageForm.value.message,
+      idDestinataire: this.user.id,
+      date: date.toString(),
+    };
+
+    try {
+      this.messageboxService.sendMessage(newMessage);
+      this.messageForm.reset();
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

@@ -16,9 +16,7 @@ export class FeedComponent implements OnInit {
     this.class = {};
   }
 
-  async ngOnInit(): Promise<void> {
-    console.log(this.posts);
-  }
+  async ngOnInit(): Promise<void> {}
 
   deletePostById(postId: string) {
     this.posts = this.posts.filter((post) => post.id !== postId);

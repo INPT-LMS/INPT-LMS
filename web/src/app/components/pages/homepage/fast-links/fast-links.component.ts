@@ -17,7 +17,9 @@ export class FastLinksComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       const res: any = await this.classService.getAllStudentCourses();
-      this.courses = res;
+      if (res) {
+        this.courses = res;
+      }
     } catch (error) {
       console.log(error);
     }

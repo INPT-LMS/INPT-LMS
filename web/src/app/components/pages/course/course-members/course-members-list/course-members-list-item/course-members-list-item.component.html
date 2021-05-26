@@ -1,0 +1,9 @@
+<ng-container *ngIf="user.id">
+  <app-user-link [userId]="user.id">
+    <div class="card my-1 w-100">
+      <div class="card-body">
+        <span>{{ user.nom }} {{ user.prenom }}</span>
+      </div>
+    </div>
+  </app-user-link>
+</ng-container>

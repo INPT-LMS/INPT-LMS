@@ -4,6 +4,8 @@ import { AccountComponent } from './components/pages/account/account.component';
 import { LanguageComponent } from './components/pages/account/chosen-setting/language/language.component';
 import { PersonalInformationComponent } from './components/pages/account/chosen-setting/personal-information/personal-information.component';
 import { SecurityComponent } from './components/pages/account/chosen-setting/security/security.component';
+import { CourseFeedComponent } from './components/pages/course/course-feed/course-feed.component';
+import { CourseMembersComponent } from './components/pages/course/course-members/course-members.component';
 import { CourseComponent } from './components/pages/course/course.component';
 import { HomepageComponent } from './components/pages/homepage/homepage.component';
 import { LoginComponent } from './components/pages/login/login.component';
@@ -17,7 +19,14 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'feed', component: HomepageComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'course/:id', component: CourseComponent },
+  {
+    path: 'course/:id',
+    component: CourseComponent,
+    children: [
+      { path: '', component: CourseFeedComponent },
+      { path: 'members', component: CourseMembersComponent },
+    ],
+  },
   {
     path: 'messaging',
     component: MessagingComponent,

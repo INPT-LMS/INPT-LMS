@@ -65,7 +65,7 @@ export class ClassService {
    */
   addMemberInCourse(courseID: string, memberID: number) {
     return this.http
-      .post(`${BASE_URL}/course/${courseID}/members/${memberID}`, {})
+      .post(`${BASE_URL}/course/${courseID}/member/${memberID}`, {})
       .toPromise();
   }
 

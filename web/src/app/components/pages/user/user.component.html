@@ -33,6 +33,25 @@
       </div>
     </div>
   </div>
+  <ng-container *ngIf="!isMe">
+    <h4 class="text-center mt-4 mb-3">Envoyer un message :</h4>
+    <form [formGroup]="messageForm" (ngSubmit)="onSubmit($event)">
+      <div class="d-flex align-items-center">
+        <textarea
+          class="form-control your-message"
+          formControlName="message"
+          placeholder="Ecris ton message ..."
+        ></textarea>
+        <!-- Options -->
+        <button class="btn link">
+          <i class="fa fa-paperclip mx-2"></i>
+        </button>
+        <button type="submit" class="btn link">
+          <i class="fas fa-paper-plane mx-2"></i>
+        </button>
+      </div>
+    </form>
+  </ng-container>
 </div>
 <!-- <div class="container">
   <div class="mx-3 d-flex align-items-center mb-4">
