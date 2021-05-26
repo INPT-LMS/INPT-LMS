@@ -29,7 +29,7 @@ export class SignupFormComponent implements OnInit {
   ngOnInit(): void {}
 
   // Signup the user
-  onSubmit(event: Event) {
+  async onSubmit(event: Event) {
     event.preventDefault();
 
     const { password, verifyPassword } = this.signupForm.value;
@@ -38,19 +38,21 @@ export class SignupFormComponent implements OnInit {
       return;
     }
 
-    this.accountService
-      .signupUser(this.signupForm.value)
-      .subscribe((response: any) => {
-        if (response.error) {
-          this.errorHandler.handleError(response);
-          return;
-        }
+    try {
+      const res: any = await this.accountService.signupUser(
+        this.signupForm.value
+      );
+      if (res.error) {
+        throw res.error;
+      }
 
-        console.log(response);
-        const { userToken, message } = response;
+      console.log(res);
+      const { userToken, message } = res;
 
-        this.router.navigate(['/login']);
-        return;
-      });
+      this.router.navigate(['/login']);
+      return;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

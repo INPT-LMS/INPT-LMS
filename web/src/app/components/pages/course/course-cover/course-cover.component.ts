@@ -7,9 +7,14 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CourseCoverComponent implements OnInit {
   @Input()
+  deleteClass: () => void = () => {};
+  @Input()
+  classId: string;
+  @Input()
   title: string;
 
   constructor() {
+    this.classId = '';
     this.title = '';
   }
 

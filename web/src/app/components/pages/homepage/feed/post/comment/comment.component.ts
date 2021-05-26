@@ -20,10 +20,14 @@ export class CommentComponent implements OnInit {
     this.user = {};
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const userId = this.commentaire.idProprietaire!;
-    this.accountService.getUser(userId).subscribe((res: any) => {
+    try {
+      const res: any = await this.accountService.getUser(userId);
       this.user = res.user;
-    });
+      this.user.id = userId;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

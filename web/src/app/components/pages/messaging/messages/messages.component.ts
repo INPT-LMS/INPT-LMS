@@ -14,9 +14,12 @@ export class MessagesComponent implements OnInit {
     this.conversations = [];
   }
 
-  ngOnInit(): void {
-    this.messageboxService.getDiscussions().subscribe((res: any) => {
+  async ngOnInit(): Promise<void> {
+    try {
+      const res: any = await this.messageboxService.getDiscussions();
       this.conversations = res.content;
-    });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

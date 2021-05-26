@@ -1,5 +1,7 @@
 <app-course-cover
   [title]="class.courseName ? class.courseName : ''"
+  [deleteClass]="deleteClass.bind(this)"
+  [classId]="class.courseID!"
 ></app-course-cover>
 <div class="course-color">
   <div class="container">
@@ -11,10 +13,7 @@
         ></app-about-course>
       </div>
       <div class="col-6">
-        <!-- Add post -->
-        <app-add-post [class]="class" [posts]="posts"></app-add-post>
-        <!-- Feed -->
-        <app-feed [posts]="posts"></app-feed>
+        <router-outlet></router-outlet>
       </div>
       <div class="col-3 mt-5">
         <!-- Agenda -->

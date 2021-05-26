@@ -36,7 +36,7 @@ export class ConversationComponent implements OnInit {
     this.messages = [];
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (!history.state.conversation) {
       this.router.navigate(['/messaging']);
     }
@@ -45,16 +45,19 @@ export class ConversationComponent implements OnInit {
     this.otherUser = history.state.otherUser;
     this.otherUserId = history.state.otherUserId;
 
-    this.messageboxService
-      .getMessages(this.conversation.id)
-      .subscribe((res: any) => {
-        this.messages = res.content;
-        console.log(this.messages);
-        console.log(this.otherUserId);
-      });
+    try {
+      const res: any = await this.messageboxService.getMessages(
+        this.conversation.id
+      );
+      this.messages = res.content;
+      console.log(this.messages);
+      console.log(this.otherUserId);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  onSubmit(event: Event) {
+  async onSubmit(event: Event) {
     event.preventDefault();
 
     const date = new Date();
@@ -65,12 +68,13 @@ export class ConversationComponent implements OnInit {
       date: date.toString(),
     };
 
-    this.messageboxService.sendMessage(newMessage).subscribe((res: any) => {
-      console.log(res);
-
+    try {
+      this.messageboxService.sendMessage(newMessage);
       this.messages.push(newMessage);
 
       this.messageForm.reset();
-    });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

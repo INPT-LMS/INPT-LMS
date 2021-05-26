@@ -27,16 +27,20 @@ export class AddCourseItemComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit(event: Event) {
+  async onSubmit(event: Event) {
     event.preventDefault();
 
     const payload = {
       ...this.courseForm.value,
     };
 
-    this.classService.addCourseForAdmin(payload).subscribe((res: any) => {
+    try {
+      const res: any = await this.classService.addCourseForAdmin(payload);
       this.courses.unshift(payload);
       console.log(res);
-    });
+      this.courseForm.reset();
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

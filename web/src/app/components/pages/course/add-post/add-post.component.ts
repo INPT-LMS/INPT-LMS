@@ -31,7 +31,7 @@ export class AddPostComponent implements OnInit {
     console.log(this.class);
   }
 
-  onSubmit(event: Event) {
+  async onSubmit(event: Event) {
     event.preventDefault();
 
     const { content } = this.postForm.value;
@@ -39,12 +39,14 @@ export class AddPostComponent implements OnInit {
       idCours: this.class.courseID,
       contenuPublication: content,
     };
-    console.log(publication);
-    this.postService
-      .addPublication(publication)
-      .subscribe((res: Publication) => {
-        console.log(res);
-        this.posts.unshift(res);
-      });
+
+    try {
+      const res: Publication = await this.postService.addPublication(
+        publication
+      );
+      this.posts.unshift(res);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

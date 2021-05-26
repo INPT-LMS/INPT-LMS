@@ -23,7 +23,7 @@ export class SecurityComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit(event: Event) {
+  async onSubmit(event: Event) {
     event.preventDefault();
 
     const oldPassword = this.passwordForm.value.oldPassword;
@@ -40,9 +40,12 @@ export class SecurityComponent implements OnInit {
         newPassword,
       };
 
-      this.accountService.updateUserPassword(payload).subscribe((res: any) => {
+      try {
+        const res = await this.accountService.updateUserPassword(payload);
         console.log(res);
-      });
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 }

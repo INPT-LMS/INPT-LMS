@@ -26,20 +26,23 @@ export class PersonalInformationComponent implements OnInit {
     this.user = {};
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const userId = parseInt(this.localStorageService.get('userId')!);
 
-    this.accountService.getUser(userId).subscribe((res: any) => {
+    try {
+      const res: any = await this.accountService.getUser(userId);
       this.user = res.user;
       this.user.id = userId;
       this.informationsForm.get('nom')?.setValue(this.user.nom);
       this.informationsForm.get('prenom')?.setValue(this.user.prenom);
       this.informationsForm.get('email')?.setValue(this.user.email);
       this.informationsForm.get('etudieA')?.setValue(this.user.etudieA);
-    });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  onSubmit(event: Event) {
+  async onSubmit(event: Event) {
     const updatedUser = {
       ...this.user,
       ...this.informationsForm.value,
@@ -47,8 +50,11 @@ export class PersonalInformationComponent implements OnInit {
 
     console.log(updatedUser);
 
-    this.accountService.updateUser(updatedUser).subscribe((res: any) => {
+    try {
+      const res = await this.accountService.updateUser(updatedUser);
       console.log(res);
-    });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

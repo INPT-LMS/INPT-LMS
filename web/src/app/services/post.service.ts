@@ -18,44 +18,30 @@ export class PostService {
    * Récupère toutes les publications dans les cours où l'utilisateur est enregistré
    */
   getFeedPublications() {
-    return this.http.get(`${PUBLICATION_BASE_URL}/cours`).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    return this.http.get(`${PUBLICATION_BASE_URL}/cours`).toPromise();
   }
 
   /**
    * Récupère toutes les publications d'un cours particulier
    */
   getClassPublications(classId: string) {
-    return this.http.get(`${PUBLICATION_BASE_URL}/cours/${classId}`).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    return this.http
+      .get(`${PUBLICATION_BASE_URL}/cours/${classId}`)
+      .toPromise();
   }
 
   /**
    * Récupère une publication avec l'id de son cours
    */
   getPublication(classId: string) {
-    return this.http.get(`${PUBLICATION_BASE_URL}/${classId}`).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    return this.http.get(`${PUBLICATION_BASE_URL}/${classId}`).toPromise();
   }
 
   /**
    * Ajoute une publication dans un cours
    */
   addPublication(publication: Publication) {
-    return this.http.post(`${PUBLICATION_BASE_URL}/`, publication).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    return this.http.post(`${PUBLICATION_BASE_URL}/`, publication).toPromise();
   }
 
   /**
@@ -64,33 +50,23 @@ export class PostService {
   updatePublication(publication: Publication) {
     return this.http
       .put(`${PUBLICATION_BASE_URL}/${publication.id}`, publication)
-      .pipe(
-        catchError((err) => {
-          return of(err);
-        })
-      );
+      .toPromise();
   }
 
   /**
    * Supprime une publication
    */
   deletePublication(publicationId: string) {
-    return this.http.delete(`${PUBLICATION_BASE_URL}/${publicationId}`).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    return this.http
+      .delete(`${PUBLICATION_BASE_URL}/${publicationId}`)
+      .toPromise();
   }
 
   /**
    * Ajoute un commentaire dans une publication
    */
   addCommentaire(commentaire: Commentaire) {
-    return this.http.post(`${COMMENT_BASE_URL}`, commentaire).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    return this.http.post(`${COMMENT_BASE_URL}`, commentaire).toPromise();
   }
 
   /**
@@ -99,43 +75,27 @@ export class PostService {
   updateCommentaire(commentaire: Commentaire) {
     return this.http
       .put(`${COMMENT_BASE_URL}/${commentaire.idCommentaire}`, commentaire)
-      .pipe(
-        catchError((err) => {
-          return of(err);
-        })
-      );
+      .toPromise();
   }
 
   /**
    * Supprime un commentaire dans une publication
    */
   deleteCommentaire(commentaireId: string) {
-    return this.http.delete(`${COMMENT_BASE_URL}/${commentaireId}`).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    return this.http.delete(`${COMMENT_BASE_URL}/${commentaireId}`).toPromise();
   }
 
   /**
    * Ajoute un like dans une publication
    */
   addLike(like: Like) {
-    return this.http.post(`${LIKE_BASE_URL}`, like).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    return this.http.post(`${LIKE_BASE_URL}`, like).toPromise();
   }
 
   /**
    * Supprime un like dans une publication
    */
   deleteLike(likeId: string) {
-    return this.http.delete(`${LIKE_BASE_URL}/${likeId}`).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    return this.http.delete(`${LIKE_BASE_URL}/${likeId}`).toPromise();
   }
 }

@@ -23,20 +23,26 @@ export class LanguageComponent implements OnInit {
     this.user = {};
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const userId = parseInt(this.localStorageService.get('userId')!);
-    this.accountService.getUser(userId).subscribe((res: any) => {
+    try {
+      const res: any = await this.accountService.getUser(userId);
       this.user = res.user;
       this.user.id = userId;
       this.languageForm.get('language')?.setValue(this.user.langue);
-    });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  onSubmit(event: Event) {
+  async onSubmit(event: Event) {
     const langue = this.languageForm.value.language;
     this.user.langue = langue;
-    this.accountService.updateUser(this.user).subscribe((res: any) => {
+    try {
+      const res = await this.accountService.updateUser(this.user);
       console.log(res);
-    });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

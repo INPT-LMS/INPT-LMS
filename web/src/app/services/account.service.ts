@@ -14,14 +14,7 @@ export class AccountService {
    * Récupérer un utilisateur
    */
   getUser(userId: number) {
-    return this.http.get(`/account/user/${userId}`).pipe(
-      catchError((err) => {
-        return of({
-          error: err.error.error,
-          status: err.status,
-        });
-      })
-    );
+    return this.http.get(`/account/user/${userId}`).toPromise();
   }
 
   /**
@@ -33,14 +26,7 @@ export class AccountService {
         email,
         password,
       })
-      .pipe(
-        catchError((err) => {
-          return of({
-            error: err.error.error,
-            status: err.status,
-          });
-        })
-      );
+      .toPromise();
   }
 
   /**
@@ -54,28 +40,14 @@ export class AccountService {
         email,
         password,
       })
-      .pipe(
-        catchError((err) => {
-          return of({
-            error: err.error.error,
-            status: err.status,
-          });
-        })
-      );
+      .toPromise();
   }
 
   /**
    * Mise à jour d'un utilisateur, a besoin d'autorisation
    */
   updateUser(user: User) {
-    return this.http.put(`/account/update/${user.id}`, { ...user }).pipe(
-      catchError((err) => {
-        return of({
-          error: err.error.error,
-          status: err.status,
-        });
-      })
-    );
+    return this.http.put(`/account/update/${user.id}`, { ...user }).toPromise();
   }
 
   /**
@@ -92,27 +64,13 @@ export class AccountService {
   }) {
     return this.http
       .put(`/account/update/password/${userId}`, { oldPassword, newPassword })
-      .pipe(
-        catchError((err) => {
-          return of({
-            error: err.error.error,
-            status: err.status,
-          });
-        })
-      );
+      .toPromise();
   }
 
   /**
    * Supprime un utilisateur, a besoin d'autorisation
    */
   deleteUser(userId: number) {
-    return this.http.delete(`/account/update/${userId}`).pipe(
-      catchError((err) => {
-        return of({
-          error: err.error.error,
-          status: err.status,
-        });
-      })
-    );
+    return this.http.delete(`/account/update/${userId}`).toPromise();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { PostService } from 'src/app/services/post.service';
@@ -10,6 +10,7 @@ import { Publication } from 'src/app/utils/Types';
   styleUrls: ['./homepage.component.css'],
 })
 export class HomepageComponent implements OnInit {
+  @Output()
   posts: Publication[];
 
   constructor(
@@ -20,18 +21,22 @@ export class HomepageComponent implements OnInit {
     this.posts = [];
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (!this.localStorageService.get('userToken')) {
       this.router.navigate(['/']);
     }
-    this.postService.getFeedPublications().subscribe((response: any) => {
-      const postsByCourses = Object.values(response);
+
+    try {
+      const res = await this.postService.getFeedPublications();
+      const postsByCourses = Object.values(res);
 
       postsByCourses.forEach((course: any) => {
         course.forEach((post: Publication) => {
           this.posts.push(post);
         });
       });
-    });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

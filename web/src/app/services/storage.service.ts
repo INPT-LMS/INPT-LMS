@@ -16,11 +16,9 @@ export class StorageService {
    * Récupère les fichiers d'une publication
    */
   getAllFichiersPublication(publicationID: string) {
-    this.http.get(`${PUBLICATION_BASE_URL}/files/${publicationID}/files`).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    this.http
+      .get(`${PUBLICATION_BASE_URL}/files/${publicationID}/files`)
+      .toPromise();
   }
 
   /**
@@ -29,11 +27,7 @@ export class StorageService {
   getFichierPublication(publicationID: string, assocId: number) {
     this.http
       .get(`${PUBLICATION_BASE_URL}/files/${publicationID}/files/${assocId}`)
-      .pipe(
-        catchError((err) => {
-          return of(err);
-        })
-      );
+      .toPromise();
   }
 
   /**
@@ -44,11 +38,7 @@ export class StorageService {
       .get(
         `${PUBLICATION_BASE_URL}/files/${publicationID}/files/${assocId}/info`
       )
-      .pipe(
-        catchError((err) => {
-          return of(err);
-        })
-      );
+      .toPromise();
   }
 
   /**
@@ -57,11 +47,7 @@ export class StorageService {
   addFichierPublication(publicationID: string, assocId: number) {
     this.http
       .post(`${PUBLICATION_BASE_URL}/files/${publicationID}/files`, { assocId })
-      .pipe(
-        catchError((err) => {
-          return of(err);
-        })
-      );
+      .toPromise();
   }
 
   /**
@@ -70,55 +56,35 @@ export class StorageService {
   deleteFichierPublication(publicationID: string, assocId: number) {
     this.http
       .delete(`${PUBLICATION_BASE_URL}/files/${publicationID}/files/${assocId}`)
-      .pipe(
-        catchError((err) => {
-          return of(err);
-        })
-      );
+      .toPromise();
   }
 
   /**
    * Récupère le contenu d'un sac
    */
   getAllFichiersSac() {
-    this.http.get(`${USER_FILES_BASE_URL}/files`).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    this.http.get(`${USER_FILES_BASE_URL}/files`).toPromise();
   }
 
   /**
    * Récupère un fichier du sac
    */
   getFichierSac(assocId: number) {
-    this.http.get(`${USER_FILES_BASE_URL}/files/${assocId}`).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    this.http.get(`${USER_FILES_BASE_URL}/files/${assocId}`).toPromise();
   }
 
   /**
    * Récupère les infos d'un fichier du sac
    */
   getInfoFichiersSac(assocId: number) {
-    this.http.get(`${USER_FILES_BASE_URL}/files/${assocId}/info`).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    this.http.get(`${USER_FILES_BASE_URL}/files/${assocId}/info`).toPromise();
   }
 
   /**
    * Ajoute un fichier dans un sac, ceci n'est qu'un copie du fichier
    */
   addFichierSac(assocId: number) {
-    this.http.post(`${PUBLICATION_BASE_URL}/files`, { assocId }).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    this.http.post(`${PUBLICATION_BASE_URL}/files`, { assocId }).toPromise();
   }
 
   // TODO Upload à vérifier
@@ -128,21 +94,13 @@ export class StorageService {
   uploadFichierSac(file: File) {
     const data = new FormData();
     data.append('fichier', file);
-    this.http.post(`${PUBLICATION_BASE_URL}/upload`, data).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    this.http.post(`${PUBLICATION_BASE_URL}/upload`, data).toPromise();
   }
 
   /**
    * Supprime un fichier du sac
    */
   deleteFichierSac(assocId: number) {
-    this.http.delete(`${PUBLICATION_BASE_URL}/files/${assocId}`).pipe(
-      catchError((err) => {
-        return of(err);
-      })
-    );
+    this.http.delete(`${PUBLICATION_BASE_URL}/files/${assocId}`).toPromise();
   }
 }
