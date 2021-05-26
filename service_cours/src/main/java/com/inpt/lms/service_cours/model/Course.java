@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import javax.persistence.*;
 
@@ -28,8 +26,7 @@ public class Course implements Serializable{
 	 @JsonIgnore
 	private Professor owner ;
 	 @ManyToMany(mappedBy="courses" , fetch = FetchType.LAZY)
-
-	private List<Member> students = new ArrayList<>();
+	private Set<Member> students = new HashSet<>();
 
 	public Course() {
 		super();
@@ -74,11 +71,11 @@ public class Course implements Serializable{
 		this.owner = owner;
 	}
 
-	public List<Member> getStudents() {
+	public Set<Member> getStudents() {
 		return students;
 	}
 
-	public void setStudents(List<Member> students) {
+	public void setStudents(Set<Member> students) {
 		this.students = students;
 	}
 
