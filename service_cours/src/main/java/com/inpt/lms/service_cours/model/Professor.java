@@ -1,5 +1,6 @@
 package com.inpt.lms.service_cours.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -18,7 +19,7 @@ public class Professor implements Serializable{
 	private long professorID ;
 	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-	
+	@JsonIgnore
 	private List<Course> ownedCourses;
 	public Professor(@JsonProperty long professorID){
 		this.professorID = professorID;
