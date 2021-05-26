@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 @RequestMapping("/public")
 @RestController
@@ -26,7 +27,7 @@ public class MemberControl {
         return courseAdministration.addMember(courseID,memberID,userid);
     }
     @GetMapping("/course/{courseID}/members")
-    public List<Member> getCourseMembers(@PathVariable UUID courseID, @RequestHeader("X-USER-ID") long userid){
+    public Set<Member> getCourseMembers(@PathVariable UUID courseID, @RequestHeader("X-USER-ID") long userid){
         return courseDetails.getCourseMembers(courseID,userid);
     }
     @DeleteMapping("/course/{courseID}/member/{memberID}")

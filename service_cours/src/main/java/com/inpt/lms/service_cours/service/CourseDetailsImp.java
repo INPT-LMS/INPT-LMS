@@ -9,10 +9,8 @@ import com.inpt.lms.service_cours.repository.ProfessorInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+
 @Service
 public class CourseDetailsImp implements CourseDatails{
     @Autowired
@@ -22,12 +20,12 @@ public class CourseDetailsImp implements CourseDatails{
     @Autowired
     CourseInterface courseInterface ;
     @Override
-    public List<Course> getStudentCourses(long studentID) {
+    public Set<Course> getStudentCourses(long studentID) {
         Optional<Member> memberOptional = memberInterface.findById(studentID);
         if(memberOptional.isPresent()){
             return memberOptional.get().getCourses();
         }
-        return new ArrayList<>();
+        return new HashSet<>();
     }
 
     @Override
@@ -66,7 +64,7 @@ public class CourseDetailsImp implements CourseDatails{
     }
 
     @Override
-    public List<Member> getCourseMembers(UUID courseID) {
+    public Set<Member> getCourseMembers(UUID courseID) {
         Optional<Course> course = courseInterface.findById(courseID);
         if(course.isPresent()){
             return course.get().getStudents();
@@ -75,7 +73,7 @@ public class CourseDetailsImp implements CourseDatails{
     }
 
     @Override
-    public List<Member> getCourseMembers(UUID courseID, long ownerID) {
+    public Set<Member> getCourseMembers(UUID courseID, long ownerID) {
         Optional<Course> course = courseInterface.findById(courseID);
         if(course.isPresent()){
             if( course.get().getOwner().equals(professorInterface.findById(ownerID).orElse(null))

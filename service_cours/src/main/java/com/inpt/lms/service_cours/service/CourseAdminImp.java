@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -44,7 +45,7 @@ public class CourseAdminImp implements CourseAdministration{
             member1 = member.get();
         }
 
-        List<Member> students = course.getStudents();
+        Set<Member> students = course.getStudents();
         students.add(member1);
 
         member1.getCourses().add(course);
@@ -54,6 +55,10 @@ public class CourseAdminImp implements CourseAdministration{
         return course;
     }
 
+    @Override
+    public List<Course> getAllCourses() {
+        return courseInterface.findAll();
+    }
 
 
     @Override
@@ -90,7 +95,7 @@ public class CourseAdminImp implements CourseAdministration{
         if(course.isPresent()){
             System.out.println("found course");
             Course course1 = course.get();
-            List<Course> memberCourses = member1.getCourses();
+            Set<Course> memberCourses = member1.getCourses();
             if(memberCourses.contains(course1)){
                 return true ;
             }
@@ -113,7 +118,7 @@ public class CourseAdminImp implements CourseAdministration{
         Optional<Course> course = courseInterface.findById(courseID);
         if(course.isPresent()){
             Course course1 = course.get();
-            List<Course> memberCourses = member.getCourses();
+            Set<Course> memberCourses = member.getCourses();
             if(memberCourses.contains(course1)){
                memberCourses.remove(course1);
             }

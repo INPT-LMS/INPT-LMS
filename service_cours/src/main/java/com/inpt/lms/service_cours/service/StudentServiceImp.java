@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class StudentServiceImp implements StudentService{
     @Autowired
     MemberInterface memberInterface ;
     @Override
-    public List<Course> getStudentCourses(long ownerID) {
+    public Set<Course> getStudentCourses(long ownerID) {
         Optional<Member> memberOptional = memberInterface.findById(ownerID);
         return memberOptional.map(Member::getCourses).orElse(null);
     }

@@ -3,6 +3,7 @@ package com.inpt.lms.service_cours.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,7 +38,7 @@ public class Professor implements Serializable{
 	}
 
 	public List<Course> getOwnedCourses() {
-		return ownedCourses;
+		return ownedCourses== null ? new ArrayList<>() : ownedCourses;
 	}
 
 	public void setOwnedCourses(List<Course> ownedCourses) {

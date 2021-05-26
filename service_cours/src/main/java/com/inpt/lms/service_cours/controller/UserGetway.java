@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RequestMapping("/public")
 @RestController
@@ -13,7 +14,7 @@ public class UserGetway {
     @Autowired
     StudentService studentService ;
     @GetMapping("/student/courses")
-    public List<Course> getStudentCourses(@RequestHeader("X-USER-ID") long userID){
+    public Set<Course> getStudentCourses(@RequestHeader("X-USER-ID") long userID){
         return studentService.getStudentCourses(userID);
     }
 }
