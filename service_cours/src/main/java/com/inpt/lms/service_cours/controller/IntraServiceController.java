@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RequestMapping("/admin")
@@ -14,7 +15,7 @@ public class IntraServiceController {
     @Autowired
     CourseDatails courseDetails;
     @GetMapping("/course/{courseID}/members")
-    public List<Member> getCourseMembers(@PathVariable UUID courseID){
+    public Set<Member> getCourseMembers(@PathVariable UUID courseID){
         return courseDetails.getCourseMembers(courseID);
     }
 }

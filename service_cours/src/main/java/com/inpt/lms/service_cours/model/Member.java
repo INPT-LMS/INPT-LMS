@@ -3,24 +3,20 @@ package com.inpt.lms.service_cours.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
+
 @Entity
 public class Member implements Serializable {
 	@Id
 	private long memberID ;
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	 @JoinTable
+	@JoinTable(
+			joinColumns = @JoinColumn(name = "memberID"),
+			inverseJoinColumns = @JoinColumn(name = "courseID"))
 	@JsonIgnore
-	private List<Course> courses = new ArrayList<>();
+	private Set<Course> courses = new HashSet<>();
 	public Member(long memberID) {
 		super();
 	}
@@ -34,15 +30,17 @@ public class Member implements Serializable {
 		return memberID;
 	}
 
+	public Set<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(Set<Course> courses) {
+		this.courses = courses;
+	}
+
 	public void setMemberID(long memberID) {
 		this.memberID = memberID;
 	}
 
-	public List<Course> getCourses() {
-		return courses;
-	}
 
-	public void setCourses(List<Course> courses) {
-		this.courses = courses;
-	}
 }
