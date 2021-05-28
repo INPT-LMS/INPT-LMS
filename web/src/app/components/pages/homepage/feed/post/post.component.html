@@ -75,6 +75,7 @@
   <app-comment
     *ngFor="let commentaire of post.commentaires"
     [commentaire]="commentaire"
+    [deleteCommentById]="deleteCommentById.bind(this)"
   ></app-comment>
   <form class="w-100" [formGroup]="commentForm" (ngSubmit)="onSubmit($event)">
     <div class="card-footer d-flex align-items-center">

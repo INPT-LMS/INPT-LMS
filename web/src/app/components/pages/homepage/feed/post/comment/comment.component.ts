@@ -12,6 +12,8 @@ import { Commentaire, User } from 'src/app/utils/Types';
 export class CommentComponent implements OnInit {
   @Input()
   commentaire: Commentaire;
+  @Input()
+  deleteCommentById: (_: string) => void = (_: string) => {};
   user: User;
   isMine: boolean = false;
 
@@ -28,7 +30,6 @@ export class CommentComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    console.log(this.commentaire);
     const userId = this.commentaire.idProprietaire!;
     try {
       const res: any = await this.accountService.getUser(userId);
@@ -39,8 +40,6 @@ export class CommentComponent implements OnInit {
     }
 
     this.isMine = userId === parseInt(this.localStorageService.get('userId')!);
-
-    console.log('Comment is mine:' + this.isMine);
   }
 
   async deleteComment() {
@@ -49,6 +48,7 @@ export class CommentComponent implements OnInit {
     try {
       const res = await this.postService.deleteCommentaire(commentId);
       console.log(res);
+      this.deleteCommentById(commentId);
     } catch (error) {
       console.log(error);
     }
