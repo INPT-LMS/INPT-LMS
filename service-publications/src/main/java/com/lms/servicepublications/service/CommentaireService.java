@@ -43,7 +43,7 @@ public class CommentaireService {
      * Fonction pour supprimer un commentaire par son id
      * @return String
      */
-    public String supprimerCommentaire(String id_user, String idCommentaire) {
+    public String supprimerCommentaire(Long id_user, String idCommentaire) {
         Commentaire commentaire = (commentaireRepository.findById(idCommentaire).orElseThrow(() -> new ResourceNotFoundException("Comment not found")));
         if(!commentaire.getIdProprietaire().equals(id_user)) throw new UnauthorizedException("Action not authorized");
         Publication publication = publicationRepository.findById(commentaire.getIdPublication()).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
@@ -56,19 +56,20 @@ public class CommentaireService {
         publication.setCommentaires(commentaires);
         commentaireRepository.deleteById(idCommentaire);
         publicationRepository.save(publication);
-        return "Commentaire supprimé avec succèes";
+        return "{\"Message\":\"Commentaire supprimée avec succès\"}";
     }
 
     /**
      * Fonction pour modifier un commentaire par son id
      * @return String
      */
-    public String modifierCommentaire(String id_user,String id, CommentaireDTO commentaireDTO){
+    public String modifierCommentaire(Long id_user,String id, CommentaireDTO commentaireDTO){
         Commentaire commentaire = commentaireRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Comment not found"));
         if(!commentaire.getIdProprietaire().equals(id_user)) throw new UnauthorizedException("Action not authorized");
         commentaire.setContenuCommentaire(commentaireDTO.getContenuCommentaire());
         commentaireRepository.save(commentaire);
-        return "Commentaire modifié avec succès";
+        return "{\"Message\":\"Commentaire modifié avec succès\"}";
+
     }
 
     public void supprimerCommentairesInPublication(List<Commentaire> commentaires) {

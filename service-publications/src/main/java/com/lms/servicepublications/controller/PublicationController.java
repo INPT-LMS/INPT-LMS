@@ -8,6 +8,7 @@ import com.lms.servicepublications.model.Publication;
 import com.lms.servicepublications.proxies.CoursProxy;
 import com.lms.servicepublications.service.PublicationService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public class PublicationController {
         return publicationService.ajouterPublication(id_user, publicationDTO);
     }
 
-    @DeleteMapping("publication/{idPublication}")
+    @DeleteMapping(value = "publication/{idPublication}", produces = MediaType.APPLICATION_JSON_VALUE)
     public String removePublication(@RequestHeader(value = "X-USER-ID", required = false) Long id_user, @PathVariable String idPublication){
         if(id_user == null) throw new BadRequestException("User id is missing");
         return publicationService.supprimerPublication(id_user, idPublication);
