@@ -3,6 +3,7 @@ import 'package:lms_flutter/services/auth_service.dart';
 import 'package:lms_flutter/services/post_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'course_service.dart';
 import 'message_service.dart';
 
 final getIt = GetIt.instance;
@@ -20,6 +21,10 @@ void setup() async {
       dependsOn: [SharedPreferences]);
 
   getIt.registerSingletonWithDependencies<PostService>(
-          () => PostService(getIt.get<SharedPreferences>()),
+      () => PostService(getIt.get<SharedPreferences>()),
+      dependsOn: [SharedPreferences]);
+
+  getIt.registerSingletonWithDependencies<CourseService>(
+      () => CourseService(getIt.get<SharedPreferences>()),
       dependsOn: [SharedPreferences]);
 }

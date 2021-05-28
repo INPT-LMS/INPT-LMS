@@ -8,6 +8,7 @@ import 'package:lms_flutter/model/posts/post_data.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/screens/view_models/liste_data_model.dart';
 import 'package:lms_flutter/services/auth_service.dart';
+import 'package:lms_flutter/services/course_service.dart';
 import 'package:lms_flutter/services/post_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ class Post extends StatelessWidget {
     var infos = Provider.of<InfosModel>(context, listen: false).userInfos;
     var authService = getIt.get<AuthService>();
     var postService = getIt.get<PostService>();
+    var coursService = getIt.get<CourseService>();
     var userLike = postData.likes.firstWhere(
         (like) => like.idProprietaire == infos.id,
         orElse: () => null);
@@ -68,11 +70,10 @@ class Post extends StatelessWidget {
                                         : "",
                                     style: TextStyle(
                                         fontSize: 15, color: Colors.red)),
-                                future: Future<String>(() async {
-                                  //TODO recuperer le nom du cours
-                                  await Future.delayed(Duration(seconds: 2));
-                                  return "test cours";
-                                })))
+                                future: coursService
+                                    .getCours(postData.idCours)
+                                    .then(
+                                        (courseData) => courseData.courseName)))
                       ])),
             ),
             Padding(
@@ -87,8 +88,8 @@ class Post extends StatelessWidget {
             margin: EdgeInsets.all(10),
             child: Text(postData.contenuPublication)),
         if (postData.idProprietaire == infos.id)
-          TextButton(
-              child: Text("Supprimer", style: TextStyle(color: Colors.red)),
+          IconButton(
+              icon: Icon(Icons.delete, color: Colors.red),
               onPressed: () {
                 postService.removePost(postData.id).then((value) {
                   var listModele = Provider.of<ListDataModel<PostData>>(context,

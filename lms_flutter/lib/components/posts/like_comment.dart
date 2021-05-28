@@ -35,7 +35,18 @@ class _LikeCommentState extends State<LikeComment> {
     userLike = this.widget.userLike;
     showComments = false;
     commentairesData = this.widget.commentairesData;
-    commentaires = commentairesData.map<Comment>((c) => Comment(c)).toList();
+    var removeComment = (idComment) {
+      postService.removeCommentaire(idComment).then((value) {
+        setState(() {
+          commentairesData.removeWhere((element) => element.id == idComment);
+          commentaires.removeWhere(
+              (element) => element.commentaireData.id == idComment);
+        });
+      });
+    };
+    commentaires = commentairesData
+        .map<Comment>((c) => Comment(c, removeComment))
+        .toList();
     isLikeDisabled = false;
     postService = getIt.get<PostService>();
   }
@@ -59,7 +70,10 @@ class _LikeCommentState extends State<LikeComment> {
               icon: Icon(Icons.comment, color: Colors.blue),
               onPressed: () {
                 setState(() => showComments = !showComments);
-              })
+              }),
+          Container(
+              margin: EdgeInsets.only(left: 5),
+              child: Text("${commentaires.length}"))
         ]),
         if (showComments)
           Column(

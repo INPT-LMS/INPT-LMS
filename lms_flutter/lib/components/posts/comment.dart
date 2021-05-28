@@ -3,16 +3,21 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/consts/custom_colors.dart';
 import 'package:lms_flutter/model/posts/commentaire_data.dart';
+import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/services/auth_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
+import 'package:provider/provider.dart';
 
 class Comment extends StatelessWidget {
   CommentaireData commentaireData;
-  Comment(this.commentaireData, {Key key}) : super(key: key);
+  void Function(String idComment) removeComment;
+  Comment(this.commentaireData, this.removeComment, {Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var authService = getIt.get<AuthService>();
+    var infos = Provider.of<InfosModel>(context, listen: false).userInfos;
     return FutureBuilder(
       builder: (context, snapshot) {
         return Container(
@@ -33,7 +38,13 @@ class Comment extends StatelessWidget {
               child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(commentaireData.contenuCommentaire)),
-            )
+            ),
+            if (infos.id == commentaireData.idProprietaire)
+              IconButton(
+                  icon: Icon(Icons.delete, color: Colors.red),
+                  onPressed: () {
+                    removeComment(commentaireData.id);
+                  })
           ]),
         );
       },

@@ -66,4 +66,14 @@ class PostService extends BaseService {
       throw NetworkException();
     }).then((response) => handleException(response));
   }
+
+  Future<String> removeCommentaire(String idCommentaire) {
+    loadToken();
+    Uri url =
+        Uri.parse(BaseUrl.URL_GATEWAY + "/post/commentaire/$idCommentaire");
+    return http.delete(url, headers: headers).timeout(Duration(seconds: 5),
+        onTimeout: () {
+      throw NetworkException();
+    }).then((response) => handleException(response));
+  }
 }
