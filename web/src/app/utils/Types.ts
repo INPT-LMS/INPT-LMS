@@ -41,7 +41,7 @@ export interface Publication {
 }
 
 export interface Commentaire {
-  idCommentaire?: string;
+  id?: string;
   idPublication: string;
   idProprietaire?: number;
   contenuCommentaire: string;

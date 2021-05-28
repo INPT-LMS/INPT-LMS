@@ -48,6 +48,7 @@ export class CourseComponent implements OnInit {
       const res: any = await this.classService.deleteCourse(
         this.class.courseID!
       );
+      console.log(res);
       if (res === true) {
         this.router.navigate(['/']);
       } else {
