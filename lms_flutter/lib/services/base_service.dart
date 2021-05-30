@@ -1,18 +1,20 @@
 import 'dart:convert';
 
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'exceptions/authentication_exception.dart';
 import 'exceptions/bad_request_exception.dart';
 import 'exceptions/not_found_exception.dart';
 import 'exceptions/unknown_exception.dart';
 
-abstract class BaseService{
+abstract class BaseService {
   SharedPreferences sharedPreferences;
   String token;
   Map<String, String> headers;
+  http.Client client;
 
-  BaseService(this.sharedPreferences);
+  BaseService(this.sharedPreferences, this.client);
 
   void loadToken() {
     if (token != null) {

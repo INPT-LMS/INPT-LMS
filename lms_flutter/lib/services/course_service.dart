@@ -10,12 +10,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'exceptions/network_exception.dart';
 
 class CourseService extends BaseService {
-  CourseService(SharedPreferences sharedPreferences) : super(sharedPreferences);
+  CourseService(SharedPreferences sharedPreferences, http.Client client)
+      : super(sharedPreferences, client);
 
   Future<CourseData> getCours(String idCours) {
-    loadToken();
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
     Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/class/course/$idCours");
-    return http.get(url, headers: headers).timeout(Duration(seconds: 5),
+    return client.get(url, headers: headers).timeout(Duration(seconds: 5),
         onTimeout: () {
       throw NetworkException();
     }).then((response) {

@@ -11,25 +11,36 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'base_service.dart';
 
-class MessageService extends BaseService{
-  MessageService(SharedPreferences sharedPreferences) : super(sharedPreferences);
+class MessageService extends BaseService {
+  MessageService(SharedPreferences sharedPreferences, http.Client client)
+      : super(sharedPreferences, client);
 
   Future<List<String>> getDiscussionHasNewMessage() {
-    loadToken();
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
     Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/messagebox/infos/new");
 
-    return http.get(url, headers: headers).timeout(Duration(seconds: 5),
+    return client.get(url, headers: headers).timeout(Duration(seconds: 5),
         onTimeout: () {
       throw NetworkException();
-    }).then(
-        (response) => jsonDecode(handleException(response)) as List<String>);
+    }).then((response) {
+      var listDynamic = jsonDecode(handleException(response)) as List;
+      return listDynamic.map<String>((item) => item.toString()).toList();
+    });
   }
 
   Future<PaginationDiscussion> getDiscussions(int size, int page) {
-    loadToken();
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
     Uri url = Uri.parse(BaseUrl.URL_GATEWAY +
         "/messagebox/infos?page=$page&size=$size&sort=lastUpdate,desc");
-    return http.get(url, headers: headers).timeout(Duration(seconds: 5),
+    return client.get(url, headers: headers).timeout(Duration(seconds: 5),
         onTimeout: () {
       throw NetworkException();
     }).then((response) =>
@@ -38,10 +49,14 @@ class MessageService extends BaseService{
 
   Future<PaginationMessage> getDiscussionMessages(
       String discId, int size, int page) {
-    loadToken();
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
     Uri url = Uri.parse(BaseUrl.URL_GATEWAY +
         "/messagebox/discussion/$discId?page=$page&size=$size&sort=date,desc");
-    return http.get(url, headers: headers).timeout(Duration(seconds: 5),
+    return client.get(url, headers: headers).timeout(Duration(seconds: 5),
         onTimeout: () {
       throw NetworkException();
     }).then((response) =>
@@ -49,9 +64,13 @@ class MessageService extends BaseService{
   }
 
   Future envoyerMessage(MessageData message) {
-    loadToken();
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
     Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/messagebox/discussion");
-    return http
+    return client
         .post(url, body: jsonEncode(message), headers: headers)
         .timeout(Duration(seconds: 5), onTimeout: () {
       throw NetworkException();

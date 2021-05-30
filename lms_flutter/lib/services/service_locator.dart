@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
 import 'package:lms_flutter/services/auth_service.dart';
 import 'package:lms_flutter/services/post_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,18 +14,18 @@ void setup() async {
       () => SharedPreferences.getInstance());
 
   getIt.registerSingletonWithDependencies<AuthService>(
-      () => AuthService(getIt.get<SharedPreferences>()),
+      () => AuthService(getIt.get<SharedPreferences>(), http.Client()),
       dependsOn: [SharedPreferences]);
 
   getIt.registerSingletonWithDependencies<MessageService>(
-      () => MessageService(getIt.get<SharedPreferences>()),
+      () => MessageService(getIt.get<SharedPreferences>(), http.Client()),
       dependsOn: [SharedPreferences]);
 
   getIt.registerSingletonWithDependencies<PostService>(
-      () => PostService(getIt.get<SharedPreferences>()),
+      () => PostService(getIt.get<SharedPreferences>(), http.Client()),
       dependsOn: [SharedPreferences]);
 
   getIt.registerSingletonWithDependencies<CourseService>(
-      () => CourseService(getIt.get<SharedPreferences>()),
+      () => CourseService(getIt.get<SharedPreferences>(), http.Client()),
       dependsOn: [SharedPreferences]);
 }

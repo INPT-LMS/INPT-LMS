@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
-import 'package:lms_flutter/services/exceptions/authentication_exception.dart';
-import 'package:lms_flutter/services/exceptions/not_found_exception.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
@@ -111,15 +109,10 @@ class _LoginPageState extends State<LoginPage> {
                             '/home', (Route<dynamic> route) => false);
                       } else
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Une erreur s'est produite")));
-                    }, onError: (e) {
-                      if (e is AuthenticationException ||
-                          e is NotFoundException)
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text("Email ou mot de passe incorrect")));
-                      else
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Une erreur s'est produite")));
+                    }).catchError((e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Une erreur s'est produite")));
                     });
                   },
                   child: Text(

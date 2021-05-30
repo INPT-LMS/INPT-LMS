@@ -11,12 +11,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'exceptions/network_exception.dart';
 
 class PostService extends BaseService {
-  PostService(SharedPreferences sharedPreferences) : super(sharedPreferences);
+  PostService(SharedPreferences sharedPreferences, http.Client client)
+      : super(sharedPreferences, client);
 
   Future<PaginationPost> getFeed() {
-    loadToken();
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
     Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/post/publication/cours");
-    return http.get(url, headers: headers).timeout(Duration(seconds: 5),
+    return client.get(url, headers: headers).timeout(Duration(seconds: 5),
         onTimeout: () {
       throw NetworkException();
     }).then((response) {
@@ -31,18 +36,21 @@ class PostService extends BaseService {
           .toList()
           .map<PostData>((postJson) => PostData.fromJson(postJson))
           .toList();
-      content.sort((post1, post2) =>
-          post1.datePublication.isAfter(post2.datePublication) ? -1 : 1);
       return PaginationPost(true, content);
     });
   }
 
   Future<LikeData> addLike(String idPublication) {
-    loadToken();
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
     Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/post/like");
-    return http
+    return client
         .post(url,
-            headers: headers, body: "{\"idPublication\": \"$idPublication\"}")
+            headers: headers,
+            body: jsonEncode(<String, String>{"idPublication": idPublication}))
         .timeout(Duration(seconds: 5), onTimeout: () {
       throw NetworkException();
     }).then((response) =>
@@ -50,28 +58,40 @@ class PostService extends BaseService {
   }
 
   Future<String> removeLike(String idLike) {
-    loadToken();
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
     Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/post/like/$idLike");
-    return http.delete(url, headers: headers).timeout(Duration(seconds: 5),
+    return client.delete(url, headers: headers).timeout(Duration(seconds: 5),
         onTimeout: () {
       throw NetworkException();
     }).then((response) => handleException(response));
   }
 
   Future<String> removePost(String idPost) {
-    loadToken();
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
     Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/post/publication/$idPost");
-    return http.delete(url, headers: headers).timeout(Duration(seconds: 5),
+    return client.delete(url, headers: headers).timeout(Duration(seconds: 5),
         onTimeout: () {
       throw NetworkException();
     }).then((response) => handleException(response));
   }
 
   Future<String> removeCommentaire(String idCommentaire) {
-    loadToken();
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
     Uri url =
         Uri.parse(BaseUrl.URL_GATEWAY + "/post/commentaire/$idCommentaire");
-    return http.delete(url, headers: headers).timeout(Duration(seconds: 5),
+    return client.delete(url, headers: headers).timeout(Duration(seconds: 5),
         onTimeout: () {
       throw NetworkException();
     }).then((response) => handleException(response));
