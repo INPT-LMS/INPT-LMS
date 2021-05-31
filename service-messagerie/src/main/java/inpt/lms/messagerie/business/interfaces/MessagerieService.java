@@ -12,7 +12,7 @@ import inpt.lms.messagerie.proxies.NoSuchUserException;
 
 public interface MessagerieService {
 
-	void envoyerMessage(Message message) throws NoSuchUserException;
+	Message envoyerMessage(Message message) throws NoSuchUserException;
 
 	Page<Discussion> getDiscussionsUtilisateur(long idUtilisateur, Pageable pagination);
 

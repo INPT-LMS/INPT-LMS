@@ -25,8 +25,8 @@ paths:
               $ref: '#/components/schemas/MessageForm'
         required: true
       responses:
-        "400":
-          description: Bad Request
+        "503":
+          description: Service Unavailable
           content:
             '*/*':
               schema:
@@ -37,14 +37,18 @@ paths:
             '*/*':
               schema:
                 type: string
-        "503":
-          description: Service Unavailable
+        "400":
+          description: Bad Request
           content:
             '*/*':
               schema:
                 type: string
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
   /messagerie/infos:
     get:
       tags:
@@ -63,8 +67,8 @@ paths:
         schema:
           $ref: '#/components/schemas/Pageable'
       responses:
-        "400":
-          description: Bad Request
+        "503":
+          description: Service Unavailable
           content:
             '*/*':
               schema:
@@ -75,8 +79,8 @@ paths:
             '*/*':
               schema:
                 type: string
-        "503":
-          description: Service Unavailable
+        "400":
+          description: Bad Request
           content:
             '*/*':
               schema:
@@ -100,8 +104,8 @@ paths:
           type: integer
           format: int64
       responses:
-        "400":
-          description: Bad Request
+        "503":
+          description: Service Unavailable
           content:
             '*/*':
               schema:
@@ -112,8 +116,8 @@ paths:
             '*/*':
               schema:
                 type: string
-        "503":
-          description: Service Unavailable
+        "400":
+          description: Bad Request
           content:
             '*/*':
               schema:
@@ -149,8 +153,8 @@ paths:
         schema:
           $ref: '#/components/schemas/Pageable'
       responses:
-        "400":
-          description: Bad Request
+        "503":
+          description: Service Unavailable
           content:
             '*/*':
               schema:
@@ -161,8 +165,8 @@ paths:
             '*/*':
               schema:
                 type: string
-        "503":
-          description: Service Unavailable
+        "400":
+          description: Bad Request
           content:
             '*/*':
               schema:
@@ -196,8 +200,8 @@ paths:
         schema:
           $ref: '#/components/schemas/Pageable'
       responses:
-        "400":
-          description: Bad Request
+        "503":
+          description: Service Unavailable
           content:
             '*/*':
               schema:
@@ -208,8 +212,8 @@ paths:
             '*/*':
               schema:
                 type: string
-        "503":
-          description: Service Unavailable
+        "400":
+          description: Bad Request
           content:
             '*/*':
               schema:
@@ -235,73 +239,6 @@ components:
           maxLength: 2147483647
           minLength: 1
           type: string
-    Pageable:
-      type: object
-      properties:
-        page:
-          minimum: 0
-          type: integer
-          format: int32
-        size:
-          minimum: 1
-          type: integer
-          format: int32
-        sort:
-          type: array
-          items:
-            type: string
-    Discussion:
-      type: object
-      properties:
-        id:
-          type: string
-        idParticipant1:
-          type: integer
-          format: int64
-        idParticipant2:
-          type: integer
-          format: int64
-    PageDiscussion:
-      type: object
-      properties:
-        totalPages:
-          type: integer
-          format: int32
-        totalElements:
-          type: integer
-          format: int64
-        pageable:
-          $ref: '#/components/schemas/Pageable'
-        first:
-          type: boolean
-        last:
-          type: boolean
-        number:
-          type: integer
-          format: int32
-        sort:
-          $ref: '#/components/schemas/Sort'
-        numberOfElements:
-          type: integer
-          format: int32
-        size:
-          type: integer
-          format: int32
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/Discussion'
-        empty:
-          type: boolean
-    Sort:
-      type: object
-      properties:
-        sorted:
-          type: boolean
-        unsorted:
-          type: boolean
-        empty:
-          type: boolean
     Message:
       type: object
       properties:
@@ -323,6 +260,82 @@ components:
         lu:
           type: boolean
           writeOnly: true
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
+    Discussion:
+      type: object
+      properties:
+        id:
+          type: string
+        nomParticipant1:
+          type: string
+        idParticipant1:
+          type: integer
+          format: int64
+        nomParticipant2:
+          type: string
+        idParticipant2:
+          type: integer
+          format: int64
+        lastMessage:
+          $ref: '#/components/schemas/Message'
+        lastUpdate:
+          type: string
+          format: date-time
+    PageDiscussion:
+      type: object
+      properties:
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Discussion'
+        number:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/Sort'
+        numberOfElements:
+          type: integer
+          format: int32
+        empty:
+          type: boolean
+    Sort:
+      type: object
+      properties:
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+        empty:
+          type: boolean
     PageMessage:
       type: object
       properties:
@@ -338,6 +351,13 @@ components:
           type: boolean
         last:
           type: boolean
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
         number:
           type: integer
           format: int32
@@ -346,12 +366,5 @@ components:
         numberOfElements:
           type: integer
           format: int32
-        size:
-          type: integer
-          format: int32
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
         empty:
           type: boolean

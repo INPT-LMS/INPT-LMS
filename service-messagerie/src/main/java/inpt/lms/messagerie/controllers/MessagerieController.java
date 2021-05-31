@@ -60,7 +60,7 @@ public class MessagerieController {
 	}
 	
 	@PostMapping(path="/discussion",consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void envoyerMessage(@RequestHeader(name = "X-USER-ID") long userId,
+	public Message envoyerMessage(@RequestHeader(name = "X-USER-ID") long userId,
 			@Valid @RequestBody  MessageForm messageForm) 
 					throws NoSuchUserException{
 		if (messageForm.getIdDestinataire().equals(userId))
@@ -70,7 +70,7 @@ public class MessagerieController {
 		message.setIdEmetteur(userId);
 		message.setIdDestinataire(messageForm.getIdDestinataire());
 		message.setContenu(messageForm.getContenu());
-		messagerieService.envoyerMessage(message);
+		return messagerieService.envoyerMessage(message);
 	}
 
 	public MessagerieService getMessagerieService() {
