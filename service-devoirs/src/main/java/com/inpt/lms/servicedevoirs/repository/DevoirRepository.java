@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface DevoirRepository extends MongoRepository<Devoir,String> {
-    List<Devoir> findDevoirsByIdCours(UUID idCours);
+    List<Devoir> findDevoirsByIdCours(String idCours);
 }

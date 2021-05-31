@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 
+import java.time.Instant;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -17,7 +18,5 @@ public class DevoirInfos {
     @Id
     private String id;
     private String contenu;
-    // FIXME la date ne default pas
-    @CreatedDate
     private Date dateCreation;
 }

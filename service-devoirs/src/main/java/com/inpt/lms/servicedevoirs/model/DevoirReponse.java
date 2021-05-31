@@ -1,9 +1,6 @@
 package com.inpt.lms.servicedevoirs.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 
 @AllArgsConstructor
@@ -13,7 +10,8 @@ import org.springframework.data.annotation.Id;
 public class DevoirReponse {
     @Id
     private String id;
-    private String idProprietaire;
+    private Long idProprietaire;
     private Fichier fichier;
     private int note;
+    private boolean estNote;
 }
