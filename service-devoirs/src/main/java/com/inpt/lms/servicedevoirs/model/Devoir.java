@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,9 +16,10 @@ import java.util.UUID;
 public class Devoir {
     @Id
     private String id;
-    private UUID idCours;
-    private String idProprietaire;
+    private String idCours;
+    private Long idProprietaire;
     private String type;
     private DevoirInfos devoirInfos;
     private List<DevoirReponse> reponses;
+    private Date dateLimite;
 }

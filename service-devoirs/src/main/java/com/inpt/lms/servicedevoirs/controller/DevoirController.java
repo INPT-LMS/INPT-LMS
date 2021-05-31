@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -20,12 +19,12 @@ public class DevoirController {
    private final DevoirService devoirService;
 
    @GetMapping("/devoirs/{courseId}")
-   public List<Devoir> getDevoirs(@RequestHeader(name ="X-USER-ID")Long userId, @PathVariable UUID courseId){
+   public List<Devoir> getDevoirs(@RequestHeader(name ="X-USER-ID")Long userId, @PathVariable String courseId){
       return devoirService.recupererDevoirs(userId,courseId);
    }
 
    @GetMapping("/devoirs/{courseId}/{devoirId}")
-   public Devoir getDevoir(@RequestHeader(name = "X-USER-ID") Long userId, @PathVariable UUID courseId, @PathVariable String devoirId){
+   public Devoir getDevoir(@RequestHeader(name = "X-USER-ID") Long userId, @PathVariable String courseId, @PathVariable String devoirId){
       Devoir devoir = null;
       try {
          devoir = devoirService.recupererDevoir(userId, courseId,devoirId);
@@ -40,7 +39,7 @@ public class DevoirController {
    }
 
    @PostMapping("/devoirs/{courseId}")
-   public Devoir addDevoir(@RequestHeader(name = "X-USER-ID") Long userId,@PathVariable UUID courseId, @RequestBody DevoirDTO devoirDTO){
+   public Devoir addDevoir(@RequestHeader(name = "X-USER-ID") Long userId,@PathVariable String courseId, @RequestBody DevoirDTO devoirDTO){
       Devoir devoir = null;
       try {
          devoir = devoirService.addDevoir(userId, courseId, devoirDTO);
@@ -52,7 +51,7 @@ public class DevoirController {
    }
 
    @PutMapping("/devoirs/{courseId}/{devoirId}/rendu")
-   public DevoirReponse rendreDevoir(@RequestHeader(name = "X-USER-ID") Long userId, @PathVariable UUID courseId, @PathVariable String devoirId, @RequestBody DevoirReponseDTO devoirReponseDTO){
+   public DevoirReponse rendreDevoir(@RequestHeader(name = "X-USER-ID") Long userId, @PathVariable String courseId, @PathVariable String devoirId, @RequestBody DevoirReponseDTO devoirReponseDTO){
       DevoirReponse devoirReponse = null;
       try {
          devoirReponse = devoirService.rendreDevoir(userId, courseId,devoirId,devoirReponseDTO);
@@ -68,7 +67,7 @@ public class DevoirController {
    }
 
    @PutMapping("/devoirs/{courseId}/{devoirId}/rendu/{idReponse}")
-   public DevoirReponse noterDevoir(@RequestHeader(name = "X-USER-ID") Long userId, @PathVariable UUID courseId, @PathVariable String devoirId,@PathVariable String idReponse,@RequestBody NoteDTO noteDTO){
+   public DevoirReponse noterDevoir(@RequestHeader(name = "X-USER-ID") Long userId, @PathVariable String courseId, @PathVariable String devoirId,@PathVariable String idReponse,@RequestBody NoteDTO noteDTO){
       DevoirReponse devoirReponse = null;
       try {
          devoirReponse = devoirService.noterDevoir(userId, courseId, devoirId,idReponse,noteDTO);

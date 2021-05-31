@@ -22,7 +22,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -58,7 +57,7 @@ class DevoirServiceTest {
 
         // When
         // TODO Fix test
-        UUID courseId = null;
+        String courseId = null;
         Long userId = null;
         underTest.recupererDevoir(userId, courseId, idDevoir);
 
@@ -71,7 +70,7 @@ class DevoirServiceTest {
     void doitRecupererTousLesDevoirs() {
         // When
         Long userId=1l;
-        UUID courseId = UUID.randomUUID();
+        String courseId = "";
         underTest.recupererDevoirs(userId, courseId);
 
         // Then
@@ -83,11 +82,10 @@ class DevoirServiceTest {
     void doitAjouterUnNouveauDevoirEtDevoirInfosAPartirDuDTO() {
         // Given
         // TODO Fix test
-        UUID courseId = null;
+        String courseId = null;
         Long userId = null;
 
         DevoirDTO devoirDTO = new DevoirDTO();
-        devoirDTO.setIdProprietaire("X");
         devoirDTO.setContenu("Z");
         devoirDTO.setType("QUIZZ");
 
@@ -97,7 +95,6 @@ class DevoirServiceTest {
         Devoir devoir = new Devoir();
         devoir.setIdCours(courseId);
         devoir.setType(devoirDTO.getType());
-        devoir.setIdProprietaire(devoirDTO.getIdProprietaire());
         devoir.setDevoirInfos(devoirInfos);
         devoir.setReponses(new ArrayList<>());
         devoir.setDevoirInfos(devoirInfos);
@@ -127,7 +124,6 @@ class DevoirServiceTest {
         String idDevoir = any();
 
         DevoirReponseDTO devoirReponseDTO = new DevoirReponseDTO();
-        devoirReponseDTO.setIdProprietaire("X");
         devoirReponseDTO.setNomFichier("Y");
 
         Fichier f = new Fichier();
@@ -141,13 +137,12 @@ class DevoirServiceTest {
         devoir.getReponses().add(devoirReponse);
 
         devoirReponse.setFichier(f);
-        devoirReponse.setIdProprietaire(devoirReponseDTO.getIdProprietaire());
         devoirReponse.setNote(0);
 
         // When
         // TODO Fix test
         Long userId = null;
-        UUID courseId = null;
+        String courseId = null;
         underTest.rendreDevoir(userId, courseId, idDevoir,devoirReponseDTO);
 
         // Then
@@ -177,7 +172,7 @@ class DevoirServiceTest {
 
         // When
         // TODO Fix test
-        UUID courseId = null;
+        String courseId = null;
         Long userId = null;
         underTest.noterDevoir(userId, courseId, idDevoir,idReponse,noteDTO);
 
