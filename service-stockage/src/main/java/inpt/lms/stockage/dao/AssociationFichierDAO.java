@@ -29,4 +29,7 @@ public interface AssociationFichierDAO
 	
 	Optional<AssociationFichier> findByIdAndIdCorrespondantAssociationAndTypeAssociation(
 			Long idAssoc, String idAssocie,TypeAssociation typeAssociation);
+	
+	Optional<AssociationFichier> findByIdCorrespondantAssociationAndTypeAssociation(
+			String idAssocie,TypeAssociation typeAssociation);
 }

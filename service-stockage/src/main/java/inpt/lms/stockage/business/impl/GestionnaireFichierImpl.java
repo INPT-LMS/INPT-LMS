@@ -66,6 +66,27 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 		associationFichierDAO.deleteById(idAssociation);
 	}
 	
+	private AssociationFichier ecrireFichierStockage(Long userId, byte[] bytes, 
+			String contentType, String filename, long size,TypeAssociation association) 
+					throws IOException {
+		FichierInfo fInfo = new FichierInfo();
+		fInfo.setContentType(contentType);
+		fInfo.setNom(filename);
+		fInfo.setIdProprietaire(userId);
+		fInfo.setDateCreation(LocalDateTime.now());
+		fInfo.setSize(size);
+		
+		String chemin = gestionnaireIO.ecrireFichier(bytes, "personal-"+userId, "");
+		fInfo.setChemin(chemin);
+		fInfo = fichierInfoDAO.save(fInfo);
+		
+		AssociationFichier assoc = new AssociationFichier();
+		assoc.setIdCorrespondantAssociation(userId.toString());
+		assoc.setTypeAssociation(association);
+		assoc.setFichierInfo(fInfo);
+		return associationFichierDAO.save(assoc);
+	}
+	
 	@Override
 	public void isAssociationPresent(Long idAssoc, String idAssocie,
 			TypeAssociation typeAssociation) throws NotFoundException{
@@ -131,22 +152,8 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 		if (usedSpace + size > MAX_SPACE_PER_USER)
 			throw new StorageLimitExceededException();
 		
-		FichierInfo fInfo = new FichierInfo();
-		fInfo.setContentType(contentType);
-		fInfo.setNom(nom);
-		fInfo.setIdProprietaire(idUtilisateur);
-		fInfo.setDateCreation(LocalDateTime.now());
-		fInfo.setSize(size);
-		
-		String chemin = gestionnaireIO.ecrireFichier(fichier, "personal-"+idUtilisateur, "");
-		fInfo.setChemin(chemin);
-		fInfo = fichierInfoDAO.save(fInfo);
-		
-		AssociationFichier assoc = new AssociationFichier();
-		assoc.setIdCorrespondantAssociation(idUtilisateur.toString());
-		assoc.setTypeAssociation(TypeAssociation.SAC);
-		assoc.setFichierInfo(fInfo);
-		return associationFichierDAO.save(assoc);
+		return ecrireFichierStockage(idUtilisateur, fichier, contentType, nom, size,
+				TypeAssociation.SAC);
 	}
 
 	@Override
@@ -178,11 +185,46 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 		fichier.setFichierContenu(gestionnaireIO.lireFichier(info.getChemin()));
 		return fichier;
 	}
-
 	
 	@Override
 	public AssociationFichier getFichierByAssocId(Long idAssoc) throws NotFoundException{
 		return recupererAssociation(idAssoc);
+	}
+	
+	@Override
+	public AssociationFichier uploadPhotoProfil(long userId, byte[] bytes, 
+			String contentType, String filename, long size) throws IOException {
+		Optional<AssociationFichier> oldPicture = associationFichierDAO.findByIdCorrespondantAssociationAndTypeAssociation(
+				String.valueOf(userId), TypeAssociation.PROFIL_PICTURE);
+		AssociationFichier newPicture = 
+				ecrireFichierStockage(userId, bytes, contentType, filename, size, 
+						TypeAssociation.PROFIL_PICTURE);
+		if (oldPicture.isPresent()) {
+			FichierInfo fInfo = oldPicture.get().getFichierInfo();
+			fichierInfoDAO.delete(fInfo);
+			gestionnaireIO.supprimerFichier(fInfo.getChemin());
+		}
+		return newPicture;
+	}
+	
+	@Override
+	public void retraitPhotoProfil(long userId) throws NotFoundException, IOException {
+		Optional<AssociationFichier> oldPicture = associationFichierDAO.findByIdCorrespondantAssociationAndTypeAssociation(
+				String.valueOf(userId), TypeAssociation.PROFIL_PICTURE);
+		if (oldPicture.isPresent()) {
+			FichierInfo fInfo = oldPicture.get().getFichierInfo();
+			fichierInfoDAO.delete(fInfo);
+			gestionnaireIO.supprimerFichier(fInfo.getChemin());
+		}	
+	}
+	
+	@Override
+	public Long getIdAssocPhotoUser(Long userId) throws NotFoundException {
+		Optional<AssociationFichier> assocFichier = associationFichierDAO.findByIdCorrespondantAssociationAndTypeAssociation(
+				userId.toString(), TypeAssociation.PROFIL_PICTURE);
+		if (assocFichier.isEmpty())
+			throw new NotFoundException("photo profil");
+		return assocFichier.get().getId();
 	}
 	
 	public FichierInfoDAO getFichierInfoDAO() {

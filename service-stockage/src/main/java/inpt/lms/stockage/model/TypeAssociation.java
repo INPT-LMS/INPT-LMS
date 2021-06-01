@@ -1,5 +1,5 @@
 package inpt.lms.stockage.model;
 
 public enum TypeAssociation {
-	COURS,PUBLICATION,DEVOIR,SAC
+	COURS,PUBLICATION,DEVOIR,SAC,PROFIL_PICTURE
 }
