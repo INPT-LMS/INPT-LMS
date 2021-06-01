@@ -43,7 +43,7 @@ public class MessagerieServiceImpl implements MessagerieService {
 	}
 
 	@Override
-	public void envoyerMessage(Message message)throws NoSuchUserException {
+	public Message envoyerMessage(Message message)throws NoSuchUserException {
 		long emetteur = message.getIdEmetteur();
 		long destinataire = message.getIdDestinataire();
 		long participant1 = emetteur < destinataire ? emetteur : destinataire;
@@ -84,6 +84,8 @@ public class MessagerieServiceImpl implements MessagerieService {
 		discussion.setLastMessage(message);
 		discussion.setLastUpdate(now);
 		discussionDAO.save(discussion);
+		
+		return message;
 	}
 
 	@Override
