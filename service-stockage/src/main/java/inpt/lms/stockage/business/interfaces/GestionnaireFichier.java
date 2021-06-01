@@ -139,5 +139,36 @@ public interface GestionnaireFichier {
 	 * @throws NotFoundException
 	 */
 	void isAssociationPresent(Long idAssoc, String idAssocie, TypeAssociation typeAssociation)
-			throws NotFoundException;	
+			throws NotFoundException;
+
+	/**
+	 * Enregistre une photo de profil pour l'utilisateur
+	 * @param idUtilisateur l'identifiant de l'utilisateur
+	 * @param photo le fichier
+	 * @param contentType le type de fichier
+	 * @param nom le nom du fichier
+	 * @param size la taille du fichier (en octets)
+	 * @return Les informations sur le fichier ajoute
+	 * @throws IOException Si une erreur d'écriture est survenue
+	 * 
+	 */
+	AssociationFichier uploadPhotoProfil(long userId, byte[] bytes, 
+			String contentType, String filename, long size) throws IOException;
+
+	/**
+	 * Recupere l'identifiant de l'association de la photo de l'utilisateur
+	 * @param userId l'id de l'utilisateur
+	 * @return l'identifiant de l'association
+	 * @throws NotFoundException Si l'utilisateur n'existe pas ou n'a pas de photo
+	 */
+	Long getIdAssocPhotoUser(Long userId) throws NotFoundException;
+
+	/**
+	 * Supprime la photo de profil de l'utilisateur
+	 * @param userId l'identifiant de l'utilisateur
+	 * @throws NotFoundException Si l'utilisateur n'a pas de photo de profil
+	 * @throws IOException Si une erreur a lieu durant la suppression
+	 */
+	void retraitPhotoProfil(long userId) throws NotFoundException,IOException;
+	
 }
