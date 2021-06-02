@@ -14,7 +14,9 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping />
+        <datasource-mapping>
+          <factory-entry name="entityManagerFactory" />
+        </datasource-mapping>
         <naming-strategy-map />
       </configuration>
     </facet>
@@ -166,5 +168,9 @@
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-crypto:5.4.6" level="project" />
     <orderEntry type="library" name="Maven: io.github.openfeign:feign-core:10.10.1" level="project" />
     <orderEntry type="library" name="Maven: io.github.openfeign:feign-slf4j:10.10.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tika:tika-core:1.26" level="project" />
+    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.activation:javax.activation-api:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.activation:activation:1.1.1" level="project" />
   </component>
 </module>

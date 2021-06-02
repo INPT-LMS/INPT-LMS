@@ -21,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -91,6 +92,7 @@ class DevoirServiceTest {
 
         DevoirInfos devoirInfos = new DevoirInfos();
         devoirInfos.setContenu(devoirDTO.getContenu());
+        devoirInfos.setDateCreation(new Date());
 
         Devoir devoir = new Devoir();
         devoir.setIdCours(courseId);
