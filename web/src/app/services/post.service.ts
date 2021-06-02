@@ -74,7 +74,7 @@ export class PostService {
    */
   updateCommentaire(commentaire: Commentaire) {
     return this.http
-      .put(`${COMMENT_BASE_URL}/${commentaire.idCommentaire}`, commentaire)
+      .put(`${COMMENT_BASE_URL}/${commentaire.id}`, commentaire)
       .toPromise();
   }
 

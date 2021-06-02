@@ -10,25 +10,9 @@ import { User } from 'src/app/utils/Types';
 })
 export class CourseMembersListComponent implements OnInit {
   @Input()
-  classId: string = '';
   members: User[] = [];
 
-  constructor(
-    private classService: ClassService,
-    private accountService: AccountService
-  ) {}
+  constructor() {}
 
-  async ngOnInit(): Promise<void> {
-    try {
-      const res: any = await this.classService.getCourseMembers(this.classId);
-      for (let user of res) {
-        const data: any = await this.accountService.getUser(user.memberID);
-        let newUser = data.user;
-        newUser.id = user.memberID;
-        this.members.push(newUser);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  async ngOnInit(): Promise<void> {}
 }

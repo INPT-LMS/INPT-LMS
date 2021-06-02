@@ -93,10 +93,7 @@ export class PostComponent implements OnInit {
       const res = await this.postService.deletePublication(postId);
       this.deletePostById(postId);
     } catch (error) {
-      // FIXME Le client reçoit une erreur même si la suppression passe quand même
       console.log(error);
-    } finally {
-      this.deletePostById(postId);
     }
   }
 
@@ -107,17 +104,24 @@ export class PostComponent implements OnInit {
     const idPublication = this.post.id!;
     const { comment: contenuCommentaire } = this.commentForm.value;
 
-    const payload: Commentaire = {
+    let payload: Commentaire = {
       idProprietaire,
       idPublication,
       contenuCommentaire,
     };
 
     try {
-      await this.postService.addCommentaire(payload);
+      const res: any = await this.postService.addCommentaire(payload);
+      payload.id = res.id;
       this.post.commentaires?.unshift(payload);
     } catch (error) {
       console.log(error);
     }
+  }
+
+  deleteCommentById(commentId: string) {
+    this.post.commentaires = this.post.commentaires?.filter(
+      (comment) => comment.id !== commentId
+    );
   }
 }

@@ -19,6 +19,16 @@
         {{ commentaire.contenuCommentaire }}
       </p>
     </div>
+
+    <!-- Options menu -->
+    <div *ngIf="isMine" ngbDropdown class="d-inline-block settings">
+      <button class="btn link" ngbDropdownToggle></button>
+      <div ngbDropdownMenu>
+        <button (click)="deleteComment()" ngbDropdownItem>
+          Supprimer le commentaire
+        </button>
+      </div>
+    </div>
     <!-- Number of likes -->
     <!-- <div class="d-flex align-items-center align-self-end">
       <a href="">
