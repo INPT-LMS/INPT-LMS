@@ -4,7 +4,6 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lms_flutter/mock_components/mock_home_screen.dart';
 import 'package:lms_flutter/screens/CoursePage.dart';
 import 'package:lms_flutter/screens/LoginPage.dart';
 import 'package:lms_flutter/screens/ProfilePage.dart';
@@ -16,13 +15,15 @@ import 'package:lms_flutter/services/auth_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
+import 'mock_components/mock_home_screen.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setup();
   await getIt.allReady();
   var authService = getIt.get<AuthService>();
   InfosModel modele = InfosModel(
-      authService.isLoggedIn() ? authService.userInfos : null,
+      authService.isLoggedIn() ? authService.getUserLoggedInfos() : null,
       await Connectivity().checkConnectivity());
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider.value(value: modele)],

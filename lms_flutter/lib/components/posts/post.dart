@@ -13,6 +13,8 @@ import 'package:lms_flutter/services/post_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils.dart';
+
 class Post extends StatelessWidget {
   PostData postData;
   Post(this.postData, {Key key}) : super(key: key);
@@ -91,10 +93,16 @@ class Post extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.delete, color: Colors.red),
               onPressed: () {
-                postService.removePost(postData.id).then((value) {
-                  var listModele = Provider.of<ListDataModel<PostData>>(context,
-                      listen: false);
-                  listModele.deleteWhere((item) => item.id == postData.id);
+                askConfirmation(context).then((value) {
+                  if (value == null || !value) return;
+                  postService.removePost(postData.id).then((value) {
+                    var listModele = Provider.of<ListDataModel<PostData>>(
+                        context,
+                        listen: false);
+                    listModele.deleteWhere((item) => item.id == postData.id);
+                  }).catchError((e) {
+                    showDefaultErrorMessage(context, e);
+                  });
                 });
               }),
         LikeComment(

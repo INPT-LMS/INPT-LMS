@@ -10,8 +10,6 @@ import 'package:lms_flutter/services/exceptions/not_found_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService extends BaseService {
-  UserInfos userInfos;
-
   AuthService(SharedPreferences sharedPreferences, http.Client client)
       : super(sharedPreferences, client);
 
@@ -56,6 +54,11 @@ class AuthService extends BaseService {
   bool isLoggedIn() {
     return sharedPreferences.containsKey("userToken") &&
         sharedPreferences.containsKey("userInfos");
+  }
+
+  UserInfos getUserLoggedInfos() {
+    return UserInfos.fromJson(
+        jsonDecode(sharedPreferences.getString("userInfos")));
   }
 
   void logout() {

@@ -4,6 +4,7 @@ import 'package:lms_flutter/model/posts/commentaire_data.dart';
 import 'package:lms_flutter/model/posts/like_data.dart';
 import 'package:lms_flutter/services/post_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
+import 'package:lms_flutter/utils.dart';
 
 class LikeComment extends StatefulWidget {
   String idPublication;
@@ -27,21 +28,26 @@ class _LikeCommentState extends State<LikeComment> {
   List<CommentaireData> commentairesData;
   List<Comment> commentaires;
   PostService postService;
+  TextEditingController controller;
+  void Function(String idComment) removeComment;
 
   @override
   void initState() {
     super.initState();
+    controller = TextEditingController();
     numberLikes = this.widget.numberLikes;
     userLike = this.widget.userLike;
     showComments = false;
     commentairesData = this.widget.commentairesData;
-    var removeComment = (idComment) {
+    removeComment = (idComment) {
       postService.removeCommentaire(idComment).then((value) {
         setState(() {
           commentairesData.removeWhere((element) => element.id == idComment);
           commentaires.removeWhere(
               (element) => element.commentaireData.id == idComment);
         });
+      }).catchError((e) {
+        showDefaultErrorMessage(context, e);
       });
     };
     commentaires = commentairesData
@@ -55,7 +61,39 @@ class _LikeCommentState extends State<LikeComment> {
   LikeComment get widget => super.widget;
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var field = TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+            hintText: "Ecrire un commentaire",
+            border: OutlineInputBorder(),
+            suffixIcon: IconButton(
+                icon: Icon(Icons.send),
+                onPressed: () {
+                  if (controller.text == null || controller.text.length == 0)
+                    return;
+                  postService
+                      .addCommentaire(
+                          this.widget.idPublication, controller.text)
+                      .then((commentaireData) {
+                    setState(() {
+                      commentairesData.insert(0, commentaireData);
+                      commentaires.insert(
+                          0, Comment(commentaireData, removeComment));
+                    });
+                  }).catchError((e) {
+                    showDefaultErrorMessage(context, e);
+                  });
+                  controller.clear();
+                })));
+    List<Widget> liste = [field];
+    liste.addAll(commentaires);
     return Column(
       children: [
         Row(children: [
@@ -63,7 +101,9 @@ class _LikeCommentState extends State<LikeComment> {
               icon: Icon(
                   userLike != null ? Icons.favorite : Icons.favorite_border,
                   color: Colors.red),
-              onPressed: changeLike),
+              onPressed: () {
+                changeLike(context);
+              }),
           Container(
               margin: EdgeInsets.only(left: 5), child: Text("$numberLikes")),
           IconButton(
@@ -76,14 +116,12 @@ class _LikeCommentState extends State<LikeComment> {
               child: Text("${commentaires.length}"))
         ]),
         if (showComments)
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: commentaires)
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: liste)
       ],
     );
   }
 
-  void changeLike() {
+  void changeLike(BuildContext context) {
     if (isLikeDisabled) return;
     isLikeDisabled = true;
     if (userLike != null)
@@ -93,9 +131,10 @@ class _LikeCommentState extends State<LikeComment> {
           numberLikes--;
           isLikeDisabled = false;
         });
-      }, onError: (e) {
+      }).catchError((e) {
+        showDefaultErrorMessage(context, e);
         setState(() {
-          isLikeDisabled = false;
+          isLikeDisabled = true;
         });
       });
     else
@@ -105,9 +144,10 @@ class _LikeCommentState extends State<LikeComment> {
           numberLikes++;
           isLikeDisabled = false;
         });
-      }, onError: (e) {
+      }).catchError((e) {
+        showDefaultErrorMessage(context, e);
         setState(() {
-          isLikeDisabled = false;
+          isLikeDisabled = true;
         });
       });
   }

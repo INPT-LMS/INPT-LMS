@@ -1,6 +1,8 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/services/service_locator.dart';
+import 'package:lms_flutter/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth_service.dart';
@@ -31,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    var infosModel = Provider.of<InfosModel>(context, listen: false);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -99,20 +102,23 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: () {
                     var authService = getIt.get<AuthService>();
+                    if (infosModel.networkType == ConnectivityResult.none) {
+                      showSnackbar(context, "Pas de connexion");
+                      return;
+                    }
                     authService
                         .login(mailController.text, passwordController.text)
                         .then((isOk) {
                       if (isOk) {
                         Provider.of<InfosModel>(context, listen: false)
-                            .userInfos = authService.userInfos;
+                            .userInfos = authService.getUserLoggedInfos();
                         Navigator.of(context).pushNamedAndRemoveUntil(
                             '/home', (Route<dynamic> route) => false);
                       } else
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Email ou mot de passe incorrect")));
+                        showSnackbar(
+                            context, "Email ou mot de passe incorrect");
                     }).catchError((e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Une erreur s'est produite")));
+                      showDefaultErrorMessage(context, e);
                     });
                   },
                   child: Text(

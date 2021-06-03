@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:lms_flutter/model/consts/base_url.dart';
 import 'package:lms_flutter/model/pagination/pagination_post.dart';
+import 'package:lms_flutter/model/posts/commentaire_data.dart';
 import 'package:lms_flutter/model/posts/like_data.dart';
 import 'package:lms_flutter/model/posts/post_data.dart';
 import 'package:lms_flutter/services/base_service.dart';
@@ -36,6 +37,27 @@ class PostService extends BaseService {
           .toList()
           .map<PostData>((postJson) => PostData.fromJson(postJson))
           .toList();
+      content.sort((post1, post2) =>
+          post1.datePublication.isAfter(post2.datePublication) ? -1 : 1);
+      return PaginationPost(true, content);
+    });
+  }
+
+  Future<PaginationPost> getPostsCours(String idCours) {
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
+    Uri url =
+        Uri.parse(BaseUrl.URL_GATEWAY + "/post/publication/cours/$idCours");
+    return client.get(url, headers: headers).timeout(Duration(seconds: 5),
+        onTimeout: () {
+      throw NetworkException();
+    }).then((response) {
+      var listePosts = jsonDecode(handleException(response)) as List;
+      List<PostData> content =
+          listePosts.map<PostData>((item) => PostData.fromJson(item)).toList();
       return PaginationPost(true, content);
     });
   }
@@ -70,6 +92,26 @@ class PostService extends BaseService {
     }).then((response) => handleException(response));
   }
 
+  Future<PostData> addPost(String idCours, String contenu) {
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
+    Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/post/publication");
+    return client
+        .post(url,
+            headers: headers,
+            body: jsonEncode(<String, String>{
+              "idCours": idCours,
+              "contenuPublication": contenu
+            }))
+        .timeout(Duration(seconds: 5), onTimeout: () {
+      throw NetworkException();
+    }).then((response) =>
+            PostData.fromJson(jsonDecode(handleException(response))));
+  }
+
   Future<String> removePost(String idPost) {
     try {
       loadToken();
@@ -81,6 +123,26 @@ class PostService extends BaseService {
         onTimeout: () {
       throw NetworkException();
     }).then((response) => handleException(response));
+  }
+
+  Future<CommentaireData> addCommentaire(String idPublication, String contenu) {
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
+    Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/post/commentaire");
+    return client
+        .post(url,
+            headers: headers,
+            body: jsonEncode(<String, String>{
+              "idPublication": idPublication,
+              "contenuCommentaire": contenu
+            }))
+        .timeout(Duration(seconds: 5), onTimeout: () {
+      throw NetworkException();
+    }).then((response) =>
+            CommentaireData.fromJson(jsonDecode(handleException(response))));
   }
 
   Future<String> removeCommentaire(String idCommentaire) {

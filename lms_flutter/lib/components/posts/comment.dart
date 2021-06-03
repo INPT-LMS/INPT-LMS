@@ -8,6 +8,8 @@ import 'package:lms_flutter/services/auth_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils.dart';
+
 class Comment extends StatelessWidget {
   CommentaireData commentaireData;
   void Function(String idComment) removeComment;
@@ -43,7 +45,10 @@ class Comment extends StatelessWidget {
               IconButton(
                   icon: Icon(Icons.delete, color: Colors.red),
                   onPressed: () {
-                    removeComment(commentaireData.id);
+                    askConfirmation(context).then((value) {
+                      if (value == null || !value) return;
+                      removeComment(commentaireData.id);
+                    });
                   })
           ]),
         );

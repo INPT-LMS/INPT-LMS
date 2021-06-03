@@ -6,7 +6,6 @@ import 'package:lms_flutter/model/discussions/message_data.dart';
 import 'package:lms_flutter/model/pagination/pagination_discussion.dart';
 import 'package:lms_flutter/model/pagination/pagination_message.dart';
 import 'package:lms_flutter/services/exceptions/network_exception.dart';
-import 'package:lms_flutter/services/exceptions/unknown_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'base_service.dart';
@@ -63,7 +62,7 @@ class MessageService extends BaseService {
         PaginationMessage.fromJson(jsonDecode(handleException(response))));
   }
 
-  Future envoyerMessage(MessageData message) {
+  Future<MessageData> envoyerMessage(MessageData message) {
     try {
       loadToken();
     } catch (e) {
@@ -74,8 +73,7 @@ class MessageService extends BaseService {
         .post(url, body: jsonEncode(message), headers: headers)
         .timeout(Duration(seconds: 5), onTimeout: () {
       throw NetworkException();
-    }).then((value) {
-      if (value.statusCode != 200) throw UnknownException();
-    });
+    }).then((response) =>
+            MessageData.fromJson(jsonDecode(handleException(response))));
   }
 }

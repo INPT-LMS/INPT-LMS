@@ -9,7 +9,9 @@ import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/screens/view_models/liste_data_model.dart';
 import 'package:lms_flutter/services/data_list/message_list_service.dart';
+import 'package:lms_flutter/services/exceptions/bad_request_exception.dart';
 import 'package:lms_flutter/services/message_service.dart';
+import 'package:lms_flutter/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../services/service_locator.dart';
@@ -25,6 +27,8 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
   UserInfos infos;
   MessageService messageService;
   TextEditingController messageController;
+  int idDestinataire;
+  String idDiscussion;
   @override
   void initState() {
     messageController = TextEditingController();
@@ -42,9 +46,10 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
   Widget build(BuildContext context) {
     infos = Provider.of<InfosModel>(context).userInfos;
     var disc = ModalRoute.of(context).settings.arguments as DiscussionData;
-    int idDestinataire = infos.id == disc.idParticipant1
+    idDestinataire = infos.id == disc.idParticipant1
         ? disc.idParticipant2
         : disc.idParticipant1;
+    idDiscussion = disc.id;
     var messageListService =
         MessageListService(messageService, infos.id, disc.id);
 
@@ -71,33 +76,31 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
                               suffixIcon: IconButton(
                                   icon: Icon(Icons.send),
                                   onPressed: () {
-                                    var texte = messageController.text;
-                                    if (texte != null && texte.length > 0) {
-                                      var messageToSend = MessageData(
-                                          null,
-                                          disc.id,
-                                          infos.id,
-                                          idDestinataire,
-                                          DateTime.now(),
-                                          texte);
-                                      messageService
-                                          .envoyerMessage(messageToSend)
-                                          .then((value) {
-                                        Provider.of<ListDataModel<MessageData>>(
-                                                context,
-                                                listen: false)
-                                            .addFirst(messageToSend);
-                                      }, onError: (error) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                                content: Text(
-                                                    "Erreur : veuillez reessayer")));
-                                      });
-                                      messageController.text = "";
-                                    }
+                                    envoyerMessage(context);
                                   })))
                     ],
                   );
                 })));
+  }
+
+  envoyerMessage(BuildContext context) {
+    var texte = messageController.text;
+    if (texte != null && texte.length > 0) {
+      var messageToSend = MessageData(
+          null, idDiscussion, infos.id, idDestinataire, null, texte);
+      messageService.envoyerMessage(messageToSend).then((message) {
+        Provider.of<ListDataModel<MessageData>>(context, listen: false)
+            .addFirst(message);
+      }).catchError((error) {
+        if (error is BadRequestException)
+          showSnackbar(
+              context,
+              "Impossible d'envoyer un message à cet utilisateur : "
+              "il est invalide ou n'existe pas");
+        else
+          showDefaultErrorMessage(context, error);
+      });
+      messageController.clear();
+    }
   }
 }
