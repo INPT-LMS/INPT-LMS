@@ -4,6 +4,7 @@ import com.inpt.lms.servicedevoirs.dto.DevoirDTO;
 import com.inpt.lms.servicedevoirs.dto.DevoirReponseDTO;
 import com.inpt.lms.servicedevoirs.dto.NoteDTO;
 import com.inpt.lms.servicedevoirs.exception.DevoirNotFoundException;
+import com.inpt.lms.servicedevoirs.exception.DevoirReponseNotFoundException;
 import com.inpt.lms.servicedevoirs.exception.RenduNotFoundException;
 import com.inpt.lms.servicedevoirs.model.Devoir;
 import com.inpt.lms.servicedevoirs.model.DevoirInfos;
@@ -62,7 +63,8 @@ public class DevoirService {
      */
     public Devoir addDevoir(Long userId, String courseId, DevoirDTO devoirDTO) throws IllegalAccessError {
         Devoir devoir = new Devoir();
-        if (!verifierAutorisation(userId, devoir.getIdCours())) {
+        Date d = new Date();
+        if (!verifierAutorisation(userId, devoir.getIdCours()) || devoirDTO.getDateLimite().before(d)) {
             throw new IllegalAccessError("You cannot perform this action");
         }
 
@@ -85,6 +87,8 @@ public class DevoirService {
 
     /**
      * Fonction pour rendre un devoir
+     * Une personne ne peut rendre qu'un seul devoir à la fois
+     * Lorsque la personne rend plusieurs fois un devoir, c'est son devoir qui est modifié à plusieurs reprises
      */
     public DevoirReponse rendreDevoir(Long userId, String courseId, String idDevoir, DevoirReponseDTO devoirReponseDTO) throws DevoirNotFoundException, IllegalAccessError {
         if (!verifierAutorisation(userId, courseId)) {
@@ -92,25 +96,43 @@ public class DevoirService {
         }
         Devoir devoir = devoirRepository.findById(idDevoir).orElseThrow(() -> new DevoirNotFoundException("Devoir introuvable"));
 
+        Date nowDate = new Date();
+        if (nowDate.after(devoir.getDateLimite())) {
+            throw new IllegalAccessError("You cannot perform this action");
+        }
 
-        DevoirReponse devoirReponse = new DevoirReponse();
+        Fichier f = null;
+        DevoirReponse devoirReponse = null;
+        try {
+            String renduId = renduExiste(userId);
 
-        Fichier f = new Fichier();
-        f.setNom(devoirReponseDTO.getNomFichier());
+            devoirReponse = devoir.getReponses().stream().filter(d -> d.getId().equals(renduId)).findFirst().orElseThrow(() -> new DevoirReponseNotFoundException("Rendu introuvable"));
+
+            f = devoirReponse.getFichier();
+            f.setNom(devoirReponseDTO.getNomFichier());
+        } catch (DevoirReponseNotFoundException e) {
+
+            devoirReponse = new DevoirReponse();
+
+            f = new Fichier();
+            f.setNom(devoirReponseDTO.getNomFichier());
 
 
-        devoir.getReponses().add(devoirReponse);
+            devoir.getReponses().add(devoirReponse);
 
-        devoirReponse.setFichier(f);
-        devoirReponse.setIdProprietaire(userId);
-        devoirReponse.setNote(0);
-        devoirReponse.setEstNote(false);
+            devoirReponse.setFichier(f);
+            devoirReponse.setIdProprietaire(userId);
+        } finally {
+            devoirReponse.setNote(0);
+            devoirReponse.setEstNote(false);
+            devoirReponse.setDateRendu(new Date());
 
-        fichierRepository.save(f);
-        devoirReponseRepository.save(devoirReponse);
-        devoirRepository.save(devoir);
+            fichierRepository.save(f);
+            devoirReponseRepository.save(devoirReponse);
+            devoirRepository.save(devoir);
 
-        return devoirReponse;
+            return devoirReponse;
+        }
     }
 
     /**
@@ -150,5 +172,12 @@ public class DevoirService {
         devoir.setReponses(reponses);
 
         return devoir;
+    }
+
+    /**
+     * Fonction pour retourner un rendu d'une devoir s'il existe à partir de l'id de l'utilisateur
+     */
+    private String renduExiste(Long userId) throws DevoirReponseNotFoundException {
+        return devoirReponseRepository.findDevoirReponseByIdProprietaire(userId).orElseThrow(() -> new DevoirReponseNotFoundException("Devoir introuvable")).getId();
     }
 }
