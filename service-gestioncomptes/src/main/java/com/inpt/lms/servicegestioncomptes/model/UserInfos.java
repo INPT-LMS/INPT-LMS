@@ -2,7 +2,6 @@ package com.inpt.lms.servicegestioncomptes.model;
 
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -17,7 +16,7 @@ public class UserInfos {
     private Long id;
 
     @Transient
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy ="userInfos" )
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy ="userInfos" )
     private User user;
 
     private String nom;
