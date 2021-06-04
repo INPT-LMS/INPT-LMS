@@ -83,16 +83,19 @@ class DevoirServiceTest {
         // Given
         String courseId = null;
         Long userId = null;
-        Date d = new Date();
+        Date dateCreation = new Date();
+        Date dateLimite = new Date();
+        dateLimite.setTime(dateLimite.getTime() + 10000);
 
         DevoirDTO devoirDTO = new DevoirDTO();
         devoirDTO.setContenu("Z");
         devoirDTO.setType("QUIZZ");
-        devoirDTO.setDateLimite(d);
 
         DevoirInfos devoirInfos = new DevoirInfos();
         devoirInfos.setContenu(devoirDTO.getContenu());
-        devoirInfos.setDateCreation(d);
+        devoirInfos.setDateCreation(dateCreation);
+
+        devoirDTO.setDateLimite(dateLimite);
 
         Devoir devoir = new Devoir();
         devoir.setDateLimite(devoirDTO.getDateLimite());
@@ -114,9 +117,9 @@ class DevoirServiceTest {
         Devoir capturedDevoir = devoirArgumentCaptor.getValue();
         DevoirInfos capturedDevoirInfos = devoirInfosArgumentCaptor.getValue();
 
-        assertThat(capturedDevoir).isEqualTo(devoir);
-        assertThat(capturedDevoirInfos).isEqualTo(devoirInfos);
-        assertThat(capturedDevoirInfos).isEqualTo(devoir.getDevoirInfos());
+        assertThat(capturedDevoir.equals(devoir));
+        assertThat(capturedDevoirInfos.equals(devoirInfos));
+        assertThat(capturedDevoirInfos.equals(devoir.getDevoirInfos()));
     }
 
     @Test
