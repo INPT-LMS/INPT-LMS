@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:lms_flutter/model/posts/post_data.dart';
+import 'package:lms_flutter/model/post/post_data.dart';
 
 class PaginationPost {
   bool last;
@@ -16,7 +16,7 @@ class PaginationPost {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    "last": jsonEncode(last),
-    "content": jsonEncode(content)
-  };
+        "last": jsonEncode(last),
+        "content": jsonEncode(content)
+      };
 }

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:lms_flutter/model/consts/base_url.dart';
+import 'package:lms_flutter/model/consts.dart';
 import 'package:lms_flutter/model/course/course_data.dart';
 import 'package:lms_flutter/services/base_service.dart';
 import 'package:lms_flutter/services/exceptions/authentication_exception.dart';
@@ -19,9 +19,10 @@ class CourseService extends BaseService {
     } catch (e) {
       return Future.error(e);
     }
-    Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/class/course/$idCours");
-    return client.get(url, headers: headers).timeout(Duration(seconds: 5),
-        onTimeout: () {
+    Uri url = Uri.parse(Consts.URL_GATEWAY + "/class/course/$idCours");
+    return client
+        .get(url, headers: headers)
+        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
       throw NetworkException();
     }).then((response) {
       var responseBody = handleException(response);

@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:lms_flutter/model/consts/base_url.dart';
+import 'package:lms_flutter/model/consts.dart';
 import 'package:lms_flutter/model/pagination/pagination_post.dart';
-import 'package:lms_flutter/model/posts/commentaire_data.dart';
-import 'package:lms_flutter/model/posts/like_data.dart';
-import 'package:lms_flutter/model/posts/post_data.dart';
+import 'package:lms_flutter/model/post/commentaire_data.dart';
+import 'package:lms_flutter/model/post/like_data.dart';
+import 'package:lms_flutter/model/post/post_data.dart';
 import 'package:lms_flutter/services/base_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,9 +21,10 @@ class PostService extends BaseService {
     } catch (e) {
       return Future.error(e);
     }
-    Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/post/publication/cours");
-    return client.get(url, headers: headers).timeout(Duration(seconds: 5),
-        onTimeout: () {
+    Uri url = Uri.parse(Consts.URL_GATEWAY + "/post/publication/cours");
+    return client
+        .get(url, headers: headers)
+        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
       throw NetworkException();
     }).then((response) {
       Map<String, dynamic> listePosts = jsonDecode(handleException(response));
@@ -50,9 +51,10 @@ class PostService extends BaseService {
       return Future.error(e);
     }
     Uri url =
-        Uri.parse(BaseUrl.URL_GATEWAY + "/post/publication/cours/$idCours");
-    return client.get(url, headers: headers).timeout(Duration(seconds: 5),
-        onTimeout: () {
+        Uri.parse(Consts.URL_GATEWAY + "/post/publication/cours/$idCours");
+    return client
+        .get(url, headers: headers)
+        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
       throw NetworkException();
     }).then((response) {
       var listePosts = jsonDecode(handleException(response)) as List;
@@ -68,12 +70,12 @@ class PostService extends BaseService {
     } catch (e) {
       return Future.error(e);
     }
-    Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/post/like");
+    Uri url = Uri.parse(Consts.URL_GATEWAY + "/post/like");
     return client
         .post(url,
             headers: headers,
             body: jsonEncode(<String, String>{"idPublication": idPublication}))
-        .timeout(Duration(seconds: 5), onTimeout: () {
+        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
       throw NetworkException();
     }).then((response) =>
             LikeData.fromJson(jsonDecode(handleException(response))));
@@ -85,9 +87,10 @@ class PostService extends BaseService {
     } catch (e) {
       return Future.error(e);
     }
-    Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/post/like/$idLike");
-    return client.delete(url, headers: headers).timeout(Duration(seconds: 5),
-        onTimeout: () {
+    Uri url = Uri.parse(Consts.URL_GATEWAY + "/post/like/$idLike");
+    return client
+        .delete(url, headers: headers)
+        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
       throw NetworkException();
     }).then((response) => handleException(response));
   }
@@ -98,7 +101,7 @@ class PostService extends BaseService {
     } catch (e) {
       return Future.error(e);
     }
-    Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/post/publication");
+    Uri url = Uri.parse(Consts.URL_GATEWAY + "/post/publication");
     return client
         .post(url,
             headers: headers,
@@ -106,7 +109,7 @@ class PostService extends BaseService {
               "idCours": idCours,
               "contenuPublication": contenu
             }))
-        .timeout(Duration(seconds: 5), onTimeout: () {
+        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
       throw NetworkException();
     }).then((response) =>
             PostData.fromJson(jsonDecode(handleException(response))));
@@ -118,9 +121,10 @@ class PostService extends BaseService {
     } catch (e) {
       return Future.error(e);
     }
-    Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/post/publication/$idPost");
-    return client.delete(url, headers: headers).timeout(Duration(seconds: 5),
-        onTimeout: () {
+    Uri url = Uri.parse(Consts.URL_GATEWAY + "/post/publication/$idPost");
+    return client
+        .delete(url, headers: headers)
+        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
       throw NetworkException();
     }).then((response) => handleException(response));
   }
@@ -131,7 +135,7 @@ class PostService extends BaseService {
     } catch (e) {
       return Future.error(e);
     }
-    Uri url = Uri.parse(BaseUrl.URL_GATEWAY + "/post/commentaire");
+    Uri url = Uri.parse(Consts.URL_GATEWAY + "/post/commentaire");
     return client
         .post(url,
             headers: headers,
@@ -139,7 +143,7 @@ class PostService extends BaseService {
               "idPublication": idPublication,
               "contenuCommentaire": contenu
             }))
-        .timeout(Duration(seconds: 5), onTimeout: () {
+        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
       throw NetworkException();
     }).then((response) =>
             CommentaireData.fromJson(jsonDecode(handleException(response))));
@@ -152,9 +156,10 @@ class PostService extends BaseService {
       return Future.error(e);
     }
     Uri url =
-        Uri.parse(BaseUrl.URL_GATEWAY + "/post/commentaire/$idCommentaire");
-    return client.delete(url, headers: headers).timeout(Duration(seconds: 5),
-        onTimeout: () {
+        Uri.parse(Consts.URL_GATEWAY + "/post/commentaire/$idCommentaire");
+    return client
+        .delete(url, headers: headers)
+        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
       throw NetworkException();
     }).then((response) => handleException(response));
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/posts/post.dart';
-import 'package:lms_flutter/model/posts/post_data.dart';
+import 'package:lms_flutter/model/post/post_data.dart';
 import 'package:lms_flutter/screens/liste/liste_data.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 import 'package:lms_flutter/services/data_list/post_list_service.dart';

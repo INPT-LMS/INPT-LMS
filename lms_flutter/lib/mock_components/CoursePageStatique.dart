@@ -6,18 +6,17 @@ import 'package:lms_flutter/components/course_elements/course_settings.dart';
 import 'package:lms_flutter/mock_components/mock_post.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 
-class CoursePage extends StatefulWidget {
+class CoursePageStatique extends StatefulWidget {
   final String argument;
-  const CoursePage({Key key, this.argument}) : super(key: key);
+  const CoursePageStatique({Key key, this.argument}) : super(key: key);
 
   @override
-  _CoursePageState createState() => _CoursePageState();
+  _CoursePageStatiqueState createState() => _CoursePageStatiqueState();
 }
 
-class _CoursePageState extends State<CoursePage> {
+class _CoursePageStatiqueState extends State<CoursePageStatique> {
   @override
   Widget build(BuildContext context) {
-    var idCours = ModalRoute.of(context).settings.arguments as String;
     return BaseScaffoldAppBar(
         body: SingleChildScrollView(
       child: Column(
@@ -53,14 +52,6 @@ class _CoursePageState extends State<CoursePage> {
                 Container(
                   padding: EdgeInsets.all(24),
                   child: AddPost(),
-                ),
-                Center(
-                  child: TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/devoirs",
-                            arguments: idCours);
-                      },
-                      child: Text("Voir les devoirs du cours")),
                 ),
                 Column(
                     children: List<PostStatique>.generate(

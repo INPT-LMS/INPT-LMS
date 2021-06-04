@@ -1,16 +1,16 @@
 // Helper file to make coverage work for all dart files
 
-import 'package:lms_flutter/model/consts/base_url.dart';
+import 'package:lms_flutter/model/consts.dart';
 import 'package:lms_flutter/model/course/course_data.dart';
 import 'package:lms_flutter/model/course/visibility_data.dart';
-import 'package:lms_flutter/model/discussions/discussion_data.dart';
-import 'package:lms_flutter/model/discussions/message_data.dart';
+import 'package:lms_flutter/model/discussion/discussion_data.dart';
+import 'package:lms_flutter/model/discussion/message_data.dart';
 import 'package:lms_flutter/model/pagination/pagination_discussion.dart';
 import 'package:lms_flutter/model/pagination/pagination_message.dart';
 import 'package:lms_flutter/model/pagination/pagination_post.dart';
-import 'package:lms_flutter/model/posts/commentaire_data.dart';
-import 'package:lms_flutter/model/posts/like_data.dart';
-import 'package:lms_flutter/model/posts/post_data.dart';
+import 'package:lms_flutter/model/post/commentaire_data.dart';
+import 'package:lms_flutter/model/post/like_data.dart';
+import 'package:lms_flutter/model/post/post_data.dart';
 // ignore_for_file: unused_import
 import 'package:lms_flutter/model/user_infos.dart';
 import 'package:lms_flutter/model/user_register_form.dart';

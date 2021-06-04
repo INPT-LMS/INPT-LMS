@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lms_flutter/model/discussions/discussion_data.dart';
+import 'package:lms_flutter/model/discussion/discussion_data.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:provider/provider.dart';
 

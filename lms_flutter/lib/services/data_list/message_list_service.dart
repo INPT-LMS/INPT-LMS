@@ -1,4 +1,4 @@
-import 'package:lms_flutter/model/discussions/message_data.dart';
+import 'package:lms_flutter/model/discussion/message_data.dart';
 import 'package:lms_flutter/services/data_list/data_list_service.dart';
 
 import '../message_service.dart';

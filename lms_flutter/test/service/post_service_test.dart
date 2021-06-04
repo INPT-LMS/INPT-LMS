@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
-import 'package:lms_flutter/model/posts/post_data.dart';
+import 'package:lms_flutter/model/post/post_data.dart';
 import 'package:lms_flutter/services/post_service.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';

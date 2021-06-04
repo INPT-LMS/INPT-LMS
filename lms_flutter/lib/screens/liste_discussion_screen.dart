@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:lms_flutter/components/discussions/discussion.dart';
-import 'package:lms_flutter/model/discussions/discussion_data.dart';
-import 'package:lms_flutter/model/user_infos.dart';
+import 'package:lms_flutter/model/discussion/discussion_data.dart';
 import 'package:lms_flutter/screens/liste/liste_data.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
@@ -20,17 +19,9 @@ class ListeDiscussionScreen extends StatefulWidget {
 }
 
 class _ListeDiscussionScreenState extends State<ListeDiscussionScreen> {
-  UserInfos infos;
-  MessageService messageService;
-  @override
-  void initState() {
-    messageService = getIt.get<MessageService>();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    infos = Provider.of<InfosModel>(context).userInfos;
+    var infos = Provider.of<InfosModel>(context).userInfos;
     return BaseScaffoldAppBar(
       body: Container(
         margin: EdgeInsets.all(10),

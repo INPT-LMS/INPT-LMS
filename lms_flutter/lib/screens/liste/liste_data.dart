@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:lms_flutter/screens/utils.dart';
 import 'package:lms_flutter/services/data_list/data_list_service.dart';
-import 'package:lms_flutter/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../view_models/liste_data_model.dart';

@@ -1,8 +1,8 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:lms_flutter/screens/utils.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/services/service_locator.dart';
-import 'package:lms_flutter/utils.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth_service.dart';

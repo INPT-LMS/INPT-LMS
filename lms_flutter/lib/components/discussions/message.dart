@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lms_flutter/components/consts/custom_colors.dart';
-import 'package:lms_flutter/model/discussions/message_data.dart';
+import 'package:lms_flutter/model/discussion/message_data.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:provider/provider.dart';
 

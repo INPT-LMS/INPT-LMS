@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lms_flutter/components/consts/custom_colors.dart';
 import 'package:lms_flutter/components/posts/like_comment.dart';
-import 'package:lms_flutter/model/posts/post_data.dart';
+import 'package:lms_flutter/model/post/post_data.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/screens/view_models/liste_data_model.dart';
 import 'package:lms_flutter/services/auth_service.dart';
@@ -13,7 +13,7 @@ import 'package:lms_flutter/services/post_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
-import '../../utils.dart';
+import '../../screens/utils.dart';
 
 class Post extends StatelessWidget {
   PostData postData;
@@ -28,6 +28,7 @@ class Post extends StatelessWidget {
     var userLike = postData.likes.firstWhere(
         (like) => like.idProprietaire == infos.id,
         orElse: () => null);
+    var isOwner = infos.id == this.postData.idProprietaire;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       decoration: BoxDecoration(
@@ -52,7 +53,10 @@ class Post extends StatelessWidget {
                         FutureBuilder(
                             builder: (context, snapshot) => Text(
                                 snapshot.hasData ? snapshot.data : "",
-                                style: TextStyle(fontSize: 15)),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color:
+                                        isOwner ? Colors.blue : Colors.black)),
                             future: authService
                                 .getUserInfos(postData.idProprietaire)
                                 .then((response) =>
@@ -62,7 +66,8 @@ class Post extends StatelessWidget {
                             onTap: () {
                               if (ModalRoute.of(context).settings.name !=
                                   "/course") {
-                                Navigator.pushNamed(context, "/course");
+                                Navigator.pushNamed(context, "/course",
+                                    arguments: postData.idCours);
                               }
                             },
                             child: FutureBuilder(
@@ -81,7 +86,9 @@ class Post extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Text(
-                  DateFormat.yMd().add_Hm().format(postData.datePublication),
+                  DateFormat.yMMMMd('fr_FR')
+                      .add_Hm()
+                      .format(postData.datePublication),
                   style: TextStyle(fontSize: 12),
                 ))
           ]),
@@ -89,7 +96,7 @@ class Post extends StatelessWidget {
         Container(
             margin: EdgeInsets.all(10),
             child: Text(postData.contenuPublication)),
-        if (postData.idProprietaire == infos.id)
+        if (isOwner)
           IconButton(
               icon: Icon(Icons.delete, color: Colors.red),
               onPressed: () {

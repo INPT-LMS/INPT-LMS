@@ -5,6 +5,7 @@ import 'package:lms_flutter/services/post_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'course_service.dart';
+import 'devoir_service.dart';
 import 'message_service.dart';
 
 final getIt = GetIt.instance;
@@ -27,5 +28,9 @@ void setup() async {
 
   getIt.registerSingletonWithDependencies<CourseService>(
       () => CourseService(getIt.get<SharedPreferences>(), http.Client()),
+      dependsOn: [SharedPreferences]);
+
+  getIt.registerSingletonWithDependencies<DevoirService>(
+      () => DevoirService(getIt.get<SharedPreferences>(), http.Client()),
       dependsOn: [SharedPreferences]);
 }

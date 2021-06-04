@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:lms_flutter/model/discussions/discussion_data.dart';
+import 'package:lms_flutter/model/discussion/discussion_data.dart';
 
 class PaginationDiscussion {
   bool last;

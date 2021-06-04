@@ -1,4 +1,4 @@
-import 'package:lms_flutter/model/posts/post_data.dart';
+import 'package:lms_flutter/model/post/post_data.dart';
 import 'package:lms_flutter/services/data_list/data_list_service.dart';
 import 'package:lms_flutter/services/post_service.dart';
 

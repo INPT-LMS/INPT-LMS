@@ -1,10 +1,13 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/posts/comment.dart';
-import 'package:lms_flutter/model/posts/commentaire_data.dart';
-import 'package:lms_flutter/model/posts/like_data.dart';
+import 'package:lms_flutter/model/post/commentaire_data.dart';
+import 'package:lms_flutter/model/post/like_data.dart';
+import 'package:lms_flutter/screens/utils.dart';
+import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/services/post_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
-import 'package:lms_flutter/utils.dart';
+import 'package:provider/provider.dart';
 
 class LikeComment extends StatefulWidget {
   String idPublication;
@@ -68,6 +71,7 @@ class _LikeCommentState extends State<LikeComment> {
 
   @override
   Widget build(BuildContext context) {
+    var network = Provider.of<InfosModel>(context, listen: false).networkType;
     var field = TextFormField(
         controller: controller,
         decoration: InputDecoration(
@@ -78,6 +82,10 @@ class _LikeCommentState extends State<LikeComment> {
                 onPressed: () {
                   if (controller.text == null || controller.text.length == 0)
                     return;
+                  else if (network == ConnectivityResult.none) {
+                    showSnackbar(context, "Pas de connexion");
+                    return;
+                  }
                   postService
                       .addCommentaire(
                           this.widget.idPublication, controller.text)
@@ -102,6 +110,10 @@ class _LikeCommentState extends State<LikeComment> {
                   userLike != null ? Icons.favorite : Icons.favorite_border,
                   color: Colors.red),
               onPressed: () {
+                if (network == ConnectivityResult.none) {
+                  showSnackbar(context, "Pas de connexion");
+                  return;
+                }
                 changeLike(context);
               }),
           Container(
