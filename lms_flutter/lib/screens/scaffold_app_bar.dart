@@ -3,7 +3,7 @@ import 'package:lms_flutter/services/auth_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 
 class BaseScaffoldAppBar extends StatefulWidget {
-  Widget body;
+  final Widget body;
   BaseScaffoldAppBar({Key key, this.body}) : super(key: key);
 
   @override
@@ -72,21 +72,23 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
         title: Text("LMS"),
         actions: [
           IconButton(
-              icon: Icon(Icons.home), tooltip: "Accueil", onPressed: (){
-            if (ModalRoute.of(context).settings.name != "/home")
-              Navigator.pushNamed(context, "/home");
-          }),
+              icon: Icon(Icons.home),
+              tooltip: "Accueil",
+              onPressed: () {
+                if (ModalRoute.of(context).settings.name != "/home")
+                  Navigator.pushNamed(context, "/home");
+              }),
           IconButton(
               icon: Icon(Icons.add_alert_rounded),
               tooltip: "Alertes",
-              onPressed: (){}),
+              onPressed: () {}),
           IconButton(
               icon: Icon(Icons.mail),
               tooltip: "Messages",
               onPressed: () {
-                    if (ModalRoute.of(context).settings.name != "/messages")
-                      Navigator.pushNamed(context, "/messages");
-                  }),
+                if (ModalRoute.of(context).settings.name != "/messages")
+                  Navigator.pushNamed(context, "/messages");
+              }),
           IconButton(
               icon: Icon(Icons.settings),
               tooltip: "Parametres",

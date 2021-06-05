@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:lms_flutter/model/devoir/devoir_data.dart';
 
 class Devoir extends StatelessWidget {
-  DevoirData devoirData;
-  int idUser;
+  final DevoirData devoirData;
+  final int idUser;
   Devoir(this.devoirData, this.idUser, {Key key}) : super(key: key);
 
   @override

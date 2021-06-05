@@ -12,8 +12,8 @@ import 'package:provider/provider.dart';
 import '../../screens/utils.dart';
 
 class Comment extends StatelessWidget {
-  CommentaireData commentaireData;
-  void Function(String idComment) removeComment;
+  final CommentaireData commentaireData;
+  final void Function(String idComment) removeComment;
   Comment(this.commentaireData, this.removeComment, {Key key})
       : super(key: key);
 

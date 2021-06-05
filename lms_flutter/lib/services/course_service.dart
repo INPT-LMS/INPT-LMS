@@ -30,4 +30,22 @@ class CourseService extends BaseService {
       return CourseData.fromJson(jsonDecode(responseBody));
     });
   }
+
+  Future<int> getCoursOwner(String idCours) {
+    try {
+      loadToken();
+    } catch (e) {
+      return Future.error(e);
+    }
+    Uri url = Uri.parse(Consts.URL_GATEWAY + "/class/course/$idCours/owner");
+    return client
+        .get(url, headers: headers)
+        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
+      throw NetworkException();
+    }).then((response) {
+      var responseBody = handleException(response);
+      if (responseBody == "UNAUTHORIZED") throw new AuthenticationException();
+      return int.parse(responseBody);
+    });
+  }
 }

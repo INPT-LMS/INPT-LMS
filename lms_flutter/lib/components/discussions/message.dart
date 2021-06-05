@@ -6,7 +6,7 @@ import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:provider/provider.dart';
 
 class Message extends StatelessWidget {
-  MessageData data;
+  final MessageData data;
   Message(this.data, {Key key}) : super(key: key);
 
   @override
@@ -30,7 +30,7 @@ class Message extends StatelessWidget {
                 style:
                     TextStyle(color: isEmetteur ? Colors.black : Colors.white)),
             Align(
-              child: Text(DateFormat.jm().format(data.date),
+              child: Text(DateFormat.yMd("fr_FR").add_Hm().format(data.date),
                   style: TextStyle(color: Colors.grey)),
               alignment: Alignment.bottomRight,
             )

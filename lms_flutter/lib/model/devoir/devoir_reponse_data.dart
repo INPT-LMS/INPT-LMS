@@ -7,6 +7,7 @@ class DevoirReponseData {
   String id;
   int idProprietaire;
   int note;
+  DateTime dateRendu;
   bool estNote;
 
   DevoirReponseData(this.id, this.idProprietaire, this.note, this.estNote);

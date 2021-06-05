@@ -4,7 +4,7 @@ import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:provider/provider.dart';
 
 class Discussion extends StatelessWidget {
-  DiscussionData data;
+  final DiscussionData data;
   Discussion(
     this.data, {
     Key key,
@@ -18,7 +18,9 @@ class Discussion extends StatelessWidget {
           ? data.nomParticipant2
           : data.nomParticipant1),
       subtitle: Text(
-        data.lastMessage.contenu,
+        data.lastMessage.idDestinataire == infos.id
+            ? data.lastMessage.contenu
+            : "Moi : ${data.lastMessage.contenu}",
         overflow: TextOverflow.ellipsis,
       ),
       onTap: () {

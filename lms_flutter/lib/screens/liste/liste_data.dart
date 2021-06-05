@@ -7,10 +7,12 @@ import 'package:provider/provider.dart';
 import '../view_models/liste_data_model.dart';
 
 class ListeData<T> extends StatefulWidget {
-  bool reverse;
-  DataService<T> dataService;
+  final bool reverse;
+  final DataService<T> dataService;
+  final bool shrinkWrap;
 
-  ListeData(this.dataService, this.reverse, {Key key}) : super(key: key);
+  ListeData(this.dataService, this.reverse, {Key key, this.shrinkWrap = false})
+      : super(key: key);
 
   @override
   _ListeDataState<T> createState() => _ListeDataState<T>();
@@ -70,7 +72,7 @@ class _ListeDataState<T> extends State<ListeData<T>> {
       hasError = false;
     }
     return ListView(
-        shrinkWrap: true,
+        shrinkWrap: this.widget.shrinkWrap,
         reverse: this.widget.reverse,
         controller: scrollController,
         children: this.widget.reverse

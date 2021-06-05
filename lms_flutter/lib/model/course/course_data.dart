@@ -1,5 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:lms_flutter/model/course/professor.dart';
 import 'package:lms_flutter/model/course/visibility_data.dart';
+
+import 'member.dart';
 
 part 'course_data.g.dart';
 
@@ -10,6 +13,8 @@ class CourseData {
   String courseDescription;
   String imageURL;
   Visibility visibility;
+  Professor owner;
+  List<Member> students;
 
   CourseData(this.courseID, this.courseName, this.courseDescription,
       this.imageURL, this.visibility);

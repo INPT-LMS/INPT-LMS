@@ -51,7 +51,7 @@ class _CoursePageStatiqueState extends State<CoursePageStatique> {
                 ),
                 Container(
                   padding: EdgeInsets.all(24),
-                  child: AddPost(),
+                  child: AddPost("fakeIdCours"),
                 ),
                 Column(
                     children: List<PostStatique>.generate(

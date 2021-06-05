@@ -10,10 +10,10 @@ import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
 class LikeComment extends StatefulWidget {
-  String idPublication;
-  int numberLikes;
-  LikeData userLike;
-  List<CommentaireData> commentairesData;
+  final String idPublication;
+  final int numberLikes;
+  final LikeData userLike;
+  final List<CommentaireData> commentairesData;
   LikeComment(this.idPublication, this.numberLikes, this.userLike,
       this.commentairesData,
       {Key key})

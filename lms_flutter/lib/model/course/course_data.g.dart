@@ -15,7 +15,14 @@ CourseData _$CourseDataFromJson(Map<String, dynamic> json) {
     json['visibility'] == null
         ? null
         : Visibility.fromJson(json['visibility'] as Map<String, dynamic>),
-  );
+  )
+    ..owner = json['owner'] == null
+        ? null
+        : Professor.fromJson(json['owner'] as Map<String, dynamic>)
+    ..students = (json['students'] as List)
+        ?.map((e) =>
+            e == null ? null : Member.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$CourseDataToJson(CourseData instance) =>
@@ -25,4 +32,6 @@ Map<String, dynamic> _$CourseDataToJson(CourseData instance) =>
       'courseDescription': instance.courseDescription,
       'imageURL': instance.imageURL,
       'visibility': instance.visibility,
+      'owner': instance.owner,
+      'students': instance.students,
     };

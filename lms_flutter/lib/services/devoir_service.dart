@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:http/src/client.dart';
+import 'package:http/http.dart';
 import 'package:lms_flutter/model/consts.dart';
 import 'package:lms_flutter/model/devoir/devoir_data.dart';
 import 'package:lms_flutter/model/pagination/pagination_devoir.dart';
 import 'package:lms_flutter/services/base_service.dart';
+import 'package:lms_flutter/services/exceptions/bad_request_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'exceptions/network_exception.dart';
@@ -45,7 +46,10 @@ class DevoirService extends BaseService {
         .get(url, headers: headers)
         .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
       throw NetworkException();
-    }).then((response) =>
-            DevoirData.fromJson(jsonDecode(handleException(response))));
+    }).then((response) {
+      var devoirString = handleException(response);
+      if (devoirString.isEmpty) throw BadRequestException();
+      return DevoirData.fromJson(jsonDecode(devoirString));
+    });
   }
 }

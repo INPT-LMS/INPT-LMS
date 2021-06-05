@@ -11,6 +11,7 @@ import 'package:lms_flutter/services/message_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
+//TODO: recherche discussion + cas retour arriere
 class ListeDiscussionScreen extends StatefulWidget {
   const ListeDiscussionScreen({Key key}) : super(key: key);
 
@@ -44,14 +45,16 @@ class _ListeDiscussionScreenState extends State<ListeDiscussionScreen> {
                           labelText: "Chercher quelqu'un")),
                 )
               ])),
-          ChangeNotifierProvider(
-              create: (context) => ListDataModel<DiscussionData>(
-                  <DiscussionData>[],
-                  <Widget>[],
-                  (discData) => Discussion(discData)),
-              child: ListeData<DiscussionData>(
-                  DiscussionListService(getIt.get<MessageService>(), infos.id),
-                  false))
+          Expanded(
+              child: ChangeNotifierProvider(
+                  create: (context) => ListDataModel<DiscussionData>(
+                      <DiscussionData>[],
+                      <Widget>[],
+                      (discData) => Discussion(discData)),
+                  child: ListeData<DiscussionData>(
+                      DiscussionListService(
+                          getIt.get<MessageService>(), infos.id),
+                      false)))
         ]),
       ),
     );

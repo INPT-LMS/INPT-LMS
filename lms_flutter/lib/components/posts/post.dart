@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 import '../../screens/utils.dart';
 
 class Post extends StatelessWidget {
-  PostData postData;
+  final PostData postData;
   Post(this.postData, {Key key}) : super(key: key);
 
   @override
@@ -73,10 +73,12 @@ class Post extends StatelessWidget {
                             child: FutureBuilder(
                                 builder: (context, snapshot) => Text(
                                     snapshot.hasData
-                                        ? "Course ${snapshot.data}"
+                                        ? "Cours : ${snapshot.data}"
                                         : "",
                                     style: TextStyle(
-                                        fontSize: 15, color: Colors.red)),
+                                        fontSize: 16,
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold)),
                                 future: coursService
                                     .getCours(postData.idCours)
                                     .then(
