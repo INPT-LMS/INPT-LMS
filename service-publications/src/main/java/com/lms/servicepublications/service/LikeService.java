@@ -27,6 +27,7 @@ public class LikeService {
         Like like = new Like();
         like.setIdProprietaire(user_id);
         like.setIdPublication(likeDTO.getIdPublication());
+        like.setName_user(likeDTO.getName_user());
         List<Like> likes = publication.getLikes();
         likes.add(like);
         publication.setLikes(likes);

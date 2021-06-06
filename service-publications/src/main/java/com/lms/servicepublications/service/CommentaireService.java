@@ -28,6 +28,7 @@ public class CommentaireService {
         Publication publication = publicationRepository.findById(commentaireDTO.getIdPublication()).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
         Commentaire commentaire = new Commentaire();
         commentaire.setIdProprietaire(id_user);
+        commentaire.setName_user(commentaireDTO.getName_user());
         commentaire.setIdPublication(commentaireDTO.getIdPublication());
         commentaire.setContenuCommentaire(commentaireDTO.getContenuCommentaire());
         List<Commentaire> commentaires = publication.getCommentaires();

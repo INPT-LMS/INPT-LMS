@@ -10,6 +10,7 @@ import java.util.UUID;
 public class PublicationDTO {
     private UUID idCours;
     private String contenuPublication;
+    private String name_user;
    // private String fichier;
     private String commentaire;
     private List<Like> likes;

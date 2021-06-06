@@ -10,8 +10,6 @@ import com.lms.servicepublications.model.Like;
 import com.lms.servicepublications.model.Publication;
 import com.lms.servicepublications.repository.PublicationRepository;
 import lombok.AllArgsConstructor;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -76,6 +74,7 @@ public class PublicationService {
         Publication publication = new Publication();
         publication.setContenuPublication(publicationDTO.getContenuPublication());
         publication.setIdCours(publicationDTO.getIdCours());
+        publication.setName_user(publicationDTO.getName_user());
         publication.setIdProprietaire(id_user);
         publication.setCommentaires(new ArrayList<Commentaire>());
         publication.setLikes(new ArrayList<Like>());
