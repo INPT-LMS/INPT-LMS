@@ -49,7 +49,7 @@ public class AssociationFichier {
 	}
 	
 	/**
-	 * Fonction qui masque les proprietes non necessaires pour l'utilisateur.\n
+	 * Fonction qui masque les proprietes non necessaires pour l'utilisateur.<br />
 	 * Elle est necessaire à cause d'une incompatibilité entre l'annotation JsonView et
 	 * l'interface Page
 	 */

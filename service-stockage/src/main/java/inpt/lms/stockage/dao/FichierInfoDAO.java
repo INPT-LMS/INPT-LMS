@@ -1,5 +1,7 @@
 package inpt.lms.stockage.dao;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -17,7 +19,13 @@ public interface FichierInfoDAO extends PagingAndSortingRepository<FichierInfo, 
 	Page<FichierInfo> findAllByAssociations_IdCorrespondantAssociationAndAssociations_TypeAssociation(
 			String idCorrespondantAssocatin,TypeAssociation typeAssociation,Pageable pagination);
 	
-	@Query("SELECT SUM(fi.size) FROM FichierInfo fi WHERE fi.idProprietaire = ?1")
+	List<FichierInfo> findAllByAssociations_IdCorrespondantAssociationAndAssociations_TypeAssociation(
+			String idCorrespondantAssocatin,TypeAssociation typeAssociation);
+	
+	@Query("SELECT SUM(fi.size) FROM FichierInfo fi JOIN AssociationFichier af "
+			+ "ON af.fichierInfo = fi WHERE fi.idProprietaire = ?1 AND "
+			+ "af.typeAssociation = 'SAC'")
 	Long getUsedSpaceUser(Long idUtilisateur);
+
 	
 }

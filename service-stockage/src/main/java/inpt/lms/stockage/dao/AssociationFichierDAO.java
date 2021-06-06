@@ -18,6 +18,10 @@ public interface AssociationFichierDAO
 	List<AssociationFichier> findAllByFichierInfo_IdAndTypeAssociation(Long id,
 			TypeAssociation typeAssociation);
 	
+	Page<AssociationFichier> findAllByFichierInfo_NomIgnoreCaseContainingAndIdCorrespondantAssociationAndTypeAssociation(
+			String partieNom,String idCorrespondant, TypeAssociation typeAssociation,
+			Pageable page);
+	
 	Long deleteByFichierInfo_IdAndTypeAssociation(Long idFichier,
 			TypeAssociation type);
 
@@ -32,4 +36,7 @@ public interface AssociationFichierDAO
 	
 	Optional<AssociationFichier> findByIdCorrespondantAssociationAndTypeAssociation(
 			String idAssocie,TypeAssociation typeAssociation);
+
+	Optional<AssociationFichier> findByIdCorrespondantAssociationAndTypeAssociationAndFichierInfo_IdProprietaire(
+			String idCorrespondant, TypeAssociation typeAssociation ,long id);
 }

@@ -11,6 +11,8 @@ import inpt.lms.stockage.controller.exceptions.UnauthorizedException;
 import inpt.lms.stockage.proxies.ProxyUnavailableException;
 import inpt.lms.stockage.proxies.course.GestionCoursProxy;
 import inpt.lms.stockage.proxies.course.Member;
+import inpt.lms.stockage.proxies.devoir.Devoir;
+import inpt.lms.stockage.proxies.devoir.DevoirProxy;
 import inpt.lms.stockage.proxies.publication.GestionPublicationProxy;
 import inpt.lms.stockage.proxies.publication.Publication;
 
@@ -21,6 +23,9 @@ public class AuthorizationService {
 	protected GestionCoursProxy coursProxy;
 	@Autowired
 	protected GestionPublicationProxy publicationProxy;
+	@Autowired
+	protected DevoirProxy devoirProxy;
+	
 
 	public void isClassMember(UUID coursId, long userId) 
 			throws UnauthorizedException,ProxyUnavailableException{
@@ -80,5 +85,31 @@ public class AuthorizationService {
 		} catch (RetryableException e) {
 			throw new ProxyUnavailableException();
 		}
+	}
+
+	public void isDevoirClassMember(String devoirId,String coursId, long userId) 
+			throws UnauthorizedException, ProxyUnavailableException {
+		try {
+		Devoir devoir = devoirProxy.getDevoir(userId, coursId, devoirId);
+		if (devoir == null || devoir.getId() == null)
+			throw new UnauthorizedException();
+		} catch (RetryableException e) {
+			throw new ProxyUnavailableException();
+		}
+			
+	}
+
+	public void isDevoirOwner(String devoirId,String coursId, long userId) 
+			throws UnauthorizedException, ProxyUnavailableException {
+		try {
+		Devoir devoir = devoirProxy.getDevoir(userId, coursId, devoirId);
+		if (devoir == null || devoir.getId() == null 
+				|| devoir.getIdProprietaire().longValue() != userId)
+			throw new UnauthorizedException();
+		
+		} catch (RetryableException e) {
+			throw new ProxyUnavailableException();
+		}
+			
 	}
 }
