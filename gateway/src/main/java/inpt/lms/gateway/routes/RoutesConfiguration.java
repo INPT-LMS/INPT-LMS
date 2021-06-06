@@ -13,6 +13,7 @@ public class RoutesConfiguration {
 	public RouteLocator myRoutes(RouteLocatorBuilder builder,TokenValidationFilter 
 			tokenValidation, UrlsProperties urls) {
 		return builder.routes()
+				.route(RouteCreatorUtil.getAdminRoute("/storage/admin/", urls.getStockage()))
 				.route(RouteCreatorUtil.getRoute("/storage/user/picture/","/storage/user/picture/",
 						urls.getStockage()))
 				.route(RouteCreatorUtil.getProtectedRoute("/storage/","/storage/",
