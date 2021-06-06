@@ -6,11 +6,20 @@ import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.route.builder.Buildable;
 import org.springframework.cloud.gateway.route.builder.PredicateSpec;
 
+import inpt.lms.gateway.filters.AdminRouteFilter;
 import inpt.lms.gateway.filters.TokenValidationFilter;
 
 public class RouteCreatorUtil {	
 	private RouteCreatorUtil() {
 		throw new IllegalStateException("Utility class");
+	}
+	
+	public static Function<PredicateSpec, Buildable<Route>> getAdminRoute(
+			String beginPath,String endUri){
+		String beginPathValue = beginPath.endsWith("/") ? beginPath+"?*/**" : beginPath;
+		return p -> p.path(beginPathValue)
+				.filters(f -> f.filter(new AdminRouteFilter()))
+				.uri(endUri);
 	}
 
 	public static Function<PredicateSpec, Buildable<Route>> getProtectedRoute(
