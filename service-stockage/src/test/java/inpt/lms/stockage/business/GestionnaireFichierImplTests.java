@@ -66,28 +66,6 @@ class GestionnaireFichierImplTests {
 	}
 	
 	@Test
-	void testShouldAddSac() throws NotFoundException {
-		when(assocDAO.findById(5l)).thenReturn(Optional.of(assoc));
-		
-		gFichier.ajoutDansSac(10l, 5l);
-		
-		ArgumentCaptor<AssociationFichier> assocCaptured = ArgumentCaptor.forClass(AssociationFichier.class);
-		verify(assocDAO).save(assocCaptured.capture());
-		AssociationFichier captured = assocCaptured.getValue();
-		
-		assertEquals(TypeAssociation.SAC, captured.getTypeAssociation());
-		assertEquals("10",captured.getIdCorrespondantAssociation());
-		assertEquals(fInfo.getNom(),captured.getFichierInfo().getNom());
-	}
-	
-	@Test
-	void testShouldThrowAddSac() throws NotFoundException {
-		when(assocDAO.findById(5l)).thenReturn(Optional.empty());
-		
-		assertThrows(NotFoundException.class, () -> gFichier.ajoutDansSac(10l, 5l));
-	}
-	
-	@Test
 	void testShouldRemoveSacAndDelete() throws NotFoundException, IOException {
 		when(assocDAO.findByIdAndIdCorrespondantAssociationAndTypeAssociation(
 				5l, "10", TypeAssociation.SAC)).thenReturn(Optional.of(assoc));
