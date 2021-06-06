@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// TODO Vérification de l'identité pour la suppression/Modification
 @Service
 @AllArgsConstructor
 
