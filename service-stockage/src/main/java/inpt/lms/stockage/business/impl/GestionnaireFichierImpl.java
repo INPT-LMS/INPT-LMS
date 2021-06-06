@@ -1,8 +1,12 @@
 package inpt.lms.stockage.business.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.transaction.Transactional;
 
@@ -14,8 +18,10 @@ import org.springframework.stereotype.Service;
 import inpt.lms.stockage.business.interfaces.FichierEtInfo;
 import inpt.lms.stockage.business.interfaces.GestionnaireFichier;
 import inpt.lms.stockage.business.interfaces.GestionnaireIOFichier;
+import inpt.lms.stockage.business.interfaces.UsedSpaceWrapper;
 import inpt.lms.stockage.business.interfaces.exceptions.NotFoundException;
 import inpt.lms.stockage.business.interfaces.exceptions.StorageLimitExceededException;
+import inpt.lms.stockage.controller.exceptions.NoContentException;
 import inpt.lms.stockage.dao.AssociationFichierDAO;
 import inpt.lms.stockage.dao.FichierInfoDAO;
 import inpt.lms.stockage.model.AssociationFichier;
@@ -36,6 +42,14 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 	protected GestionnaireIOFichier gestionnaireIO;
 	public static final long MAX_SPACE_PER_USER = 25600000; // 50 MiB
 	
+	private void deleteIfPresent(Optional<AssociationFichier> optional) throws IOException {
+		if (optional.isPresent()) {
+			FichierInfo fInfo = optional.get().getFichierInfo();
+			fichierInfoDAO.delete(fInfo);
+			gestionnaireIO.supprimerFichier(fInfo.getChemin());
+		}
+	}
+
 	private FichierInfo recupererFichier(Long idFichier) throws NotFoundException {
 		Optional<FichierInfo> fInfo = fichierInfoDAO.findById(idFichier);
 		if (fInfo.isEmpty())
@@ -66,8 +80,9 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 		associationFichierDAO.deleteById(idAssociation);
 	}
 	
-	private AssociationFichier ecrireFichierStockage(Long userId, byte[] bytes, 
-			String contentType, String filename, long size,TypeAssociation association) 
+	private AssociationFichier ecrireFichierStockage(Long userId,String idCorrespondant,
+			byte[] bytes, String contentType, String filename, long size,
+			TypeAssociation association) 
 					throws IOException {
 		FichierInfo fInfo = new FichierInfo();
 		fInfo.setContentType(contentType);
@@ -81,25 +96,25 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 		fInfo = fichierInfoDAO.save(fInfo);
 		
 		AssociationFichier assoc = new AssociationFichier();
-		assoc.setIdCorrespondantAssociation(userId.toString());
+		assoc.setIdCorrespondantAssociation(idCorrespondant);
 		assoc.setTypeAssociation(association);
 		assoc.setFichierInfo(fInfo);
 		return associationFichierDAO.save(assoc);
 	}
 	
 	@Override
+	public Page<AssociationFichier> getFichierParNom(String partieNom,
+			String idCorrespondant,TypeAssociation typeAssociation,Pageable page) {
+		return associationFichierDAO.findAllByFichierInfo_NomIgnoreCaseContainingAndIdCorrespondantAssociationAndTypeAssociation(
+				partieNom, idCorrespondant, typeAssociation, page);
+	}
+
+	@Override
 	public void isAssociationPresent(Long idAssoc, String idAssocie,
 			TypeAssociation typeAssociation) throws NotFoundException{
 		if (!associationFichierDAO.existsByIdAndIdCorrespondantAssociationAndTypeAssociation(
 				idAssoc, idAssocie, typeAssociation))
 			throw new NotFoundException(NotFoundException.ERROR_FILE);
-	}
-
-	@Override
-	public AssociationFichier ajoutDansSac(Long idUtilisateur, Long idAssocFichier) throws NotFoundException{
-		
-		return ajoutAssociation(idUtilisateur.toString(),
-				TypeAssociation.SAC, recupererAssociation(idAssocFichier).getFichierInfo());
 	}
 	
 	@Override
@@ -148,12 +163,12 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 	public AssociationFichier uploadFichierSac(Long idUtilisateur, byte[] fichier, 
 			String contentType, String nom, long size) 
 					throws StorageLimitExceededException,IOException {
-		long usedSpace = getUsedSpace(idUtilisateur);
+		long usedSpace = getUsedSpace(idUtilisateur).getUsedSpace();
 		if (usedSpace + size > MAX_SPACE_PER_USER)
 			throw new StorageLimitExceededException();
 		
-		return ecrireFichierStockage(idUtilisateur, fichier, contentType, nom, size,
-				TypeAssociation.SAC);
+		return ecrireFichierStockage(idUtilisateur,idUtilisateur.toString(), fichier,
+				contentType, nom, size,TypeAssociation.SAC);
 	}
 
 	@Override
@@ -169,10 +184,10 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 	}
 	
 	@Override
-	public Long getUsedSpace(Long idUtilisateur) {
+	public UsedSpaceWrapper getUsedSpace(Long idUtilisateur) {
 		Long usedSpace = fichierInfoDAO.getUsedSpaceUser(idUtilisateur);
 		// Si l'utilisateur ne possede aucun fichier le resultat sera NULL (au lieu de 0)
-		return usedSpace == null ? 0 : usedSpace;
+		return new UsedSpaceWrapper(usedSpace == null ? 0 : usedSpace, MAX_SPACE_PER_USER);
 	}
 	
 	@Override
@@ -197,13 +212,9 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 		Optional<AssociationFichier> oldPicture = associationFichierDAO.findByIdCorrespondantAssociationAndTypeAssociation(
 				String.valueOf(userId), TypeAssociation.PROFIL_PICTURE);
 		AssociationFichier newPicture = 
-				ecrireFichierStockage(userId, bytes, contentType, filename, size, 
-						TypeAssociation.PROFIL_PICTURE);
-		if (oldPicture.isPresent()) {
-			FichierInfo fInfo = oldPicture.get().getFichierInfo();
-			fichierInfoDAO.delete(fInfo);
-			gestionnaireIO.supprimerFichier(fInfo.getChemin());
-		}
+				ecrireFichierStockage(userId,String.valueOf(userId), bytes, contentType,
+						filename, size, TypeAssociation.PROFIL_PICTURE);
+		deleteIfPresent(oldPicture);
 		return newPicture;
 	}
 	
@@ -211,11 +222,7 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 	public void retraitPhotoProfil(long userId) throws NotFoundException, IOException {
 		Optional<AssociationFichier> oldPicture = associationFichierDAO.findByIdCorrespondantAssociationAndTypeAssociation(
 				String.valueOf(userId), TypeAssociation.PROFIL_PICTURE);
-		if (oldPicture.isPresent()) {
-			FichierInfo fInfo = oldPicture.get().getFichierInfo();
-			fichierInfoDAO.delete(fInfo);
-			gestionnaireIO.supprimerFichier(fInfo.getChemin());
-		}	
+		deleteIfPresent(oldPicture);	
 	}
 	
 	@Override
@@ -227,6 +234,56 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 		return assocFichier.get().getId();
 	}
 	
+	@Override
+	public AssociationFichier uploadReponseDevoir(long userId, String devoirId, byte[] reponse, String contentType,
+			String filename, long size) throws IOException {
+		Optional<AssociationFichier> oldReponse = associationFichierDAO.findByIdCorrespondantAssociationAndTypeAssociationAndFichierInfo_IdProprietaire(
+				devoirId, TypeAssociation.ASSIGNMENT_RESPONSE,userId);
+		AssociationFichier newReponse = 
+				ecrireFichierStockage(userId,devoirId,reponse, contentType, filename, size, 
+						TypeAssociation.ASSIGNMENT_RESPONSE);
+		deleteIfPresent(oldReponse);
+		return newReponse;
+	}
+
+	@Override
+	public Long getIdAssocReponseDevoir(Long userId, String devoirId) throws NotFoundException {
+		Optional<AssociationFichier> assocFichier = associationFichierDAO.findByIdCorrespondantAssociationAndTypeAssociationAndFichierInfo_IdProprietaire(
+				devoirId, TypeAssociation.ASSIGNMENT_RESPONSE,userId);
+		if (assocFichier.isEmpty())
+			throw new NotFoundException("reponse devoir");
+		return assocFichier.get().getId();
+	}
+
+	@Override
+	public void retraitReponseDevoir(long userId, String devoirId) throws NotFoundException, IOException {
+		Optional<AssociationFichier> oldReponse = associationFichierDAO.findByIdCorrespondantAssociationAndTypeAssociationAndFichierInfo_IdProprietaire(
+				devoirId, TypeAssociation.ASSIGNMENT_RESPONSE,userId);
+		deleteIfPresent(oldReponse);
+	}
+	
+	@Override
+	public byte[] getAllReponseDevoir(String devoirId) throws NoContentException,
+		IOException {
+		List<FichierInfo> reponsesDevoir = fichierInfoDAO.findAllByAssociations_IdCorrespondantAssociationAndAssociations_TypeAssociation(
+				devoirId, TypeAssociation.ASSIGNMENT_RESPONSE);
+		if (reponsesDevoir.isEmpty())
+			throw new NoContentException();
+		
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		ZipOutputStream outputZip = new ZipOutputStream(outputStream);
+		ZipEntry entry;
+
+		for (FichierInfo fInfo : reponsesDevoir) {
+			entry = new ZipEntry(fInfo.getNom());
+			outputZip.putNextEntry(entry);
+			outputZip.write(gestionnaireIO.lireFichier(fInfo.getChemin()));
+			outputZip.closeEntry();
+		}
+		outputZip.close();
+		return outputStream.toByteArray();
+	}
+
 	public FichierInfoDAO getFichierInfoDAO() {
 		return fichierInfoDAO;
 	}

@@ -11,4 +11,7 @@ public class InvalidFileTypeException extends Exception {
 	public InvalidFileTypeException(List<String> supportedTypes) {
 		super("Supported mime types are : "+supportedTypes.toString());
 	}
+	public InvalidFileTypeException(String expected, String real) {
+		super("Expected : "+expected+" but got : "+real);
+	}
 }

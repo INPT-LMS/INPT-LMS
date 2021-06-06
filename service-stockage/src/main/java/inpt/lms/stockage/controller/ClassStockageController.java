@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -99,6 +100,17 @@ public class ClassStockageController {
 				coursId, TypeAssociation.COURS);
 		return ControllerResponseUtils.lireFichier(
 				gestionnaireFichier.lireFichier(assocId));
+	}
+	
+	@GetMapping("{coursId}/search")
+	public Page<AssociationFichier> searchFichiers(@RequestHeader(name = "X-USER-ID")
+			long userId,@RequestParam(name = "name",required = true) String partieNom,
+			@PathVariable String coursId, Pageable page) throws UnauthorizedException,
+			ProxyUnavailableException, NotFoundException{
+		authService.isClassMemberOrOwner(getCoursUUID(coursId), userId);
+		return gestionnaireFichier.getFichierParNom(partieNom,coursId,
+				TypeAssociation.COURS,page)
+				.map(AssociationFichier::masquerProprietes);
 	}
 	
 	public long getMaxSize() {
