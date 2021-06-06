@@ -21,6 +21,7 @@ import inpt.lms.stockage.business.interfaces.GestionnaireFichier;
 import inpt.lms.stockage.business.interfaces.GestionnaireIOFichier;
 import inpt.lms.stockage.business.interfaces.exceptions.NotFoundException;
 import inpt.lms.stockage.model.AssociationFichier;
+import inpt.lms.stockage.proxies.comptes.GestionCompteProxy;
 import inpt.lms.stockage.proxies.course.GestionCoursProxy;
 
 
@@ -36,6 +37,8 @@ class StockageControllerTests {
 	public AuthorizationService authService;
 	@MockBean
 	public GestionCoursProxy coursProxy;
+	@MockBean
+	public GestionCompteProxy compteProxy;
 	
 	public UUID fakeUUID = UUID.randomUUID();
 
