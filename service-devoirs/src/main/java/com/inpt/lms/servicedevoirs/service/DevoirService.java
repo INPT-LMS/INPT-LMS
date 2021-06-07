@@ -10,17 +10,18 @@ import com.inpt.lms.servicedevoirs.model.Devoir;
 import com.inpt.lms.servicedevoirs.model.DevoirInfos;
 import com.inpt.lms.servicedevoirs.model.DevoirReponse;
 import com.inpt.lms.servicedevoirs.model.Fichier;
+import com.inpt.lms.servicedevoirs.proxy.StockageProxy;
 import com.inpt.lms.servicedevoirs.repository.DevoirInfosRepository;
 import com.inpt.lms.servicedevoirs.repository.DevoirReponseRepository;
 import com.inpt.lms.servicedevoirs.repository.DevoirRepository;
 import com.inpt.lms.servicedevoirs.repository.FichierRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +31,7 @@ public class DevoirService {
     private final DevoirInfosRepository devoirInfosRepository;
     private final DevoirReponseRepository devoirReponseRepository;
     private final FichierRepository fichierRepository;
+    private final StockageProxy stockageProxy;
 
 
     /**
@@ -90,7 +92,7 @@ public class DevoirService {
      * Une personne ne peut rendre qu'un seul devoir à la fois
      * Lorsque la personne rend plusieurs fois un devoir, c'est son devoir qui est modifié à plusieurs reprises
      */
-    public DevoirReponse rendreDevoir(Long userId, String courseId, String idDevoir, DevoirReponseDTO devoirReponseDTO) throws DevoirNotFoundException, IllegalAccessError {
+    public DevoirReponse rendreDevoir(MultipartFile fichier, Long userId, String courseId, String idDevoir) throws DevoirNotFoundException, IllegalAccessError {
         if (!verifierAutorisation(userId, courseId)) {
             throw new IllegalAccessError("You cannot perform this action");
         }
@@ -104,18 +106,25 @@ public class DevoirService {
         Fichier f = null;
         DevoirReponse devoirReponse = null;
         try {
+            String s = stockageProxy.uploadReponseDevoir(fichier, userId, idDevoir);
+            System.out.println(s);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
             String renduId = renduExiste(userId);
 
             devoirReponse = devoir.getReponses().stream().filter(d -> d.getId().equals(renduId)).findFirst().orElseThrow(() -> new DevoirReponseNotFoundException("Rendu introuvable"));
 
             f = devoirReponse.getFichier();
-            f.setNom(devoirReponseDTO.getNomFichier());
+//            f.setNom(devoirReponseDTO.getNomFichier());
         } catch (DevoirReponseNotFoundException e) {
 
             devoirReponse = new DevoirReponse();
 
             f = new Fichier();
-            f.setNom(devoirReponseDTO.getNomFichier());
+//            f.setNom(devoirReponseDTO.getNomFichier());
 
 
             devoir.getReponses().add(devoirReponse);
