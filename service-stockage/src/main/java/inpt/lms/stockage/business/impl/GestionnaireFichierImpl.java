@@ -275,7 +275,7 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 		ZipEntry entry;
 
 		for (FichierInfo fInfo : reponsesDevoir) {
-			entry = new ZipEntry(fInfo.getNom()+" - no"+fInfo.getIdProprietaire());
+			entry = new ZipEntry(fInfo.getNom());
 			outputZip.putNextEntry(entry);
 			outputZip.write(gestionnaireIO.lireFichier(fInfo.getChemin()));
 			outputZip.closeEntry();

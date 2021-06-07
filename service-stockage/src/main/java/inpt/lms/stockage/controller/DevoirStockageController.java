@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import feign.RetryableException;
 import inpt.lms.stockage.authorization.AuthorizationService;
 import inpt.lms.stockage.business.interfaces.GestionnaireFichier;
 import inpt.lms.stockage.business.interfaces.exceptions.NotFoundException;
@@ -27,6 +28,8 @@ import inpt.lms.stockage.controller.exceptions.NoContentException;
 import inpt.lms.stockage.controller.exceptions.UnauthorizedException;
 import inpt.lms.stockage.model.AssociationFichier;
 import inpt.lms.stockage.proxies.ProxyUnavailableException;
+import inpt.lms.stockage.proxies.comptes.GestionCompteProxy;
+import inpt.lms.stockage.proxies.comptes.UserInfos;
 import inpt.lms.stockage.proxies.course.GestionCoursProxy;
 import inpt.lms.stockage.util.ControllerResponseUtils;
 
@@ -43,16 +46,26 @@ public class DevoirStockageController {
 	protected AuthorizationService authService;
 	@Autowired
 	protected GestionCoursProxy coursProxy;
+	@Autowired
+	protected GestionCompteProxy compteProxy;
 	
 	@PostMapping(path = "admin/assignment/{devoirId}", consumes = "multipart/form-data")
 	public AssociationFichier uploadReponseDevoir(@RequestParam MultipartFile fichier,
 			@RequestHeader(name = "X-USER-ID") long userId,@PathVariable String devoirId)
-			throws IOException, FileTooBigException, InvalidFileTypeException {
+			throws IOException, FileTooBigException, InvalidFileTypeException,
+			ProxyUnavailableException {
 		if (fichier.getSize() > maxFileSize)
 			throw new FileTooBigException(maxFileSize);
 		ControllerResponseUtils.checkContentType(fichier);
 		
 		String filename = new File(fichier.getOriginalFilename()).getName();
+		try {
+			UserInfos infos = compteProxy.getUserInfos(userId).getUser();
+			filename = infos.getNom() + " " + infos.getPrenom() + " - " + filename 
+					+ " - no"+ userId;
+		} catch (RetryableException e) {
+			throw new ProxyUnavailableException();
+		}
 		AssociationFichier assoc = gestionnaireFichier.uploadReponseDevoir(userId,
 				devoirId, fichier.getBytes(), fichier.getContentType(),
 				filename, fichier.getSize());
