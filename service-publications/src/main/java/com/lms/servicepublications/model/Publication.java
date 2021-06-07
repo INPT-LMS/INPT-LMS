@@ -24,7 +24,8 @@ public class Publication {
     private String id;
     private Long idProprietaire;
     private UUID idCours;
-    private String name_user;
+    private String nomUser;
+    private String prenomUser;
     @CreatedDate
     private Date datePublication;
     private String contenuPublication;

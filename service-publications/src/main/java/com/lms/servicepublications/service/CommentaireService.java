@@ -1,9 +1,11 @@
 package com.lms.servicepublications.service;
+import com.lms.servicepublications.beans.UserInfoBean;
 import com.lms.servicepublications.dto.CommentaireDTO;
 import com.lms.servicepublications.exceptions.ResourceNotFoundException;
 import com.lms.servicepublications.exceptions.UnauthorizedException;
 import com.lms.servicepublications.model.Commentaire;
 import com.lms.servicepublications.model.Publication;
+import com.lms.servicepublications.proxies.GestionCompteProxy;
 import com.lms.servicepublications.repository.CommentaireRepository;
 import com.lms.servicepublications.repository.PublicationRepository;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ public class CommentaireService {
 
     private final CommentaireRepository commentaireRepository;
     private final PublicationRepository publicationRepository;
+    private final GestionCompteProxy gestionCompteProxy;
 
 
     /**
@@ -25,10 +28,12 @@ public class CommentaireService {
      * @return String
      */
     public Commentaire ajouterCommentaire(Long id_user, CommentaireDTO commentaireDTO){
+        UserInfoBean userInfoBean = gestionCompteProxy.getNameById(id_user);
         Publication publication = publicationRepository.findById(commentaireDTO.getIdPublication()).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
         Commentaire commentaire = new Commentaire();
         commentaire.setIdProprietaire(id_user);
-        commentaire.setName_user(commentaireDTO.getName_user());
+        commentaire.setNomUser(userInfoBean.getNom());
+        commentaire.setPrenomUser(userInfoBean.getPrenom());
         commentaire.setIdPublication(commentaireDTO.getIdPublication());
         commentaire.setContenuCommentaire(commentaireDTO.getContenuCommentaire());
         List<Commentaire> commentaires = publication.getCommentaires();
