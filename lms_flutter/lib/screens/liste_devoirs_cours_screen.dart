@@ -11,6 +11,7 @@ import 'package:lms_flutter/services/data_list/devoir_list_service.dart';
 import 'package:lms_flutter/services/devoir_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
+
 //TODO: Ajout devoir
 class ListeDevoirsCoursScreen extends StatefulWidget {
   const ListeDevoirsCoursScreen({Key key}) : super(key: key);

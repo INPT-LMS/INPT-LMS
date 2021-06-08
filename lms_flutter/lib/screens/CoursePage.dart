@@ -88,13 +88,18 @@ class _CoursePageState extends State<CoursePage> {
                               child: AddPost(idCours),
                             ),
                             Center(
-                              child: TextButton(
+                              child: ElevatedButton(
                                   onPressed: () {
                                     if (snapshot.hasData)
                                       Navigator.pushNamed(context, "/devoirs",
                                           arguments: snapshot.data);
                                   },
                                   child: Text("Voir les devoirs du cours")),
+                            ),
+                            Center(
+                              child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: Text("Voir les fichiers du cours")),
                             ),
                             ListeData<PostData>(
                                 PostListCoursService(postService, idCours),

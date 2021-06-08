@@ -48,7 +48,7 @@ class DevoirService extends BaseService {
       throw NetworkException();
     }).then((response) {
       var devoirString = handleException(response);
-      if (devoirString.isEmpty) throw BadRequestException();
+      if (devoirString.isEmpty) throw BadRequestException("No devoir found");
       return DevoirData.fromJson(jsonDecode(devoirString));
     });
   }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:lms_flutter/services/exceptions/forbidden_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'exceptions/authentication_exception.dart';
@@ -36,10 +37,13 @@ abstract class BaseService {
         return utf8.decode(response.bodyBytes);
         break;
       case 400:
-        throw BadRequestException();
+        throw BadRequestException(utf8.decode(response.bodyBytes));
         break;
       case 401:
         throw AuthenticationException();
+        break;
+      case 403:
+        throw ForbiddenException();
         break;
       case 404:
         throw NotFoundException();

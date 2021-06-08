@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/services/exceptions/authentication_exception.dart';
+import 'package:lms_flutter/services/exceptions/forbidden_exception.dart';
 import 'package:lms_flutter/services/exceptions/network_exception.dart';
 
 showSnackbar(BuildContext context, String texte) {
@@ -7,7 +8,9 @@ showSnackbar(BuildContext context, String texte) {
 }
 
 showDefaultErrorMessage(BuildContext context, Exception e) {
-  if (e is AuthenticationException)
+  if (e is ForbiddenException) {
+    showSnackbar(context, "Erreur : vous n'avez pas le droit de faire ceci");
+  } else if (e is AuthenticationException)
     showSnackbar(context,
         "Erreur d'authentification : veuillez vous reconnecter et reessayer");
   else if (e is NetworkException)
@@ -40,4 +43,19 @@ Future askConfirmation(BuildContext context) {
           ],
         );
       });
+}
+
+IconData findIconFromFileType(String mimeType) {
+  if (mimeType.startsWith("image"))
+    return Icons.image;
+  else if (mimeType.startsWith("text"))
+    return Icons.text_format;
+  else if (mimeType.startsWith("audio"))
+    return Icons.music_note;
+  else if (mimeType.startsWith("video"))
+    return Icons.ondemand_video_outlined;
+  else if (mimeType == "application/pdf")
+    return Icons.picture_as_pdf;
+  else
+    return Icons.insert_drive_file;
 }

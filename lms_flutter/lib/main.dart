@@ -4,24 +4,27 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:lms_flutter/mock_components/mock_home_screen.dart';
+import 'package:lms_flutter/screens/CoursePage.dart';
 import 'package:lms_flutter/screens/LoginPage.dart';
 import 'package:lms_flutter/screens/ProfilePage.dart';
 import 'package:lms_flutter/screens/SignUpPage.dart';
 import 'package:lms_flutter/screens/devoir_details_screen.dart';
 import 'package:lms_flutter/screens/discussion_screen.dart';
+import 'package:lms_flutter/screens/fichier_details_screen.dart';
+import 'package:lms_flutter/screens/home_screen.dart';
 import 'package:lms_flutter/screens/liste_devoirs_cours_screen.dart';
 import 'package:lms_flutter/screens/liste_discussion_screen.dart';
+import 'package:lms_flutter/screens/stockage_sac_screen.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/services/auth_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
-import 'mock_components/CoursePageStatique.dart';
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize(debug: true);
   setup();
   await getIt.allReady();
   await initializeDateFormatting('fr_FR', null);
@@ -35,7 +38,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatefulWidget {
-  String initRoute;
+  final String initRoute;
 
   MyApp(this.initRoute, {Key key}) : super(key: key);
 
@@ -70,13 +73,15 @@ class _MyAppState extends State<MyApp> {
         routes: {
           '/login': (context) => LoginPage(),
           '/signup': (context) => SignUpPage(),
-          '/home': (context) => HomeScreenStatique(),
-          '/course': (context) => CoursePageStatique(),
+          '/home': (context) => HomeScreen(),
+          '/course': (context) => CoursePage(),
           '/profile': (context) => Profile(),
           '/messages': (context) => ListeDiscussionScreen(),
           '/discussion': (context) => DiscussionScreen(),
           '/devoirs': (context) => ListeDevoirsCoursScreen(),
-          '/devoirs-detail': (context) => DevoirDetailsScreen()
+          '/devoirs-detail': (context) => DevoirDetailsScreen(),
+          '/stockage-sac': (context) => StockageSacScreen(),
+          '/fichier-details': (context) => FichierDetailsScreen()
         });
   }
 

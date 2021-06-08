@@ -31,16 +31,16 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
       ListTile(
           title: Row(
             children: [
-              Icon(Icons.alarm, color: Colors.blue),
+              Icon(Icons.cloud, color: Colors.blue),
               Container(
-                child: Text('Mes devoirs'),
+                child: Text('Mon sac'),
                 padding: EdgeInsets.only(left: 10),
               )
             ],
           ),
           onTap: () {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text("Vers mes devoirs")));
+            if (ModalRoute.of(context).settings.name != "/")
+              Navigator.pushNamed(context, "/stockage-sac");
           }),
       ListTile(
           title: Row(
