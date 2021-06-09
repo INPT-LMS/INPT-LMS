@@ -49,7 +49,7 @@ public class CourseAdminImp implements CourseAdministration{
         students.add(member1);
 
         member1.getCourses().add(course);
-        memberInterface.save(member1);
+
 
         courseInterface.save(course);
         return course;

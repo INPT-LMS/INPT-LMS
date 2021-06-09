@@ -3,6 +3,7 @@ package com.inpt.lms.service_cours.service;
 import com.inpt.lms.service_cours.model.Course;
 import com.inpt.lms.service_cours.model.Member;
 import com.inpt.lms.service_cours.model.Professor;
+import com.inpt.lms.service_cours.model.Visibility;
 import com.inpt.lms.service_cours.repository.CourseInterface;
 import com.inpt.lms.service_cours.repository.MemberInterface;
 import com.inpt.lms.service_cours.repository.ProfessorInterface;
@@ -93,6 +94,13 @@ public class CourseDetailsImp implements CourseDatails{
             return courseOptional.get().getOwner().getProfessorID();
         }
         return 0;
+    }
+
+    @Override
+    public List<Course> getCoursesByName(String courseID, long userID) {
+
+        List<Course> coursesList = courseInterface.getCourseByCourseNameContainingAndVisibilityVisibilityID(courseID,0);
+        return coursesList ;
     }
 
     @Override

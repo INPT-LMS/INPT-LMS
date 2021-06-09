@@ -43,12 +43,14 @@ class CourseAdminImpTest {
     void deleteEmptyCourse(){
         addCourse();
         assertThat(courseAdminImp.deleteCourse(COURSEID)).isTrue();
+        assertThat(courseAdminImp.deleteCourse(COURSEID)).isFalse();
 
     }
     @Test
     void deleteCourseWithMembers(){
         addMember();
         assertThat(courseAdminImp.deleteCourse(COURSEID)).isTrue();
+        assertThat(courseAdminImp.deleteCourse(COURSEID)).isFalse();
 
     }
 
