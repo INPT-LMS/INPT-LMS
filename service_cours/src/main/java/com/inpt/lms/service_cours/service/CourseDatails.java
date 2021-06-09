@@ -16,6 +16,7 @@ public interface CourseDatails {
     public boolean isProfessor(UUID courseID, long professorID);
     public boolean isMember(UUID courseID, long userID);
     public long getCourseProfessor(UUID courseID);
+    public List<Course> getCoursesByName(String courseID, long userID);
     public List<Member> getBannedStudents(UUID courseID);
 
 }
