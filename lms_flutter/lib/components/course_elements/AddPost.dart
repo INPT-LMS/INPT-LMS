@@ -59,6 +59,8 @@ class _AddPostState extends State<AddPost> {
           ),
           TextFormField(
             controller: controller,
+            keyboardType: TextInputType.multiline,
+            maxLines: 3,
             decoration: InputDecoration(
               labelText: "What's up ?",
               border: OutlineInputBorder(),

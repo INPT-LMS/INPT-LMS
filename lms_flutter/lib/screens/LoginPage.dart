@@ -15,18 +15,18 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController mailController;
+  TextEditingController emailController;
   TextEditingController passwordController;
   @override
   void initState() {
     super.initState();
-    mailController = TextEditingController();
+    emailController = TextEditingController();
     passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
-    mailController.dispose();
+    emailController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               Text(
-                "Welcome",
+                "Bienvenue",
                 style: TextStyle(
                     fontSize: 48,
                     color: Color.fromRGBO(47, 80, 97, 1),
@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 padding: EdgeInsets.fromLTRB(0, 51, 0, 0),
                 child: TextFormField(
-                  controller: mailController,
+                  controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   cursorColor: Theme.of(context).cursorColor,
                   decoration: InputDecoration(
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.only(
                             topRight: Radius.circular(24),
                             bottomLeft: Radius.circular(24))),
-                    labelText: 'Password',
+                    labelText: 'Mot de passe',
                     labelStyle: TextStyle(
                       color: Color.fromRGBO(47, 80, 97, 1),
                     ),
@@ -107,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                       return;
                     }
                     authService
-                        .login(mailController.text, passwordController.text)
+                        .login(emailController.text, passwordController.text)
                         .then((isOk) {
                       if (isOk) {
                         Provider.of<InfosModel>(context, listen: false)
@@ -122,18 +122,9 @@ class _LoginPageState extends State<LoginPage> {
                     });
                   },
                   child: Text(
-                    'Login',
+                    'Se connecter',
                     style: TextStyle(fontFamily: 'Montserrat', fontSize: 32),
                   ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 51),
-                child: Column(
-                  children: [
-                    Text("Not having an account yet?"),
-                    Text("Create one"),
-                  ],
                 ),
               ),
               Container(
@@ -154,11 +145,10 @@ class _LoginPageState extends State<LoginPage> {
                       // foreground
                       ),
                   onPressed: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/signup', (Route<dynamic> route) => false);
+                    Navigator.pushNamed(context, "/signup");
                   },
                   child: Text(
-                    'Go to SignUP',
+                    "S'inscrire",
                     style: TextStyle(color: Color(0xff0275B1), fontSize: 32),
                   ),
                 ),

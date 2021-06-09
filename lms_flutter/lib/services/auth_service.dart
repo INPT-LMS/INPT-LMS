@@ -9,6 +9,8 @@ import 'package:lms_flutter/services/exceptions/authentication_exception.dart';
 import 'package:lms_flutter/services/exceptions/not_found_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'exceptions/network_exception.dart';
+
 class AuthService extends BaseService {
   AuthService(SharedPreferences sharedPreferences, http.Client client)
       : super(sharedPreferences, client);
@@ -41,9 +43,13 @@ class AuthService extends BaseService {
   }
 
   Future<http.Response> register(UserRegisterForm form) {
-    return client.post(Uri.parse(Consts.URL_GATEWAY + "/account/register"),
-        headers: <String, String>{"Content-Type": "application/json"},
-        body: jsonEncode(form));
+    return client
+        .post(Uri.parse(Consts.URL_GATEWAY + "/account/register"),
+            headers: <String, String>{"Content-Type": "application/json"},
+            body: jsonEncode(form))
+        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
+      throw NetworkException();
+    });
   }
 
   Future<http.Response> getUserInfos(int userId) {

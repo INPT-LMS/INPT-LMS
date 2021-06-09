@@ -13,6 +13,8 @@ UserRegisterForm _$UserRegisterFormFromJson(Map<String, dynamic> json) {
     json['nom'] as String,
     json['prenom'] as String,
     json['estProfesseur'] as bool,
+    json['etudieA'] as String,
+    json['enseigneA'] as String,
   );
 }
 
@@ -23,4 +25,6 @@ Map<String, dynamic> _$UserRegisterFormToJson(UserRegisterForm instance) =>
       'nom': instance.nom,
       'prenom': instance.prenom,
       'estProfesseur': instance.estProfesseur,
+      'etudieA': instance.etudieA,
+      'enseigneA': instance.enseigneA,
     };

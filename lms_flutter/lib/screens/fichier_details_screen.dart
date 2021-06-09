@@ -22,6 +22,7 @@ class FichierDetailsScreen extends StatefulWidget {
 class _FichierDetailsScreenState extends State<FichierDetailsScreen> {
   StockageService stockageService;
   bool error;
+  bool finished;
   @override
   Widget build(BuildContext context) {
     var fichier = ModalRoute.of(context).settings.arguments as Fichier;
@@ -31,6 +32,10 @@ class _FichierDetailsScreenState extends State<FichierDetailsScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) => showSnackbar(
           context, "Une erreur est survenue lors du telechargement"));
       error = false;
+    } else if (finished) {
+      WidgetsBinding.instance.addPostFrameCallback(
+          (_) => showSnackbar(context, "Téléchargement terminé"));
+      finished = false;
     }
     return BaseScaffoldAppBar(
       body: Column(children: [
@@ -41,7 +46,8 @@ class _FichierDetailsScreenState extends State<FichierDetailsScreen> {
             child: ElevatedButton(
                 onPressed: () {
                   stockageService.downloadFichier(
-                      Consts.URL_GATEWAY + "/storage/user/files/${fichier.id}");
+                      Consts.URL_GATEWAY + "/storage/user/files/${fichier.id}",
+                      fichier.fichierInfo.nom);
                 },
                 child: Text("Telecharger le fichier"))),
         Center(
@@ -85,6 +91,8 @@ class _FichierDetailsScreenState extends State<FichierDetailsScreen> {
       DownloadTaskStatus status = data[1];
       if (status == DownloadTaskStatus.failed) {
         error = true;
+      } else if (status == DownloadTaskStatus.complete) {
+        finished = true;
       }
       int progress = data[2];
       setState(() {});
@@ -93,6 +101,7 @@ class _FichierDetailsScreenState extends State<FichierDetailsScreen> {
 
     stockageService = getIt.get<StockageService>();
     error = false;
+    finished = false;
   }
 
   @override

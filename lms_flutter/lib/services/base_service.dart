@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -31,13 +32,14 @@ abstract class BaseService {
     }
   }
 
-  String handleException(http.Response response) {
-    switch (response.statusCode) {
+  String _handleException(
+      int statusCode, dynamic input, String Function(dynamic input) converter) {
+    switch (statusCode) {
       case 200:
-        return utf8.decode(response.bodyBytes);
+        return converter(input);
         break;
       case 400:
-        throw BadRequestException(utf8.decode(response.bodyBytes));
+        throw BadRequestException(converter(input));
         break;
       case 401:
         throw AuthenticationException();
@@ -51,5 +53,18 @@ abstract class BaseService {
       default:
         throw UnknownException();
     }
+  }
+
+  Future<String> handleExceptionStreamed(http.StreamedResponse response) {
+    if (response.statusCode == 200 || response.statusCode == 400)
+      return utf8.decodeStream(response.stream).then((body) => Future(() =>
+          _handleException(response.statusCode, response, (input) => body)));
+    return Future(
+        () => _handleException(response.statusCode, response, (input) => ""));
+  }
+
+  String handleException(http.Response response) {
+    return _handleException(response.statusCode, response,
+        (input) => utf8.decode(response.bodyBytes));
   }
 }

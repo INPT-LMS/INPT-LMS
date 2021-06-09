@@ -62,7 +62,6 @@ class _ListeDataState<T> extends State<ListeData<T>> {
   @override
   Widget build(BuildContext context) {
     modele = Provider.of<ListDataModel<T>>(context);
-    if (modele.listeWidgets.isEmpty && !isListFinished && !isLoading) addData();
 
     if (hasError) {
       WidgetsBinding.instance.addPostFrameCallback((_) => showSnackbar(
@@ -71,6 +70,14 @@ class _ListeDataState<T> extends State<ListeData<T>> {
           "recupération des données"));
       hasError = false;
     }
+
+    if (modele.listeWidgets.isEmpty && !isLoading) {
+      if (!isListFinished)
+        addData();
+      else
+        return Center(child: Text("Rien à afficher"));
+    }
+
     return ListView(
         shrinkWrap: this.widget.shrinkWrap,
         reverse: this.widget.reverse,
