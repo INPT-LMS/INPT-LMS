@@ -11,5 +11,5 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface CourseInterface extends JpaRepository<Course,UUID> {
-    public List<Course> getCourseByCourseNameContaining(String course,Visibility v);
+    public List<Course> getCourseByCourseNameContainingAndVisibilityVisibilityID(String course,int v);
 }

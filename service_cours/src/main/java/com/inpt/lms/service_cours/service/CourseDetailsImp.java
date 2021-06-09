@@ -99,7 +99,7 @@ public class CourseDetailsImp implements CourseDatails{
     @Override
     public List<Course> getCoursesByName(String courseID, long userID) {
 
-        List<Course> coursesList = courseInterface.getCourseByCourseNameContaining(courseID);
+        List<Course> coursesList = courseInterface.getCourseByCourseNameContainingAndVisibilityVisibilityID(courseID,0);
         return coursesList ;
     }
 
