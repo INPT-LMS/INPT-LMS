@@ -5,7 +5,7 @@ import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
-import '../services/auth_service.dart';
+import '../services/compte_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -101,17 +101,17 @@ class _LoginPageState extends State<LoginPage> {
                     onPrimary: Colors.white, // foreground
                   ),
                   onPressed: () {
-                    var authService = getIt.get<AuthService>();
+                    var compteService = getIt.get<CompteService>();
                     if (infosModel.networkType == ConnectivityResult.none) {
                       showSnackbar(context, "Pas de connexion");
                       return;
                     }
-                    authService
+                    compteService
                         .login(emailController.text, passwordController.text)
                         .then((isOk) {
                       if (isOk) {
                         Provider.of<InfosModel>(context, listen: false)
-                            .userInfos = authService.getUserLoggedInfos();
+                            .userInfos = compteService.getUserLoggedInfos();
                         Navigator.of(context).pushNamedAndRemoveUntil(
                             '/home', (Route<dynamic> route) => false);
                       } else

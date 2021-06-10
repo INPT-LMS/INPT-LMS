@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'exceptions/network_exception.dart';
 
+/// Service chargé des interactions liées aux devoirs
 class DevoirService extends BaseService {
   DevoirService(SharedPreferences sharedPreferences, Client client)
       : super(sharedPreferences, client);

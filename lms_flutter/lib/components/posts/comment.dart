@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/consts/custom_colors.dart';
 import 'package:lms_flutter/model/post/commentaire_data.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
-import 'package:lms_flutter/services/auth_service.dart';
+import 'package:lms_flutter/services/compte_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +17,7 @@ class Comment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var authService = getIt.get<AuthService>();
+    var compteService = getIt.get<CompteService>();
     var infosModele = Provider.of<InfosModel>(context, listen: false);
     var infos = infosModele.userInfos;
     var network = infosModele.networkType;
@@ -63,9 +61,9 @@ class Comment extends StatelessWidget {
           ]),
         );
       },
-      future: authService
+      future: compteService
           .getUserInfos(commentaireData.idProprietaire)
-          .then((response) => jsonDecode(response.body)["user"]["nom"]),
+          .then((infos) => infos.nom),
     );
   }
 }

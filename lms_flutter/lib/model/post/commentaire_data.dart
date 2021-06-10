@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'commentaire_data.g.dart';
 
 @JsonSerializable()
-class CommentaireData{
+class CommentaireData {
   String id;
   String idPublication;
   DateTime dateCommentaire;

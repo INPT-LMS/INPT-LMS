@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'like_data.g.dart';
 
 @JsonSerializable()
-class LikeData{
+class LikeData {
   String id;
   String idPublication;
   DateTime dateLike;

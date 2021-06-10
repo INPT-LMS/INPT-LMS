@@ -48,9 +48,8 @@ class _ListeDiscussionScreenState extends State<ListeDiscussionScreen> {
           Expanded(
               child: ChangeNotifierProvider(
                   create: (context) => ListDataModel<DiscussionData>(
-                      <DiscussionData>[],
-                      <Widget>[],
-                      (discData) => Discussion(discData)),
+                      (discData) => Discussion(discData),
+                      (discData) => discData.id),
                   child: ListeData<DiscussionData>(
                       DiscussionListService(
                           getIt.get<MessageService>(), infos.id),

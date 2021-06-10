@@ -16,6 +16,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Service chargé des interactions liées au stockage
 class StockageService extends BaseService {
   StockageService(SharedPreferences sharedPreferences, Client client)
       : super(sharedPreferences, client);

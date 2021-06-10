@@ -61,8 +61,9 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
         body: Container(
             margin: EdgeInsets.all(10),
             child: ChangeNotifierProvider<ListDataModel<MessageData>>(
-                create: (context) => ListDataModel<MessageData>(<MessageData>[],
-                    <Widget>[], (messageData) => Message(messageData)),
+                create: (context) => ListDataModel<MessageData>(
+                    (messageData) => Message(messageData),
+                    (messageData) => messageData.id),
                 builder: (context, _) {
                   return Column(
                     children: [

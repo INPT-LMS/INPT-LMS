@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'exceptions/network_exception.dart';
 
+/// Service chargé des interactions liées aux publications
 class PostService extends BaseService {
   PostService(SharedPreferences sharedPreferences, http.Client client)
       : super(sharedPreferences, client);

@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/model/user_register_form.dart';
 import 'package:lms_flutter/screens/utils.dart';
-import 'package:lms_flutter/services/auth_service.dart';
+import 'package:lms_flutter/services/compte_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -21,7 +21,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController mdpConfController;
   TextEditingController ecoleController;
   bool isProf;
-  AuthService authService;
+  CompteService compteService;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
     mdpConfController = TextEditingController();
     emailController = TextEditingController();
     ecoleController = TextEditingController();
-    authService = getIt.get<AuthService>();
+    compteService = getIt.get<CompteService>();
   }
 
   @override
@@ -246,7 +246,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         else
                           registerForm.etudieA = ecole;
                       }
-                      authService.register(registerForm).then((value) {
+                      compteService.register(registerForm).then((value) {
                         switch (value.statusCode) {
                           case 200:
                             showSnackbar(

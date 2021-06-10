@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'base_service.dart';
 
+/// Service chargé des interactions liées à la messagerie
 class MessageService extends BaseService {
   MessageService(SharedPreferences sharedPreferences, http.Client client)
       : super(sharedPreferences, client);

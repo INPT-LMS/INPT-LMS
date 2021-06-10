@@ -9,10 +9,7 @@ class CoverPic extends StatelessWidget {
       height: MediaQuery.of(context).size.height * .25,
       decoration: BoxDecoration(
           image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage("images/cover.jpg")
-          )
-      ),
+              fit: BoxFit.cover, image: AssetImage("images/cover.jpg"))),
     );
   }
 }

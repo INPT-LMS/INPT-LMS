@@ -37,8 +37,9 @@ class _ListeDevoirsCoursScreenState extends State<ListeDevoirsCoursScreen> {
                     child: Text("Ajouter un devoir"), onPressed: () {})),
           Expanded(
               child: ChangeNotifierProvider(
-                  create: (context) => ListDataModel<DevoirData>(<DevoirData>[],
-                      <Widget>[], (devoirData) => Devoir(devoirData, infos.id)),
+                  create: (context) => ListDataModel<DevoirData>(
+                      (devoirData) => Devoir(devoirData, infos.id),
+                      (devoirData) => devoirData.id),
                   child: ListeData<DevoirData>(
                       DevoirListService(
                           getIt.get<DevoirService>(), courseData.courseID),

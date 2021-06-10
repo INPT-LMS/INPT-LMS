@@ -44,12 +44,11 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
         body: SingleChildScrollView(
             child: ChangeNotifierProvider(
       create: (context) => ListDataModel<Fichier>(
-          <Fichier>[],
-          <Widget>[],
           (fichier) => FichierResume(
                 fichier,
                 onDelete: (fichier) => updateSize(-fichier.fichierInfo.size),
-              )),
+              ),
+          (fichier) => fichier.id),
       builder: (context, _) {
         var usedSpaceMB = usedSpace / 1024 / 1024;
         var totalSpaceMB = totalSpace / 1024 / 1024;

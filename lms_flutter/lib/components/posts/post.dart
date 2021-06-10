@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lms_flutter/components/consts/custom_colors.dart';
@@ -7,7 +5,7 @@ import 'package:lms_flutter/components/posts/like_comment.dart';
 import 'package:lms_flutter/model/post/post_data.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/screens/view_models/liste_data_model.dart';
-import 'package:lms_flutter/services/auth_service.dart';
+import 'package:lms_flutter/services/compte_service.dart';
 import 'package:lms_flutter/services/course_service.dart';
 import 'package:lms_flutter/services/post_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
@@ -22,7 +20,7 @@ class Post extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var infos = Provider.of<InfosModel>(context, listen: false).userInfos;
-    var authService = getIt.get<AuthService>();
+    var compteService = getIt.get<CompteService>();
     var postService = getIt.get<PostService>();
     var coursService = getIt.get<CourseService>();
     var userLike = postData.likes.firstWhere(
@@ -57,11 +55,9 @@ class Post extends StatelessWidget {
                                     fontSize: 15,
                                     color:
                                         isOwner ? Colors.blue : Colors.black)),
-                            future: authService
+                            future: compteService
                                 .getUserInfos(postData.idProprietaire)
-                                .then((response) =>
-                                    jsonDecode(response.body)["user"]["nom"]
-                                        as String)),
+                                .then((infos) => infos.nom)),
                         GestureDetector(
                             onTap: () {
                               if (ModalRoute.of(context).settings.name !=

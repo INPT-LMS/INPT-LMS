@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lms_flutter/services/auth_service.dart';
+import 'package:lms_flutter/services/compte_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 
 class BaseScaffoldAppBar extends StatefulWidget {
@@ -59,7 +59,7 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
       ListTile(
           title: Text('Se deconnecter'),
           onTap: () {
-            getIt.get<AuthService>().logout();
+            getIt.get<CompteService>().logout();
             Navigator.pushNamedAndRemoveUntil(
                 context, "/login", (route) => false);
           }),

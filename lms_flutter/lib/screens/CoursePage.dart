@@ -78,9 +78,8 @@ class _CoursePageState extends State<CoursePage> {
                       ),
                       ChangeNotifierProvider(
                         create: (context) => ListDataModel<PostData>(
-                            <PostData>[],
-                            <Widget>[],
-                            (postData) => Post(postData)),
+                            (postData) => Post(postData),
+                            (postData) => postData.id),
                         child: Column(
                           children: [
                             Container(

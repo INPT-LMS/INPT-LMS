@@ -18,7 +18,7 @@ import 'package:lms_flutter/screens/liste_devoirs_cours_screen.dart';
 import 'package:lms_flutter/screens/liste_discussion_screen.dart';
 import 'package:lms_flutter/screens/stockage_sac_screen.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
-import 'package:lms_flutter/services/auth_service.dart';
+import 'package:lms_flutter/services/compte_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
@@ -28,13 +28,13 @@ Future<void> main() async {
   setup();
   await getIt.allReady();
   await initializeDateFormatting('fr_FR', null);
-  var authService = getIt.get<AuthService>();
+  var compteService = getIt.get<CompteService>();
   InfosModel modele = InfosModel(
-      authService.isLoggedIn() ? authService.getUserLoggedInfos() : null,
+      compteService.isLoggedIn() ? compteService.getUserLoggedInfos() : null,
       await Connectivity().checkConnectivity());
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider.value(value: modele)],
-      child: MyApp(authService.isLoggedIn() ? "/home" : "/login")));
+      child: MyApp(compteService.isLoggedIn() ? "/home" : "/login")));
 }
 
 class MyApp extends StatefulWidget {

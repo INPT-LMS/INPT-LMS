@@ -11,43 +11,44 @@ class SettingsWidget extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: Align(
         alignment: Alignment.topRight,
-
         child: PopupMenuButton(
-
-          icon: Icon(Icons.settings,color: Colors.white,),
+          icon: Icon(
+            Icons.settings,
+            color: Colors.white,
+          ),
           itemBuilder: (BuildContext context) => <PopupMenuEntry>[
             const PopupMenuItem(
               child: ListTile(
-
-                title: Text('Contact professor'  , textAlign: TextAlign.center,),
+                title: Text(
+                  'Contact professor',
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
             const PopupMenuItem(
               child: ListTile(
-
-                title: Text('Share' , textAlign: TextAlign.center),
+                title: Text('Share', textAlign: TextAlign.center),
               ),
             ),
             const PopupMenuItem(
               child: ListTile(
-
-                title: Text('Members' , textAlign: TextAlign.center),
+                title: Text('Members', textAlign: TextAlign.center),
               ),
             ),
             const PopupMenuItem(
               child: ListTile(
-
-                title: Text('Edit course' , textAlign: TextAlign.center),
+                title: Text('Edit course', textAlign: TextAlign.center),
               ),
             ),
-             const PopupMenuItem(
-               child: ListTile(
-
-                 title: Text('Quit' , textAlign: TextAlign.center, style: TextStyle(
-                   color: Colors.red
-                 ),),
-    ),
-    ),
+            const PopupMenuItem(
+              child: ListTile(
+                title: Text(
+                  'Quit',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+            ),
           ],
         ),
       ),

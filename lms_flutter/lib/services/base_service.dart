@@ -10,6 +10,10 @@ import 'exceptions/bad_request_exception.dart';
 import 'exceptions/not_found_exception.dart';
 import 'exceptions/unknown_exception.dart';
 
+//TODO: Passage de http vers dio
+/// Classe abstraite qui définit un service qui utilise le web <br />
+/// Elle définit des méthodes de bases pour la gestion des exceptions
+/// et le chargement des headers (content-type, authorization)
 abstract class BaseService {
   SharedPreferences sharedPreferences;
   String token;

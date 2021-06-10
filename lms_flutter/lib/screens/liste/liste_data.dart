@@ -82,9 +82,7 @@ class _ListeDataState<T> extends State<ListeData<T>> {
         shrinkWrap: this.widget.shrinkWrap,
         reverse: this.widget.reverse,
         controller: scrollController,
-        children: this.widget.reverse
-            ? modele.listeWidgets.toList()
-            : modele.listeWidgets.toList());
+        children: modele.listeWidgets.toList());
   }
 
   void addData() {

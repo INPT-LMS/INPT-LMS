@@ -11,8 +11,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'exceptions/network_exception.dart';
 
-class AuthService extends BaseService {
-  AuthService(SharedPreferences sharedPreferences, http.Client client)
+///Service chargé de la connexion et de l'inscription <br />
+///Il gère les tokens et les informations utilisateur
+class CompteService extends BaseService {
+  CompteService(SharedPreferences sharedPreferences, http.Client client)
       : super(sharedPreferences, client);
 
   Future<bool> login(String email, String password) {
@@ -28,9 +30,7 @@ class AuthService extends BaseService {
       sharedPreferences.setString("userToken", body["token"]);
 
       return getUserInfos(userId);
-    }).then((response) {
-      var infos =
-          UserInfos.fromJson(jsonDecode(handleException(response))["user"]);
+    }).then((infos) {
       infos.id = userId;
       sharedPreferences.setString("userInfos", jsonEncode(infos));
       return true;
@@ -52,9 +52,12 @@ class AuthService extends BaseService {
     });
   }
 
-  Future<http.Response> getUserInfos(int userId) {
+  Future<UserInfos> getUserInfos(int userId) {
     return client.get(Uri.parse(Consts.URL_GATEWAY + "/account/user/$userId"),
-        headers: <String, String>{"Content-Type": "application/json"});
+        headers: <String, String>{
+          "Content-Type": "application/json"
+        }).then((response) =>
+        UserInfos.fromJson(jsonDecode(handleException(response))["user"]));
   }
 
   bool isLoggedIn() {

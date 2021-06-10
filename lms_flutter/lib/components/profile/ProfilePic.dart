@@ -9,11 +9,7 @@ class ProfilePic extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(
-              color: Colors.white,
-              width: 3
-          )
-      ),
+          border: Border.all(color: Colors.white, width: 3)),
       child: CircleAvatar(
         radius: 60,
         backgroundImage: AssetImage("images/pic.jpg"),

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:lms_flutter/model/user_infos.dart';
-import 'package:lms_flutter/services/auth_service.dart';
+import 'package:lms_flutter/services/compte_service.dart';
 import 'package:lms_flutter/services/exceptions/unknown_exception.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +27,7 @@ void main() {
 
     client = MockClient();
 
-    authService = AuthService(sharedPref, client);
+    authService = CompteService(sharedPref, client);
   });
 
   test("Should authenticate correctly", () async {
