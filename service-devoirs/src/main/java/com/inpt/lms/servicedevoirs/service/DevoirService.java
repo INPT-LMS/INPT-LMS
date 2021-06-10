@@ -1,7 +1,6 @@
 package com.inpt.lms.servicedevoirs.service;
 
 import com.inpt.lms.servicedevoirs.dto.DevoirDTO;
-import com.inpt.lms.servicedevoirs.dto.DevoirReponseDTO;
 import com.inpt.lms.servicedevoirs.dto.NoteDTO;
 import com.inpt.lms.servicedevoirs.exception.DevoirNotFoundException;
 import com.inpt.lms.servicedevoirs.exception.DevoirReponseNotFoundException;
@@ -16,6 +15,7 @@ import com.inpt.lms.servicedevoirs.repository.DevoirReponseRepository;
 import com.inpt.lms.servicedevoirs.repository.DevoirRepository;
 import com.inpt.lms.servicedevoirs.repository.FichierRepository;
 import lombok.AllArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -103,11 +103,16 @@ public class DevoirService {
             throw new IllegalAccessError("You cannot perform this action");
         }
 
-        Fichier f = null;
+        Fichier f = new Fichier();
         DevoirReponse devoirReponse = null;
         try {
-            String s = stockageProxy.uploadReponseDevoir(fichier, userId, idDevoir);
-            System.out.println(s);
+            String resStockage = stockageProxy.uploadReponseDevoir(fichier, userId, idDevoir);
+            JSONObject file = new JSONObject(resStockage);
+            JSONObject fileInfo = file.getJSONObject("fichierInfo");
+            f.setId(file.get("id").toString());
+            f.setNom(fileInfo.getString("nom"));
+
+            System.out.println(f);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -117,21 +122,13 @@ public class DevoirService {
 
             devoirReponse = devoir.getReponses().stream().filter(d -> d.getId().equals(renduId)).findFirst().orElseThrow(() -> new DevoirReponseNotFoundException("Rendu introuvable"));
 
-            f = devoirReponse.getFichier();
-//            f.setNom(devoirReponseDTO.getNomFichier());
         } catch (DevoirReponseNotFoundException e) {
 
             devoirReponse = new DevoirReponse();
-
-            f = new Fichier();
-//            f.setNom(devoirReponseDTO.getNomFichier());
-
-
             devoir.getReponses().add(devoirReponse);
-
+        } finally {
             devoirReponse.setFichier(f);
             devoirReponse.setIdProprietaire(userId);
-        } finally {
             devoirReponse.setNote(0);
             devoirReponse.setEstNote(false);
             devoirReponse.setDateRendu(new Date());

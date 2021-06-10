@@ -11,7 +11,6 @@ import org.springframework.data.annotation.Id;
 @Data
 @ToString
 public class Fichier {
-    @Id
     private String id;
     private String nom;
 }
