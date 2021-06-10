@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 @FeignClient(name = "stockage", url = "${inpt.lms.url.service.stockage}")
 @RequestMapping(path = "/storage")
 public interface StockageProxy {
-    @PostMapping(value = "admin/assignment/{devoirId}", consumes = "multipart/form-data")
-    String uploadReponseDevoir(@RequestParam(value = "fichier") MultipartFile fichier,
+    @PostMapping(path = "admin/assignment/{devoirId}", consumes = "multipart/form-data")
+    String uploadReponseDevoir(@RequestPart MultipartFile fichier,
                                @RequestHeader(name = "X-USER-ID") long userId, @PathVariable String devoirId);
 }
