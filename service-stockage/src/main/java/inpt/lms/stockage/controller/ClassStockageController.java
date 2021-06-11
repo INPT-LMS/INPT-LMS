@@ -33,10 +33,9 @@ import inpt.lms.stockage.proxies.ProxyUnavailableException;
 import inpt.lms.stockage.util.ControllerResponseUtils;
 
 @RestController
-@RequestMapping(path = "/storage/class", produces = "application/json",
-consumes = "application/json")
+@RequestMapping(path = "/storage/class")
 public class ClassStockageController {
-	@Value("${inpt.lms.stockage.max-size}")
+	@Value("${inpt.lms.stockage.max-file-size}")
 	protected long maxSize;
 	@Autowired
 	protected GestionnaireFichier gestionnaireFichier;

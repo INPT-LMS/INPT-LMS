@@ -34,12 +34,10 @@ import inpt.lms.stockage.proxies.course.GestionCoursProxy;
 import inpt.lms.stockage.util.ControllerResponseUtils;
 
 @RestController
-@RequestMapping(path = "/storage",
-	produces = "application/json", consumes = "application/json")
+@RequestMapping(path = "/storage")
 public class DevoirStockageController {
-	@Value("${inpt.lms.stockage.max-size}")
+	@Value("${inpt.lms.stockage.max-file-size}")
 	protected long maxSize;
-	protected long maxFileSize = 10485760;
 	@Autowired
 	protected GestionnaireFichier gestionnaireFichier;
 	@Autowired
@@ -54,8 +52,8 @@ public class DevoirStockageController {
 			@RequestHeader(name = "X-USER-ID") long userId,@PathVariable String devoirId)
 			throws IOException, FileTooBigException, InvalidFileTypeException,
 			ProxyUnavailableException {
-		if (fichier.getSize() > maxFileSize)
-			throw new FileTooBigException(maxFileSize);
+		if (fichier.getSize() > maxSize)
+			throw new FileTooBigException(maxSize);
 		ControllerResponseUtils.checkContentType(fichier);
 		
 		String filename = new File(fichier.getOriginalFilename()).getName();
@@ -80,13 +78,25 @@ public class DevoirStockageController {
 	}
 
 	@GetMapping("assignment/{courseId}/{devoirId}")
-	public ResponseEntity<byte[]> getReponseDevoir(@RequestHeader(name = "X-USER-ID") 
+	public ResponseEntity<byte[]> getOwnReponseDevoir(@RequestHeader(name = "X-USER-ID") 
 	long userId,@PathVariable String courseId,@PathVariable String devoirId) 
 			throws NotFoundException, IOException, UnauthorizedException, 
 			ProxyUnavailableException {
 		
 		authService.isDevoirClassMember(devoirId, courseId, userId);
 		Long idAssocDevoir = gestionnaireFichier.getIdAssocReponseDevoir(userId, devoirId);
+		return ControllerResponseUtils.lireFichier(
+				gestionnaireFichier.lireFichier(idAssocDevoir));
+	}
+	
+	@GetMapping("assignment/{courseId}/{devoirId}/{eleveId}")
+	public ResponseEntity<byte[]> getUserReponseDevoir(@RequestHeader(name = "X-USER-ID") 
+	long userId,@PathVariable String courseId,@PathVariable String devoirId,
+	@PathVariable long eleveId) throws NotFoundException, IOException,
+		UnauthorizedException, 	ProxyUnavailableException {
+		
+		authService.isDevoirOwner(devoirId, courseId, userId);
+		Long idAssocDevoir = gestionnaireFichier.getIdAssocReponseDevoir(eleveId, devoirId);
 		return ControllerResponseUtils.lireFichier(
 				gestionnaireFichier.lireFichier(idAssocDevoir));
 	}

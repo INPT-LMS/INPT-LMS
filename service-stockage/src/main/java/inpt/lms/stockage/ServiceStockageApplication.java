@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
@@ -55,5 +56,10 @@ public class ServiceStockageApplication{
 	@Bean
 	public CustomErrorDecoder getErrorDecoder() {
 		return new CustomErrorDecoder();
+	}
+
+	@Bean
+	public ShallowEtagHeaderFilter shallowEtagHeaderFilter() {
+	    return new ShallowEtagHeaderFilter();
 	}
 }
