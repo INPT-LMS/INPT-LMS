@@ -1,15 +1,10 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart' as dio;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:lms_flutter/model/consts.dart';
 import 'package:lms_flutter/model/pagination/pagination_fichier.dart';
 import 'package:lms_flutter/model/stockage/fichier.dart';
 import 'package:lms_flutter/services/base_service.dart';
-import 'package:lms_flutter/services/exceptions/network_exception.dart';
 import 'package:lms_flutter/services/exceptions/no_permission_exception.dart';
 import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
@@ -18,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Service chargé des interactions liées au stockage
 class StockageService extends BaseService {
-  StockageService(SharedPreferences sharedPreferences, Client client)
+  StockageService(SharedPreferences sharedPreferences, dio.Dio client)
       : super(sharedPreferences, client);
 
   String _extractPath(String path) {
@@ -27,55 +22,25 @@ class StockageService extends BaseService {
   }
 
   Future<Fichier> uploadFichier(String url, PlatformFile fichier) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
     var formData = dio.FormData.fromMap({
       'fichier': dio.MultipartFile(fichier.readStream, fichier.size,
           contentType: MediaType.parse(lookupMimeType(fichier.name)),
           filename: fichier.name)
     });
-    var dioClient = dio.Dio(dio.BaseOptions(
-        headers: <String, String>{"Authorization": headers["Authorization"]}));
-    return dioClient
+    return client
         .post(url, data: formData)
         .then((response) => Fichier.fromJson(response.data));
   }
 
-  Future<Fichier> associateFichier(Uri url) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
-    return client.post(url, headers: headers).timeout(
-        Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then(
-        (response) => Fichier.fromJson(jsonDecode(handleException(response))));
+  Future<Fichier> associateFichier(String url) {
+    return client.post(url).then((response) => Fichier.fromJson(response.data));
   }
 
-  Future deleteFichier(Uri url) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
-    return client
-        .delete(url, headers: headers)
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then((response) => handleException(response));
+  Future deleteFichier(String url) {
+    return client.delete(url);
   }
 
-  Future<String> downloadFichier(String url, String filename) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
+  Future<String> downloadFichier(String fullUrl, String filename) {
     return Permission.storage
         .request()
         .then((permissionStatus) {
@@ -83,39 +48,24 @@ class StockageService extends BaseService {
         })
         .then((_) => getExternalStorageDirectory())
         .then((directory) => FlutterDownloader.enqueue(
-            url: url,
-            headers: headers,
+            url: fullUrl,
+            headers: <String, String>{
+              "Authorization": client.options.headers["Authorization"],
+              "Content-type": "application/json; charset=utf-8"
+            },
             savedDir: _extractPath(directory.path),
             showNotification: true,
             openFileFromNotification: true,
             fileName: filename));
   }
 
-  Future<PaginationFichier> getFichiers(Uri url) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
+  Future<PaginationFichier> getFichiers(String url) {
     return client
-        .get(url, headers: headers)
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then((response) =>
-            PaginationFichier.fromJson(jsonDecode(handleException(response))));
+        .get(url)
+        .then((response) => PaginationFichier.fromJson(response.data));
   }
 
   Future<Map<String, dynamic>> getUsedSpace() {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
-    Uri url = Uri.parse(Consts.URL_GATEWAY + "/storage/user/space");
-    return client
-        .get(url, headers: headers)
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then((response) => jsonDecode(handleException(response)));
+    return client.get("/storage/user/space").then((response) => response.data);
   }
 }

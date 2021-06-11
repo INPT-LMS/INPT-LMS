@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
-import 'package:lms_flutter/model/consts.dart';
+import 'package:dio/dio.dart';
 import 'package:lms_flutter/model/pagination/pagination_post.dart';
 import 'package:lms_flutter/model/post/commentaire_data.dart';
 import 'package:lms_flutter/model/post/like_data.dart';
@@ -9,26 +8,14 @@ import 'package:lms_flutter/model/post/post_data.dart';
 import 'package:lms_flutter/services/base_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'exceptions/network_exception.dart';
-
 /// Service chargé des interactions liées aux publications
 class PostService extends BaseService {
-  PostService(SharedPreferences sharedPreferences, http.Client client)
+  PostService(SharedPreferences sharedPreferences, Dio client)
       : super(sharedPreferences, client);
 
   Future<PaginationPost> getFeed() {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
-    Uri url = Uri.parse(Consts.URL_GATEWAY + "/post/publication/cours");
-    return client
-        .get(url, headers: headers)
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then((response) {
-      Map<String, dynamic> listePosts = jsonDecode(handleException(response));
+    return client.get("/post/publication/cours").then((response) {
+      Map<String, dynamic> listePosts = response.data;
       if (listePosts.values.every((element) => (element as List).isEmpty))
         return PaginationPost(true, <PostData>[]);
       List<PostData> content = listePosts.values
@@ -46,19 +33,8 @@ class PostService extends BaseService {
   }
 
   Future<PaginationPost> getPostsCours(String idCours) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
-    Uri url =
-        Uri.parse(Consts.URL_GATEWAY + "/post/publication/cours/$idCours");
-    return client
-        .get(url, headers: headers)
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then((response) {
-      var listePosts = jsonDecode(handleException(response)) as List;
+    return client.get("/post/publication/cours/$idCours").then((response) {
+      var listePosts = response.data as List;
       List<PostData> content =
           listePosts.map<PostData>((item) => PostData.fromJson(item)).toList();
       return PaginationPost(true, content);
@@ -66,102 +42,47 @@ class PostService extends BaseService {
   }
 
   Future<LikeData> addLike(String idPublication) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
-    Uri url = Uri.parse(Consts.URL_GATEWAY + "/post/like");
     return client
-        .post(url,
-            headers: headers,
-            body: jsonEncode(<String, String>{"idPublication": idPublication}))
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then((response) =>
-            LikeData.fromJson(jsonDecode(handleException(response))));
+        .post("/post/like",
+            data: jsonEncode(<String, String>{"idPublication": idPublication}))
+        .then((response) => LikeData.fromJson(response.data));
   }
 
   Future<String> removeLike(String idLike) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
-    Uri url = Uri.parse(Consts.URL_GATEWAY + "/post/like/$idLike");
     return client
-        .delete(url, headers: headers)
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then((response) => handleException(response));
+        .delete("/post/like/$idLike")
+        .then((response) => response.data.toString());
   }
 
   Future<PostData> addPost(String idCours, String contenu) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
-    Uri url = Uri.parse(Consts.URL_GATEWAY + "/post/publication");
     return client
-        .post(url,
-            headers: headers,
-            body: jsonEncode(<String, String>{
+        .post("/post/publication",
+            data: jsonEncode(<String, String>{
               "idCours": idCours,
               "contenuPublication": contenu
             }))
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then((response) =>
-            PostData.fromJson(jsonDecode(handleException(response))));
+        .then((response) => PostData.fromJson(response.data));
   }
 
   Future<String> removePost(String idPost) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
-    Uri url = Uri.parse(Consts.URL_GATEWAY + "/post/publication/$idPost");
     return client
-        .delete(url, headers: headers)
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then((response) => handleException(response));
+        .delete("/post/publication/$idPost")
+        .then((response) => response.data.toString());
   }
 
   Future<CommentaireData> addCommentaire(String idPublication, String contenu) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
-    Uri url = Uri.parse(Consts.URL_GATEWAY + "/post/commentaire");
     return client
-        .post(url,
-            headers: headers,
-            body: jsonEncode(<String, String>{
+        .post("/post/commentaire",
+            data: jsonEncode(<String, String>{
               "idPublication": idPublication,
               "contenuCommentaire": contenu
             }))
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then((response) =>
-            CommentaireData.fromJson(jsonDecode(handleException(response))));
+        .then((response) => CommentaireData.fromJson(response.data));
   }
 
   Future<String> removeCommentaire(String idCommentaire) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
-    Uri url =
-        Uri.parse(Consts.URL_GATEWAY + "/post/commentaire/$idCommentaire");
     return client
-        .delete(url, headers: headers)
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then((response) => handleException(response));
+        .delete("/post/commentaire/$idCommentaire")
+        .then((response) => response.data.toString());
   }
 }

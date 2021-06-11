@@ -104,9 +104,9 @@ class Post extends StatelessWidget {
                     var listModele = Provider.of<ListDataModel<PostData>>(
                         context,
                         listen: false);
-                    listModele.deleteWhere((item) => item.id == postData.id);
+                    listModele.deleteWhere(postData.id);
                   }).catchError((e) {
-                    showDefaultErrorMessage(context, e);
+                    showDefaultErrorMessage(context, e.response.statusCode);
                   });
                 });
               }),

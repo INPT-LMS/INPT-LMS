@@ -1,31 +1,22 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
-import 'package:lms_flutter/model/consts.dart';
+import 'package:dio/dio.dart';
 import 'package:lms_flutter/model/user_infos.dart';
 import 'package:lms_flutter/model/user_register_form.dart';
 import 'package:lms_flutter/services/base_service.dart';
-import 'package:lms_flutter/services/exceptions/authentication_exception.dart';
-import 'package:lms_flutter/services/exceptions/not_found_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'exceptions/network_exception.dart';
 
 ///Service chargé de la connexion et de l'inscription <br />
 ///Il gère les tokens et les informations utilisateur
 class CompteService extends BaseService {
-  CompteService(SharedPreferences sharedPreferences, http.Client client)
+  CompteService(SharedPreferences sharedPreferences, Dio client)
       : super(sharedPreferences, client);
 
   Future<bool> login(String email, String password) {
     int userId;
-    return client
-        .post(Uri.parse(Consts.URL_GATEWAY + "/account/auth"),
-            headers: <String, String>{"Content-Type": "application/json"},
-            body: jsonEncode(
-                <String, String>{"email": email, "password": password}))
-        .then((response) {
-      var body = jsonDecode(handleException(response))["user"];
+    return client.post("/account/auth",
+        data: {"email": email, "password": password}).then((response) {
+      var body = response.data["user"];
       userId = body["id"];
       sharedPreferences.setString("userToken", body["token"]);
 
@@ -36,28 +27,21 @@ class CompteService extends BaseService {
       return true;
     }).onError((error, stackTrace) {
       sharedPreferences.remove("userToken");
-      return error is AuthenticationException || error is NotFoundException
+      var statusCode = (error as DioError).response.statusCode;
+      return statusCode == 400 || statusCode == 404
           ? false
           : Future<bool>.error(error);
     });
   }
 
-  Future<http.Response> register(UserRegisterForm form) {
-    return client
-        .post(Uri.parse(Consts.URL_GATEWAY + "/account/register"),
-            headers: <String, String>{"Content-Type": "application/json"},
-            body: jsonEncode(form))
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    });
+  Future register(UserRegisterForm form) {
+    return client.post("/account/register", data: form.toJson());
   }
 
   Future<UserInfos> getUserInfos(int userId) {
-    return client.get(Uri.parse(Consts.URL_GATEWAY + "/account/user/$userId"),
-        headers: <String, String>{
-          "Content-Type": "application/json"
-        }).then((response) =>
-        UserInfos.fromJson(jsonDecode(handleException(response))["user"]));
+    return client
+        .get("/account/user/$userId")
+        .then((response) => UserInfos.fromJson(response.data["user"]));
   }
 
   bool isLoggedIn() {
@@ -68,6 +52,10 @@ class CompteService extends BaseService {
   UserInfos getUserLoggedInfos() {
     return UserInfos.fromJson(
         jsonDecode(sharedPreferences.getString("userInfos")));
+  }
+
+  String getUserToken() {
+    return sharedPreferences.getString("userToken");
   }
 
   void logout() {

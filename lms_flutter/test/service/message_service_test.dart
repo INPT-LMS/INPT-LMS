@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:lms_flutter/model/discussion/discussion_data.dart';
@@ -53,4 +54,4 @@ void main() {
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
-class MockClient extends Mock implements http.Client {}
+class MockClient extends Mock implements Dio {}

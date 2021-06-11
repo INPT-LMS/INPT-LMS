@@ -86,8 +86,9 @@ class _AddPostState extends State<AddPost> {
                                 listen: false)
                             .addFirst(post))
                         .catchError((e) {
-                      showDefaultErrorMessage(context, e);
+                      showDefaultErrorMessage(context, e.response.statusCode);
                     });
+                    controller.clear();
                   },
                   child: Text("Ajouter"),
                   style: ElevatedButton.styleFrom(

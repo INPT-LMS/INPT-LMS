@@ -41,7 +41,7 @@ class _CoursePageState extends State<CoursePage> {
     var idCours = ModalRoute.of(context).settings.arguments as String;
     if (courseData == null)
       courseData = courseService.getCours(idCours).catchError((e) {
-        showDefaultErrorMessage(context, e);
+        showDefaultErrorMessage(context, e.response.statusCode);
       });
     return BaseScaffoldAppBar(
         body: FutureBuilder<CourseData>(
@@ -78,7 +78,10 @@ class _CoursePageState extends State<CoursePage> {
                       ),
                       ChangeNotifierProvider(
                         create: (context) => ListDataModel<PostData>(
-                            (postData) => Post(postData),
+                            (postData) => Post(
+                                  postData,
+                                  key: UniqueKey(),
+                                ),
                             (postData) => postData.id),
                         child: Column(
                           children: [

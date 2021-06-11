@@ -24,7 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return BaseScaffoldAppBar(
         body: ChangeNotifierProvider(
             create: (context) => ListDataModel<PostData>(
-                (postData) => Post(postData), (postData) => postData.id),
+                (postData) => Post(postData, key: Key(postData.id)),
+                (postData) => postData.id),
             child: ListeData<PostData>(PostListService(postService), false)));
   }
 }

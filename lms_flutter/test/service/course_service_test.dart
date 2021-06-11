@@ -1,11 +1,11 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:lms_flutter/model/course/course_data.dart';
 import 'package:lms_flutter/model/course/visibility_data.dart';
 import 'package:lms_flutter/services/course_service.dart';
-import 'package:lms_flutter/services/exceptions/authentication_exception.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -61,4 +61,4 @@ void main() {
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
-class MockClient extends Mock implements http.Client {}
+class MockClient extends Mock implements Dio {}

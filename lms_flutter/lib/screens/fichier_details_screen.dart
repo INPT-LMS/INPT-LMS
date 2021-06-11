@@ -1,6 +1,7 @@
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +9,6 @@ import 'package:lms_flutter/model/consts.dart';
 import 'package:lms_flutter/model/stockage/fichier.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 import 'package:lms_flutter/screens/utils.dart';
-import 'package:lms_flutter/services/exceptions/not_found_exception.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:lms_flutter/services/stockage_service.dart';
 
@@ -56,17 +56,17 @@ class _FichierDetailsScreenState extends State<FichierDetailsScreen> {
                   askConfirmation(context).then((value) {
                     if (value == true)
                       stockageService
-                          .deleteFichier(Uri.parse(Consts.URL_GATEWAY +
-                              "/storage/user/files/${fichier.id}"))
+                          .deleteFichier("/storage/user/files/${fichier.id}")
                           .then((value) {
                         showSnackbar(context, "Fichier supprimé");
                         Navigator.pop(context, fichier.id);
                       }).catchError((e) {
-                        if (e is NotFoundException) {
+                        if ((e as DioError).response.statusCode == 400) {
                           showSnackbar(context, "Fichier non trouvé");
                           Navigator.pop(context, fichier.id);
                         } else {
-                          showDefaultErrorMessage(context, e);
+                          showDefaultErrorMessage(
+                              context, e.response.statusCode);
                         }
                       });
                   });

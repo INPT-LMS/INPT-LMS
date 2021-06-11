@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
 import 'package:lms_flutter/model/user_infos.dart';
 import 'package:lms_flutter/services/compte_service.dart';
 import 'package:lms_flutter/services/exceptions/unknown_exception.dart';
@@ -29,11 +29,9 @@ void main() {
 
     authService = CompteService(sharedPref, client);
   });
-
   test("Should authenticate correctly", () async {
-    when(client.post(any, headers: anyNamed("headers"), body: anyNamed("body")))
-        .thenAnswer((invoc) => Future(() => http.Response(
-            jsonEncode(loginResponse), 200,
+    when(client.post(any, data: anyNamed("data"))).thenAnswer((invoc) => Future(
+        () => Response(jsonEncode(loginResponse), 200,
             headers: <String, String>{"Content-Type": "application/json"})));
     when(client.get(any, headers: anyNamed("headers"))).thenAnswer((invoc) =>
         Future(() => http.Response(jsonEncode(infosResponse), 200,
@@ -50,8 +48,8 @@ void main() {
   });
 
   test("Should fail login", () async {
-    when(client.post(any, headers: anyNamed("headers"), body: anyNamed("body")))
-        .thenAnswer((invoc) => Future(() => http.Response("", 401,
+    when(client.post(any, data: anyNamed("data"))).thenAnswer((invoc) => Future(
+        () => http.Response("", 401,
             headers: <String, String>{"Content-Type": "application/json"})));
 
     var future = authService.login("email", "password");
@@ -64,8 +62,8 @@ void main() {
   });
 
   test("Should throw unknown exception", () async {
-    when(client.post(any, headers: anyNamed("headers"), body: anyNamed("body")))
-        .thenAnswer((invoc) => Future(() => http.Response("", 500,
+    when(client.post(any, data: anyNamed("data"))).thenAnswer((invoc) => Future(
+        () => http.Response("", 500,
             headers: <String, String>{"Content-Type": "application/json"})));
 
     var future = authService.login("email", "password");
@@ -76,4 +74,4 @@ void main() {
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
-class MockClient extends Mock implements http.Client {}
+class MockClient extends Mock implements Dio {}

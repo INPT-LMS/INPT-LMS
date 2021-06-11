@@ -10,9 +10,8 @@ class FichierListService extends DataService<Fichier> {
 
   @override
   Future<DataWrapper<Fichier>> addData(int n, int p) {
-    Uri url = Uri.parse("$baseUrl?page=$p&size=$n");
     return stockageService
-        .getFichiers(url)
+        .getFichiers("$baseUrl?page=$p&size=$n")
         .then((value) => DataWrapper(value.last, value.content));
   }
 }

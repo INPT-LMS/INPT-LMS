@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:lms_flutter/services/exceptions/authentication_exception.dart';
-import 'package:lms_flutter/services/exceptions/forbidden_exception.dart';
-import 'package:lms_flutter/services/exceptions/network_exception.dart';
 
 showSnackbar(BuildContext context, String texte) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(texte)));
 }
 
-showDefaultErrorMessage(BuildContext context, Exception e) {
-  if (e is ForbiddenException) {
-    showSnackbar(context, "Erreur : vous n'avez pas le droit de faire ceci");
-  } else if (e is AuthenticationException)
-    showSnackbar(context,
-        "Erreur d'authentification : veuillez vous reconnecter et reessayer");
-  else if (e is NetworkException)
-    showSnackbar(
-        context, "Le serveur n'a pas répondu, veuillez ressayer plus tard");
-  else
-    showSnackbar(
-        context, "Une erreur s'est produite, veuillez ressayer plus tard");
+showDefaultErrorMessage(BuildContext context, int statusCode) {
+  switch (statusCode) {
+    case 401:
+      showSnackbar(context,
+          "Erreur d'authentification : veuillez vous reconnecter et reessayer");
+      break;
+    case 403:
+      showSnackbar(context, "Erreur : vous n'avez pas le droit de faire ceci");
+      break;
+    default:
+      showSnackbar(
+          context, "Une erreur s'est produite, veuillez ressayer plus tard");
+  }
 }
 
-Future askConfirmation(BuildContext context) {
+Future askConfirmation(BuildContext context,
+    {String texte = 'Etes-vous sûr de vouloir faire cette action ?'}) {
   return showDialog(
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Etes-vous sûr de vouloir faire cette action ?'),
+          title: Text(texte),
           actions: [
             TextButton(
               onPressed: () {

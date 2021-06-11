@@ -263,7 +263,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             break;
                         }
                       }).catchError((e) {
-                        showDefaultErrorMessage(context, e);
+                        showDefaultErrorMessage(context, e.response.statusCode);
                       });
                     }
                   },

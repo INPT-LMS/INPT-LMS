@@ -50,7 +50,7 @@ class _LikeCommentState extends State<LikeComment> {
               (element) => element.commentaireData.id == idComment);
         });
       }).catchError((e) {
-        showDefaultErrorMessage(context, e);
+        showDefaultErrorMessage(context, e.response.statusCode);
       });
     };
     commentaires = commentairesData
@@ -96,7 +96,7 @@ class _LikeCommentState extends State<LikeComment> {
                           0, Comment(commentaireData, removeComment));
                     });
                   }).catchError((e) {
-                    showDefaultErrorMessage(context, e);
+                    showDefaultErrorMessage(context, e.response.statusCode);
                   });
                   controller.clear();
                 })));
@@ -144,7 +144,7 @@ class _LikeCommentState extends State<LikeComment> {
           isLikeDisabled = false;
         });
       }).catchError((e) {
-        showDefaultErrorMessage(context, e);
+        showDefaultErrorMessage(context, e.response.statusCode);
         setState(() {
           isLikeDisabled = true;
         });
@@ -157,7 +157,7 @@ class _LikeCommentState extends State<LikeComment> {
           isLikeDisabled = false;
         });
       }).catchError((e) {
-        showDefaultErrorMessage(context, e);
+        showDefaultErrorMessage(context, e.response.statusCode);
         setState(() {
           isLikeDisabled = true;
         });

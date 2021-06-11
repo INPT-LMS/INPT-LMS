@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -19,22 +20,29 @@ import 'package:lms_flutter/screens/liste_discussion_screen.dart';
 import 'package:lms_flutter/screens/stockage_sac_screen.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/services/compte_service.dart';
+import 'package:lms_flutter/services/dio_client.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterDownloader.initialize(debug: true);
-  setup();
+  await FlutterDownloader.initialize();
+
+  setupServices();
   await getIt.allReady();
+
   await initializeDateFormatting('fr_FR', null);
+
   var compteService = getIt.get<CompteService>();
+  var isLoggedIn = compteService.isLoggedIn();
+  if (isLoggedIn)
+    setupDioClient(getIt.get<Dio>(), compteService.getUserToken());
   InfosModel modele = InfosModel(
-      compteService.isLoggedIn() ? compteService.getUserLoggedInfos() : null,
+      isLoggedIn ? compteService.getUserLoggedInfos() : null,
       await Connectivity().checkConnectivity());
   runApp(MultiProvider(
       providers: [ChangeNotifierProvider.value(value: modele)],
-      child: MyApp(compteService.isLoggedIn() ? "/home" : "/login")));
+      child: MyApp(isLoggedIn ? "/home" : "/login")));
 }
 
 class MyApp extends StatefulWidget {

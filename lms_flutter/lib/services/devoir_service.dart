@@ -1,33 +1,17 @@
-import 'dart:convert';
-
-import 'package:http/http.dart';
-import 'package:lms_flutter/model/consts.dart';
+import 'package:dio/dio.dart';
 import 'package:lms_flutter/model/devoir/devoir_data.dart';
 import 'package:lms_flutter/model/pagination/pagination_devoir.dart';
 import 'package:lms_flutter/services/base_service.dart';
-import 'package:lms_flutter/services/exceptions/bad_request_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'exceptions/network_exception.dart';
 
 /// Service chargé des interactions liées aux devoirs
 class DevoirService extends BaseService {
-  DevoirService(SharedPreferences sharedPreferences, Client client)
+  DevoirService(SharedPreferences sharedPreferences, Dio client)
       : super(sharedPreferences, client);
 
   Future<PaginationDevoir> getDevoirsCours(String idCours) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
-    Uri url = Uri.parse(Consts.URL_GATEWAY + "/assignment/devoirs/$idCours");
-    return client
-        .get(url, headers: headers)
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then((response) {
-      var listeDevoirs = jsonDecode(handleException(response)) as List;
+    return client.get("/assignment/devoirs/$idCours").then((response) {
+      var listeDevoirs = response.data as List;
       List<DevoirData> content = listeDevoirs
           .map<DevoirData>((item) => DevoirData.fromJson(item))
           .toList();
@@ -36,21 +20,10 @@ class DevoirService extends BaseService {
   }
 
   Future<DevoirData> getDevoir(String idCours, String idDevoir) {
-    try {
-      loadToken();
-    } catch (e) {
-      return Future.error(e);
-    }
-    Uri url = Uri.parse(
-        Consts.URL_GATEWAY + "/assignment/devoirs/$idCours/$idDevoir");
     return client
-        .get(url, headers: headers)
-        .timeout(Duration(seconds: Consts.TIMEOUT_REQUEST), onTimeout: () {
-      throw NetworkException();
-    }).then((response) {
-      var devoirString = handleException(response);
-      if (devoirString.isEmpty) throw BadRequestException("No devoir found");
-      return DevoirData.fromJson(jsonDecode(devoirString));
+        .get("/assignment/devoirs/$idCours/$idDevoir")
+        .then((response) {
+      return DevoirData.fromJson(response.data);
     });
   }
 }

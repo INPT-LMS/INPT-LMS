@@ -11,7 +11,6 @@ import 'package:lms_flutter/screens/utils.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/screens/view_models/liste_data_model.dart';
 import 'package:lms_flutter/services/data_list/message_list_service.dart';
-import 'package:lms_flutter/services/exceptions/bad_request_exception.dart';
 import 'package:lms_flutter/services/message_service.dart';
 import 'package:provider/provider.dart';
 
@@ -102,13 +101,13 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
       Provider.of<ListDataModel<MessageData>>(context, listen: false)
           .addFirst(message);
     }).catchError((error) {
-      if (error is BadRequestException)
+      if (error.response.status == 400)
         showSnackbar(
             context,
             "Impossible d'envoyer un message à cet utilisateur : "
             "il est invalide ou n'existe pas");
       else
-        showDefaultErrorMessage(context, error);
+        showDefaultErrorMessage(context, error.response.statusCode);
     });
     messageController.clear();
   }

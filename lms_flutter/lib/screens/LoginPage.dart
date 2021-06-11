@@ -1,7 +1,9 @@
 import 'package:connectivity/connectivity.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/screens/utils.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
+import 'package:lms_flutter/services/dio_client.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
@@ -112,13 +114,15 @@ class _LoginPageState extends State<LoginPage> {
                       if (isOk) {
                         Provider.of<InfosModel>(context, listen: false)
                             .userInfos = compteService.getUserLoggedInfos();
+                        setupDioClient(
+                            getIt.get<Dio>(), compteService.getUserToken());
                         Navigator.of(context).pushNamedAndRemoveUntil(
                             '/home', (Route<dynamic> route) => false);
                       } else
                         showSnackbar(
                             context, "Email ou mot de passe incorrect");
                     }).catchError((e) {
-                      showDefaultErrorMessage(context, e);
+                      showDefaultErrorMessage(context, e.response.statusCode);
                     });
                   },
                   child: Text(

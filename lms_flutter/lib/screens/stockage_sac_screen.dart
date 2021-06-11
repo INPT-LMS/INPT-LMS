@@ -1,7 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/stockage/fichier_resume.dart';
-import 'package:lms_flutter/model/consts.dart';
 import 'package:lms_flutter/model/stockage/fichier.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 import 'package:lms_flutter/screens/utils.dart';
@@ -69,8 +69,8 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
                       child: Text("Ajouter un fichier"),
                       onPressed: () => uploadFichier(context)))),
           ListeData<Fichier>(
-              FichierListService(getIt.get<StockageService>(),
-                  Consts.URL_GATEWAY + "/storage/user/files"),
+              FichierListService(
+                  getIt.get<StockageService>(), "/storage/user/files"),
               false,
               shrinkWrap: true)
         ]);
@@ -84,14 +84,32 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
         .then((result) {
       if (result.isSinglePick)
         stockageService
-            .uploadFichier(
-                Consts.URL_GATEWAY + "/storage/user/upload", result.files[0])
+            .uploadFichier("/storage/user/upload", result.files[0])
             .then((fichier) {
           updateSize(fichier.fichierInfo.size);
           Provider.of<ListDataModel<Fichier>>(context, listen: false)
               .addFirst(fichier);
           showSnackbar(context, "Fichier enregistrée dans le sac !");
-        }).catchError((e) => showSnackbar(context, "Une erreur est survenue"));
+        }).catchError((e) {
+          if (e.response.statusCode == 400) {
+            var reason = (e as DioError).response.data.toString();
+            if (reason.contains("No space left"))
+              showSnackbar(
+                  context,
+                  "Pas assez d'espace de stockage pour "
+                  "téléverser ce fichier");
+            else if (reason.contains("max size"))
+              showSnackbar(context, "Ce fichier est trop grand");
+            else if (reason.contains("but got"))
+              showSnackbar(
+                  context,
+                  "Le contenu du fichier et son extension "
+                  "ne correspondent pas");
+            else
+              showSnackbar(context, "Une erreur est survenue");
+          } else
+            showSnackbar(context, e.response.statusCode);
+        });
     });
   }
 

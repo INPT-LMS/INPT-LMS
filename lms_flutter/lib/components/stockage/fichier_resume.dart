@@ -23,7 +23,7 @@ class FichierResume extends StatelessWidget {
             .then((value) {
           if (value == null) return;
           Provider.of<ListDataModel<Fichier>>(context, listen: false)
-              .deleteWhere((item) => item.id == fichier.id);
+              .deleteWhere(fichier.id);
           if (onDelete != null) this.onDelete(fichier);
         });
       },
