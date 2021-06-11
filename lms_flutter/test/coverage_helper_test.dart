@@ -13,8 +13,6 @@ import 'package:lms_flutter/components/profile/CoverPic.dart';
 import 'package:lms_flutter/components/profile/ProfileCourseSection.dart';
 import 'package:lms_flutter/components/profile/ProfilePic.dart';
 import 'package:lms_flutter/components/stockage/fichier_resume.dart';
-// ignore_for_file: unused_import
-import 'package:lms_flutter/generated_plugin_registrant.dart';
 import 'package:lms_flutter/main.dart';
 import 'package:lms_flutter/mock_components/CoursePageStatique.dart';
 import 'package:lms_flutter/mock_components/mock_home_screen.dart';
@@ -39,6 +37,8 @@ import 'package:lms_flutter/model/post/like_data.dart';
 import 'package:lms_flutter/model/post/post_data.dart';
 import 'package:lms_flutter/model/stockage/fichier.dart';
 import 'package:lms_flutter/model/stockage/fichier_info.dart';
+// ignore_for_file: unused_import
+
 import 'package:lms_flutter/model/user_infos.dart';
 import 'package:lms_flutter/model/user_register_form.dart';
 import 'package:lms_flutter/screens/CoursePage.dart';
@@ -68,6 +68,9 @@ import 'package:lms_flutter/services/data_list/message_list_service.dart';
 import 'package:lms_flutter/services/data_list/post_cours_list_service.dart';
 import 'package:lms_flutter/services/data_list/post_list_service.dart';
 import 'package:lms_flutter/services/devoir_service.dart';
+import 'package:lms_flutter/services/dio_client.dart';
+import 'package:lms_flutter/services/exceptions/authentication_exception.dart';
+import 'package:lms_flutter/services/exceptions/forbidden_exception.dart';
 import 'package:lms_flutter/services/exceptions/no_permission_exception.dart';
 import 'package:lms_flutter/services/message_service.dart';
 import 'package:lms_flutter/services/post_service.dart';

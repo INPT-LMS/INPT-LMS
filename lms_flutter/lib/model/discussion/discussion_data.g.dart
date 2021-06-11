@@ -29,6 +29,6 @@ Map<String, dynamic> _$DiscussionDataToJson(DiscussionData instance) =>
       'idParticipant1': instance.idParticipant1,
       'nomParticipant2': instance.nomParticipant2,
       'idParticipant2': instance.idParticipant2,
-      'lastMessage': instance.lastMessage,
+      'lastMessage': instance.lastMessage?.toJson(),
       'lastUpdate': instance.lastUpdate?.toIso8601String(),
     };

@@ -32,7 +32,7 @@ Map<String, dynamic> _$DevoirDataToJson(DevoirData instance) =>
       'idCours': instance.idCours,
       'idProprietaire': instance.idProprietaire,
       'type': instance.type,
-      'devoirInfos': instance.devoirInfos,
-      'reponses': instance.reponses,
+      'devoirInfos': instance.devoirInfos?.toJson(),
+      'reponses': instance.reponses?.map((e) => e?.toJson())?.toList(),
       'dateLimite': instance.dateLimite?.toIso8601String(),
     };

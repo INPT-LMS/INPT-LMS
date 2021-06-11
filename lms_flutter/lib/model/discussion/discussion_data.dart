@@ -3,7 +3,7 @@ import 'package:lms_flutter/model/discussion/message_data.dart';
 
 part 'discussion_data.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class DiscussionData {
   String id;
   String nomParticipant1;

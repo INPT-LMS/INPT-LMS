@@ -31,7 +31,7 @@ Map<String, dynamic> _$CourseDataToJson(CourseData instance) =>
       'courseName': instance.courseName,
       'courseDescription': instance.courseDescription,
       'imageURL': instance.imageURL,
-      'visibility': instance.visibility,
-      'owner': instance.owner,
-      'students': instance.students,
+      'visibility': instance.visibility?.toJson(),
+      'owner': instance.owner?.toJson(),
+      'students': instance.students?.map((e) => e?.toJson())?.toList(),
     };

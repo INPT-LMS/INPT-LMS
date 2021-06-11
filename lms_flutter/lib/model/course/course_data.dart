@@ -6,7 +6,7 @@ import 'member.dart';
 
 part 'course_data.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class CourseData {
   String courseID;
   String courseName;

@@ -5,7 +5,7 @@ import 'devoir_reponse_data.dart';
 
 part 'devoir_data.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class DevoirData {
   String id;
   String idCours;

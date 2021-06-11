@@ -33,6 +33,6 @@ Map<String, dynamic> _$PostDataToJson(PostData instance) => <String, dynamic>{
       'idCours': instance.idCours,
       'datePublication': instance.datePublication?.toIso8601String(),
       'contenuPublication': instance.contenuPublication,
-      'commentaires': instance.commentaires,
-      'likes': instance.likes,
+      'commentaires': instance.commentaires?.map((e) => e?.toJson())?.toList(),
+      'likes': instance.likes?.map((e) => e?.toJson())?.toList(),
     };

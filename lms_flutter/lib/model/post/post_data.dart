@@ -5,7 +5,7 @@ import 'like_data.dart';
 
 part 'post_data.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class PostData {
   String id;
   int idProprietaire;

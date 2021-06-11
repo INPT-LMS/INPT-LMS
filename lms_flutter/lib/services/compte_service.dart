@@ -25,12 +25,12 @@ class CompteService extends BaseService {
       infos.id = userId;
       sharedPreferences.setString("userInfos", jsonEncode(infos));
       return true;
-    }).onError((error, stackTrace) {
+    }).onError((error, _) {
       sharedPreferences.remove("userToken");
       var statusCode = (error as DioError).response.statusCode;
-      return statusCode == 400 || statusCode == 404
+      return (statusCode == 400 || statusCode == 404)
           ? false
-          : Future<bool>.error(error);
+          : Future.error(error);
     });
   }
 
