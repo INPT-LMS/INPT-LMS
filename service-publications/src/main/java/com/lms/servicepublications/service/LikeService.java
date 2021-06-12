@@ -1,10 +1,12 @@
 package com.lms.servicepublications.service;
+import com.lms.servicepublications.beans.UserInfoBean;
 import com.lms.servicepublications.dto.LikeDTO;
 import com.lms.servicepublications.exceptions.ResourceAlreadyExists;
 import com.lms.servicepublications.exceptions.ResourceNotFoundException;
 import com.lms.servicepublications.exceptions.UnauthorizedException;
 import com.lms.servicepublications.model.Like;
 import com.lms.servicepublications.model.Publication;
+import com.lms.servicepublications.proxies.GestionCompteProxy;
 import com.lms.servicepublications.repository.LikeRepository;
 import com.lms.servicepublications.repository.PublicationRepository;
 import lombok.AllArgsConstructor;
@@ -12,21 +14,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// TODO Vérification de l'identité pour la suppression/Modification
 @Service
 @AllArgsConstructor
 
 public class LikeService {
+    private final GestionCompteProxy gestionCompteProxy;
     private final LikeRepository likeRepository;
     private final PublicationRepository publicationRepository;
 
 
     public Like ajouterLike(Long user_id, LikeDTO likeDTO){
+        UserInfoBean userInfoBean = gestionCompteProxy.getNameById(user_id);
         if(likeRepository.existsByIdProprietaireAndIdPublication(user_id, likeDTO.getIdPublication())) throw new ResourceAlreadyExists("You've already liked this post");
         Publication publication = publicationRepository.findById(likeDTO.getIdPublication()).orElseThrow(()->new ResourceNotFoundException("Publication not found"));
         Like like = new Like();
         like.setIdProprietaire(user_id);
         like.setIdPublication(likeDTO.getIdPublication());
+        like.setNomUser(userInfoBean.getNom());
+        like.setPrenomUser(userInfoBean.getPrenom());
         List<Like> likes = publication.getLikes();
         likes.add(like);
         publication.setLikes(likes);

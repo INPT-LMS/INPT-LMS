@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 
 public class CommentaireDTO {
-
     private String idPublication;
     private String contenuCommentaire;
 }

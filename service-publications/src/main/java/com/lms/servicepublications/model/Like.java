@@ -18,6 +18,8 @@ import java.util.Date;
 public class Like {
     @Id
     private String id;
+    private String nomUser;
+    private String prenomUser;
     private String idPublication;
     @CreatedDate
     private Date dateLike;

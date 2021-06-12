@@ -19,6 +19,8 @@ public class Commentaire {
     @Id
     private String id;
     private String idPublication;
+    private String nomUser;
+    private String prenomUser;
     @CreatedDate
     private Date dateCommentaire;
     private String contenuCommentaire;
