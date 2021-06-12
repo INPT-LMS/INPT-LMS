@@ -25,8 +25,8 @@ public interface AssociationFichierDAO
 	Long deleteByFichierInfo_IdAndTypeAssociation(Long idFichier,
 			TypeAssociation type);
 
-	Page<AssociationFichier> findAllByIdCorrespondantAssociationAndTypeAssociation(String idAssocie,
-			TypeAssociation typeAssociation, Pageable pagination);
+	Page<AssociationFichier> findAllByIdCorrespondantAssociationAndTypeAssociationOrderByFichierInfo_DateCreationDesc(
+			String idAssocie,TypeAssociation typeAssociation, Pageable pagination);
 	
 	boolean existsByIdAndIdCorrespondantAssociationAndTypeAssociation(
 			Long idAssoc, String idAssocie,TypeAssociation typeAssociation);

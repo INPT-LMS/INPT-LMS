@@ -11,6 +11,7 @@ import java.util.zip.ZipOutputStream;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,8 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 	protected AssociationFichierDAO associationFichierDAO;
 	@Autowired
 	protected GestionnaireIOFichier gestionnaireIO;
-	public static final long MAX_SPACE_PER_USER = 25600000; // 50 MiB
+	@Value("${inpt.lms.stockage.max-user-space}")
+	private long maxUserSpace;
 	
 	private void deleteIfPresent(Optional<AssociationFichier> optional) throws IOException {
 		if (optional.isPresent()) {
@@ -164,7 +166,7 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 			String contentType, String nom, long size) 
 					throws StorageLimitExceededException,IOException {
 		long usedSpace = getUsedSpace(idUtilisateur).getUsedSpace();
-		if (usedSpace + size > MAX_SPACE_PER_USER)
+		if (usedSpace + size > getMaxUserSpace())
 			throw new StorageLimitExceededException();
 		
 		return ecrireFichierStockage(idUtilisateur,idUtilisateur.toString(), fichier,
@@ -174,7 +176,7 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 	@Override
 	public Page<AssociationFichier> getListeFichiersAssocies(String idAssocie, TypeAssociation typeAssociation,
 			Pageable pagination) {
-		return associationFichierDAO.findAllByIdCorrespondantAssociationAndTypeAssociation(
+		return associationFichierDAO.findAllByIdCorrespondantAssociationAndTypeAssociationOrderByFichierInfo_DateCreationDesc(
 						idAssocie, typeAssociation, pagination);
 	}
 
@@ -187,7 +189,7 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 	public UsedSpaceWrapper getUsedSpace(Long idUtilisateur) {
 		Long usedSpace = fichierInfoDAO.getUsedSpaceUser(idUtilisateur);
 		// Si l'utilisateur ne possede aucun fichier le resultat sera NULL (au lieu de 0)
-		return new UsedSpaceWrapper(usedSpace == null ? 0 : usedSpace, MAX_SPACE_PER_USER);
+		return new UsedSpaceWrapper(usedSpace == null ? 0 : usedSpace, getMaxUserSpace());
 	}
 	
 	@Override
@@ -306,5 +308,13 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 
 	public void setGestionnaireIO(GestionnaireIOFichier gestionnaireIO) {
 		this.gestionnaireIO = gestionnaireIO;
+	}
+
+	public long getMaxUserSpace() {
+		return maxUserSpace;
+	}
+
+	public void setMaxUserSpace(long maxUserSpace) {
+		this.maxUserSpace = maxUserSpace;
 	}
 }
