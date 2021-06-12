@@ -2,6 +2,7 @@ import { NumberLiteralType } from 'typescript';
 
 export type User = {
   id?: number;
+  fullName?: string;
   nom?: string;
   prenom?: string;
   email?: string;

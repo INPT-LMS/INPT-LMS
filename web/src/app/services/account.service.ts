@@ -73,4 +73,11 @@ export class AccountService {
   deleteUser(userId: number) {
     return this.http.delete(`/account/update/${userId}`).toPromise();
   }
+
+  /**
+   * Chercher un utilisateur par son nom
+   */
+  searchUserByName(userName: string) {
+    return this.http.get(`/account/search?name=${userName}`).toPromise();
+  }
 }

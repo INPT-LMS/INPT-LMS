@@ -33,12 +33,14 @@
       <form [formGroup]="addUserForm" (ngSubmit)="onSubmit($event)">
         <div class="modal-body">
           <div class="form-group">
-            <label> Personne à ajouter </label>
+            <label> Personne à ajouter :</label>
             <input
               type="text"
               class="form-control"
-              placeholder="ID de la personne"
-              formControlName="userId"
+              placeholder="Nom de la personne"
+              formControlName="userName"
+              [ngbTypeahead]="search"
+              #instance="ngbTypeahead"
             />
           </div>
         </div>
