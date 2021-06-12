@@ -22,6 +22,10 @@ public class Visibility implements Serializable{
 		this.visibilityID = visibilityID;
 		this.name = name;
 	}
+	public Visibility(int visibilityID) {
+		this.visibilityID = visibilityID;
+
+	}
 
 	public int getVisibilityID() {
 		return visibilityID;

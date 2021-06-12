@@ -1,6 +1,7 @@
 package inpt.lms.stockage.util;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.apache.tika.config.TikaConfig;
@@ -29,12 +30,7 @@ public class ControllerResponseUtils {
 				.body(fichier.getFichierContenu());
 	}
 	
-	public static void checkContentType( MultipartFile fichier, List<String> supportedTypes) 
-			throws InvalidFileTypeException, IOException {
-		String contentType = fichier.getContentType();
-		if (contentType == null || !(supportedTypes.contains(contentType)))
-			throw new InvalidFileTypeException(supportedTypes);
-		
+	public static String getMimeType(InputStream stream,String filename) throws IOException{
 		TikaConfig tika;
 		try {
 			tika = new TikaConfig();
@@ -43,11 +39,32 @@ public class ControllerResponseUtils {
 		}
 		
 		Metadata metadata = new Metadata();
-		metadata.set(TikaMetadataKeys.RESOURCE_NAME_KEY, fichier.getOriginalFilename());
-		String mimeType = tika.getDetector().detect(
-		        TikaInputStream.get(fichier.getInputStream()), metadata).toString();
+		metadata.set(TikaMetadataKeys.RESOURCE_NAME_KEY, filename);
+		return tika.getDetector().detect(
+		        TikaInputStream.get(stream), metadata).toString();
+	}
+	
+	public static void checkContentType( MultipartFile fichier, List<String> supportedTypes) 
+			throws InvalidFileTypeException, IOException {
+		String contentType = fichier.getContentType();
+		if (contentType == null || !(supportedTypes.contains(contentType)))
+			throw new InvalidFileTypeException(supportedTypes);
+		
+		String mimeType = getMimeType(fichier.getInputStream(), 
+				fichier.getOriginalFilename());
 		
 		if (!supportedTypes.contains(mimeType))
 			throw new InvalidFileTypeException(supportedTypes);
+	}
+	
+	public static void checkContentType(MultipartFile fichier) 
+			throws InvalidFileTypeException, IOException {
+		String contentType = fichier.getContentType();
+	
+		String mimeType = getMimeType(fichier.getInputStream(), 
+				fichier.getOriginalFilename());
+		
+		if (!mimeType.equals("application/octet-stream ") && !mimeType.equals(contentType))
+			throw new InvalidFileTypeException(mimeType,contentType);
 	}
 }

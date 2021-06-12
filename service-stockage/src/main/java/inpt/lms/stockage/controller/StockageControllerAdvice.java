@@ -12,6 +12,7 @@ import inpt.lms.stockage.business.interfaces.exceptions.NotFoundException;
 import inpt.lms.stockage.business.interfaces.exceptions.StorageLimitExceededException;
 import inpt.lms.stockage.controller.exceptions.FileTooBigException;
 import inpt.lms.stockage.controller.exceptions.InvalidFileTypeException;
+import inpt.lms.stockage.controller.exceptions.NoContentException;
 import inpt.lms.stockage.controller.exceptions.UnauthorizedException;
 import inpt.lms.stockage.proxies.ProxyUnavailableException;
 
@@ -61,5 +62,12 @@ public class StockageControllerAdvice {
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	public ResponseEntity<String> handleInvalidFileTypeException(InvalidFileTypeException e){
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(NoContentException.class)
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	public ResponseEntity<String> handleNoContentException(NoContentException e){
+		return new ResponseEntity<>("There is no response to this assignment",
+				HttpStatus.BAD_REQUEST);
 	}
 }

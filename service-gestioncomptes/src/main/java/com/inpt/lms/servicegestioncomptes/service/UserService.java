@@ -15,6 +15,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -23,6 +25,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserInfosRepository userInfosRepository;
     private final JWTUtil jwtUtil;
+
+    public List<User> searchUsers(String name) {
+        List<User> usersList = userRepository.findAllByFullNameContaining(name);
+        return usersList;
+    }
 
     public UserInfosDTO getUserInfos(Long id) throws UserNotFoundException {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
@@ -62,8 +69,9 @@ public class UserService {
         User user = new User();
         user.setEmail(userInfosDTO.getEmail());
         user.setPassword(encryptPassword(userInfosDTO.getPassword()));
-
+        user.setFullName(userInfos.getNom() + " " + userInfos.getPrenom());
         user.setUserInfos(userInfos);
+
         userRepository.save(user);
         userInfosRepository.save(userInfos);
 
@@ -142,4 +150,5 @@ public class UserService {
             throw new BadCredentialsException("Invalid email or password");
         }
     }
+
 }

@@ -42,9 +42,9 @@ class DevoirServiceTest {
     private FichierRepository fichierRepository;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         MockitoAnnotations.openMocks(this);
-        underTest = new DevoirService(devoirRepository,devoirInfosRepository,devoirReponseRepository,fichierRepository);
+        underTest = new DevoirService(devoirRepository, devoirInfosRepository, devoirReponseRepository, fichierRepository);
     }
 
     @Test
@@ -57,7 +57,6 @@ class DevoirServiceTest {
         given(devoirRepository.findById(idDevoir)).willReturn(Optional.of(devoir));
 
         // When
-        // TODO Fix test
         String courseId = null;
         Long userId = null;
         underTest.recupererDevoir(userId, courseId, idDevoir);
@@ -70,7 +69,7 @@ class DevoirServiceTest {
     @DisplayName("Doit récuperer tous les devoirs existants")
     void doitRecupererTousLesDevoirs() {
         // When
-        Long userId=1l;
+        Long userId = 1l;
         String courseId = "";
         underTest.recupererDevoirs(userId, courseId);
 
@@ -82,9 +81,11 @@ class DevoirServiceTest {
     @DisplayName("Doit ajouter un nouveau Devoir et DevoirInfos à partir du DevoirDTO")
     void doitAjouterUnNouveauDevoirEtDevoirInfosAPartirDuDTO() {
         // Given
-        // TODO Fix test
         String courseId = null;
         Long userId = null;
+        Date dateCreation = new Date();
+        Date dateLimite = new Date();
+        dateLimite.setTime(dateLimite.getTime() + 10000);
 
         DevoirDTO devoirDTO = new DevoirDTO();
         devoirDTO.setContenu("Z");
@@ -92,21 +93,23 @@ class DevoirServiceTest {
 
         DevoirInfos devoirInfos = new DevoirInfos();
         devoirInfos.setContenu(devoirDTO.getContenu());
-        devoirInfos.setDateCreation(new Date());
+        devoirInfos.setDateCreation(dateCreation);
+
+        devoirDTO.setDateLimite(dateLimite);
 
         Devoir devoir = new Devoir();
+        devoir.setDateLimite(devoirDTO.getDateLimite());
         devoir.setIdCours(courseId);
         devoir.setType(devoirDTO.getType());
         devoir.setDevoirInfos(devoirInfos);
         devoir.setReponses(new ArrayList<>());
-        devoir.setDevoirInfos(devoirInfos);
 
         // When
         underTest.addDevoir(userId, courseId, devoirDTO);
 
         // Then
         ArgumentCaptor<Devoir> devoirArgumentCaptor = ArgumentCaptor.forClass(Devoir.class);
-        ArgumentCaptor<DevoirInfos> devoirInfosArgumentCaptor= ArgumentCaptor.forClass(DevoirInfos.class);
+        ArgumentCaptor<DevoirInfos> devoirInfosArgumentCaptor = ArgumentCaptor.forClass(DevoirInfos.class);
 
         verify(devoirRepository).save(devoirArgumentCaptor.capture());
         verify(devoirInfosRepository).save(devoirInfosArgumentCaptor.capture());
@@ -114,16 +117,17 @@ class DevoirServiceTest {
         Devoir capturedDevoir = devoirArgumentCaptor.getValue();
         DevoirInfos capturedDevoirInfos = devoirInfosArgumentCaptor.getValue();
 
-        assertThat(capturedDevoir).isEqualTo(devoir);
-        assertThat(capturedDevoirInfos).isEqualTo(devoirInfos);
-        assertThat(capturedDevoirInfos).isEqualTo(devoir.getDevoirInfos());
+        assertThat(capturedDevoir.equals(devoir));
+        assertThat(capturedDevoirInfos.equals(devoirInfos));
+        assertThat(capturedDevoirInfos.equals(devoir.getDevoirInfos()));
     }
 
     @Test
     @DisplayName("Doit rendre un devoir")
     void doitRendreUnDevoir() throws DevoirNotFoundException {
-       // Given
+        // Given
         String idDevoir = any();
+        Long userId = 0l;
 
         DevoirReponseDTO devoirReponseDTO = new DevoirReponseDTO();
         devoirReponseDTO.setNomFichier("Y");
@@ -131,25 +135,31 @@ class DevoirServiceTest {
         Fichier f = new Fichier();
         f.setNom(devoirReponseDTO.getNomFichier());
 
+        Date dateLimite = new Date();
+        dateLimite.setTime(dateLimite.getTime() + 10000);
+
         Devoir devoir = new Devoir();
+        DevoirReponse devoirReponse = new DevoirReponse();
+
         devoir.setReponses(new ArrayList<>());
+        devoir.setDateLimite(dateLimite);
         given(devoirRepository.findById(idDevoir)).willReturn(Optional.of(devoir));
 
-        DevoirReponse devoirReponse = new DevoirReponse();
         devoir.getReponses().add(devoirReponse);
 
         devoirReponse.setFichier(f);
         devoirReponse.setNote(0);
+        devoirReponse.setDateRendu(new Date());
+        devoirReponse.setIdProprietaire(userId);
 
         // When
         // TODO Fix test
-        Long userId = null;
         String courseId = null;
-        underTest.rendreDevoir(userId, courseId, idDevoir,devoirReponseDTO);
+        underTest.rendreDevoir(userId, courseId, idDevoir, devoirReponseDTO);
 
         // Then
         verify(fichierRepository).save(f);
-        verify(devoirReponseRepository).save(devoirReponse);
+        verify(devoirReponseRepository).findDevoirReponseByIdProprietaire(userId);
         verify(devoirRepository).save(devoir);
     }
 
@@ -176,7 +186,7 @@ class DevoirServiceTest {
         // TODO Fix test
         String courseId = null;
         Long userId = null;
-        underTest.noterDevoir(userId, courseId, idDevoir,idReponse,noteDTO);
+        underTest.noterDevoir(userId, courseId, idDevoir, idReponse, noteDTO);
 
         // Then
         verify(devoirReponseRepository).save(devoirReponse);

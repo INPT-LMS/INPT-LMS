@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,11 +24,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import inpt.lms.stockage.business.interfaces.GestionnaireFichier;
+import inpt.lms.stockage.business.interfaces.UsedSpaceWrapper;
 import inpt.lms.stockage.business.interfaces.exceptions.NotFoundException;
 import inpt.lms.stockage.business.interfaces.exceptions.StorageLimitExceededException;
 import inpt.lms.stockage.controller.exceptions.FileTooBigException;
 import inpt.lms.stockage.controller.exceptions.InvalidFileTypeException;
-import inpt.lms.stockage.forms.ParamAssocId;
 import inpt.lms.stockage.model.AssociationFichier;
 import inpt.lms.stockage.model.TypeAssociation;
 import inpt.lms.stockage.util.ControllerResponseUtils;
@@ -59,7 +58,7 @@ public class SacStockageController {
 		return AssociationFichier.masquerProprietes(assoc);
 	}
 
-	@DeleteMapping(path = "picture")
+	@DeleteMapping("picture")
 	public ResponseEntity<String> deletePhotoProfil(@RequestHeader(name = "X-USER-ID") 
 			long userId) throws NotFoundException, IOException {
 		gestionnaireFichier.retraitPhotoProfil(userId);
@@ -72,13 +71,18 @@ public class SacStockageController {
 		return ControllerResponseUtils.lireFichier(gestionnaireFichier.lireFichier(idAssocPhoto));
 	}
 
-	// FIXME : Desactivation temporaire de la route en attendant une meilleure
-	// méthode d'autorisation
-	// @PostMapping("files")
-	@JsonView(AssociationFichier.Public.class)
-	public AssociationFichier ajoutFichierSac(@RequestBody ParamAssocId assocId,
-			@RequestHeader(name = "X-USER-ID") long userId) throws NotFoundException {
-		return gestionnaireFichier.ajoutDansSac(userId, assocId.getAssocId());
+	@PostMapping(path = "upload", consumes = "multipart/form-data")
+	public AssociationFichier uploadFichierSac(@RequestParam MultipartFile fichier,
+			@RequestHeader(name = "X-USER-ID") long userId)
+			throws IOException, StorageLimitExceededException, 
+			FileTooBigException, InvalidFileTypeException {
+		ControllerResponseUtils.checkContentType(fichier);
+		if (fichier.getSize() > maxSize)
+			throw new FileTooBigException(maxSize);
+		String filename = new File(fichier.getOriginalFilename()).getName();
+		AssociationFichier assoc = gestionnaireFichier.uploadFichierSac(userId, fichier.getBytes(),
+				fichier.getContentType(), filename, fichier.getSize());
+		return AssociationFichier.masquerProprietes(assoc);
 	}
 
 	@DeleteMapping("files/{assocId}")
@@ -108,17 +112,20 @@ public class SacStockageController {
 		gestionnaireFichier.isAssociationPresent(assocId, String.valueOf(userId), TypeAssociation.SAC);
 		return ControllerResponseUtils.lireFichier(gestionnaireFichier.lireFichier(assocId));
 	}
-
-	@PostMapping(path = "upload", consumes = "multipart/form-data")
-	public AssociationFichier uploadFichierSac(@RequestParam MultipartFile fichier,
-			@RequestHeader(name = "X-USER-ID") long userId)
-			throws IOException, StorageLimitExceededException, FileTooBigException {
-		if (fichier.getSize() > maxSize)
-			throw new FileTooBigException(maxSize);
-		String filename = new File(fichier.getOriginalFilename()).getName();
-		AssociationFichier assoc = gestionnaireFichier.uploadFichierSac(userId, fichier.getBytes(),
-				fichier.getContentType(), filename, fichier.getSize());
-		return AssociationFichier.masquerProprietes(assoc);
+	
+	@GetMapping("space")
+	public UsedSpaceWrapper getUsedSpace(@RequestHeader(name = "X-USER-ID")
+			long userId) {
+		return gestionnaireFichier.getUsedSpace(userId);
+	}
+	
+	@GetMapping("search")
+	public Page<AssociationFichier> searchFichiers(@RequestHeader(name = "X-USER-ID")
+			long userId,@RequestParam(name = "name",required = true) String partieNom,
+			Pageable page){
+		return gestionnaireFichier.getFichierParNom(partieNom,String.valueOf(userId),
+				TypeAssociation.SAC,page)
+				.map(AssociationFichier::masquerProprietes);
 	}
 
 	public long getMaxSize() {
