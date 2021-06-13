@@ -9,8 +9,13 @@ import { User } from 'src/app/utils/Types';
 export class CourseMembersListItemComponent implements OnInit {
   @Input()
   user: User = {};
+  @Input()
+  ownerId: number = -1;
+  isOwner: boolean = false;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isOwner = this.user.id === this.ownerId;
+  }
 }

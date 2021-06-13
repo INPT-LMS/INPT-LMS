@@ -37,7 +37,9 @@ export class AddMemberComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.members);
+  }
 
   async onSubmit(event: Event) {
     event.preventDefault();

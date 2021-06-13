@@ -1,5 +1,3 @@
-import { NumberLiteralType } from 'typescript';
-
 export type User = {
   id?: number;
   fullName?: string;
@@ -32,6 +30,8 @@ export type Class = {
 export interface Publication {
   id?: string;
   idProprietaire?: number;
+  nomUser?: string;
+  prenomUser?: string;
   datePublication?: Date;
   idCours?: string;
   contenuPublication?: string;
