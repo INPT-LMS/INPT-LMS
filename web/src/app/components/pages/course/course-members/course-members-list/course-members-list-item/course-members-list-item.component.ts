@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { User } from 'src/app/utils/Types';
 
 @Component({
@@ -12,10 +13,14 @@ export class CourseMembersListItemComponent implements OnInit {
   @Input()
   ownerId: number = -1;
   isOwner: boolean = false;
+  isMe: boolean = false;
 
-  constructor() {}
+  constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
     this.isOwner = this.user.id === this.ownerId;
+
+    this.isMe =
+      parseInt(this.localStorageService.get('userId')!) === this.user.id;
   }
 }

@@ -2,12 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
-interface Devoir {
-  idProprietiare: number;
-  type: string;
-  contenu: string;
-}
+import { Devoir } from '../utils/Types';
 
 interface RenduDevoir {
   idProprietiare: number;

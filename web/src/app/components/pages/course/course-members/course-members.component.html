@@ -1,11 +1,13 @@
 <h2 class="text-center">Members</h2>
 <hr />
-<app-add-member
-  [classId]="classId"
-  [addMember]="addMember.bind(this)"
-  [members]="members"
-></app-add-member>
-<hr />
+<ng-container *ngIf="isProfessor">
+  <app-add-member
+    [classId]="classId"
+    [addMember]="addMember.bind(this)"
+    [members]="members"
+  ></app-add-member>
+  <hr />
+</ng-container>
 
 <app-course-members-list
   [members]="members"

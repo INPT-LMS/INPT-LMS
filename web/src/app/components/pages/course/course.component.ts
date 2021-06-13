@@ -13,6 +13,7 @@ import { Class, Publication } from 'src/app/utils/Types';
 export class CourseComponent implements OnInit {
   class: Class;
   posts: Publication[];
+  ownerId: number;
 
   constructor(
     private postService: PostService,
@@ -24,6 +25,7 @@ export class CourseComponent implements OnInit {
     this.class = {
       devoirs: [],
     };
+    this.ownerId = -1;
   }
 
   async ngOnInit(): Promise<void> {
@@ -41,6 +43,8 @@ export class CourseComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+
+    this.ownerId = this.class.owner?.professorID!;
   }
 
   async deleteClass() {

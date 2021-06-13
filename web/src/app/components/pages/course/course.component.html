@@ -1,6 +1,7 @@
 <app-course-cover
   [title]="class.courseName ? class.courseName : ''"
   [deleteClass]="deleteClass.bind(this)"
+  [ownerId]="ownerId"
   [classId]="class.courseID!"
 ></app-course-cover>
 <div class="course-color">

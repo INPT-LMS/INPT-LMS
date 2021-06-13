@@ -23,8 +23,17 @@ export type Class = {
     visiblityID?: number;
     name?: string;
   };
+  owner?: {
+    professorID?: number;
+  };
   // XXX Devoirs à revoir
   devoirs?: any[];
+};
+
+export type Devoir = {
+  type: 'DEVOIR' | 'QUIZZ';
+  contenu: string;
+  dateLimite: Date;
 };
 
 export interface Publication {
