@@ -3,12 +3,9 @@ package com.lms.servicepublications.service;
 
 import com.lms.servicepublications.beans.CoursBean;
 import com.lms.servicepublications.beans.UserBean;
-import com.lms.servicepublications.beans.UserInfoBean;
 import com.lms.servicepublications.dto.PublicationDTO;
 import com.lms.servicepublications.exceptions.ResourceNotFoundException;
 import com.lms.servicepublications.exceptions.UnauthorizedException;
-import com.lms.servicepublications.model.Commentaire;
-import com.lms.servicepublications.model.Like;
 import com.lms.servicepublications.model.Publication;
 import com.lms.servicepublications.proxies.GestionCompteProxy;
 import com.lms.servicepublications.repository.PublicationRepository;
@@ -79,11 +76,11 @@ public class PublicationService {
         Publication publication = new Publication();
         publication.setContenuPublication(publicationDTO.getContenuPublication());
         publication.setIdCours(publicationDTO.getIdCours());
-        publication.setNomUser(userBean.getUserInfoBean().getNom());
-        publication.setPrenomUser(userBean.getUserInfoBean().getPrenom());
+        publication.setNomUser(userBean.getUser().getNom());
+        publication.setPrenomUser(userBean.getUser().getPrenom());
         publication.setIdProprietaire(id_user);
-        publication.setCommentaires(new ArrayList<Commentaire>());
-        publication.setLikes(new ArrayList<Like>());
+        publication.setCommentaires(new ArrayList<>());
+        publication.setLikes(new ArrayList<>());
         return publicationRepository.insert(publication);
     }
 

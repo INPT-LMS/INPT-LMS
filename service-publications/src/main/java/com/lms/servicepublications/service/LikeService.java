@@ -1,6 +1,5 @@
 package com.lms.servicepublications.service;
 import com.lms.servicepublications.beans.UserBean;
-import com.lms.servicepublications.beans.UserInfoBean;
 import com.lms.servicepublications.dto.LikeDTO;
 import com.lms.servicepublications.exceptions.ResourceAlreadyExists;
 import com.lms.servicepublications.exceptions.ResourceNotFoundException;
@@ -23,7 +22,10 @@ public class LikeService {
     private final LikeRepository likeRepository;
     private final PublicationRepository publicationRepository;
 
-
+    /**
+     * Fonction pour ajouter un LIKE
+     * @return String
+     */
     public Like ajouterLike(Long user_id, LikeDTO likeDTO){
         UserBean userBean = gestionCompteProxy.getNameById(user_id);
         if(likeRepository.existsByIdProprietaireAndIdPublication(user_id, likeDTO.getIdPublication())) throw new ResourceAlreadyExists("You've already liked this post");
@@ -31,8 +33,8 @@ public class LikeService {
         Like like = new Like();
         like.setIdProprietaire(user_id);
         like.setIdPublication(likeDTO.getIdPublication());
-        like.setNomUser(userBean.getUserInfoBean().getNom());
-        like.setPrenomUser(userBean.getUserInfoBean().getPrenom());
+        like.setNomUser(userBean.getUser().getNom());
+        like.setPrenomUser(userBean.getUser().getPrenom());
         List<Like> likes = publication.getLikes();
         likes.add(like);
         publication.setLikes(likes);
@@ -40,6 +42,8 @@ public class LikeService {
         publicationRepository.save(publication);
         return like;
     }
+
+
 
 
     public String supprimerLike(Long id_user, String idLike){
