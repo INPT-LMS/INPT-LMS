@@ -50,6 +50,11 @@ public class CourseGetway {
 		}
 		return HttpStatus.UNAUTHORIZED ;
 	}
+
+	@GetMapping("/course/discover/{courseName}")
+	public List<Course> getCoursesByName(@PathVariable String courseName){
+		return courseDetailsImp.getCoursesByName(courseName,1);
+	}
 	/* @GetMapping("/course/{courseid}/owner/{ownerid}")
 	public boolean checkProfessor(@PathVariable UUID courseid,@PathVariable long ownerid){
 

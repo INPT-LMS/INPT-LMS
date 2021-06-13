@@ -2,6 +2,7 @@ package com.lms.servicepublications.service;
 
 
 import com.lms.servicepublications.beans.CoursBean;
+import com.lms.servicepublications.beans.UserBean;
 import com.lms.servicepublications.beans.UserInfoBean;
 import com.lms.servicepublications.dto.PublicationDTO;
 import com.lms.servicepublications.exceptions.ResourceNotFoundException;
@@ -74,12 +75,12 @@ public class PublicationService {
      * @return String
      */
     public Publication ajouterPublication(long id_user, PublicationDTO publicationDTO){
-        UserInfoBean userInfoBean = gestionCompteProxy.getNameById(id_user);
+        UserBean userBean = gestionCompteProxy.getNameById(id_user);
         Publication publication = new Publication();
         publication.setContenuPublication(publicationDTO.getContenuPublication());
         publication.setIdCours(publicationDTO.getIdCours());
-        publication.setNomUser(userInfoBean.getNom());
-        publication.setPrenomUser(userInfoBean.getPrenom());
+        publication.setNomUser(userBean.getUserInfoBean().getNom());
+        publication.setPrenomUser(userBean.getUserInfoBean().getPrenom());
         publication.setIdProprietaire(id_user);
         publication.setCommentaires(new ArrayList<Commentaire>());
         publication.setLikes(new ArrayList<Like>());

@@ -1,4 +1,5 @@
 package com.lms.servicepublications.service;
+import com.lms.servicepublications.beans.UserBean;
 import com.lms.servicepublications.beans.UserInfoBean;
 import com.lms.servicepublications.dto.LikeDTO;
 import com.lms.servicepublications.exceptions.ResourceAlreadyExists;
@@ -24,14 +25,14 @@ public class LikeService {
 
 
     public Like ajouterLike(Long user_id, LikeDTO likeDTO){
-        UserInfoBean userInfoBean = gestionCompteProxy.getNameById(user_id);
+        UserBean userBean = gestionCompteProxy.getNameById(user_id);
         if(likeRepository.existsByIdProprietaireAndIdPublication(user_id, likeDTO.getIdPublication())) throw new ResourceAlreadyExists("You've already liked this post");
         Publication publication = publicationRepository.findById(likeDTO.getIdPublication()).orElseThrow(()->new ResourceNotFoundException("Publication not found"));
         Like like = new Like();
         like.setIdProprietaire(user_id);
         like.setIdPublication(likeDTO.getIdPublication());
-        like.setNomUser(userInfoBean.getNom());
-        like.setPrenomUser(userInfoBean.getPrenom());
+        like.setNomUser(userBean.getUserInfoBean().getNom());
+        like.setPrenomUser(userBean.getUserInfoBean().getPrenom());
         List<Like> likes = publication.getLikes();
         likes.add(like);
         publication.setLikes(likes);
