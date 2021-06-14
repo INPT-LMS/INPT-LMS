@@ -1,8 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Devoir } from '../utils/Types';
+import { DevoirInfos } from '../utils/Types';
 
 interface RenduDevoir {
   idProprietiare: number;
@@ -37,7 +35,7 @@ export class AssignmentService {
   /**
    * Ajoute un devoir dans un cours
    */
-  addDevoir(classId: string, devoir: Devoir) {
+  addDevoir(classId: string, devoir: DevoirInfos) {
     return this.http
       .post(`/assignment/devoirs/${classId}`, devoir, this.httpOptions)
       .toPromise();

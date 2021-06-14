@@ -31,9 +31,22 @@ export type Class = {
 };
 
 export type Devoir = {
-  type: 'DEVOIR' | 'QUIZZ';
-  contenu: string;
-  dateLimite: Date;
+  id?: string;
+  idCours?: string;
+  idPropprietaire?: number;
+  devoirInfos?: DevoirInfos;
+  reponses?: ReponseDevoir[];
+  type?: 'DEVOIR' | 'QUIZZ';
+};
+
+export type DevoirInfos = {
+  type?: 'DEVOIR' | 'QUIZZ';
+  contenu?: string;
+  dateLimite?: Date;
+};
+
+export type ReponseDevoir = {
+  id?: string;
 };
 
 export interface Publication {
