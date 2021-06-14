@@ -23,12 +23,12 @@ class ListDataModel<T> extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addFirst(T item) {
+  void addFirst(T item, {bool update = true}) {
     if (listeData.any((element) => getDataId(element) == getDataId(item)))
       return;
     listeData.insert(0, item);
     listeWidgets.insert(0, dataToWidget(item));
-    notifyListeners();
+    if (update) notifyListeners();
   }
 
   void addLast(T item, {bool update = true}) {
@@ -42,6 +42,13 @@ class ListDataModel<T> extends ChangeNotifier {
   void updateWithData(List<T> items) {
     items.forEach((item) {
       addLast(item, update: false);
+    });
+    notifyListeners();
+  }
+
+  void updateWithDataFirst(List<T> items) {
+    items.forEach((item) {
+      addFirst(item, update: false);
     });
     notifyListeners();
   }

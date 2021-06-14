@@ -32,6 +32,14 @@ class MessageService extends BaseService {
         .then((response) => PaginationMessage.fromJson(response.data));
   }
 
+  Future<PaginationMessage> getDiscussionNewMessages(
+      String discId, int size, int page) {
+    return client
+        .get(
+            "/messagebox/discussion/$discId/new?page=$page&size=$size&sort=date,desc")
+        .then((response) => PaginationMessage.fromJson(response.data));
+  }
+
   Future<MessageData> envoyerMessage(MessageData message) {
     return client
         .post("/messagebox/discussion", data: message.toJson())

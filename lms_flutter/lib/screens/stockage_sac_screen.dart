@@ -33,7 +33,7 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
     stockageService.getUsedSpace().then((value) {
       setState(() {
         usedSpace = (value["usedSpace"] as int).toDouble();
-        totalSpace = (value["availableSpace"] as int).toDouble();
+        totalSpace = (value["totalSpace"] as int).toDouble();
       });
     });
   }
@@ -91,15 +91,14 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
               .addFirst(fichier);
           showSnackbar(context, "Fichier enregistrée dans le sac !");
         }).catchError((e) {
-          if (e.response.statusCode == 400) {
+          var code = e.response.statusCode;
+          if (code == 400) {
             var reason = (e as DioError).response.data.toString();
             if (reason.contains("No space left"))
               showSnackbar(
                   context,
                   "Pas assez d'espace de stockage pour "
                   "téléverser ce fichier");
-            else if (reason.contains("max size"))
-              showSnackbar(context, "Ce fichier est trop grand");
             else if (reason.contains("but got"))
               showSnackbar(
                   context,
@@ -107,7 +106,9 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
                   "ne correspondent pas");
             else
               showSnackbar(context, "Une erreur est survenue");
-          } else
+          } else if (code == 413)
+            showSnackbar(context, "Ce fichier est trop grand");
+          else
             showSnackbar(context, e.response.statusCode);
         });
     });

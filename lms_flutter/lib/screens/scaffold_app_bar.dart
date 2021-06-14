@@ -4,7 +4,10 @@ import 'package:lms_flutter/services/service_locator.dart';
 
 class BaseScaffoldAppBar extends StatefulWidget {
   final Widget body;
-  BaseScaffoldAppBar({Key key, this.body}) : super(key: key);
+  void Function() beforePush;
+  void Function() afterReturn;
+  BaseScaffoldAppBar({Key key, this.body, this.beforePush, this.afterReturn})
+      : super(key: key);
 
   @override
   _BaseScaffoldAppBarState createState() => _BaseScaffoldAppBarState();
@@ -39,8 +42,7 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
             ],
           ),
           onTap: () {
-            if (ModalRoute.of(context).settings.name != "/")
-              Navigator.pushNamed(context, "/stockage-sac");
+            pushRoute("/stockage-sac", "/stockage-sac");
           }),
       ListTile(
           title: Row(
@@ -75,8 +77,7 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
               icon: Icon(Icons.home),
               tooltip: "Accueil",
               onPressed: () {
-                if (ModalRoute.of(context).settings.name != "/home")
-                  Navigator.pushNamed(context, "/home");
+                pushRoute("/home", "/home");
               }),
           IconButton(
               icon: Icon(Icons.add_alert_rounded),
@@ -86,8 +87,7 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
               icon: Icon(Icons.mail),
               tooltip: "Messages",
               onPressed: () {
-                if (ModalRoute.of(context).settings.name != "/messages")
-                  Navigator.pushNamed(context, "/messages");
+                pushRoute("/messages", "/messages");
               }),
           IconButton(
               icon: Icon(Icons.settings),
@@ -107,6 +107,15 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
       ),
       body: widget.body,
     );
+  }
+
+  void pushRoute(String condition, String newRoute) {
+    if (ModalRoute.of(context).settings.name != condition) {
+      if (widget.beforePush != null) widget.beforePush();
+      Navigator.pushNamed(context, newRoute).then((value) {
+        if (widget.afterReturn != null) widget.afterReturn();
+      });
+    }
   }
 
   @override

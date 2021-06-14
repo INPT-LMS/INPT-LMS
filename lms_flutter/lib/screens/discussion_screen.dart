@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -30,6 +32,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
   TextEditingController messageController;
   int idDestinataire;
   String idDiscussion;
+  Timer regularFetch;
   @override
   void initState() {
     messageController = TextEditingController();
@@ -40,6 +43,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
   @override
   void dispose() {
     messageController.dispose();
+    regularFetch.cancel();
     super.dispose();
   }
 
@@ -57,6 +61,10 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
         MessageListService(messageService, infos.id, disc.id);
 
     return BaseScaffoldAppBar(
+        afterReturn: () => setState(() {}),
+        beforePush: () {
+          if (regularFetch != null) regularFetch.cancel();
+        },
         body: Container(
             margin: EdgeInsets.all(10),
             child: ChangeNotifierProvider<ListDataModel<MessageData>>(
@@ -64,6 +72,17 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
                     (messageData) => Message(messageData),
                     (messageData) => messageData.id),
                 builder: (context, _) {
+                  if (regularFetch != null) regularFetch.cancel();
+                  regularFetch = Timer.periodic(Duration(seconds: 2), (_) {
+                    messageService
+                        .getDiscussionNewMessages(idDiscussion, 40, 0)
+                        .then((newMessages) {
+                      if (newMessages.content.isNotEmpty)
+                        Provider.of<ListDataModel<MessageData>>(context,
+                                listen: false)
+                            .updateWithDataFirst(newMessages.content);
+                    });
+                  });
                   return Column(
                     children: [
                       Expanded(

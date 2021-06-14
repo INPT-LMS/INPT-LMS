@@ -11,7 +11,6 @@ import 'package:lms_flutter/services/message_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
-//TODO: recherche discussion + cas retour arriere
 class ListeDiscussionScreen extends StatefulWidget {
   const ListeDiscussionScreen({Key key}) : super(key: key);
 
@@ -20,6 +19,21 @@ class ListeDiscussionScreen extends StatefulWidget {
 }
 
 class _ListeDiscussionScreenState extends State<ListeDiscussionScreen> {
+  List<String> withNewsDiscussionsId;
+  MessageService messageService;
+
+  @override
+  void initState() {
+    super.initState();
+    withNewsDiscussionsId = [];
+    messageService = getIt.get<MessageService>();
+    messageService.getDiscussionHasNewMessage().then((value) {
+      setState(() {
+        withNewsDiscussionsId = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var infos = Provider.of<InfosModel>(context).userInfos;
@@ -28,32 +42,14 @@ class _ListeDiscussionScreenState extends State<ListeDiscussionScreen> {
         margin: EdgeInsets.all(10),
         child: Column(children: [
           Center(child: Text("Messagerie")),
-          Container(
-              margin: EdgeInsets.only(top: 20, bottom: 20),
-              child: Row(children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  child: CircleAvatar(
-                      backgroundImage: AssetImage("images/pic.jpg")),
-                ),
-                Expanded(
-                  child: TextFormField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          suffixIcon: IconButton(
-                              icon: Icon(Icons.search), onPressed: () {}),
-                          labelText: "Chercher quelqu'un")),
-                )
-              ])),
           Expanded(
-              child: ChangeNotifierProvider(
+              child: ChangeNotifierProvider<ListDataModel<DiscussionData>>(
                   create: (context) => ListDataModel<DiscussionData>(
-                      (discData) => Discussion(discData),
+                      (discData) => Discussion(discData,
+                          (discId) => withNewsDiscussionsId.contains(discId)),
                       (discData) => discData.id),
                   child: ListeData<DiscussionData>(
-                      DiscussionListService(
-                          getIt.get<MessageService>(), infos.id),
-                      false)))
+                      DiscussionListService(messageService, infos.id), false)))
         ]),
       ),
     );
