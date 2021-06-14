@@ -34,11 +34,11 @@ import inpt.lms.stockage.model.TypeAssociation;
 import inpt.lms.stockage.util.ControllerResponseUtils;
 
 @RestController
-@RequestMapping(path = "/storage/user", produces = "application/json", consumes = "application/json")
+@RequestMapping(path = "/storage/user")
 public class SacStockageController {
-	@Value("${inpt.lms.stockage.max-size}")
+	@Value("${inpt.lms.stockage.max-file-size}")
 	protected long maxSize;
-	protected long maxPictureSize = 2097152;
+	protected long maxPictureSize = 5242880; // 5MB
 	protected List<String> supportedPictureTypes = Arrays.asList("image/jpeg", "image/png");
 	@Autowired
 	protected GestionnaireFichier gestionnaireFichier;
@@ -52,7 +52,7 @@ public class SacStockageController {
 		
 		ControllerResponseUtils.checkContentType(fichier, supportedPictureTypes);
 		
-		String filename = new File(fichier.getOriginalFilename()).getName();
+		String filename = "picture-user-"+userId;
 		AssociationFichier assoc = gestionnaireFichier.uploadPhotoProfil(userId, 
 				fichier.getBytes(), fichier.getContentType(),filename, fichier.getSize());
 		return AssociationFichier.masquerProprietes(assoc);
@@ -68,7 +68,8 @@ public class SacStockageController {
 	@GetMapping("picture/{userId}")
 	public ResponseEntity<byte[]> getPhotoProfil(@PathVariable Long userId) throws NotFoundException, IOException {
 		Long idAssocPhoto = gestionnaireFichier.getIdAssocPhotoUser(userId);
-		return ControllerResponseUtils.lireFichier(gestionnaireFichier.lireFichier(idAssocPhoto));
+		return ControllerResponseUtils.lireFichierAvecCache(
+				gestionnaireFichier.lireFichier(idAssocPhoto));
 	}
 
 	@PostMapping(path = "upload", consumes = "multipart/form-data")

@@ -63,6 +63,8 @@ class GestionnaireFichierImplTests {
 		assoc.setIdCorrespondantAssociation("10");
 		assoc.setTypeAssociation(TypeAssociation.SAC);
 		assoc.setFichierInfo(fInfo);
+		
+		gFichier.setMaxUserSpace(52428800);
 	}
 	
 	@Test
@@ -106,7 +108,7 @@ class GestionnaireFichierImplTests {
 	
 	@Test
 	void testShouldThrowLimitExceed() throws StorageLimitExceededException, IOException {
-		when(fDAO.getUsedSpaceUser(10l)).thenReturn(GestionnaireFichierImpl.MAX_SPACE_PER_USER+1);
+		when(fDAO.getUsedSpaceUser(10l)).thenReturn(52428801l);
 		byte[] fakeFile = new byte[20];
 		new Random().nextBytes(fakeFile);
 		assertThrows(StorageLimitExceededException.class, 

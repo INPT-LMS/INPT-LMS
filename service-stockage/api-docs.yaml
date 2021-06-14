@@ -34,6 +34,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -61,7 +67,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/AssociationFichier'
   /storage/user/picture:
@@ -92,6 +98,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -119,7 +131,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/AssociationFichier'
     delete:
@@ -140,6 +152,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -167,7 +185,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 type: string
   /storage/publication/{publicationId}/files:
@@ -199,6 +217,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -226,7 +250,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/PageAssociationFichier'
     post:
@@ -258,6 +282,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -285,7 +315,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/AssociationFichier_Public'
   /storage/class/{coursId}/files:
@@ -317,6 +347,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -344,7 +380,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/PageAssociationFichier'
     post:
@@ -376,6 +412,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -403,7 +445,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/AssociationFichier_Public'
   /storage/admin/assignment/{devoirId}:
@@ -439,6 +481,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -466,7 +514,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/AssociationFichier'
     delete:
@@ -492,6 +540,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -519,7 +573,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 type: string
   /storage/user/space:
@@ -541,6 +595,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -568,7 +628,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/UsedSpaceWrapper'
   /storage/user/search:
@@ -600,6 +660,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -627,7 +693,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/PageAssociationFichier'
   /storage/user/picture/{userId}:
@@ -649,6 +715,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -676,7 +748,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 type: array
                 items:
@@ -706,6 +778,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -733,7 +811,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/PageAssociationFichier'
   /storage/user/files/{assocId}:
@@ -761,6 +839,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -788,7 +872,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 type: array
                 items:
@@ -814,6 +898,12 @@ paths:
       responses:
         "404":
           description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "413":
+          description: Payload Too Large
           content:
             '*/*':
               schema:
@@ -869,6 +959,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -896,7 +992,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/AssociationFichier_Public'
   /storage/publication/{publicationId}/files/{assocId}:
@@ -929,6 +1025,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -956,7 +1058,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 type: array
                 items:
@@ -987,6 +1089,12 @@ paths:
       responses:
         "404":
           description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "413":
+          description: Payload Too Large
           content:
             '*/*':
               schema:
@@ -1047,6 +1155,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -1074,7 +1188,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/AssociationFichier_Public'
   /storage/class/{coursId}/search:
@@ -1111,6 +1225,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -1138,7 +1258,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/PageAssociationFichier'
   /storage/class/{coursId}/files/{assocId}:
@@ -1171,6 +1291,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -1198,7 +1324,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 type: array
                 items:
@@ -1229,6 +1355,12 @@ paths:
       responses:
         "404":
           description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "413":
+          description: Payload Too Large
           content:
             '*/*':
               schema:
@@ -1289,6 +1421,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -1316,14 +1454,14 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: '#/components/schemas/AssociationFichier_Public'
   /storage/assignment/{courseId}/{devoirId}:
     get:
       tags:
       - devoir-stockage-controller
-      operationId: getReponseDevoir
+      operationId: getOwnReponseDevoir
       parameters:
       - name: X-USER-ID
         in: header
@@ -1348,6 +1486,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -1375,7 +1519,81 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: byte
+  /storage/assignment/{courseId}/{devoirId}/{eleveId}:
+    get:
+      tags:
+      - devoir-stockage-controller
+      operationId: getUserReponseDevoir
+      parameters:
+      - name: X-USER-ID
+        in: header
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: courseId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: devoirId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: eleveId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: string
+        "403":
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                type: string
+        "503":
+          description: Service Unavailable
+          content:
+            '*/*':
+              schema:
+                type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
               schema:
                 type: array
                 items:
@@ -1410,6 +1628,12 @@ paths:
             '*/*':
               schema:
                 type: string
+        "413":
+          description: Payload Too Large
+          content:
+            '*/*':
+              schema:
+                type: string
         "400":
           description: Bad Request
           content:
@@ -1437,7 +1661,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 type: array
                 items:
@@ -1535,7 +1759,7 @@ components:
         usedSpace:
           type: integer
           format: int64
-        availableSpace:
+        totalSpace:
           type: integer
           format: int64
     Pageable:
@@ -1564,10 +1788,18 @@ components:
           format: int64
         pageable:
           $ref: '#/components/schemas/Pageable'
+        sort:
+          $ref: '#/components/schemas/Sort'
         first:
           type: boolean
         last:
           type: boolean
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
         size:
           type: integer
           format: int32
@@ -1575,14 +1807,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AssociationFichier'
-        number:
-          type: integer
-          format: int32
-        sort:
-          $ref: '#/components/schemas/Sort'
-        numberOfElements:
-          type: integer
-          format: int32
         empty:
           type: boolean
     Sort:

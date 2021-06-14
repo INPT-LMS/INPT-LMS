@@ -2,13 +2,13 @@ package inpt.lms.stockage.business.interfaces;
 
 public class UsedSpaceWrapper {
 	protected long usedSpace;
-	protected long availableSpace;
+	protected long totalSpace;
 	
 	public UsedSpaceWrapper() {}
 	
 	public UsedSpaceWrapper(long usedSpace, long availableSpace) {
 		this.usedSpace = usedSpace;
-		this.availableSpace = availableSpace;
+		this.totalSpace = availableSpace;
 	}
 
 	public long getUsedSpace() {
@@ -19,12 +19,12 @@ public class UsedSpaceWrapper {
 		this.usedSpace = usedSpace;
 	}
 
-	public long getAvailableSpace() {
-		return availableSpace;
+	public long getTotalSpace() {
+		return totalSpace;
 	}
 
-	public void setAvailableSpace(long availableSpace) {
-		this.availableSpace = availableSpace;
+	public void setTotalSpace(long availableSpace) {
+		this.totalSpace = availableSpace;
 	}
 	
 
