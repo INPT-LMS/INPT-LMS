@@ -9,6 +9,7 @@ import com.inpt.lms.servicedevoirs.model.Devoir;
 import com.inpt.lms.servicedevoirs.model.DevoirInfos;
 import com.inpt.lms.servicedevoirs.model.DevoirReponse;
 import com.inpt.lms.servicedevoirs.model.Fichier;
+import com.inpt.lms.servicedevoirs.proxy.StockageProxy;
 import com.inpt.lms.servicedevoirs.repository.DevoirInfosRepository;
 import com.inpt.lms.servicedevoirs.repository.DevoirReponseRepository;
 import com.inpt.lms.servicedevoirs.repository.DevoirRepository;
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,11 +42,13 @@ class DevoirServiceTest {
     private DevoirReponseRepository devoirReponseRepository;
     @Mock
     private FichierRepository fichierRepository;
+    @Mock
+    private StockageProxy stockageProxy;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        underTest = new DevoirService(devoirRepository, devoirInfosRepository, devoirReponseRepository, fichierRepository);
+        underTest = new DevoirService(devoirRepository, devoirInfosRepository, devoirReponseRepository, fichierRepository, stockageProxy);
     }
 
     @Test
@@ -155,7 +159,8 @@ class DevoirServiceTest {
         // When
         // TODO Fix test
         String courseId = null;
-        underTest.rendreDevoir(userId, courseId, idDevoir, devoirReponseDTO);
+        MultipartFile fichier = null;
+        underTest.rendreDevoir(fichier, userId, courseId, idDevoir);
 
         // Then
         verify(fichierRepository).save(f);
