@@ -53,8 +53,7 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
             ],
           ),
           onTap: () {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text("Vers mon profil")));
+            Navigator.pushNamed(context, "/profile");
           }),
       ListTile(
           title: Text('Se deconnecter'),
