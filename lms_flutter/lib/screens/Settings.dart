@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/profile/ProfilePic.dart';
+import 'package:lms_flutter/components/settings/ProfilePic.dart';
 import 'package:lms_flutter/components/settings/SettingsElement.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 
@@ -22,7 +23,7 @@ class _SettingsCompState extends State<SettingsComp> {
               padding: EdgeInsets.only(
                 top: 24
               ),
-                child: ProfilePic()),
+                child: ProfilPicEdit()),
           Container(
             padding: EdgeInsets.all(12),
             child: Text("Hello, My name",
