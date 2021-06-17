@@ -33,15 +33,55 @@ class _SettingsCompState extends State<SettingsComp> {
             Container(
 
               padding: EdgeInsets.all(24),
-              child: ExpansionTile(
-                title: Text("Settings category"),
+              child: Column(
+
                 children: [
-                 ListView(
-                   shrinkWrap: true,
-                   children: [
-                     for(var i = 0 ; i < 3 ; i++)  SettingsElement()
-                   ],
-                 )
+                  ExpansionTile(
+                    title: Text("General informations"),
+                    children: [
+                     ListView(
+                       shrinkWrap: true,
+                       children: [
+                         for(var i = 0 ; i < 3 ; i++)  SettingsElement(type : i.toString()  )
+                       ],
+                     ),
+
+                    ],
+                  ),
+                  ExpansionTile(
+                    title: Text("Security"),
+                    children: [
+                      ListView(
+                        shrinkWrap: true,
+                        children: [
+                          for(var i = 0 ; i < 3 ; i++)  SettingsElement(type : i.toString()  )
+                        ],
+                      ),
+
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 48,
+                    ),
+                    child: ElevatedButton(
+
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(24),
+                                bottomLeft: Radius.circular(24))),
+                        primary: Color(0xff0275B1), // background
+                        onPrimary: Colors.white, // foreground
+                      ),
+
+                      onPressed: () {  },
+                      child: Text(
+                        "Mettre a jour",
+                        style: TextStyle(fontFamily: 'Montserrat', fontSize: 24),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

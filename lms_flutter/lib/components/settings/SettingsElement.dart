@@ -2,16 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SettingsElement extends StatefulWidget {
-  const SettingsElement({Key key}) : super(key: key);
+  final String type ;
+  const SettingsElement({Key key , this.type}) : super(key: key);
 
   @override
   _SettingsElementState createState() => _SettingsElementState();
 }
 
 class _SettingsElementState extends State<SettingsElement> {
+  String type ;
+  @override
+  void initState() {
+    type = widget.type ;
+    super.initState();
 
+  }
   @override
   Widget build(BuildContext context) {
+
     return  Column(
 
         children: [
@@ -20,7 +28,7 @@ class _SettingsElementState extends State<SettingsElement> {
                Expanded(
                  flex: 1,
                  child : Text(
-                     "Email :"
+                     type
                  ),
                ),
                Expanded(
