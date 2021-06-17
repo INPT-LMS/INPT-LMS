@@ -47,7 +47,43 @@ public class DevoirStockageController {
 	@Autowired
 	protected GestionCompteProxy compteProxy;
 	
-	@PostMapping(path = "admin/assignment/{devoirId}", consumes = "multipart/form-data")
+	@GetMapping("assignment/{courseId}/{devoirId}/subject")
+	public ResponseEntity<byte[]> getSujetDevoir(@RequestHeader(name = "X-USER-ID") 
+	long userId,@PathVariable String courseId,@PathVariable String devoirId) 
+			throws NotFoundException, IOException,
+		UnauthorizedException, 	ProxyUnavailableException {
+		
+		authService.isDevoirClassMember(devoirId, courseId, userId);
+		Long idAssocSujet = gestionnaireFichier.getIdAssocSujetDevoir(devoirId);
+		return ControllerResponseUtils.lireFichier(
+				gestionnaireFichier.lireFichier(idAssocSujet));
+	}
+	
+	@PostMapping(path = "admin/assignment/{devoirId}/subject", 
+			consumes = "multipart/form-data")
+	public AssociationFichier uploadSujetDevoir(@RequestParam MultipartFile fichier,
+			@RequestHeader(name = "X-USER-ID") long userId,@PathVariable String devoirId)
+			throws IOException, FileTooBigException, InvalidFileTypeException {
+		if (fichier.getSize() > maxSize)
+			throw new FileTooBigException(maxSize);
+		ControllerResponseUtils.checkContentType(fichier);
+		
+		String filename = new File(fichier.getOriginalFilename()).getName();
+		AssociationFichier assoc = gestionnaireFichier.uploadSujetDevoir(userId,
+				devoirId, fichier.getBytes(), fichier.getContentType(),
+				filename, fichier.getSize());
+		return AssociationFichier.masquerProprietes(assoc);
+	}
+	
+	@DeleteMapping("admin/assignment/{devoirId}/subject")
+	public ResponseEntity<String> deleteSujetDevoir(@PathVariable String devoirId) 
+			throws NotFoundException, IOException {
+		gestionnaireFichier.retraitSujetDevoir(devoirId);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@PostMapping(path = "admin/assignment/{devoirId}/response", 
+			consumes = "multipart/form-data")
 	public AssociationFichier uploadReponseDevoir(@RequestParam MultipartFile fichier,
 			@RequestHeader(name = "X-USER-ID") long userId,@PathVariable String devoirId)
 			throws IOException, FileTooBigException, InvalidFileTypeException,
@@ -59,8 +95,9 @@ public class DevoirStockageController {
 		String filename = new File(fichier.getOriginalFilename()).getName();
 		try {
 			UserInfos infos = compteProxy.getUserInfos(userId).getUser();
-			filename = infos.getNom() + " " + infos.getPrenom() + " - " + filename 
-					+ " - no"+ userId;
+			filename = infos.getNom() + " " + infos.getPrenom() + " no"+ userId + 
+					" - " + filename;
+					
 		} catch (RetryableException e) {
 			throw new ProxyUnavailableException();
 		}
@@ -70,14 +107,14 @@ public class DevoirStockageController {
 		return AssociationFichier.masquerProprietes(assoc);
 	}
 	
-	@DeleteMapping("admin/assignment/{devoirId}")
-	public ResponseEntity<String> deleteReponse(@RequestHeader(name = "X-USER-ID") 
+	@DeleteMapping("admin/assignment/{devoirId}/response")
+	public ResponseEntity<String> deleteReponseDevoir(@RequestHeader(name = "X-USER-ID") 
 			long userId,@PathVariable String devoirId) throws NotFoundException, IOException {
 		gestionnaireFichier.retraitReponseDevoir(userId, devoirId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@GetMapping("assignment/{courseId}/{devoirId}")
+	@GetMapping("assignment/{courseId}/{devoirId}/response")
 	public ResponseEntity<byte[]> getOwnReponseDevoir(@RequestHeader(name = "X-USER-ID") 
 	long userId,@PathVariable String courseId,@PathVariable String devoirId) 
 			throws NotFoundException, IOException, UnauthorizedException, 
@@ -89,7 +126,7 @@ public class DevoirStockageController {
 				gestionnaireFichier.lireFichier(idAssocDevoir));
 	}
 	
-	@GetMapping("assignment/{courseId}/{devoirId}/{eleveId}")
+	@GetMapping("assignment/{courseId}/{devoirId}/response/{eleveId}")
 	public ResponseEntity<byte[]> getUserReponseDevoir(@RequestHeader(name = "X-USER-ID") 
 	long userId,@PathVariable String courseId,@PathVariable String devoirId,
 	@PathVariable long eleveId) throws NotFoundException, IOException,

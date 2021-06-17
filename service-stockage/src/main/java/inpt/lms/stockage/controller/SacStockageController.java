@@ -2,11 +2,13 @@ package inpt.lms.stockage.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import inpt.lms.stockage.business.interfaces.FichierEtInfo;
 import inpt.lms.stockage.business.interfaces.GestionnaireFichier;
 import inpt.lms.stockage.business.interfaces.UsedSpaceWrapper;
 import inpt.lms.stockage.business.interfaces.exceptions.NotFoundException;
@@ -30,6 +33,7 @@ import inpt.lms.stockage.business.interfaces.exceptions.StorageLimitExceededExce
 import inpt.lms.stockage.controller.exceptions.FileTooBigException;
 import inpt.lms.stockage.controller.exceptions.InvalidFileTypeException;
 import inpt.lms.stockage.model.AssociationFichier;
+import inpt.lms.stockage.model.FichierInfo;
 import inpt.lms.stockage.model.TypeAssociation;
 import inpt.lms.stockage.util.ControllerResponseUtils;
 
@@ -52,7 +56,8 @@ public class SacStockageController {
 		
 		ControllerResponseUtils.checkContentType(fichier, supportedPictureTypes);
 		
-		String filename = "picture-user-"+userId;
+		String filename = "picture-user-"+userId+"."
+				+ControllerResponseUtils.getFileExtension(fichier.getOriginalFilename());
 		AssociationFichier assoc = gestionnaireFichier.uploadPhotoProfil(userId, 
 				fichier.getBytes(), fichier.getContentType(),filename, fichier.getSize());
 		return AssociationFichier.masquerProprietes(assoc);
@@ -66,10 +71,25 @@ public class SacStockageController {
 	}
 
 	@GetMapping("picture/{userId}")
-	public ResponseEntity<byte[]> getPhotoProfil(@PathVariable Long userId) throws NotFoundException, IOException {
-		Long idAssocPhoto = gestionnaireFichier.getIdAssocPhotoUser(userId);
-		return ControllerResponseUtils.lireFichierAvecCache(
-				gestionnaireFichier.lireFichier(idAssocPhoto));
+	public ResponseEntity<byte[]> getPhotoProfil(@PathVariable Long userId) 
+			throws IOException{
+		FichierEtInfo photo;
+		try {
+			Long idAssocPhoto = gestionnaireFichier.getIdAssocPhotoUser(userId);
+			photo = gestionnaireFichier.lireFichier(idAssocPhoto);
+		} catch (NotFoundException e) {
+			FichierInfo info = new FichierInfo();
+			info.setNom("default-picture-user-"+userId+".png");
+			info.setContentType("image/png");
+			
+			photo = new FichierEtInfo();
+			photo.setFichierInfo(info);
+			try (InputStream input = new ClassPathResource("default_profil_picture.png")
+					.getInputStream()){
+				photo.setFichierContenu(input.readAllBytes());
+			}
+		}
+		return ControllerResponseUtils.lireFichierAvecCache(photo);
 	}
 
 	@PostMapping(path = "upload", consumes = "multipart/form-data")
