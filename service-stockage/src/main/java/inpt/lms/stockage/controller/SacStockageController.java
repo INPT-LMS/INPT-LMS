@@ -1,5 +1,6 @@
 package inpt.lms.stockage.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -81,13 +82,17 @@ public class SacStockageController {
 			FichierInfo info = new FichierInfo();
 			info.setNom("default-picture-user-"+userId+".png");
 			info.setContentType("image/png");
-			
 			photo = new FichierEtInfo();
 			photo.setFichierInfo(info);
-			try (InputStream input = new ClassPathResource("default_profil_picture.png")
+			
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			try (InputStream in = new ClassPathResource("default_profil_picture.png")
 					.getInputStream()){
-				photo.setFichierContenu(input.readAllBytes());
+					byte[] b = new byte[2048];
+					while (in.read(b) != -1)
+						out.write(b);
 			}
+			photo.setFichierContenu(out.toByteArray());
 		}
 		return ControllerResponseUtils.lireFichierAvecCache(photo);
 	}
