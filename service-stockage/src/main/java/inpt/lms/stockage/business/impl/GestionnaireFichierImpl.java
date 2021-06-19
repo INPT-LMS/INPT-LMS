@@ -285,6 +285,37 @@ public class GestionnaireFichierImpl implements GestionnaireFichier {
 		outputZip.close();
 		return outputStream.toByteArray();
 	}
+	
+	@Override
+	public AssociationFichier uploadSujetDevoir(long userId, String devoirId, 
+			byte[] sujet, String contentType, String filename, long size) 
+					throws IOException {
+		Optional<AssociationFichier> oldReponse = associationFichierDAO.findByIdCorrespondantAssociationAndTypeAssociationAndFichierInfo_IdProprietaire(
+				devoirId, TypeAssociation.ASSIGNMENT_SUBJECT,userId);
+		AssociationFichier newReponse = 
+				ecrireFichierStockage(userId,devoirId,sujet, contentType, filename, size, 
+						TypeAssociation.ASSIGNMENT_SUBJECT);
+		deleteIfPresent(oldReponse);
+		return newReponse;
+	}
+
+	@Override
+	public Long getIdAssocSujetDevoir(String devoirId) 
+			throws NotFoundException {
+		Optional<AssociationFichier> assocFichier = associationFichierDAO.findByIdCorrespondantAssociationAndTypeAssociation(
+				devoirId, TypeAssociation.ASSIGNMENT_SUBJECT);
+		if (assocFichier.isEmpty())
+			throw new NotFoundException("sujet devoir");
+		return assocFichier.get().getId();
+	}
+
+	@Override
+	public void retraitSujetDevoir(String devoirId) 
+			throws NotFoundException, IOException {
+		Optional<AssociationFichier> oldReponse = associationFichierDAO.findByIdCorrespondantAssociationAndTypeAssociation(
+				devoirId, TypeAssociation.ASSIGNMENT_SUBJECT);
+		deleteIfPresent(oldReponse);
+	}
 
 	public FichierInfoDAO getFichierInfoDAO() {
 		return fichierInfoDAO;

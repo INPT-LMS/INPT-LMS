@@ -83,4 +83,10 @@ public class ControllerResponseUtils {
 		if (!mimeType.equals("application/octet-stream ") && !mimeType.equals(contentType))
 			throw new InvalidFileTypeException(mimeType,contentType);
 	}
+
+	public static String getFileExtension(String filename) {
+		int lastIndex = filename.lastIndexOf(".");
+		return (lastIndex == -1 || lastIndex == filename.length() - 1) 
+				? "" : filename.substring(lastIndex+1);
+	}
 }

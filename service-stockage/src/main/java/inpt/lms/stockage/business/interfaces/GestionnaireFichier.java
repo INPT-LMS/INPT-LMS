@@ -214,4 +214,38 @@ public interface GestionnaireFichier {
 	 * @throws IOException
 	 */
 	byte[] getAllReponseDevoir(String devoirId) throws NoContentException,IOException;
+	
+	/**
+	 * Enregistre le sujet d'un devoir
+	 * @param userId l'identifiant du prof
+	 * @param devoirId l'identifiant du devoir
+	 * @param sujet le sujet du devoir
+	 * @param contentType le type de fichier
+	 * @param nom le nom du fichier
+	 * @param size la taille du fichier (en octets)
+	 * @return Les informations sur le fichier ajoute
+	 * @throws IOException Si une erreur d'écriture est survenue
+	 * 
+	 */
+	AssociationFichier uploadSujetDevoir(long userId,String devoirId, byte[] sujet, 
+			String contentType, String filename, long size) throws IOException;
+
+	/**
+	 * Recupere l'identifiant du sujet d'un devoir
+	 * @param devoirId l'identifiant du devoir
+	 * @return l'identifiant de l'association
+	 * @throws NotFoundException Si l'utilisateur n'existe pas ou n'a pas répondu au devoir
+	 */
+	Long getIdAssocSujetDevoir(String devoirId) throws NotFoundException;
+
+	/**
+	 * Supprime le sujet d'un devoir
+	 * @param userId l'identifiant de l'utilisateur
+	 * param devoirId l'identifiant du devoir
+	 * @throws NotFoundException Si le sujet n'existe pas
+	 * @throws IOException Si une erreur a lieu durant la suppression
+	 */
+	void retraitSujetDevoir(String devoirId) 
+			throws NotFoundException,IOException;
+
 }

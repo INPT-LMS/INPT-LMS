@@ -1,5 +1,6 @@
 package inpt.lms.stockage.business;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -8,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.Random;
 
 import org.junit.jupiter.api.AfterEach;
@@ -61,14 +61,14 @@ class IOFichierLocalImplTests {
 	
 	@Test
 	void testShouldReadFile() throws IOException {
-		byte[] fakeFile = new byte[10];
+		byte[] fakeFile = new byte[2048];
 		new Random().nextBytes(fakeFile);
 		File fichier = new File(testFolder,"fichier");
 		Files.write(fichier.toPath(), fakeFile);
 		
 		byte[] readFile = gFichier.lireFichier(
 				new File(testFolder,"fichier").getAbsolutePath());
-		assertTrue(Arrays.equals(fakeFile,readFile));
+		assertArrayEquals(fakeFile,readFile);
 	}
 	
 	@Test
