@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/stockage/fichier_resume.dart';
 import 'package:lms_flutter/model/stockage/fichier.dart';
@@ -79,38 +78,35 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
   }
 
   void uploadFichier(context) {
-    FilePicker.platform
-        .pickFiles(allowMultiple: false, withReadStream: true)
-        .then((result) {
-      if (result.isSinglePick)
-        stockageService
-            .uploadFichier("/storage/user/upload", result.files[0])
-            .then((fichier) {
-          updateSize(fichier.fichierInfo.size);
-          Provider.of<ListDataModel<Fichier>>(context, listen: false)
-              .addFirst(fichier);
-          showSnackbar(context, "Fichier enregistrée dans le sac !");
-        }).catchError((e) {
-          var code = e.response.statusCode;
-          if (code == 400) {
-            var reason = (e as DioError).response.data.toString();
-            if (reason.contains("No space left"))
-              showSnackbar(
-                  context,
-                  "Pas assez d'espace de stockage pour "
-                  "téléverser ce fichier");
-            else if (reason.contains("but got"))
-              showSnackbar(
-                  context,
-                  "Le contenu du fichier et son extension "
-                  "ne correspondent pas");
-            else
-              showSnackbar(context, "Une erreur est survenue");
-          } else if (code == 413)
-            showSnackbar(context, "Ce fichier est trop grand");
+    chooseFile().then((file) {
+      stockageService
+          .uploadFichier("/storage/user/upload", file)
+          .then((fichier) {
+        updateSize(fichier.fichierInfo.size);
+        Provider.of<ListDataModel<Fichier>>(context, listen: false)
+            .addFirst(fichier);
+        showSnackbar(context, "Fichier enregistrée dans le sac !");
+      }).catchError((e) {
+        var code = e.response.statusCode;
+        if (code == 400) {
+          var reason = (e as DioError).response.data.toString();
+          if (reason.contains("No space left"))
+            showSnackbar(
+                context,
+                "Pas assez d'espace de stockage pour "
+                "téléverser ce fichier");
+          else if (reason.contains("but got"))
+            showSnackbar(
+                context,
+                "Le contenu du fichier et son extension "
+                "ne correspondent pas");
           else
-            showSnackbar(context, e.response.statusCode);
-        });
+            showSnackbar(context, "Une erreur est survenue");
+        } else if (code == 413)
+          showSnackbar(context, "Ce fichier est trop grand");
+        else
+          showSnackbar(context, e.response.statusCode);
+      });
     });
   }
 

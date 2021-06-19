@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart' as dio;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -47,16 +49,33 @@ class StockageService extends BaseService {
           if (!permissionStatus.isGranted) throw NoPermissionException();
         })
         .then((_) => getExternalStorageDirectory())
-        .then((directory) => FlutterDownloader.enqueue(
-            url: fullUrl,
-            headers: <String, String>{
-              "Authorization": client.options.headers["Authorization"],
-              "Content-type": "application/json; charset=utf-8"
-            },
-            savedDir: _extractPath(directory.path),
-            showNotification: true,
-            openFileFromNotification: true,
-            fileName: filename));
+        .then((directory) {
+          var directoryPath = _extractPath(directory.path);
+          var file = File(directoryPath.endsWith("/")
+              ? directoryPath + filename
+              : directoryPath + "/" + filename);
+          var index = filename.lastIndexOf(".");
+          var extension = filename.substring(index);
+          var name = filename.substring(0, index);
+
+          while (file.existsSync()) {
+            name = "$name (copie)";
+            filename = "$name$extension";
+            file = File(directoryPath.endsWith("/")
+                ? directoryPath + filename
+                : directoryPath + "/" + filename);
+          }
+          return FlutterDownloader.enqueue(
+              url: fullUrl,
+              headers: <String, String>{
+                "Authorization": client.options.headers["Authorization"],
+                "Content-type": "application/json; charset=utf-8"
+              },
+              savedDir: directoryPath,
+              showNotification: true,
+              openFileFromNotification: true,
+              fileName: filename);
+        });
   }
 
   Future<PaginationFichier> getFichiers(String url) {

@@ -1,7 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:lms_flutter/model/devoir/devoir_data.dart';
+import 'package:lms_flutter/model/devoir/devoir_reponse_data.dart';
 import 'package:lms_flutter/model/pagination/pagination_devoir.dart';
 import 'package:lms_flutter/services/base_service.dart';
+import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Service chargé des interactions liées aux devoirs
@@ -25,5 +29,19 @@ class DevoirService extends BaseService {
         .then((response) {
       return DevoirData.fromJson(response.data);
     });
+  }
+
+  Future<DevoirReponseData> rendreDevoir(
+      String idCours, String idDevoir, PlatformFile fichier) {
+    var formData = FormData.fromMap({
+      'fichier': MultipartFile(fichier.readStream, fichier.size,
+          contentType: MediaType.parse(lookupMimeType(fichier.name)),
+          filename: fichier.name)
+    });
+    return client
+        .put("/assignment/devoirs/$idCours/$idDevoir/rendu", data: formData)
+        .then((response) => DevoirReponseData.fromJson(response.data))
+        .then((response) =>
+            response.fichier.nom == null ? throw "error" : response);
   }
 }

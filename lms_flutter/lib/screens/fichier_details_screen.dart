@@ -38,6 +38,8 @@ class _FichierDetailsScreenState extends State<FichierDetailsScreen> {
       finished = false;
     }
     return BaseScaffoldAppBar(
+      beforePush: _removeListener,
+      afterReturn: _setupListener,
       body: Column(children: [
         Text(fichier.fichierInfo.nom),
         Text("Ajouté le ${DateFormat.yMMMMd('fr_FR').add_Hm().format(date)}"),
@@ -81,9 +83,7 @@ class _FichierDetailsScreenState extends State<FichierDetailsScreen> {
 
   ReceivePort _port = ReceivePort();
 
-  @override
-  void initState() {
-    super.initState();
+  void _setupListener() {
     IsolateNameServer.registerPortWithName(
         _port.sendPort, 'downloader_send_port');
     _port.listen((dynamic data) {
@@ -98,6 +98,16 @@ class _FichierDetailsScreenState extends State<FichierDetailsScreen> {
       setState(() {});
     });
     FlutterDownloader.registerCallback(downloadCallback);
+  }
+
+  void _removeListener() {
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _setupListener();
 
     stockageService = getIt.get<StockageService>();
     error = false;
@@ -106,7 +116,7 @@ class _FichierDetailsScreenState extends State<FichierDetailsScreen> {
 
   @override
   void dispose() {
-    IsolateNameServer.removePortNameMapping('downloader_send_port');
+    _removeListener();
     super.dispose();
   }
 
