@@ -7,9 +7,11 @@ import 'package:provider/provider.dart';
 class Discussion extends StatelessWidget {
   final DiscussionData data;
   final bool Function(String discId) hasNewMessages;
+  final void Function() clear;
   Discussion(
     this.data,
-    this.hasNewMessages, {
+    this.hasNewMessages,
+    this.clear, {
     Key key,
   }) : super(key: key);
 
@@ -36,9 +38,8 @@ class Discussion extends StatelessWidget {
         if (hasNew) Icon(Icons.notifications, color: Colors.greenAccent)
       ]),
       onTap: () {
-        Navigator.pushNamedAndRemoveUntil(
-            context, "/discussion", ModalRoute.withName("/home"),
-            arguments: data);
+        Navigator.pushNamed(context, "/discussion", arguments: data)
+            .then((_) => clear());
       },
     );
   }

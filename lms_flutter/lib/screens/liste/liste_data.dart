@@ -33,6 +33,10 @@ class _ListeDataState<T> extends State<ListeData<T>> {
     dataService = this.widget.dataService;
     scrollController = ScrollController();
     scrollController.addListener(scrollListener);
+    clearValues();
+  }
+
+  void clearValues() {
     isListFinished = false;
     isLoading = false;
     hasError = false;
@@ -69,6 +73,11 @@ class _ListeDataState<T> extends State<ListeData<T>> {
           "Une erreur est survenue durant la "
           "recupération des données"));
       hasError = false;
+    }
+
+    if (modele.isCleared) {
+      clearValues();
+      modele.finishClear();
     }
 
     if (modele.listeWidgets.isEmpty && !isLoading) {

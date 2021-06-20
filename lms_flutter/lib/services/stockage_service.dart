@@ -34,8 +34,9 @@ class StockageService extends BaseService {
         .then((response) => Fichier.fromJson(response.data));
   }
 
-  Future<Fichier> associateFichier(String url) {
-    return client.post(url).then((response) => Fichier.fromJson(response.data));
+  Future<int> ajoutFichierCours(String url, int idFichier) {
+    return client.post(url, data: <String, int>{"assocId": idFichier}).then(
+        (response) => response.data["id"] as int);
   }
 
   Future deleteFichier(String url) {

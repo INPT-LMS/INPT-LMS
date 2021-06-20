@@ -44,6 +44,14 @@ class CompteService extends BaseService {
         .then((response) => UserInfos.fromJson(response.data["user"]));
   }
 
+  Future<List<UserInfos>> searchUsers(String name) {
+    return client.get("/account/search", queryParameters: <String, String>{
+      "name": name
+    }).then((response) => (response.data as List)
+        .map<UserInfos>((userJson) => UserInfos.fromJson(userJson["userInfos"]))
+        .toList());
+  }
+
   bool isLoggedIn() {
     return sharedPreferences.containsKey("userToken") &&
         sharedPreferences.containsKey("userInfos");

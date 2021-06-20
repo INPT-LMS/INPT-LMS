@@ -15,7 +15,8 @@ void main() {
     "user": <String, dynamic>{"id": 4, "token": "fakeToken"}
   };
   Map<String, dynamic> infosResponse = <String, dynamic>{
-    "user": UserInfos(4, "test", "test", "test", false, null, null).toJson()
+    "user":
+        UserInfos(4, "test", "test", "test", "test", false, null, null).toJson()
   };
 
   setUp(() {

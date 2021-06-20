@@ -120,7 +120,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
       Provider.of<ListDataModel<MessageData>>(context, listen: false)
           .addFirst(message);
     }).catchError((error) {
-      if (error.response.status == 400)
+      if (error.response.statusCode == 400)
         showSnackbar(
             context,
             "Impossible d'envoyer un message à cet utilisateur : "

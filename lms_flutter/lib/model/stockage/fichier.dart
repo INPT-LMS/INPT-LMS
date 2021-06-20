@@ -8,6 +8,8 @@ part 'fichier.g.dart';
 class Fichier {
   int id;
   FichierInfo fichierInfo;
+  bool isOwner;
+  String baseUrl;
 
   Fichier(this.id, this.fichierInfo);
 

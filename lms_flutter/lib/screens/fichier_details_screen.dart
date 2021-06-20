@@ -48,35 +48,37 @@ class _FichierDetailsScreenState extends State<FichierDetailsScreen> {
             child: ElevatedButton(
                 onPressed: () {
                   stockageService.downloadFichier(
-                      Consts.URL_GATEWAY + "/storage/user/files/${fichier.id}",
+                      Consts.URL_GATEWAY + fichier.baseUrl,
                       fichier.fichierInfo.nom);
                 },
                 child: Text("Telecharger le fichier"))),
-        Center(
-            child: ElevatedButton(
-                onPressed: () {
-                  askConfirmation(context).then((value) {
-                    if (value == true)
-                      stockageService
-                          .deleteFichier("/storage/user/files/${fichier.id}")
-                          .then((value) {
-                        showSnackbar(context, "Fichier supprimé");
-                        Navigator.pop(context, fichier.id);
-                      }).catchError((e) {
-                        if ((e as DioError).response.statusCode == 400) {
-                          showSnackbar(context, "Fichier non trouvé");
+        if (fichier.isOwner)
+          Center(
+              child: ElevatedButton(
+                  onPressed: () {
+                    askConfirmation(context).then((value) {
+                      if (value == true)
+                        stockageService
+                            .deleteFichier(fichier.baseUrl)
+                            .then((value) {
+                          showSnackbar(context, "Fichier supprimé");
                           Navigator.pop(context, fichier.id);
-                        } else {
-                          showDefaultErrorMessage(
-                              context, e.response.statusCode);
-                        }
-                      });
-                  });
-                },
-                child: Text("Supprimer le fichier"),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.red),
-                    foregroundColor: MaterialStateProperty.all(Colors.white))))
+                        }).catchError((e) {
+                          if ((e as DioError).response.statusCode == 400) {
+                            showSnackbar(context, "Fichier non trouvé");
+                            Navigator.pop(context, fichier.id);
+                          } else {
+                            showDefaultErrorMessage(
+                                context, e.response.statusCode);
+                          }
+                        });
+                    });
+                  },
+                  child: Text("Supprimer le fichier"),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red),
+                      foregroundColor:
+                          MaterialStateProperty.all(Colors.white))))
       ]),
     );
   }

@@ -4,9 +4,15 @@ import 'package:lms_flutter/services/service_locator.dart';
 
 class BaseScaffoldAppBar extends StatefulWidget {
   final Widget body;
-  void Function() beforePush;
-  void Function() afterReturn;
-  BaseScaffoldAppBar({Key key, this.body, this.beforePush, this.afterReturn})
+  final void Function() beforePush;
+  final void Function() afterReturn;
+  final FloatingActionButton actionButton;
+  BaseScaffoldAppBar(
+      {Key key,
+      this.body,
+      this.beforePush,
+      this.afterReturn,
+      this.actionButton})
       : super(key: key);
 
   @override
@@ -66,47 +72,59 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
                 context, "/login", (route) => false);
           }),
     ];
-    return Scaffold(
-      appBar: AppBar(
-        backwardsCompatibility: false,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.blue,
-        title: Text("LMS"),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.home),
-              tooltip: "Accueil",
-              onPressed: () {
-                pushRoute("/home", "/home");
-              }),
-          IconButton(
-              icon: Icon(Icons.add_alert_rounded),
-              tooltip: "Alertes",
-              onPressed: () {}),
-          IconButton(
-              icon: Icon(Icons.mail),
-              tooltip: "Messages",
-              onPressed: () {
-                pushRoute("/messages", "/messages");
-              }),
-          IconButton(
-              icon: Icon(Icons.settings),
-              tooltip: "Parametres",
-              onPressed: () => {}),
-        ],
-      ),
-      drawer: Drawer(
-        child: ListView.separated(
-          padding: EdgeInsets.only(top: 100),
-          separatorBuilder: (context, index) => Divider(
-            color: Colors.black,
-          ),
-          itemCount: 4,
-          itemBuilder: (context, index) => liste[index],
+
+    var drawer = Drawer(
+      child: ListView.separated(
+        padding: EdgeInsets.only(top: 100),
+        separatorBuilder: (context, index) => Divider(
+          color: Colors.black,
         ),
+        itemCount: 4,
+        itemBuilder: (context, index) => liste[index],
       ),
-      body: widget.body,
     );
+
+    var appBar = AppBar(
+      backwardsCompatibility: false,
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.blue,
+      title: Text("LMS"),
+      actions: [
+        IconButton(
+            icon: Icon(Icons.home),
+            tooltip: "Accueil",
+            onPressed: () {
+              pushRoute("/home", "/home");
+            }),
+        IconButton(
+            icon: Icon(Icons.add_alert_rounded),
+            tooltip: "Alertes",
+            onPressed: () {}),
+        IconButton(
+            icon: Icon(Icons.mail),
+            tooltip: "Messages",
+            onPressed: () {
+              pushRoute("/messages", "/messages");
+            }),
+        IconButton(
+            icon: Icon(Icons.settings),
+            tooltip: "Parametres",
+            onPressed: () => {}),
+      ],
+    );
+
+    return widget.actionButton == null
+        ? Scaffold(
+            appBar: appBar,
+            drawer: drawer,
+            body: widget.body,
+          )
+        : Scaffold(
+            appBar: appBar,
+            drawer: drawer,
+            body: widget.body,
+            floatingActionButton: widget.actionButton,
+          );
   }
 
   void pushRoute(String condition, String newRoute) {

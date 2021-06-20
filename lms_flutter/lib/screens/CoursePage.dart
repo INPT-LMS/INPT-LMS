@@ -73,6 +73,19 @@ class _CoursePageState extends State<CoursePage> {
                                 fontSize: 24,
                               ),
                             ),
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              snapshot.hasData
+                                  ? snapshot.data.courseDescription
+                                  : "",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
                           )
                         ]),
                       ),
@@ -100,7 +113,12 @@ class _CoursePageState extends State<CoursePage> {
                             ),
                             Center(
                               child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if (snapshot.hasData)
+                                      Navigator.pushNamed(
+                                          context, "/stockage-cours",
+                                          arguments: snapshot.data);
+                                  },
                                   child: Text("Voir les fichiers du cours")),
                             ),
                             ListeData<PostData>(

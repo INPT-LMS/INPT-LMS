@@ -42,12 +42,14 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
     return BaseScaffoldAppBar(
         body: SingleChildScrollView(
             child: ChangeNotifierProvider(
-      create: (context) => ListDataModel<Fichier>(
-          (fichier) => FichierResume(
-                fichier,
-                onDelete: (fichier) => updateSize(-fichier.fichierInfo.size),
-              ),
-          (fichier) => fichier.id),
+      create: (context) => ListDataModel<Fichier>((fichier) {
+        fichier.baseUrl = "/storage/user/files/${fichier.id}";
+        fichier.isOwner = true;
+        return FichierResume(
+          fichier,
+          onDelete: (fichier) => updateSize(-fichier.fichierInfo.size),
+        );
+      }, (fichier) => fichier.id),
       builder: (context, _) {
         var usedSpaceMB = usedSpace / 1024 / 1024;
         var totalSpaceMB = totalSpace / 1024 / 1024;
@@ -85,7 +87,7 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
         updateSize(fichier.fichierInfo.size);
         Provider.of<ListDataModel<Fichier>>(context, listen: false)
             .addFirst(fichier);
-        showSnackbar(context, "Fichier enregistrée dans le sac !");
+        showSnackbar(context, "Fichier enregistré dans le sac !");
       }).catchError((e) {
         var code = e.response.statusCode;
         if (code == 400) {

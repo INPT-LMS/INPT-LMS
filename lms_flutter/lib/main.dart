@@ -13,10 +13,12 @@ import 'package:lms_flutter/screens/ProfilePage.dart';
 import 'package:lms_flutter/screens/SignUpPage.dart';
 import 'package:lms_flutter/screens/devoir_details_screen.dart';
 import 'package:lms_flutter/screens/discussion_screen.dart';
+import 'package:lms_flutter/screens/envoyer_message_screen.dart';
 import 'package:lms_flutter/screens/fichier_details_screen.dart';
 import 'package:lms_flutter/screens/home_screen.dart';
 import 'package:lms_flutter/screens/liste_devoirs_cours_screen.dart';
 import 'package:lms_flutter/screens/liste_discussion_screen.dart';
+import 'package:lms_flutter/screens/stockage_cours_screen.dart';
 import 'package:lms_flutter/screens/stockage_sac_screen.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/services/compte_service.dart';
@@ -85,10 +87,12 @@ class _MyAppState extends State<MyApp> {
           '/course': (context) => CoursePage(),
           '/profile': (context) => Profile(),
           '/messages': (context) => ListeDiscussionScreen(),
+          '/envoyer-message': (context) => EnvoyerMessageScreen(),
           '/discussion': (context) => DiscussionScreen(),
           '/devoirs': (context) => ListeDevoirsCoursScreen(),
           '/devoirs-detail': (context) => DevoirDetailsScreen(),
           '/stockage-sac': (context) => StockageSacScreen(),
+          '/stockage-cours': (context) => StockageCoursScreen(),
           '/fichier-details': (context) => FichierDetailsScreen()
         });
   }

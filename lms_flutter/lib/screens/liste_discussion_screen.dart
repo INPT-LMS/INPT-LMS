@@ -21,6 +21,7 @@ class ListeDiscussionScreen extends StatefulWidget {
 class _ListeDiscussionScreenState extends State<ListeDiscussionScreen> {
   List<String> withNewsDiscussionsId;
   MessageService messageService;
+  ListDataModel<DiscussionData> listeModel;
 
   @override
   void initState() {
@@ -32,26 +33,52 @@ class _ListeDiscussionScreenState extends State<ListeDiscussionScreen> {
         withNewsDiscussionsId = value;
       });
     });
+    listeModel = ListDataModel<DiscussionData>(
+        (discData) => Discussion(discData,
+            (discId) => withNewsDiscussionsId.contains(discId), clear),
+        (discData) => discData.id);
   }
 
   @override
   Widget build(BuildContext context) {
     var infos = Provider.of<InfosModel>(context).userInfos;
     return BaseScaffoldAppBar(
+      afterReturn: () {
+        clear();
+      },
+      actionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.of(context).pushNamed("/envoyer-message").then((value) {
+              clear();
+            });
+          }),
       body: Container(
         margin: EdgeInsets.all(10),
         child: Column(children: [
           Center(child: Text("Messagerie")),
           Expanded(
-              child: ChangeNotifierProvider<ListDataModel<DiscussionData>>(
-                  create: (context) => ListDataModel<DiscussionData>(
-                      (discData) => Discussion(discData,
-                          (discId) => withNewsDiscussionsId.contains(discId)),
-                      (discData) => discData.id),
-                  child: ListeData<DiscussionData>(
-                      DiscussionListService(messageService, infos.id), false)))
+              child:
+                  ChangeNotifierProvider<ListDataModel<DiscussionData>>.value(
+                      value: listeModel,
+                      builder: (context, child) {
+                        Provider.of<ListDataModel<DiscussionData>>(context);
+                        return ListeData<DiscussionData>(
+                            DiscussionListService(messageService, infos.id),
+                            false);
+                      }))
         ]),
       ),
     );
+  }
+
+  void clear() {
+    messageService = getIt.get<MessageService>();
+    messageService.getDiscussionHasNewMessage().then((value) {
+      setState(() {
+        withNewsDiscussionsId = value;
+      });
+    });
+    listeModel.clear();
   }
 }
