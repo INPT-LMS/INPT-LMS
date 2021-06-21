@@ -12,7 +12,7 @@ import 'package:lms_flutter/services/devoir_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
-//TODO: Ajout devoir
+//TODO: une pop up pour l'ajout devoir
 class ListeDevoirsCoursScreen extends StatefulWidget {
   const ListeDevoirsCoursScreen({Key key}) : super(key: key);
 
@@ -40,10 +40,8 @@ class _ListeDevoirsCoursScreenState extends State<ListeDevoirsCoursScreen> {
                   create: (context) => ListDataModel<DevoirData>(
                       (devoirData) => Devoir(devoirData, infos.id),
                       (devoirData) => devoirData.id),
-                  child: ListeData<DevoirData>(
-                      DevoirListService(
-                          getIt.get<DevoirService>(), courseData.courseID),
-                      false)))
+                  child: ListeData<DevoirData>(DevoirListService(
+                      getIt.get<DevoirService>(), courseData.courseID))))
         ]),
       ),
     );

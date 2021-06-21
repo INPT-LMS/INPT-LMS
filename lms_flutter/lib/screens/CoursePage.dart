@@ -123,7 +123,6 @@ class _CoursePageState extends State<CoursePage> {
                             ),
                             ListeData<PostData>(
                                 PostListCoursService(postService, idCours),
-                                false,
                                 shrinkWrap: true),
                           ],
                         ),

@@ -44,4 +44,10 @@ class DevoirService extends BaseService {
         .then((response) =>
             response.fichier.nom == null ? throw "error" : response);
   }
+
+  Future noterDevoir(
+      String idCours, String idDevoir, String idReponse, int note) {
+    return client.put("/assignment/devoirs/$idCours/$idDevoir/rendu/$idReponse",
+        data: <String, String>{"note": "$note"});
+  }
 }

@@ -10,8 +10,13 @@ class ListeData<T> extends StatefulWidget {
   final bool reverse;
   final DataService<T> dataService;
   final bool shrinkWrap;
+  final bool canRefresh;
 
-  ListeData(this.dataService, this.reverse, {Key key, this.shrinkWrap = false})
+  ListeData(this.dataService,
+      {Key key,
+      this.reverse = false,
+      this.shrinkWrap = false,
+      this.canRefresh = true})
       : super(key: key);
 
   @override
@@ -84,14 +89,29 @@ class _ListeDataState<T> extends State<ListeData<T>> {
       if (!isListFinished)
         addData();
       else
-        return Center(child: Text("Rien à afficher"));
+        return RefreshIndicator(
+            child: ListView(
+              children: [Center(child: Text("Rien à afficher"))],
+              shrinkWrap: this.widget.shrinkWrap,
+              physics: const AlwaysScrollableScrollPhysics(),
+            ),
+            onRefresh: () {
+              return Future(() => modele.clear());
+            });
     }
-
-    return ListView(
+    var listView = ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
         shrinkWrap: this.widget.shrinkWrap,
         reverse: this.widget.reverse,
         controller: scrollController,
         children: modele.listeWidgets.toList());
+    return this.widget.canRefresh
+        ? RefreshIndicator(
+            child: listView,
+            onRefresh: () {
+              return Future(() => modele.clear());
+            })
+        : listView;
   }
 
   void addData() {

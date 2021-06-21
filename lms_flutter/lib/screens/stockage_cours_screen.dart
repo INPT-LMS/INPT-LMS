@@ -57,7 +57,6 @@ class _StockageCoursScreenState extends State<StockageCoursScreen> {
           ListeData<Fichier>(
               FichierListService(getIt.get<StockageService>(),
                   "/storage/class/${cours.courseID}/files"),
-              false,
               shrinkWrap: true)
         ]);
       },
@@ -87,7 +86,6 @@ class _StockageCoursScreenState extends State<StockageCoursScreen> {
                     return ListeData<Fichier>(
                         FichierListService(getIt.get<StockageService>(),
                             "/storage/user/files"),
-                        false,
                         shrinkWrap: true);
                   }));
         }).then((fichier) {

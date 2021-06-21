@@ -23,7 +23,6 @@ class DevoirDetailsScreen extends StatefulWidget {
   _DevoirDetailsScreenState createState() => _DevoirDetailsScreenState();
 }
 
-//TODO: rendre devoir + afficher les réponses + supprimer le devoir + cas retour
 class _DevoirDetailsScreenState extends State<DevoirDetailsScreen> {
   DevoirService devoirService;
   StockageService stockageService;
@@ -65,11 +64,15 @@ class _DevoirDetailsScreenState extends State<DevoirDetailsScreen> {
               if (isOwner)
                 Row(children: [
                   TextButton(
-                      child: Text("Voir les réponses"), onPressed: () {}),
+                      child: Text("Voir les réponses"),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/liste-reponses-devoir',
+                            arguments: devoirData);
+                      }),
                   TextButton(
                       child: Text("Supprimer le devoir"),
                       onPressed: () {
-                        //TODO delete devoir
+                        //TODO delete devoir + cas retour
                       })
                 ])
               else if (!isFinished)
@@ -124,14 +127,12 @@ class _DevoirDetailsScreenState extends State<DevoirDetailsScreen> {
     IsolateNameServer.registerPortWithName(
         _port.sendPort, 'downloader_send_port');
     _port.listen((dynamic data) {
-      String id = data[0];
       DownloadTaskStatus status = data[1];
       if (status == DownloadTaskStatus.failed) {
         downloadError = true;
       } else if (status == DownloadTaskStatus.complete) {
         finished = true;
       }
-      int progress = data[2];
       setState(() {});
     });
     FlutterDownloader.registerCallback(downloadCallback);

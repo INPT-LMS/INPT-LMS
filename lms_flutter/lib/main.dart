@@ -18,6 +18,7 @@ import 'package:lms_flutter/screens/fichier_details_screen.dart';
 import 'package:lms_flutter/screens/home_screen.dart';
 import 'package:lms_flutter/screens/liste_devoirs_cours_screen.dart';
 import 'package:lms_flutter/screens/liste_discussion_screen.dart';
+import 'package:lms_flutter/screens/liste_reponses_devoir.dart';
 import 'package:lms_flutter/screens/stockage_cours_screen.dart';
 import 'package:lms_flutter/screens/stockage_sac_screen.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
@@ -91,6 +92,7 @@ class _MyAppState extends State<MyApp> {
           '/discussion': (context) => DiscussionScreen(),
           '/devoirs': (context) => ListeDevoirsCoursScreen(),
           '/devoirs-detail': (context) => DevoirDetailsScreen(),
+          '/liste-reponses-devoir': (context) => ListeReponsesDevoirScreen(),
           '/stockage-sac': (context) => StockageSacScreen(),
           '/stockage-cours': (context) => StockageCoursScreen(),
           '/fichier-details': (context) => FichierDetailsScreen()

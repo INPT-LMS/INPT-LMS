@@ -88,7 +88,8 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
                       Expanded(
                         child: ListeData<MessageData>(
                           messageListService,
-                          true,
+                          reverse: true,
+                          canRefresh: false,
                         ),
                       ),
                       TextFormField(

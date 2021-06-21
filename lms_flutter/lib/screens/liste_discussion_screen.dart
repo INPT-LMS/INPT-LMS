@@ -62,10 +62,17 @@ class _ListeDiscussionScreenState extends State<ListeDiscussionScreen> {
                   ChangeNotifierProvider<ListDataModel<DiscussionData>>.value(
                       value: listeModel,
                       builder: (context, child) {
-                        Provider.of<ListDataModel<DiscussionData>>(context);
+                        if (Provider.of<ListDataModel<DiscussionData>>(context)
+                            .isCleared)
+                          messageService
+                              .getDiscussionHasNewMessage()
+                              .then((value) {
+                            setState(() {
+                              withNewsDiscussionsId = value;
+                            });
+                          });
                         return ListeData<DiscussionData>(
-                            DiscussionListService(messageService, infos.id),
-                            false);
+                            DiscussionListService(messageService, infos.id));
                       }))
         ]),
       ),
@@ -73,7 +80,6 @@ class _ListeDiscussionScreenState extends State<ListeDiscussionScreen> {
   }
 
   void clear() {
-    messageService = getIt.get<MessageService>();
     messageService.getDiscussionHasNewMessage().then((value) {
       setState(() {
         withNewsDiscussionsId = value;

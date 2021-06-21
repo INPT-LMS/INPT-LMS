@@ -29,12 +29,7 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
     stockageService = getIt.get<StockageService>();
     usedSpace = 0.0;
     totalSpace = 1048576.0;
-    stockageService.getUsedSpace().then((value) {
-      setState(() {
-        usedSpace = (value["usedSpace"] as int).toDouble();
-        totalSpace = (value["totalSpace"] as int).toDouble();
-      });
-    });
+    refreshSpace();
   }
 
   @override
@@ -51,6 +46,8 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
         );
       }, (fichier) => fichier.id),
       builder: (context, _) {
+        if (Provider.of<ListDataModel<Fichier>>(context).isCleared)
+          refreshSpace();
         var usedSpaceMB = usedSpace / 1024 / 1024;
         var totalSpaceMB = totalSpace / 1024 / 1024;
         return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
@@ -72,7 +69,6 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
           ListeData<Fichier>(
               FichierListService(
                   getIt.get<StockageService>(), "/storage/user/files"),
-              false,
               shrinkWrap: true)
         ]);
       },
@@ -118,6 +114,15 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
       if (usedSpace < 0)
         usedSpace = 0;
       else if (usedSpace > totalSpace) usedSpace = totalSpace;
+    });
+  }
+
+  void refreshSpace() {
+    stockageService.getUsedSpace().then((value) {
+      setState(() {
+        usedSpace = (value["usedSpace"] as int).toDouble();
+        totalSpace = (value["totalSpace"] as int).toDouble();
+      });
     });
   }
 }

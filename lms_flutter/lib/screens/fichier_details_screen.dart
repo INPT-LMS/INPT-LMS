@@ -89,14 +89,12 @@ class _FichierDetailsScreenState extends State<FichierDetailsScreen> {
     IsolateNameServer.registerPortWithName(
         _port.sendPort, 'downloader_send_port');
     _port.listen((dynamic data) {
-      String id = data[0];
       DownloadTaskStatus status = data[1];
       if (status == DownloadTaskStatus.failed) {
         error = true;
       } else if (status == DownloadTaskStatus.complete) {
         finished = true;
       }
-      int progress = data[2];
       setState(() {});
     });
     FlutterDownloader.registerCallback(downloadCallback);
