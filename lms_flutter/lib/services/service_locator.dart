@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lms_flutter/services/compte_service.dart';
 import 'package:lms_flutter/services/post_service.dart';
+import 'package:lms_flutter/services/settings_service.dart';
 import 'package:lms_flutter/services/stockage_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,5 +42,8 @@ void setupServices() async {
 
   getIt.registerSingletonWithDependencies<StockageService>(
       () => StockageService(getIt.get<SharedPreferences>(), getIt.get<Dio>()),
+      dependsOn: [SharedPreferences]);
+  getIt.registerSingletonWithDependencies<SettingsService>(
+          () => SettingsService(getIt.get<SharedPreferences>(), getIt.get<Dio>()),
       dependsOn: [SharedPreferences]);
 }

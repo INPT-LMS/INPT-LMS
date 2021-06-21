@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/profile/ProfilePic.dart';
 import 'package:lms_flutter/components/settings/ProfilePic.dart';
 import 'package:lms_flutter/components/settings/SettingsElement.dart';
+import 'package:lms_flutter/components/settings/passwordEdit.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
+import 'package:lms_flutter/screens/utils.dart';
+import 'package:lms_flutter/services/service_locator.dart';
+import 'package:lms_flutter/services/settings_service.dart';
 
 class SettingsComp extends StatefulWidget {
   const SettingsComp({Key key}) : super(key: key);
@@ -13,8 +17,19 @@ class SettingsComp extends StatefulWidget {
 }
 
 class _SettingsCompState extends State<SettingsComp> {
+  SettingsService settingsService;
+  var data ;
+  @override
+  void initState() {
+    super.initState();
+    settingsService = getIt.get<SettingsService>();
+
+
+  }
   @override
   Widget build(BuildContext context) {
+    data = settingsService.getUserLoggedInfos();
+
     return BaseScaffoldAppBar(
       body: SingleChildScrollView(
         child: Column(
@@ -43,7 +58,9 @@ class _SettingsCompState extends State<SettingsComp> {
                      ListView(
                        shrinkWrap: true,
                        children: [
-                         for(var i = 0 ; i < 3 ; i++)  SettingsElement(type : i.toString()  )
+                         SettingsElement(type : "nom", content : data.nom),
+                         SettingsElement(type : "Langue" , content : data.langue),
+
                        ],
                      ),
 
@@ -52,12 +69,7 @@ class _SettingsCompState extends State<SettingsComp> {
                   ExpansionTile(
                     title: Text("Security"),
                     children: [
-                      ListView(
-                        shrinkWrap: true,
-                        children: [
-                          for(var i = 0 ; i < 3 ; i++)  SettingsElement(type : i.toString()  )
-                        ],
-                      ),
+                      PasswordEditElement(),
 
                     ],
                   ),
@@ -76,7 +88,9 @@ class _SettingsCompState extends State<SettingsComp> {
                         onPrimary: Colors.white, // foreground
                       ),
 
-                      onPressed: () {  },
+                      onPressed: () {
+                        showSnackbar(context, data.email);
+                        },
                       child: Text(
                         "Mettre a jour",
                         style: TextStyle(fontFamily: 'Montserrat', fontSize: 24),
