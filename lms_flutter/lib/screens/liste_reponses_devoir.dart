@@ -146,6 +146,20 @@ class _ListeReponsesDevoirScreenState extends State<ListeReponsesDevoirScreen> {
         "/storage/assignment/${devoirData.idCours}/${devoirData.id}/response";
     var listeWidgets =
         reponses.map<Widget>((reponse) => buildTile(reponse, baseUrl)).toList();
+    if (listeWidgets.isNotEmpty)
+      listeWidgets.insert(
+          0,
+          ElevatedButton(
+              onPressed: () {
+                stockageService.downloadFichier(
+                    Consts.URL_GATEWAY +
+                        "/storage/assignment/${devoirData.idCours}/${devoirData.id}/all",
+                    "reponses devoir.zip");
+              },
+              child: Text("Télécharger toutes les réponses")));
+    else
+      listeWidgets
+          .add(Center(child: Text("Pas encore de réponses à ce devoir")));
     return BaseScaffoldAppBar(
         beforePush: _removeListener,
         afterReturn: _setupListener,
