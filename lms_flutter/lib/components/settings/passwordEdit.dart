@@ -65,6 +65,31 @@ class _PasswordEditElementState extends State<PasswordEditElement> {
                 ),
               ],
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 48,
+              ),
+              child: ElevatedButton(
+
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(24),
+                          bottomLeft: Radius.circular(24))),
+                  primary: Color(0xff0275B1), // background
+                  onPrimary: Colors.white, // foreground
+                ),
+
+                onPressed: () {
+                 
+
+                },
+                child: Text(
+                  "Mettre a jour",
+                  style: TextStyle(fontFamily: 'Montserrat', fontSize: 24),
+                ),
+              ),
+            ),
           ],
         )
       ],
