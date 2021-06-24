@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/stockage/fichier_resume.dart';
 import 'package:lms_flutter/model/stockage/fichier.dart';
@@ -30,12 +29,7 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
     stockageService = getIt.get<StockageService>();
     usedSpace = 0.0;
     totalSpace = 1048576.0;
-    stockageService.getUsedSpace().then((value) {
-      setState(() {
-        usedSpace = (value["usedSpace"] as int).toDouble();
-        totalSpace = (value["availableSpace"] as int).toDouble();
-      });
-    });
+    refreshSpace();
   }
 
   @override
@@ -43,13 +37,17 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
     return BaseScaffoldAppBar(
         body: SingleChildScrollView(
             child: ChangeNotifierProvider(
-      create: (context) => ListDataModel<Fichier>(
-          (fichier) => FichierResume(
-                fichier,
-                onDelete: (fichier) => updateSize(-fichier.fichierInfo.size),
-              ),
-          (fichier) => fichier.id),
+      create: (context) => ListDataModel<Fichier>((fichier) {
+        fichier.baseUrl = "/storage/user/files/${fichier.id}";
+        fichier.isOwner = true;
+        return FichierResume(
+          fichier,
+          onDelete: (fichier) => updateSize(-fichier.fichierInfo.size),
+        );
+      }, (fichier) => fichier.id),
       builder: (context, _) {
+        if (Provider.of<ListDataModel<Fichier>>(context).isCleared)
+          refreshSpace();
         var usedSpaceMB = usedSpace / 1024 / 1024;
         var totalSpaceMB = totalSpace / 1024 / 1024;
         return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
@@ -71,7 +69,6 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
           ListeData<Fichier>(
               FichierListService(
                   getIt.get<StockageService>(), "/storage/user/files"),
-              false,
               shrinkWrap: true)
         ]);
       },
@@ -79,37 +76,35 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
   }
 
   void uploadFichier(context) {
-    FilePicker.platform
-        .pickFiles(allowMultiple: false, withReadStream: true)
-        .then((result) {
-      if (result.isSinglePick)
-        stockageService
-            .uploadFichier("/storage/user/upload", result.files[0])
-            .then((fichier) {
-          updateSize(fichier.fichierInfo.size);
-          Provider.of<ListDataModel<Fichier>>(context, listen: false)
-              .addFirst(fichier);
-          showSnackbar(context, "Fichier enregistrée dans le sac !");
-        }).catchError((e) {
-          if (e.response.statusCode == 400) {
-            var reason = (e as DioError).response.data.toString();
-            if (reason.contains("No space left"))
-              showSnackbar(
-                  context,
-                  "Pas assez d'espace de stockage pour "
-                  "téléverser ce fichier");
-            else if (reason.contains("max size"))
-              showSnackbar(context, "Ce fichier est trop grand");
-            else if (reason.contains("but got"))
-              showSnackbar(
-                  context,
-                  "Le contenu du fichier et son extension "
-                  "ne correspondent pas");
-            else
-              showSnackbar(context, "Une erreur est survenue");
-          } else
-            showSnackbar(context, e.response.statusCode);
-        });
+    chooseFile().then((file) {
+      stockageService
+          .uploadFichier("/storage/user/upload", file)
+          .then((fichier) {
+        updateSize(fichier.fichierInfo.size);
+        Provider.of<ListDataModel<Fichier>>(context, listen: false)
+            .addFirst(fichier);
+        showSnackbar(context, "Fichier enregistré dans le sac !");
+      }).catchError((e) {
+        var code = e.response.statusCode;
+        if (code == 400) {
+          var reason = (e as DioError).response.data.toString();
+          if (reason.contains("No space left"))
+            showSnackbar(
+                context,
+                "Pas assez d'espace de stockage pour "
+                "téléverser ce fichier");
+          else if (reason.contains("but got"))
+            showSnackbar(
+                context,
+                "Le contenu du fichier et son extension "
+                "ne correspondent pas");
+          else
+            showSnackbar(context, "Une erreur est survenue");
+        } else if (code == 413)
+          showSnackbar(context, "Ce fichier est trop grand");
+        else
+          showSnackbar(context, e.response.statusCode);
+      });
     });
   }
 
@@ -119,6 +114,15 @@ class _StockageSacScreenState extends State<StockageSacScreen> {
       if (usedSpace < 0)
         usedSpace = 0;
       else if (usedSpace > totalSpace) usedSpace = totalSpace;
+    });
+  }
+
+  void refreshSpace() {
+    stockageService.getUsedSpace().then((value) {
+      setState(() {
+        usedSpace = (value["usedSpace"] as int).toDouble();
+        totalSpace = (value["totalSpace"] as int).toDouble();
+      });
     });
   }
 }

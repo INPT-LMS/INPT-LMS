@@ -1,4 +1,7 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:lms_flutter/services/exceptions/no_permission_exception.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 showSnackbar(BuildContext context, String texte) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(texte)));
@@ -57,4 +60,21 @@ IconData findIconFromFileType(String mimeType) {
     return Icons.picture_as_pdf;
   else
     return Icons.insert_drive_file;
+}
+
+Future<PlatformFile> chooseFile() {
+  return Permission.storage.request().then((permissionStatus) {
+    if (!permissionStatus.isGranted) throw NoPermissionException();
+  }).then((_) => FilePicker.platform
+          .pickFiles(allowMultiple: false, withReadStream: true)
+          .then((result) {
+        if (result == null)
+          throw "nothing";
+        else if (result.isSinglePick)
+          return result.files[0];
+        else if (result.files.isEmpty)
+          throw "nothing";
+        else
+          throw "error";
+      }));
 }

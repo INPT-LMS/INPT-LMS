@@ -42,7 +42,7 @@ class _ProfileState extends State<Profile> {
               child: new Container(
                 width: MediaQuery.of(context).size.width,
                 child: Column(
-                  children: [ProfilePic()],
+                  children: [ProfilePic(5)],
                 ),
               ),
             ),

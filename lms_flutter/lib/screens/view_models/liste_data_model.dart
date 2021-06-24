@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 class ListDataModel<T> extends ChangeNotifier {
   List<T> listeData;
   List<Widget> listeWidgets;
+  bool isCleared;
 
   /// Fonction qui convertit un objet (contenant des données) en un widget
   /// correspondant
@@ -14,6 +15,7 @@ class ListDataModel<T> extends ChangeNotifier {
   ListDataModel(this.dataToWidget, this.getDataId) {
     listeData = [];
     listeWidgets = [];
+    isCleared = false;
   }
 
   void deleteWhere(dynamic id) {
@@ -23,12 +25,12 @@ class ListDataModel<T> extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addFirst(T item) {
+  void addFirst(T item, {bool update = true}) {
     if (listeData.any((element) => getDataId(element) == getDataId(item)))
       return;
     listeData.insert(0, item);
     listeWidgets.insert(0, dataToWidget(item));
-    notifyListeners();
+    if (update) notifyListeners();
   }
 
   void addLast(T item, {bool update = true}) {
@@ -46,6 +48,13 @@ class ListDataModel<T> extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateWithDataFirst(List<T> items) {
+    items.forEach((item) {
+      addFirst(item, update: false);
+    });
+    notifyListeners();
+  }
+
   void updateWhere(dynamic id, T newData) {
     var index = listeData.indexWhere((element) => getDataId(element) == id);
     listeData.removeAt(index);
@@ -54,5 +63,16 @@ class ListDataModel<T> extends ChangeNotifier {
     listeData.insert(index, newData);
     listeWidgets.insert(index, dataToWidget(newData));
     notifyListeners();
+  }
+
+  void clear() {
+    listeData.clear();
+    listeWidgets.clear();
+    isCleared = true;
+    notifyListeners();
+  }
+
+  void finishClear() {
+    isCleared = false;
   }
 }

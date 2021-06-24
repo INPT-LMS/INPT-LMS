@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lms_flutter/components/consts/custom_colors.dart';
 import 'package:lms_flutter/components/posts/like_comment.dart';
+import 'package:lms_flutter/components/profile/ProfilePic.dart';
 import 'package:lms_flutter/model/post/post_data.dart';
 import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/screens/view_models/liste_data_model.dart';
@@ -37,8 +38,7 @@ class Post extends StatelessWidget {
           padding: const EdgeInsets.all(5),
           child: Row(children: [
             GestureDetector(
-                child:
-                    CircleAvatar(backgroundImage: AssetImage("images/pic.jpg")),
+                child: ProfilePic(postData.idProprietaire),
                 onTap: () {
                   Navigator.pushNamed(context, "/profile");
                 }),

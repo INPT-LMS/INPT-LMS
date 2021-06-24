@@ -26,6 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
             create: (context) => ListDataModel<PostData>(
                 (postData) => Post(postData, key: Key(postData.id)),
                 (postData) => postData.id),
-            child: ListeData<PostData>(PostListService(postService), false)));
+            child: ListeData<PostData>(PostListService(postService))));
   }
 }
