@@ -74,7 +74,10 @@ class _GeneralInfosEditState extends State<GeneralInfosEdit> {
             ),
 
             onPressed: () {
-              showSnackbar(context,UpdatedData.nom + UpdatedData.email + UpdatedData.langue   );
+              settingsService.updateUser(UpdatedData, data.id);
+              setState(() {
+              data = settingsService.getUserLoggedInfos();
+              });
 
 
             },

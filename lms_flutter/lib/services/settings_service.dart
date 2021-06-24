@@ -16,8 +16,10 @@ class SettingsService extends BaseService{
   }
 
   Future<bool> updateUser(UserInfos userInfos, int userID){
+
     client.put("/account/update/$userID",data : userInfos.toJson())
         .then((response)  {
+          sharedPreferences.setString("userInfos", jsonEncode(userInfos));
         log(response.toString()) ;
         return true;
 
