@@ -18,7 +18,7 @@ class SettingsService extends BaseService {
   }
 
   Future<bool> updateUser(UserInfos userInfos, int userID) {
-    client
+   return client
         .put("/account/update/$userID", data: userInfos.toJson())
         .then((response) {
       sharedPreferences.setString("userInfos", jsonEncode(userInfos));
@@ -30,7 +30,7 @@ class SettingsService extends BaseService {
   }
 
   Future<bool> changePassword(PasswordEditForm passwordEditForm, int userID) {
-    client
+   return  client
         .put("/account/update/password/$userID", data: passwordEditForm.toJson())
         .then((response) {
           log(response.toString());

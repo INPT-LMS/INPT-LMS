@@ -112,7 +112,22 @@ class _PasswordEditElementState extends State<PasswordEditElement> {
                        _oldPasswordController.value.text,
                        _newPasswordController.value.text );
                    int id = compteService.getUserLoggedInfos().id;
-                   settingsService.changePassword(passwordForm,id);
+                   settingsService.changePassword(passwordForm,id)
+                   .then((updated) {
+                     if(updated){
+                       showSnackbar(context, "Password updated successfully");
+                       _oldPasswordController.clear();
+                       _newPasswordController.clear();
+                       _newPasswordController2.clear();
+                     }
+                     else{
+                       showSnackbar(context, "Cridentials are not excepted "
+                           "please provide correct values");
+                       _oldPasswordController.clear();
+                       _newPasswordController.clear();
+                       _newPasswordController2.clear();
+                     }
+                   });
                  }
 
 
