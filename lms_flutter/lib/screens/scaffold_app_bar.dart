@@ -109,7 +109,9 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
         IconButton(
             icon: Icon(Icons.settings),
             tooltip: "Parametres",
-            onPressed: () => {}),
+            onPressed: ()  {
+            pushRoute("/settings", "/settings");
+            }),
       ],
     );
 
