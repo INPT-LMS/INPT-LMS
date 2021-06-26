@@ -1,27 +1,42 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lms_flutter/components/course/courseBanner.dart';
-import 'package:lms_flutter/components/profile/ProfileCourseSection.dart';
+import 'package:lms_flutter/components/my_courses/courseBanner.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
+import 'package:lms_flutter/screens/utils.dart';
+import 'package:lms_flutter/services/course_service.dart';
+import 'package:lms_flutter/services/service_locator.dart';
+class Mycourses extends StatefulWidget {
 
-class Mycourses extends StatelessWidget {
   const Mycourses({Key key}) : super(key: key);
 
   @override
+  _MycoursesState createState() => _MycoursesState();
+}
+
+class _MycoursesState extends State<Mycourses> {
+  CourseService courseService ;
+  @override
+  void initState() {
+    courseService = getIt.get<CourseService>();
+    courseService.getCourses();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
+
     return BaseScaffoldAppBar(
       body: Column(
         children: [
-         Container(
-           padding: EdgeInsets.all(24),
-           child: Text(
-             "My courses",
-             style: TextStyle(
-               fontSize: 32,
-               color: Color(0xff0275B1),
-             ),
-           ),
-         ),
+          Container(
+            padding: EdgeInsets.all(24),
+            child: Text(
+              "My courses",
+              style: TextStyle(
+                fontSize: 32,
+                color: Color(0xff0275B1),
+              ),
+            ),
+          ),
           CourseBanner("bjj"),
           CourseBanner("bjj"),
           CourseBanner("bjj"),
@@ -40,11 +55,16 @@ class Mycourses extends StatelessWidget {
                 primary: Color(0xff0275B1), // background
                 onPrimary: Colors.white, // foreground
               ),
-              onPressed: () {  },
+              onPressed: () {
+                Navigator.pushNamed(context, "/addCourse");
+              },
             ),
-          )
+          ),
+
         ],
       ),
     );
   }
 }
+
+

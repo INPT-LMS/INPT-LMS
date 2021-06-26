@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:lms_flutter/components/course/coursePicture.dart';
-import 'package:lms_flutter/components/profile/ProfilePic.dart';
+import 'package:lms_flutter/components/my_courses/coursePicture.dart';
+
+import 'coursePicture.dart';
 
 class CourseBanner extends StatelessWidget {
   final String courseID;

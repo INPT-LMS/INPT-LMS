@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:lms_flutter/model/course/course_data.dart';
 import 'package:lms_flutter/services/base_service.dart';
@@ -22,6 +24,15 @@ class CourseService extends BaseService {
       var responseBody = response.data.toString();
       if (responseBody == "UNAUTHORIZED") throw ForbiddenException();
       return int.parse(responseBody);
+    });
+  }
+
+  Future<dynamic> getCourses() {
+    return client.get("/class/student/courses").then((response) {
+      log(response.toString());
+      return response.data;
+    }).catchError((err) {
+      log(err.toString());
     });
   }
 }

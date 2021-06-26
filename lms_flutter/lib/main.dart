@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:lms_flutter/components/my_courses/addCourseElement.dart';
 import 'package:lms_flutter/screens/CoursePage.dart';
 import 'package:lms_flutter/screens/LoginPage.dart';
+import 'package:lms_flutter/screens/MycoursesPage.dart';
 import 'package:lms_flutter/screens/ProfilePage.dart';
 import 'package:lms_flutter/screens/Settings.dart';
 import 'package:lms_flutter/screens/SignUpPage.dart';
@@ -87,6 +89,8 @@ class _MyAppState extends State<MyApp> {
           '/signup': (context) => SignUpPage(),
           '/home': (context) => HomeScreen(),
           '/course': (context) => CoursePage(),
+          '/mycourses': (context) => Mycourses(),
+          '/addCourse': (context) => AddCourse(),
           '/profile': (context) => Profile(),
           '/settings': (context) => SettingsComp(),
           '/messages': (context) => ListeDiscussionScreen(),
