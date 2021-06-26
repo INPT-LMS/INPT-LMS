@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class UserBean {
-    private UserInfoBean userInfoBean;
+    private UserInfoBean User;
+    private String message;
 }

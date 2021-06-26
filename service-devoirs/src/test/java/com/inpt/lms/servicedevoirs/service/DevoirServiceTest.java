@@ -134,7 +134,7 @@ class DevoirServiceTest {
         Long userId = 0l;
 
         DevoirReponseDTO devoirReponseDTO = new DevoirReponseDTO();
-        devoirReponseDTO.setNomFichier("Y");
+        devoirReponseDTO.setNomFichier(null);
 
         Fichier f = new Fichier();
         f.setNom(devoirReponseDTO.getNomFichier());

@@ -1,6 +1,5 @@
 package com.lms.servicepublications.service;
 import com.lms.servicepublications.beans.UserBean;
-import com.lms.servicepublications.beans.UserInfoBean;
 import com.lms.servicepublications.dto.CommentaireDTO;
 import com.lms.servicepublications.exceptions.ResourceNotFoundException;
 import com.lms.servicepublications.exceptions.UnauthorizedException;
@@ -33,8 +32,8 @@ public class CommentaireService {
         Publication publication = publicationRepository.findById(commentaireDTO.getIdPublication()).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
         Commentaire commentaire = new Commentaire();
         commentaire.setIdProprietaire(id_user);
-        commentaire.setNomUser(userBean.getUserInfoBean().getNom());
-        commentaire.setPrenomUser(userBean.getUserInfoBean().getPrenom());
+        commentaire.setNomUser(userBean.getUser().getNom());
+        commentaire.setPrenomUser(userBean.getUser().getPrenom());
         commentaire.setIdPublication(commentaireDTO.getIdPublication());
         commentaire.setContenuCommentaire(commentaireDTO.getContenuCommentaire());
         List<Commentaire> commentaires = publication.getCommentaires();

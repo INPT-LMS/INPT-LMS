@@ -1,6 +1,8 @@
 package inpt.lms.stockage.business.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +33,7 @@ public class GestionnaireIOFichierLocalImpl implements GestionnaireIOFichier {
 				: new File(location, nom);
 		if (!nom.equals("") && fichierDisque.exists())
 			throw new IOException("Fichier déjà présent");
+
 		Files.write(fichierDisque.toPath(), fichier);
 		return fichierDisque.getAbsolutePath();
 	}
@@ -44,7 +47,13 @@ public class GestionnaireIOFichierLocalImpl implements GestionnaireIOFichier {
 
 	@Override
 	public byte[] lireFichier(String chemin) throws IOException {
-		return Files.readAllBytes(Path.of(chemin));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		try(FileInputStream in = new FileInputStream(chemin)){
+			byte[] b = new byte[2048];
+			while (in.read(b) != -1)
+				out.write(b);
+		}
+		return out.toByteArray();
 	}
 	
 	@Override
