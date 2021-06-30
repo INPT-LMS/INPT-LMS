@@ -96,10 +96,6 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
               pushRoute("/home", "/home");
             }),
         IconButton(
-            icon: Icon(Icons.add_alert_rounded),
-            tooltip: "Alertes",
-            onPressed: () {}),
-        IconButton(
             icon: Icon(Icons.mail),
             tooltip: "Messages",
             onPressed: () {
@@ -108,8 +104,8 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
         IconButton(
             icon: Icon(Icons.settings),
             tooltip: "Parametres",
-            onPressed: ()  {
-            pushRoute("/settings", "/settings");
+            onPressed: () {
+              pushRoute("/settings", "/settings");
             }),
       ],
     );

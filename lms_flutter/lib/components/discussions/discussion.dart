@@ -28,12 +28,14 @@ class Discussion extends StatelessWidget {
           : data.nomParticipant1),
       subtitle:
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text(
-          data.lastMessage.idDestinataire == infos.id
-              ? data.lastMessage.contenu
-              : "Moi : ${data.lastMessage.contenu}",
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(color: hasNew ? Colors.greenAccent : Colors.black),
+        Expanded(
+          child: Text(
+            data.lastMessage.idDestinataire == infos.id
+                ? data.lastMessage.contenu
+                : "Moi : ${data.lastMessage.contenu}",
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: hasNew ? Colors.greenAccent : Colors.black),
+          ),
         ),
         if (hasNew) Icon(Icons.notifications, color: Colors.greenAccent)
       ]),

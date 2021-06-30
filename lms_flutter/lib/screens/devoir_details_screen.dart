@@ -89,7 +89,7 @@ class _DevoirDetailsScreenState extends State<DevoirDetailsScreen> {
                         child: Text("Voir ma réponse"),
                         onPressed: () => stockageService.downloadFichier(
                             Consts.URL_GATEWAY +
-                                "/storage/assignment/${devoirData.idCours}/${devoirData.id}",
+                                "/storage/assignment/${devoirData.idCours}/${devoirData.id}/response",
                             devoirData.reponses[0].fichier.nom),
                       )
                   ],

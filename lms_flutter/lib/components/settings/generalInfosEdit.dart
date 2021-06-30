@@ -1,9 +1,5 @@
-import 'dart:developer';
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lms_flutter/screens/utils.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:lms_flutter/services/settings_service.dart';
 
@@ -18,52 +14,55 @@ class GeneralInfosEdit extends StatefulWidget {
 
 class _GeneralInfosEditState extends State<GeneralInfosEdit> {
   SettingsService settingsService;
-  var data ;
-  var UpdatedData ;
-  void changeInfos (var type, var value){
-    switch(type){
-      case "nom" :
+  var data;
+  var UpdatedData;
+  void changeInfos(var type, var value) {
+    switch (type) {
+      case "nom":
         setState(() {
           UpdatedData.nom = value;
-
         });
-        break ;
-      case "email" :
+        break;
+      case "email":
         setState(() {
           UpdatedData.email = value;
         });
-        break ;
-      case "langue" :
+        break;
+      case "langue":
         setState(() {
           UpdatedData.langue = value;
         });
         break;
-
     }
   }
+
   @override
   void initState() {
     super.initState();
     settingsService = getIt.get<SettingsService>();
     data = settingsService.getUserLoggedInfos();
-    UpdatedData = data ;
-
+    UpdatedData = data;
   }
+
   @override
   Widget build(BuildContext context) {
-
-    return        ListView(
+    return ListView(
       shrinkWrap: true,
       children: [
-        SettingsElement(type : "nom", content : data.nom, changeInfos: changeInfos,),
-        SettingsElement(type : "email", content : data.email, changeInfos: changeInfos),
-        SettingsElement(type : "langue" , content : data.langue, changeInfos: changeInfos),
+        SettingsElement(
+          type: "nom",
+          content: data.nom,
+          changeInfos: changeInfos,
+        ),
+        SettingsElement(
+            type: "email", content: data.email, changeInfos: changeInfos),
+        SettingsElement(
+            type: "langue", content: data.langue, changeInfos: changeInfos),
         Padding(
           padding: EdgeInsets.symmetric(
             vertical: 48,
           ),
           child: ElevatedButton(
-
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
@@ -72,14 +71,11 @@ class _GeneralInfosEditState extends State<GeneralInfosEdit> {
               primary: Color(0xff0275B1), // background
               onPrimary: Colors.white, // foreground
             ),
-
             onPressed: () {
               settingsService.updateUser(UpdatedData, data.id);
               setState(() {
-              data = settingsService.getUserLoggedInfos();
+                data = settingsService.getUserLoggedInfos();
               });
-
-
             },
             child: Text(
               "Mettre a jour",

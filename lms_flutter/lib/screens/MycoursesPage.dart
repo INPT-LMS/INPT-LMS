@@ -2,11 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/my_courses/courseBanner.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
-import 'package:lms_flutter/screens/utils.dart';
 import 'package:lms_flutter/services/course_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
-class Mycourses extends StatefulWidget {
 
+class Mycourses extends StatefulWidget {
   const Mycourses({Key key}) : super(key: key);
 
   @override
@@ -14,16 +13,16 @@ class Mycourses extends StatefulWidget {
 }
 
 class _MycoursesState extends State<Mycourses> {
-  CourseService courseService ;
+  CourseService courseService;
   @override
   void initState() {
     courseService = getIt.get<CourseService>();
     courseService.getCourses();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return BaseScaffoldAppBar(
       body: Column(
         children: [
@@ -60,11 +59,8 @@ class _MycoursesState extends State<Mycourses> {
               },
             ),
           ),
-
         ],
       ),
     );
   }
 }
-
-

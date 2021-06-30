@@ -13,7 +13,7 @@ class ProfilePic extends StatelessWidget {
         imageUrl: Consts.URL_GATEWAY + "/storage/user/picture/$userId",
         placeholder: (context, url) => Icon(Icons.perm_identity),
         errorWidget: (context, url, error) => Icon(Icons.perm_identity),
-        imageBuilder: (context, imageProvider) =>
-            CircleAvatar(backgroundImage: imageProvider));
+        imageBuilder: (context, imageProvider) => CircleAvatar(
+            backgroundImage: imageProvider, backgroundColor: Colors.white));
   }
 }

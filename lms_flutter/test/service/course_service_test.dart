@@ -5,7 +5,7 @@ import 'package:lms_flutter/services/course_service.dart';
 import 'package:lms_flutter/services/exceptions/forbidden_exception.dart';
 import 'package:mockito/mockito.dart';
 
-import 'mocks.dart';
+import '../mocks.dart';
 
 void main() {
   MockSharedPreferences sharedPref;

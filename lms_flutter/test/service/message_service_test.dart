@@ -4,7 +4,7 @@ import 'package:lms_flutter/model/discussion/message_data.dart';
 import 'package:lms_flutter/services/message_service.dart';
 import 'package:mockito/mockito.dart';
 
-import 'mocks.dart';
+import '../mocks.dart';
 
 void main() {
   MockSharedPreferences sharedPref;
