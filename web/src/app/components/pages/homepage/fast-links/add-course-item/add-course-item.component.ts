@@ -36,8 +36,7 @@ export class AddCourseItemComponent implements OnInit {
 
     try {
       const res: any = await this.classService.addCourseForAdmin(payload);
-      this.courses.unshift(payload);
-      console.log(res);
+      this.courses.unshift(res);
       this.courseForm.reset();
     } catch (error) {
       console.log(error);

@@ -39,12 +39,15 @@ export class AddAssignmentComponent implements OnInit {
 
     const { contenu, type, dateLimite } = this.assignmentForm.value;
 
+    console.log(this.assignmentForm.value);
+
     try {
       const res = await this.assignmentService.addDevoir(this.classId, {
         contenu,
         type,
         dateLimite,
       });
+      console.log(res);
       if (res === null) {
         console.log("La date doit être supérieure à la date d'aujourd'hui");
       }

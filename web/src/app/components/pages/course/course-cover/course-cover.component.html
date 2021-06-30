@@ -21,6 +21,14 @@
           ngbDropdownItem
           >Members</a
         >
+        <a
+          class="btn link"
+          [routerLink]="['/course', classId, 'assignments']"
+          [state]="{ classId: classId }"
+          routerLinkActive="router-link-active"
+          ngbDropdownItem
+          >Assignments</a
+        >
         <!-- <button ngbDropdownItem>Share Course</button> -->
         <button ngbDropdownItem>Edit Course</button>
         <button ngbDropdownItem (click)="deleteClass()">

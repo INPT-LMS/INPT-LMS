@@ -34,15 +34,17 @@ export type Devoir = {
   id?: string;
   idCours?: string;
   idPropprietaire?: number;
+  dateLimite?: Date;
   devoirInfos?: DevoirInfos;
   reponses?: ReponseDevoir[];
   type?: 'DEVOIR' | 'QUIZZ';
 };
 
 export type DevoirInfos = {
+  id?: string;
   type?: 'DEVOIR' | 'QUIZZ';
   contenu?: string;
-  dateLimite?: Date;
+  dateCreation?: Date;
 };
 
 export type ReponseDevoir = {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssignmentService } from 'src/app/services/assignment.service';
 import { ClassService } from 'src/app/services/class.service';
@@ -14,7 +14,6 @@ import { Class, Devoir, Publication } from 'src/app/utils/Types';
 export class CourseComponent implements OnInit {
   class: Class;
   posts: Publication[];
-  devoirs: Devoir[];
   ownerId: number;
 
   constructor(
@@ -25,7 +24,6 @@ export class CourseComponent implements OnInit {
     private router: Router
   ) {
     this.posts = [];
-    this.devoirs = [];
     this.class = {
       devoirs: [],
     };
@@ -48,12 +46,13 @@ export class CourseComponent implements OnInit {
       const res2: any = await this.assignmentService.getDevoirsForClass(
         this.class.courseID!
       );
-      this.devoirs = res2;
+      this.class.devoirs = res2;
     } catch (error) {
       console.log(error);
     }
 
     this.ownerId = this.class.owner?.professorID!;
+    console.log(this.class);
   }
 
   async deleteClass() {

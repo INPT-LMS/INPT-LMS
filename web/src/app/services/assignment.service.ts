@@ -26,7 +26,7 @@ export class AssignmentService {
   /**
    * Récupère un seul devoir dans un cours
    */
-  getDevoir(classId: string, devoirId: number) {
+  getDevoir(classId: string, devoirId: string) {
     return this.http
       .get(`/assignment/devoirs/${classId}/${devoirId}`, this.httpOptions)
       .toPromise();
@@ -35,7 +35,10 @@ export class AssignmentService {
   /**
    * Ajoute un devoir dans un cours
    */
-  addDevoir(classId: string, devoir: DevoirInfos) {
+  addDevoir(
+    classId: string,
+    devoir: { contenu: string; type: 'DEVOIR' | 'QUIZZ'; dateLimite: Date }
+  ) {
     return this.http
       .post(`/assignment/devoirs/${classId}`, devoir, this.httpOptions)
       .toPromise();
