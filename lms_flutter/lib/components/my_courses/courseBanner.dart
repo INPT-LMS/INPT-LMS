@@ -20,32 +20,35 @@ class CourseBanner extends StatelessWidget {
               children: [CoursePicture(this._courseData.courseID)],
             ),
           ),
-          GestureDetector(
-            onTap: (){
-              if (ModalRoute.of(context).settings.name !=
-                  "/course") {
-                Navigator.pushNamed(context, "/course",
-                    arguments: _courseData.courseID);
-              }
-            },
-            child: Expanded(
-              flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(_courseData.courseName,
-                    style: TextStyle(
-                      fontSize: 24
-                    ),),
-                    Text(_courseData.courseDescription,
 
-                      style:TextStyle(
-                        fontSize: 12
-                      ) ,)
-                  ],
+
+             Expanded(
+              flex: 3,
+                child: GestureDetector(
+                  onTap: (){
+                    if (ModalRoute.of(context).settings.name !=
+                        "/course") {
+                      Navigator.pushNamed(context, "/course",
+                          arguments: _courseData.courseID);
+                    }
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(_courseData.courseName,
+                      style: TextStyle(
+                        fontSize: 24
+                      ),),
+                      Text(_courseData.courseDescription,
+
+                        style:TextStyle(
+                          fontSize: 12
+                        ) ,)
+                    ],
+                  ),
                 )
             ),
-          )
+
         ],
       ),
     );
