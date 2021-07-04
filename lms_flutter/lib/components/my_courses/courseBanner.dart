@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lms_flutter/components/my_courses/coursePicture.dart';
+import 'package:lms_flutter/model/course/course_data.dart';
 
 import 'coursePicture.dart';
 
 class CourseBanner extends StatelessWidget {
-  final String courseID;
-  const CourseBanner(this.courseID, {Key key}) : super(key: key);
+  final CourseData _courseData;
+  const CourseBanner(this._courseData, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +17,23 @@ class CourseBanner extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Column(
-              children: [CoursePicture(this.courseID)],
+              children: [CoursePicture(this._courseData.courseID)],
             ),
           ),
           Expanded(
             flex: 3,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Course Name"),
-                  Text("Course Description")
+                  Text(_courseData.courseName,
+                  style: TextStyle(
+                    fontSize: 24
+                  ),),
+                  Text(_courseData.courseDescription,
+
+                    style:TextStyle(
+                      fontSize: 12
+                    ) ,)
                 ],
               )
           )

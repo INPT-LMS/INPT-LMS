@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/my_courses/courseBanner.dart';
+import 'package:lms_flutter/model/course/course_data.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 import 'package:lms_flutter/services/course_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
@@ -14,13 +15,20 @@ class Mycourses extends StatefulWidget {
 
 class _MycoursesState extends State<Mycourses> {
   CourseService courseService;
+  List<CourseData> coursesList  = new List.empty(growable: true);
   @override
   void initState() {
     courseService = getIt.get<CourseService>();
-    courseService.getCourses();
+    setupCoursesList();
     super.initState();
   }
-
+  void setupCoursesList() async{
+    courseService.getCourses().then((list){
+      setState(() {
+        coursesList = list;
+      });
+    });
+}
   @override
   Widget build(BuildContext context) {
     return BaseScaffoldAppBar(
@@ -36,10 +44,7 @@ class _MycoursesState extends State<Mycourses> {
               ),
             ),
           ),
-          CourseBanner("bjj"),
-          CourseBanner("bjj"),
-          CourseBanner("bjj"),
-          CourseBanner("bjj"),
+        for(int i = 0 ; i < coursesList.length ; i ++)   CourseBanner(coursesList[i]),
           Container(
             width: 140,
             height: 32,

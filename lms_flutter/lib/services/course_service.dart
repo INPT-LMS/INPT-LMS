@@ -32,10 +32,15 @@ class CourseService extends BaseService {
       return CourseData.fromJson(value.data);
     });
   }
-  Future<dynamic> getCourses() {
+  Future<List<CourseData>> getCourses() {
     return client.get("/class/student/courses").then((response) {
-      log(response.toString());
-      return response.data;
+      List  responseBody = response.data ;
+      log("Fetching " + responseBody.toString());
+      List<CourseData> courses = new List.empty(growable: true);
+      for(int i = 0 ; i < responseBody.length ; i++){
+        courses.add(CourseData.fromJson(responseBody[i]));
+      }
+      return courses;
     }).catchError((err) {
       log(err.toString());
     });
