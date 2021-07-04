@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:lms_flutter/model/add_course_form.dart';
 import 'package:lms_flutter/model/course/course_data.dart';
 import 'package:lms_flutter/services/base_service.dart';
 import 'package:lms_flutter/services/exceptions/forbidden_exception.dart';
@@ -26,7 +27,11 @@ class CourseService extends BaseService {
       return int.parse(responseBody);
     });
   }
-
+  Future<CourseData> addCourse(AddCourseForm courseData){
+    return client.post("/class/course/owner",data: courseData.toJson()).then((value) {
+      return CourseData.fromJson(value.data);
+    });
+  }
   Future<dynamic> getCourses() {
     return client.get("/class/student/courses").then((response) {
       log(response.toString());

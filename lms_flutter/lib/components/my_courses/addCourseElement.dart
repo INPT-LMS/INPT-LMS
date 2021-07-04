@@ -1,15 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lms_flutter/model/add_course_form.dart';
+import 'package:lms_flutter/model/course/course_data.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
+import 'package:lms_flutter/screens/utils.dart';
+import 'package:lms_flutter/services/course_service.dart';
+import 'package:lms_flutter/services/service_locator.dart';
 
 class AddCourse extends StatefulWidget {
   const AddCourse({Key key}) : super(key: key);
-
   @override
   _AddCourseState createState() => _AddCourseState();
 }
 
 class _AddCourseState extends State<AddCourse> {
+  TextEditingController _nameController;
+  TextEditingController _descriptionController;
+  AddCourseForm courseData;
+  CourseService courseService ;
+  @override
+  void initState() {
+    _nameController = new TextEditingController();
+    _descriptionController = new TextEditingController();
+    courseService = getIt.get<CourseService>();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BaseScaffoldAppBar(
@@ -24,6 +39,7 @@ class _AddCourseState extends State<AddCourse> {
               ),
               child: TextFormField(
                 keyboardType: TextInputType.name,
+                controller: _nameController,
                 cursorColor: Theme.of(context).cursorColor,
                 decoration: InputDecoration(
                   filled: true,
@@ -44,6 +60,7 @@ class _AddCourseState extends State<AddCourse> {
                   vertical: 24
               ),
               child: TextFormField(
+                controller: _descriptionController,
                 keyboardType: TextInputType.name,
                 maxLines: 4,
                 cursorColor: Theme.of(context).cursorColor,
@@ -65,7 +82,13 @@ class _AddCourseState extends State<AddCourse> {
               height: 52,
               margin: EdgeInsets.only(top: 24),
               child: ElevatedButton(
-                onPressed: (){},
+                onPressed: (){
+                  courseData = new AddCourseForm(_nameController.text,
+                      _descriptionController.text, null);
+                  courseService.addCourse(courseData).then((value) {
+                    showSnackbar(context, value.courseName);
+                  });
+                },
                 child: Text("Ajouter le cours"),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
