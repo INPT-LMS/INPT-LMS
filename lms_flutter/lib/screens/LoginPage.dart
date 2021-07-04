@@ -122,7 +122,10 @@ class _LoginPageState extends State<LoginPage> {
                         showSnackbar(
                             context, "Email ou mot de passe incorrect");
                     }).catchError((e) {
-                      showDefaultErrorMessage(context, e.response.statusCode);
+                      if (e.type == DioErrorType.connectTimeout)
+                        showSnackbar(context, "Erreur : serveur indisponible");
+                      else
+                        showDefaultErrorMessage(context, e.response.statusCode);
                     });
                   },
                   child: Text(

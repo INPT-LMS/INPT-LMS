@@ -27,8 +27,9 @@ class CompteService extends BaseService {
       return true;
     }).onError((error, _) {
       sharedPreferences.remove("userToken");
+      if (error.type != DioErrorType.response) return Future.error(error);
       var statusCode = (error as DioError).response.statusCode;
-      return (statusCode == 400 || statusCode == 404)
+      return (statusCode == 401 || statusCode == 404)
           ? false
           : Future.error(error);
     });
