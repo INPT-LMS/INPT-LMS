@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DevoirInfos } from '../utils/Types';
 
 interface RenduDevoir {
@@ -36,7 +37,12 @@ export class AssignmentService {
   /**
    * Récupère ma propre réponse d'un devoir
    */
-  getOwnReponseDevoir() {}
+  getOwnReponseDevoir(classId: string, devoirId: string) {
+    return this.http.get(
+      `/storage/assignment/${classId}/${devoirId}/response`,
+      { responseType: 'blob' }
+    );
+  }
 
   /**
    * Ajoute un devoir dans un cours

@@ -11,7 +11,9 @@
       <ng-container *ngIf="this.assignmentStatus.rendu; else elseTemplate">
         <span class="text-success">Oui</span> |
         <!-- TODO afficher le fichier rendu -->
-        <a href="google.com" target="_">Voir le fichier</a>
+        <button class="btn link" (click)="downloadFile()">
+          Voir le fichier
+        </button>
       </ng-container>
       <ng-template #elseTemplate>
         <span class="text-danger">Non</span>

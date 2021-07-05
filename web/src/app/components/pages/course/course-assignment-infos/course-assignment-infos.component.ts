@@ -83,4 +83,17 @@ export class CourseAssignmentInfosComponent implements OnInit {
 
     this.fileToUpload = files.item(0);
   }
+
+  async downloadFile() {
+    this.assignmentService
+      .getOwnReponseDevoir(this.classId, this.devoirId)
+      .subscribe((blob) => {
+        let downloadURL = URL.createObjectURL(blob);
+        window.open(downloadURL);
+      });
+
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  }
 }
