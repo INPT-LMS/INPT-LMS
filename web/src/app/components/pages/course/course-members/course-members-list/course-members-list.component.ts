@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AccountService } from 'src/app/services/account.service';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { ClassService } from 'src/app/services/class.service';
 import { User } from 'src/app/utils/Types';
 
@@ -11,8 +10,14 @@ import { User } from 'src/app/utils/Types';
 export class CourseMembersListComponent implements OnInit {
   @Input()
   members: User[] = [];
+  @Input()
+  classId: string = '';
+  ownerId: number = -1;
 
-  constructor() {}
+  constructor(private classService: ClassService) {}
 
-  async ngOnInit(): Promise<void> {}
+  async ngOnInit(): Promise<void> {
+    const res: any = await this.classService.getCourseForAdmin(this.classId);
+    this.ownerId = res;
+  }
 }

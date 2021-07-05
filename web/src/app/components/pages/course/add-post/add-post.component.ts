@@ -27,9 +27,7 @@ export class AddPostComponent implements OnInit {
     this.posts = [];
   }
 
-  ngOnInit(): void {
-    console.log(this.class);
-  }
+  ngOnInit(): void {}
 
   async onSubmit(event: Event) {
     event.preventDefault();

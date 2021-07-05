@@ -1,6 +1,7 @@
 <app-course-cover
   [title]="class.courseName ? class.courseName : ''"
   [deleteClass]="deleteClass.bind(this)"
+  [ownerId]="ownerId"
   [classId]="class.courseID!"
 ></app-course-cover>
 <div class="course-color">
@@ -17,7 +18,9 @@
       </div>
       <div class="col-3 mt-5">
         <!-- Agenda -->
-        <app-agenda [devoirs]="class.devoirs ? class.devoirs : []"></app-agenda>
+        <ng-container *ngIf="class.devoirs">
+          <app-agenda [devoirs]="class.devoirs"></app-agenda>
+        </ng-container>
       </div>
     </div>
   </div>

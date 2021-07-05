@@ -4,6 +4,9 @@ import { AccountComponent } from './components/pages/account/account.component';
 import { LanguageComponent } from './components/pages/account/chosen-setting/language/language.component';
 import { PersonalInformationComponent } from './components/pages/account/chosen-setting/personal-information/personal-information.component';
 import { SecurityComponent } from './components/pages/account/chosen-setting/security/security.component';
+import { CourseAssignmentInfosComponent } from './components/pages/course/course-assignment-infos/course-assignment-infos.component';
+import { CourseAssignmentsAllComponent } from './components/pages/course/course-assignments-all/course-assignments-all.component';
+import { CourseAssignmentsComponent } from './components/pages/course/course-assignments/course-assignments.component';
 import { CourseFeedComponent } from './components/pages/course/course-feed/course-feed.component';
 import { CourseMembersComponent } from './components/pages/course/course-members/course-members.component';
 import { CourseComponent } from './components/pages/course/course.component';
@@ -25,6 +28,20 @@ const routes: Routes = [
     children: [
       { path: '', component: CourseFeedComponent },
       { path: 'members', component: CourseMembersComponent },
+      {
+        path: 'assignments',
+        component: CourseAssignmentsComponent,
+        children: [
+          {
+            path: '',
+            component: CourseAssignmentsAllComponent,
+          },
+          {
+            path: ':id',
+            component: CourseAssignmentInfosComponent,
+          },
+        ],
+      },
     ],
   },
   {

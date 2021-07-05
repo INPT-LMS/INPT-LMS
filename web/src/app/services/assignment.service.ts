@@ -1,13 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-
-interface Devoir {
-  idProprietiare: number;
-  type: string;
-  contenu: string;
-}
+import { DevoirInfos } from '../utils/Types';
 
 interface RenduDevoir {
   idProprietiare: number;
@@ -33,16 +26,25 @@ export class AssignmentService {
   /**
    * Récupère un seul devoir dans un cours
    */
-  getDevoir(classId: string, devoirId: number) {
+  getDevoir(classId: string, devoirId: string) {
     return this.http
       .get(`/assignment/devoirs/${classId}/${devoirId}`, this.httpOptions)
       .toPromise();
   }
 
+  // TODO 3ajil jidan
+  /**
+   * Récupère ma propre réponse d'un devoir
+   */
+  getOwnReponseDevoir() {}
+
   /**
    * Ajoute un devoir dans un cours
    */
-  addDevoir(classId: string, devoir: Devoir) {
+  addDevoir(
+    classId: string,
+    devoir: { contenu: string; type: 'DEVOIR' | 'QUIZZ'; dateLimite: Date }
+  ) {
     return this.http
       .post(`/assignment/devoirs/${classId}`, devoir, this.httpOptions)
       .toPromise();
@@ -51,11 +53,13 @@ export class AssignmentService {
   /**
    * Ajoute un rendu pour un devoir
    */
-  addRenduDevoir(classId: string, devoirId: string, renduDevoir: RenduDevoir) {
+  addRenduDevoir(classId: string, devoirId: string, file: File) {
+    let formData = new FormData();
+    formData.append('fichier', file);
     return this.http
       .put(
         `/assignment/devoirs/${classId}/${devoirId}/rendu`,
-        renduDevoir,
+        formData,
         this.httpOptions
       )
       .toPromise();

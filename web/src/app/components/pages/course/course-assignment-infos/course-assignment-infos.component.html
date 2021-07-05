@@ -1,0 +1,37 @@
+<ng-container *ngIf="devoir.devoirInfos?.contenu!">
+  <hr />
+  <h2 class="text-center">Assignment infos :</h2>
+  <p>
+    {{ devoir.devoirInfos?.contenu! }}
+  </p>
+  <div class="border rounded p-3">
+    <h4 class="text-center">Status du devoir</h4>
+    <p>
+      Devoir rendu :
+      <ng-container *ngIf="this.assignmentStatus.rendu; else elseTemplate">
+        <span class="text-success">Oui</span> |
+        <!-- TODO afficher le fichier rendu -->
+        <a href="google.com" target="_">Voir le fichier</a>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <span class="text-danger">Non</span>
+      </ng-template>
+    </p>
+    <p>
+      Rendu noté :
+      <ng-container *ngIf="this.assignmentStatus.estNote; else elseTemplate">
+        <span class="text-success">Oui</span>
+        <span>Notes : {{ this.assignmentStatus.note! }}</span>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <span class="text-danger">Non</span>
+      </ng-template>
+    </p>
+    <form (ngSubmit)="onSubmit($event)">
+      <input type="file" class="form-control" (change)="changeFile($event)" />
+      <button class="btn btn-primary my-2 w-100 submit-btn" type="submit">
+        Ajouter/modifier un rendu
+      </button>
+    </form>
+  </div>
+</ng-container>
