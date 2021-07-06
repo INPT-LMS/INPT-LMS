@@ -58,7 +58,6 @@ export class LoginFormComponent implements OnInit {
       this.localStorageService.set('userToken', token);
       this.localStorageService.set('userId', id);
 
-      // TODO dispatch user infos
       const payload = {
         id,
         email,

@@ -1,11 +1,11 @@
 <!-- Button trigger modal -->
 <button
   type="button"
-  class="btn btn-primary w-100 add-course-btn"
+  class="btn btn-primary mb-2 w-100 add-course-btn"
   data-toggle="modal"
   data-target="#exampleModal"
 >
-  Ajouter un membre
+  Ajouter un devoir
 </button>
 
 <!-- Modal -->
@@ -20,7 +20,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ajouter un membre</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Ajouter un devoir</h5>
         <button
           type="button"
           class="close"
@@ -30,17 +30,29 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form [formGroup]="addUserForm" (ngSubmit)="onSubmit($event)">
+      <form [formGroup]="assignmentForm" (ngSubmit)="onSubmit($event)">
         <div class="modal-body">
           <div class="form-group">
-            <label> Personne à ajouter :</label>
-            <input
-              type="text"
+            <label> Type du travail </label>
+            <select name="type" class="form-control" formControlName="type">
+              <option value="DEVOIR">Devoir</option>
+              <!-- <option value="QUIZZ">Quizz</option> -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label> Contenu </label>
+            <textarea
               class="form-control"
-              placeholder="Nom de la personne"
-              formControlName="userName"
-              [ngbTypeahead]="search"
-              #instance="ngbTypeahead"
+              placeholder="Contenu"
+              formControlName="contenu"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label> Date limite </label>
+            <input
+              type="date"
+              class="form-control"
+              formControlName="dateLimite"
             />
           </div>
         </div>
@@ -48,7 +60,7 @@
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
             Annuler
           </button>
-          <button type="submit" class="btn btn-primary">Ajouter</button>
+          <button type="submit" class="btn btn-primary">Créer</button>
         </div>
       </form>
     </div>

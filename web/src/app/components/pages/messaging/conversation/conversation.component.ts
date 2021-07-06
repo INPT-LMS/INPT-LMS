@@ -50,8 +50,6 @@ export class ConversationComponent implements OnInit {
         this.conversation.id
       );
       this.messages = res.content;
-      console.log(this.messages);
-      console.log(this.otherUserId);
     } catch (error) {
       console.log(error);
     }

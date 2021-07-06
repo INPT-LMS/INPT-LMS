@@ -47,6 +47,11 @@ import { CourseMembersComponent } from './components/pages/course/course-members
 import { CourseMembersListComponent } from './components/pages/course/course-members/course-members-list/course-members-list.component';
 import { CourseMembersListItemComponent } from './components/pages/course/course-members/course-members-list/course-members-list-item/course-members-list-item.component';
 import { AddMemberComponent } from './components/pages/course/course-members/add-member/add-member.component';
+import { AddAssignmentComponent } from './components/pages/course/add-assignment/add-assignment.component';
+import { CourseAssignmentsComponent } from './components/pages/course/course-assignments/course-assignments.component';
+import { CourseAssignmentInfosComponent } from './components/pages/course/course-assignment-infos/course-assignment-infos.component';
+import { CourseAssignmentsAllComponent } from './components/pages/course/course-assignments-all/course-assignments-all.component';
+import { CourseAssignmentAnswerItemComponent } from './components/pages/course/course-assignment-infos/course-assignment-answer-item/course-assignment-answer-item.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +91,11 @@ import { AddMemberComponent } from './components/pages/course/course-members/add
     CourseMembersListComponent,
     CourseMembersListItemComponent,
     AddMemberComponent,
+    AddAssignmentComponent,
+    CourseAssignmentsComponent,
+    CourseAssignmentInfosComponent,
+    CourseAssignmentsAllComponent,
+    CourseAssignmentAnswerItemComponent,
   ],
   imports: [
     BrowserModule,

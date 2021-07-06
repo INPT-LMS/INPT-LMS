@@ -11,10 +11,13 @@ export class CourseCoverComponent implements OnInit {
   @Input()
   classId: string;
   @Input()
+  ownerId: number;
+  @Input()
   title: string;
 
   constructor() {
     this.classId = '';
+    this.ownerId = -1;
     this.title = '';
   }
 

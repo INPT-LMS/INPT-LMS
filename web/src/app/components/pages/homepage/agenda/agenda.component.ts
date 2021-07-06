@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { AssignmentService } from 'src/app/services/assignment.service';
+import { Devoir } from 'src/app/utils/Types';
 
 @Component({
   selector: 'app-agenda',
@@ -7,11 +9,9 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AgendaComponent implements OnInit {
   @Input()
-  devoirs: any[];
+  devoirs: Devoir[] = [];
 
-  constructor() {
-    this.devoirs = [];
-  }
+  constructor() {}
 
   ngOnInit(): void {}
 }
