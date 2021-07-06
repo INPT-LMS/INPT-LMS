@@ -46,8 +46,9 @@ public class GestionnaireIOFichierAWSImpl implements GestionnaireIOFichier {
 			
 			InputStream in = object.getObjectContent();
 			byte[] b = new byte[2048];
-			while (in.read(b) != -1)
-				out.write(b);
+			int totalRead;
+			while ( (totalRead = in.read(b)) != -1)
+				out.write(b, 0, totalRead);
 			return out.toByteArray();
         } catch (SdkClientException e) { throw new IOException(); } 
 	}
