@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AssignmentService } from 'src/app/services/assignment.service';
 import { ClassService } from 'src/app/services/class.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { Class, Devoir } from 'src/app/utils/Types';
 
 @Component({
@@ -10,15 +11,18 @@ import { Class, Devoir } from 'src/app/utils/Types';
 })
 export class CourseAssignmentsComponent implements OnInit {
   classId: string;
-  class: Class;
+  profId: number;
+  estProf: boolean;
   devoirs: Devoir[] = [];
 
   constructor(
     private classService: ClassService,
-    private assignmentService: AssignmentService
+    private assignmentService: AssignmentService,
+    private localStorageService: LocalStorageService
   ) {
     this.classId = history.state.classId;
-    this.class = {};
+    this.profId = -1;
+    this.estProf = false;
   }
 
   async ngOnInit(): Promise<void> {
@@ -28,8 +32,9 @@ export class CourseAssignmentsComponent implements OnInit {
     this.devoirs = res;
 
     const res2: any = await this.classService.getCourseForAdmin(this.classId);
-    console.log(res2);
-    this.class = res2;
-    console.log(this.class);
+    this.profId = res2;
+
+    this.estProf =
+      parseInt(this.localStorageService.get('userId')!) === this.profId;
   }
 }

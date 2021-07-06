@@ -51,6 +51,7 @@ import { AddAssignmentComponent } from './components/pages/course/add-assignment
 import { CourseAssignmentsComponent } from './components/pages/course/course-assignments/course-assignments.component';
 import { CourseAssignmentInfosComponent } from './components/pages/course/course-assignment-infos/course-assignment-infos.component';
 import { CourseAssignmentsAllComponent } from './components/pages/course/course-assignments-all/course-assignments-all.component';
+import { CourseAssignmentAnswerItemComponent } from './components/pages/course/course-assignment-infos/course-assignment-answer-item/course-assignment-answer-item.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { CourseAssignmentsAllComponent } from './components/pages/course/course-
     CourseAssignmentsComponent,
     CourseAssignmentInfosComponent,
     CourseAssignmentsAllComponent,
+    CourseAssignmentAnswerItemComponent,
   ],
   imports: [
     BrowserModule,

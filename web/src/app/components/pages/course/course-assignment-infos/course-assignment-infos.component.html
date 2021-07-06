@@ -4,16 +4,23 @@
   <p>
     {{ devoir.devoirInfos?.contenu! }}
   </p>
-  <div class="border rounded p-3">
-    <h4 class="text-center">Status du devoir</h4>
-    <p>
+
+  <div *ngIf="estProf; else elseTemplate" class="border rounded p-3 mt-2">
+    <h4 class="text-center">Rendus du devoir</h4>
+    <ul>
+      <li *ngFor="let reponse of devoir.reponses!">
+        <app-course-assignment-answer-item
+          [classId]="classId"
+          [devoirId]="devoirId"
+          [reponse]="reponse"
+        ></app-course-assignment-answer-item>
+      </li>
+    </ul>
+    <!-- <p>
       Devoir rendu :
       <ng-container *ngIf="this.assignmentStatus.rendu; else elseTemplate">
         <span class="text-success">Oui</span> |
-        <!-- TODO afficher le fichier rendu -->
-        <button class="btn link" (click)="downloadFile()">
-          Voir le fichier
-        </button>
+        <a class="link" (click)="downloadFile()">Voir le fichier</a>
       </ng-container>
       <ng-template #elseTemplate>
         <span class="text-danger">Non</span>
@@ -34,6 +41,37 @@
       <button class="btn btn-primary my-2 w-100 submit-btn" type="submit">
         Ajouter/modifier un rendu
       </button>
-    </form>
+    </form> -->
   </div>
+  <ng-template #elseTemplate>
+    <div class="border rounded p-3">
+      <h4 class="text-center">Status du devoir</h4>
+      <p>
+        Devoir rendu :
+        <ng-container *ngIf="this.assignmentStatus.rendu; else elseTemplate">
+          <span class="text-success">Oui</span> |
+          <a class="link" (click)="downloadFile()">Voir le fichier</a>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <span class="text-danger">Non</span>
+        </ng-template>
+      </p>
+      <p>
+        Rendu noté :
+        <ng-container *ngIf="this.assignmentStatus.estNote; else elseTemplate">
+          <span class="text-success">Oui</span> |
+          <span>Note : {{ this.assignmentStatus.note! }}</span>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <span class="text-danger">Non</span>
+        </ng-template>
+      </p>
+      <form (ngSubmit)="onSubmit($event)">
+        <input type="file" class="form-control" (change)="changeFile($event)" />
+        <button class="btn btn-primary my-2 w-100 submit-btn" type="submit">
+          Ajouter/modifier un rendu
+        </button>
+      </form>
+    </div>
+  </ng-template>
 </ng-container>

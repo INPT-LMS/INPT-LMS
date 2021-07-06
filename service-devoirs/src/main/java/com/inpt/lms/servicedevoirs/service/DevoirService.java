@@ -117,10 +117,12 @@ public class DevoirService {
             System.out.println(e.getMessage());
         }
 
+        String renduId = null;
         try {
-            String renduId = renduExiste(userId);
+            renduId = renduExiste(userId);
 
-            devoirReponse = devoir.getReponses().stream().filter(d -> d.getId().equals(renduId)).findFirst().orElseThrow(() -> new DevoirReponseNotFoundException("Rendu introuvable"));
+            String finalRenduId = renduId;
+            devoirReponse = devoir.getReponses().stream().filter(d -> d.getId().equals(finalRenduId)).findFirst().orElseThrow(() -> new DevoirReponseNotFoundException("Rendu introuvable"));
 
         } catch (DevoirReponseNotFoundException e) {
 

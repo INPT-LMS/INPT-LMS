@@ -48,8 +48,8 @@ export type DevoirInfos = {
 };
 
 export type ReponseDevoir = {
-  id?: number;
-  idProprietaire?: string;
+  id?: string;
+  idProprietaire?: number;
   dateRendu?: Date;
   estNote?: boolean;
   note?: number;

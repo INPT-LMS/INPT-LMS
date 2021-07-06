@@ -33,15 +33,30 @@ export class AssignmentService {
       .toPromise();
   }
 
-  // TODO 3ajil jidan
   /**
    * Récupère ma propre réponse d'un devoir
    */
   getOwnReponseDevoir(classId: string, devoirId: string) {
-    return this.http.get(
-      `/storage/assignment/${classId}/${devoirId}/response`,
-      { responseType: 'blob' }
-    );
+    return this.http
+      .get(`/storage/assignment/${classId}/${devoirId}/response`, {
+        responseType: 'blob',
+      })
+      .toPromise();
+  }
+
+  getUserReponseDevoir(
+    idProprietaire: number,
+    classId: string,
+    devoirId: string
+  ) {
+    return this.http
+      .get(
+        `/storage/assignment/${classId}/${devoirId}/response/${idProprietaire}`,
+        {
+          responseType: 'blob',
+        }
+      )
+      .toPromise();
   }
 
   /**
@@ -83,7 +98,7 @@ export class AssignmentService {
     return this.http
       .put(
         `/assignment/devoirs/${classId}/${devoirId}/rendu/${renduId}`,
-        note,
+        { note: note },
         this.httpOptions
       )
       .toPromise();

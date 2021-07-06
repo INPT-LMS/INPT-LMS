@@ -11,6 +11,7 @@ import { Class, Publication } from 'src/app/utils/Types';
 })
 export class CourseFeedComponent implements OnInit {
   class: Class;
+  estProf: boolean;
   posts: Publication[];
 
   constructor(
@@ -19,6 +20,7 @@ export class CourseFeedComponent implements OnInit {
     private router: Router
   ) {
     this.posts = [];
+    this.estProf = false;
     this.class = {
       devoirs: [],
     };
@@ -30,6 +32,9 @@ export class CourseFeedComponent implements OnInit {
     }
 
     this.class = history.state.class;
+    this.estProf =
+      parseInt(this.localStorageService.get('userId')!) ===
+      this.class.owner?.professorID;
 
     try {
       const res: any = await this.postService.getClassPublications(

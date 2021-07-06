@@ -1,0 +1,25 @@
+<div class="card my-3">
+  <div class="card-body">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="mx-3 align-self-center">
+        <!-- Assignment -->
+        <span class="assignment">{{ user.nom! }} {{ user.prenom! }} </span>
+      </div>
+
+      <a (click)="downloadFile()" class="link">Voir le rendu</a>
+      <form [formGroup]="noteForm" (ngSubmit)="onSubmit($event)" class="ml-2">
+        <input
+          class="form-control"
+          type="number"
+          value="0"
+          formControlName="note"
+        />
+        <input
+          class="form-control btn btn-success mt-2"
+          type="submit"
+          value="Noter ce rendu"
+        />
+      </form>
+    </div>
+  </div>
+</div>
