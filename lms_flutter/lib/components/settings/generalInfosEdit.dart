@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lms_flutter/screens/utils.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:lms_flutter/services/settings_service.dart';
 
@@ -72,7 +73,9 @@ class _GeneralInfosEditState extends State<GeneralInfosEdit> {
               onPrimary: Colors.white, // foreground
             ),
             onPressed: () {
-              settingsService.updateUser(UpdatedData, data.id);
+              settingsService.updateUser(UpdatedData, data.id).then((value) {
+                showSnackbar(context, "Updated succesfully");
+              }).onError((error, stackTrace) => showSnackbar(context, "An error accured"));
               setState(() {
                 data = settingsService.getUserLoggedInfos();
               });
