@@ -62,17 +62,12 @@ class _DevoirDetailsScreenState extends State<DevoirDetailsScreen> {
               Container(margin: EdgeInsets.only(top: 20)),
               Text(devoirData.devoirInfos.contenu),
               if (isOwner)
-                Row(children: [
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   TextButton(
                       child: Text("Voir les réponses"),
                       onPressed: () {
                         Navigator.pushNamed(context, '/liste-reponses-devoir',
                             arguments: devoirData);
-                      }),
-                  TextButton(
-                      child: Text("Supprimer le devoir"),
-                      onPressed: () {
-                        //TODO delete devoir + cas retour
                       })
                 ])
               else if (!isFinished)

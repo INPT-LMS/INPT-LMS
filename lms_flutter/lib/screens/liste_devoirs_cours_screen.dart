@@ -12,7 +12,6 @@ import 'package:lms_flutter/services/devoir_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
-//TODO: une pop up pour l'ajout devoir
 class ListeDevoirsCoursScreen extends StatefulWidget {
   const ListeDevoirsCoursScreen({Key key}) : super(key: key);
 
@@ -27,23 +26,33 @@ class _ListeDevoirsCoursScreenState extends State<ListeDevoirsCoursScreen> {
     var courseData = ModalRoute.of(context).settings.arguments as CourseData;
     var infos = Provider.of<InfosModel>(context, listen: false).userInfos;
     return BaseScaffoldAppBar(
-      body: Container(
-        margin: EdgeInsets.all(10),
-        child: Column(children: [
-          Center(child: Text("Liste des devoirs du cours")),
-          if (courseData.owner.professorID == infos.id)
-            Center(
-                child: TextButton(
-                    child: Text("Ajouter un devoir"), onPressed: () {})),
-          Expanded(
-              child: ChangeNotifierProvider(
-                  create: (context) => ListDataModel<DevoirData>(
-                      (devoirData) => Devoir(devoirData, infos.id),
-                      (devoirData) => devoirData.id),
-                  child: ListeData<DevoirData>(DevoirListService(
-                      getIt.get<DevoirService>(), courseData.courseID))))
-        ]),
-      ),
-    );
+        body: ChangeNotifierProvider(
+            create: (context) => ListDataModel<DevoirData>(
+                (devoirData) => Devoir(devoirData, infos.id),
+                (devoirData) => devoirData.id),
+            builder: (context, child) => Container(
+                  margin: EdgeInsets.all(10),
+                  child: Column(children: [
+                    Center(child: Text("Liste des devoirs du cours")),
+                    if (courseData.owner.professorID == infos.id)
+                      Center(
+                          child: TextButton(
+                              child: Text("Ajouter un devoir"),
+                              onPressed: () {
+                                Navigator.pushNamed(context, "/ajout-devoir",
+                                        arguments: courseData)
+                                    .then((value) {
+                                  if (value != null)
+                                    Provider.of<ListDataModel<DevoirData>>(
+                                            context,
+                                            listen: false)
+                                        .addLast(value);
+                                });
+                              })),
+                    Expanded(
+                        child: ListeData<DevoirData>(DevoirListService(
+                            getIt.get<DevoirService>(), courseData.courseID)))
+                  ]),
+                )));
   }
 }

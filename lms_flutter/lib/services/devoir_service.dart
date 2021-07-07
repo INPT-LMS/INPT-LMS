@@ -50,4 +50,15 @@ class DevoirService extends BaseService {
     return client.put("/assignment/devoirs/$idCours/$idDevoir/rendu/$idReponse",
         data: <String, String>{"note": "$note"});
   }
+
+  Future<DevoirData> creerDevoir(
+      String idCours, String contenu, DateTime dateLimite) {
+    return client.post("/assignment/devoirs/$idCours", data: <String, dynamic>{
+      "contenu": contenu,
+      "dateLimite": dateLimite.toIso8601String()
+    }).then((response) {
+      return DevoirData.fromJson(
+          response.data == "" ? <String, dynamic>{} : response.data);
+    });
+  }
 }

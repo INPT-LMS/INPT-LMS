@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lms_flutter/components/my_courses/addCourseElement.dart';
 import 'package:lms_flutter/screens/CoursePage.dart';
 import 'package:lms_flutter/screens/LoginPage.dart';
@@ -14,6 +14,7 @@ import 'package:lms_flutter/screens/MycoursesPage.dart';
 import 'package:lms_flutter/screens/ProfilePage.dart';
 import 'package:lms_flutter/screens/Settings.dart';
 import 'package:lms_flutter/screens/SignUpPage.dart';
+import 'package:lms_flutter/screens/ajout_devoir_screen.dart';
 import 'package:lms_flutter/screens/devoir_details_screen.dart';
 import 'package:lms_flutter/screens/discussion_screen.dart';
 import 'package:lms_flutter/screens/envoyer_message_screen.dart';
@@ -36,8 +37,6 @@ Future<void> main() async {
 
   setupServices();
   await getIt.allReady();
-
-  await initializeDateFormatting('fr_FR', null);
 
   var compteService = getIt.get<CompteService>();
   var isLoggedIn = compteService.isLoggedIn();
@@ -83,6 +82,12 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         theme: ThemeData(fontFamily: 'Montserrat'),
         title: "Login to LMS",
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [const Locale('fr', ''), const Locale('en', '')],
         initialRoute: this.widget.initRoute,
         routes: {
           '/login': (context) => LoginPage(),
@@ -97,6 +102,7 @@ class _MyAppState extends State<MyApp> {
           '/envoyer-message': (context) => EnvoyerMessageScreen(),
           '/discussion': (context) => DiscussionScreen(),
           '/devoirs': (context) => ListeDevoirsCoursScreen(),
+          '/ajout-devoir': (context) => AjoutDevoirScreen(),
           '/devoirs-detail': (context) => DevoirDetailsScreen(),
           '/liste-reponses-devoir': (context) => ListeReponsesDevoirScreen(),
           '/stockage-sac': (context) => StockageSacScreen(),
