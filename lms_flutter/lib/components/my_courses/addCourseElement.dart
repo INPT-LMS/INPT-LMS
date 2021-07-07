@@ -31,7 +31,16 @@ class _AddCourseState extends State<AddCourse> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Text("Add new course"),
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Text(
+                  "Add new course",
+                style: TextStyle(
+                  fontSize: 32,
+                  color: Color(0xff0275B1),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 50,
