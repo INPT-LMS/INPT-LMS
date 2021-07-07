@@ -5,6 +5,7 @@ import 'package:lms_flutter/components/course_elements/AddPost.dart';
 import 'package:lms_flutter/components/course_elements/course_settings.dart';
 import 'package:lms_flutter/components/posts/post.dart';
 import 'package:lms_flutter/model/course/course_data.dart';
+import 'package:lms_flutter/model/course/member.dart';
 import 'package:lms_flutter/model/post/post_data.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 import 'package:lms_flutter/screens/utils.dart';
@@ -29,11 +30,13 @@ class _CoursePageState extends State<CoursePage> {
   CourseService courseService;
   PostService postService;
   Future<CourseData> courseData;
+  List<Member> courseMembers ;
   @override
   void initState() {
     super.initState();
     postService = getIt.get<PostService>();
     courseService = getIt.get<CourseService>();
+
   }
 
   @override
@@ -43,6 +46,10 @@ class _CoursePageState extends State<CoursePage> {
       courseData = courseService.getCours(idCours).catchError((e) {
         showDefaultErrorMessage(context, e.response.statusCode);
       });
+    courseService.getCourseMembers(idCours).then((value) =>{
+        courseMembers = value
+    });
+
     return BaseScaffoldAppBar(
         body: FutureBuilder<CourseData>(
             builder: (context, snapshot) {
@@ -62,7 +69,7 @@ class _CoursePageState extends State<CoursePage> {
                               fit: BoxFit.cover),
                         ),
                         child: Column(children: [
-                          Align(child: SettingsWidget()),
+                          Align(child: SettingsWidget(courseMembers)),
                           Align(
                             alignment: Alignment.center,
                             child: Text(

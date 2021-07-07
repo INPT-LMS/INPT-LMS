@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lms_flutter/model/course/member.dart';
+import 'package:lms_flutter/screens/utils.dart';
 
 class SettingsWidget extends StatelessWidget {
-  const SettingsWidget({Key key}) : super(key: key);
+  final List<Member> members ;
+  const SettingsWidget( this.members, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +33,17 @@ class SettingsWidget extends StatelessWidget {
                 title: Text('Share', textAlign: TextAlign.center),
               ),
             ),
-            const PopupMenuItem(
-              child: ListTile(
-                title: Text('Members', textAlign: TextAlign.center),
-              ),
+             PopupMenuItem(
+
+                child: ListTile(
+                  onTap: (){
+
+                    return showDialog(context: context, builder: (context){
+                      return Dialog(child: Column(children: [for (int i = 0 ; i < members.length ; i++ )  Text(members[i].memberID.toString())]));
+                    });
+                  },
+                  title: Text('Members', textAlign: TextAlign.center),
+                ),
             ),
             const PopupMenuItem(
               child: ListTile(
