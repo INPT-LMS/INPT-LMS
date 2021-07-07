@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/screens/utils.dart';
+import 'package:lms_flutter/screens/view_models/infos_model.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 import 'package:lms_flutter/services/settings_service.dart';
+import 'package:provider/provider.dart';
 
 import 'SettingsElement.dart';
 
@@ -75,10 +77,13 @@ class _GeneralInfosEditState extends State<GeneralInfosEdit> {
             onPressed: () {
               settingsService.updateUser(UpdatedData, data.id).then((value) {
                 showSnackbar(context, "Updated succesfully");
-              }).onError((error, stackTrace) => showSnackbar(context, "An error accured"));
-              setState(() {
-                data = settingsService.getUserLoggedInfos();
-              });
+                setState(() {
+                  data = settingsService.getUserLoggedInfos();
+                  Provider.of<InfosModel>(context, listen: false)
+                      .setInfos(data);
+                });
+              }).onError((error, stackTrace) =>
+                  showSnackbar(context, "An error accured"));
             },
             child: Text(
               "Mettre a jour",

@@ -1,5 +1,4 @@
-// Helper file to make coverage work for all dart files
-
+// ignore_for_file: unused_import
 import 'package:lms_flutter/components/consts/custom_colors.dart';
 import 'package:lms_flutter/components/course_elements/AboutSection.dart';
 import 'package:lms_flutter/components/course_elements/AddPost.dart';
@@ -8,6 +7,9 @@ import 'package:lms_flutter/components/course_elements/course_settings.dart';
 import 'package:lms_flutter/components/devoirs/devoir.dart';
 import 'package:lms_flutter/components/discussions/discussion.dart';
 import 'package:lms_flutter/components/discussions/message.dart';
+import 'package:lms_flutter/components/my_courses/addCourseElement.dart';
+import 'package:lms_flutter/components/my_courses/courseBanner.dart';
+import 'package:lms_flutter/components/my_courses/coursePicture.dart';
 import 'package:lms_flutter/components/posts/comment.dart';
 import 'package:lms_flutter/components/posts/like_comment.dart';
 import 'package:lms_flutter/components/posts/post.dart';
@@ -20,9 +22,7 @@ import 'package:lms_flutter/components/settings/generalInfosEdit.dart';
 import 'package:lms_flutter/components/settings/passwordEdit.dart';
 import 'package:lms_flutter/components/stockage/fichier_resume.dart';
 import 'package:lms_flutter/main.dart';
-import 'package:lms_flutter/mock_components/CoursePageStatique.dart';
-import 'package:lms_flutter/mock_components/mock_home_screen.dart';
-import 'package:lms_flutter/mock_components/mock_post.dart';
+import 'package:lms_flutter/model/add_course_form.dart';
 import 'package:lms_flutter/model/consts.dart';
 import 'package:lms_flutter/model/course/course_data.dart';
 import 'package:lms_flutter/model/course/member.dart';
@@ -42,16 +42,18 @@ import 'package:lms_flutter/model/pagination/pagination_post.dart';
 import 'package:lms_flutter/model/post/commentaire_data.dart';
 import 'package:lms_flutter/model/post/like_data.dart';
 import 'package:lms_flutter/model/post/post_data.dart';
+import 'package:lms_flutter/model/settings/password_change_form.dart';
 import 'package:lms_flutter/model/stockage/fichier.dart';
 import 'package:lms_flutter/model/stockage/fichier_info.dart';
-// ignore_for_file: unused_import
 import 'package:lms_flutter/model/user_infos.dart';
 import 'package:lms_flutter/model/user_register_form.dart';
 import 'package:lms_flutter/screens/CoursePage.dart';
 import 'package:lms_flutter/screens/LoginPage.dart';
+import 'package:lms_flutter/screens/MycoursesPage.dart';
 import 'package:lms_flutter/screens/ProfilePage.dart';
 import 'package:lms_flutter/screens/Settings.dart';
 import 'package:lms_flutter/screens/SignUpPage.dart';
+import 'package:lms_flutter/screens/ajout_devoir_screen.dart';
 import 'package:lms_flutter/screens/devoir_details_screen.dart';
 import 'package:lms_flutter/screens/discussion_screen.dart';
 import 'package:lms_flutter/screens/envoyer_message_screen.dart';
