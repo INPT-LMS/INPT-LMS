@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lms_flutter/components/my_courses/courseBanner.dart';
 import 'package:lms_flutter/model/course/course_data.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
+import 'package:lms_flutter/services/compte_service.dart';
 import 'package:lms_flutter/services/course_service.dart';
 import 'package:lms_flutter/services/service_locator.dart';
 
@@ -15,17 +16,25 @@ class Mycourses extends StatefulWidget {
 
 class _MycoursesState extends State<Mycourses> {
   CourseService courseService;
-  List<CourseData> coursesList  = new List.empty(growable: true);
+  CompteService compteService;
+  bool isProfessor = false ;
+  List<CourseData> coursesList  = [] ;
   @override
   void initState() {
     courseService = getIt.get<CourseService>();
+    compteService = getIt.get<CompteService>();
+    isProfessor = compteService.getUserLoggedInfos().estProfesseur ;
+    coursesList = [] ;
     setupCoursesList();
     super.initState();
   }
   void setupCoursesList() async{
     courseService.getCourses().then((list){
       setState(() {
-        coursesList = list;
+        if(list != null){
+          coursesList = list;
+        }
+
       });
     });
 }
@@ -33,19 +42,25 @@ class _MycoursesState extends State<Mycourses> {
   Widget build(BuildContext context) {
     return BaseScaffoldAppBar(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            padding: EdgeInsets.all(24),
-            child: Text(
-              "My courses",
-              style: TextStyle(
-                fontSize: 32,
-                color: Color(0xff0275B1),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.all(24),
+                child: Text(
+                  "My courses",
+                  style: TextStyle(
+                    fontSize: 32,
+                    color: Color(0xff0275B1),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         for(int i = 0 ; i < coursesList.length ; i ++)   CourseBanner(coursesList[i]),
-          Container(
+          if(isProfessor) Container(
             width: 140,
             height: 32,
             margin: EdgeInsets.only(top: 24),
