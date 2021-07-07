@@ -83,11 +83,17 @@ class _AddCourseState extends State<AddCourse> {
               margin: EdgeInsets.only(top: 24),
               child: ElevatedButton(
                 onPressed: (){
-                  courseData = new AddCourseForm(_nameController.text,
-                      _descriptionController.text, null);
-                  courseService.addCourse(courseData).then((value) {
-                    showSnackbar(context, value.courseName);
-                  });
+                  if(_nameController.text == ""){
+                    showSnackbar(context, "Please provide a name for the course");
+                  }
+                  else{
+                    courseData = new AddCourseForm(_nameController.text,
+                        _descriptionController.text, null);
+                    courseService.addCourse(courseData).then((value) {
+                      showSnackbar(context, value.courseName + "est cree");
+                    });
+                  }
+
                 },
                 child: Text("Ajouter le cours"),
                 style: ElevatedButton.styleFrom(
