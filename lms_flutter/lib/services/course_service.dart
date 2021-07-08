@@ -14,10 +14,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Service chargé des interactions liées aux cours
 class CourseService extends BaseService {
   CourseService(SharedPreferences sharedPreferences, Dio client)
-      : super(sharedPreferences, client){
-   compteService = getIt.get<CompteService>();
+      : super(sharedPreferences, client) {
+    compteService = getIt.get<CompteService>();
   }
-  CompteService compteService  ;
+
+  CompteService compteService;
+
   Future<CourseData> getCours(String idCours) {
     return client.get("/class/course/$idCours").then((response) {
       if (response.data.toString() == "UNAUTHORIZED")
@@ -55,9 +57,8 @@ class CourseService extends BaseService {
     });
   }
 
-  Future<List<UserInfos>> getCourseMembers(String courseID){
-    return client.get("/class/course/$courseID/members").then((response){
-
+  Future<List<UserInfos>> getCourseMembers(String courseID) {
+    return client.get("/class/course/$courseID/members").then((response) {
       List responseBody = response.data;
       List<UserInfos> courseMembers = new List.empty(growable: true);
       for (int i = 0; i < responseBody.length; i++) {
@@ -68,27 +69,40 @@ class CourseService extends BaseService {
 
         return courseMembers;
       }
-      return courseMembers ;
-    }).catchError((err){
+      return courseMembers;
+    }).catchError((err) {
       log("Erorr");
     });
   }
 
-  Future<List<CourseData>> searchCourses(String name){
+  Future<List<CourseData>> searchCourses(String name) {
     return client.get("/class/course/discover/$name").then((value) {
-      List<CourseData> coursesList  = <CourseData>[];
-      if(value.statusCode == 200){
+      List<CourseData> coursesList = <CourseData>[];
+      if (value.statusCode == 200) {
         List responseBody = value.data;
-        for(int i = 0 ; i< responseBody.length ; i++){
+        for (int i = 0; i < responseBody.length; i++) {
           coursesList.add(CourseData.fromJson(responseBody[i]));
           log(responseBody[i].toString());
         }
-        return coursesList ;
-      }
-      else{
+        return coursesList;
+      } else {
         return <CourseData>[];
       }
-
     });
   }
+  bool isMember(CourseData courseData){
+    int memberID = compteService.getUserLoggedInfos().id;
+    courseData.students.map((e)  {
+      log(e.memberID.toString());
+      if(e.memberID == memberID) return true;
+    });
+     return false ;
+  }
+  bool isProfessor(CourseData courseData){
+    int id = compteService.getUserLoggedInfos().id;
+    return courseData.owner.professorID == id ;
+
+  }
+
+
 }

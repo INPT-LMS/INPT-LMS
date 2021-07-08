@@ -11,6 +11,7 @@ import 'package:lms_flutter/model/user_infos.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 import 'package:lms_flutter/screens/utils.dart';
 import 'package:lms_flutter/screens/view_models/liste_data_model.dart';
+import 'package:lms_flutter/services/compte_service.dart';
 import 'package:lms_flutter/services/course_service.dart';
 import 'package:lms_flutter/services/data_list/post_cours_list_service.dart';
 import 'package:lms_flutter/services/post_service.dart';
@@ -21,6 +22,7 @@ import 'liste/liste_data.dart';
 
 class CoursePage extends StatefulWidget {
   final String argument;
+
   const CoursePage({Key key, this.argument}) : super(key: key);
 
   @override
@@ -30,13 +32,16 @@ class CoursePage extends StatefulWidget {
 class _CoursePageState extends State<CoursePage> {
   CourseService courseService;
   PostService postService;
+  CompteService compteService;
   Future<CourseData> courseData;
   Future<List<UserInfos>> courseMembers;
+  Future<UserInfos> userInfos ;
   @override
   void initState() {
     super.initState();
     postService = getIt.get<PostService>();
     courseService = getIt.get<CourseService>();
+    compteService = getIt.get<CompteService>();
   }
 
   @override
@@ -112,10 +117,15 @@ class _CoursePageState extends State<CoursePage> {
                             (postData) => postData.id),
                         child: Column(
                           children: [
-                            Container(
-                              padding: EdgeInsets.all(24),
-                              child: AddPost(idCours),
-                            ),
+                            if(snapshot.hasData &&
+                                (courseService.isMember(snapshot.data ) ||
+                                    courseService.isProfessor(snapshot.data)))
+                              Container(
+                                padding: EdgeInsets.all(24),
+                                child:  AddPost(idCours),
+                              )
+
+                            ,
                             Center(
                               child: ElevatedButton(
                                   onPressed: () {
