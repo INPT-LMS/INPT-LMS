@@ -27,7 +27,9 @@ public class CourseGetway {
 	}
 	@GetMapping("/course/{courseID}")
 	public Serializable getCourseByID(@PathVariable UUID courseID, @RequestHeader("X-USER-ID") long userID) {
-		if(courseDetailsImp.isMember(courseID,userID)){
+		if(courseVisibility.getCourseVisibility(courseID).getVisibilityID() == 0)
+			return courseVisibility.getPublicCourseByID(courseID);
+		else if(courseDetailsImp.isMember(courseID,userID)){
 			return courseVisibility.getCourseByID(courseID,userID);
 		}
 		return HttpStatus.UNAUTHORIZED;

@@ -52,6 +52,14 @@ public class CourseVisibilityImp implements CourseVisibility{
          }
         return optionalCourse.get();
     }
+    @Override
+    public Course getPublicCourseByID(UUID courseID) {
+        Optional<Course> optionalCourse = courseInterface.findById(courseID);
+        if(!optionalCourse.isPresent()  ){
+            return null;
+        }
+        return optionalCourse.get();
+    }
 
 
     @Override

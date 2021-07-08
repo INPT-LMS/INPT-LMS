@@ -11,4 +11,5 @@ public interface CourseVisibility {
     public List<Course> getPublicCourses(Visibility v);
     public Course getCourseByID(UUID courseID,long userID);
     public Visibility setCourseVisibility(UUID courseID , int  visibilityID);
+    public Course getPublicCourseByID(UUID courseID);
 }

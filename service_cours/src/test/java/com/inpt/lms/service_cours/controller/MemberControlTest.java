@@ -55,6 +55,17 @@ class MemberControlTest {
         assertThat(courseAdminImp.addMember(COURSEID,memberID,professorID)).isTrue();
         assertThat(courseAdminImp.addMember(COURSEID,1,2)).isFalse();
     }
+    @Test
+    void getPublicCourse(){
+        addCourse();
+        assertThat(courseVisibility.getPublicCourseByID(COURSEID).getCourseName().equals("course to test"));
+
+    }
+    @Test
+    void getCourse(){
+        addMember();
+        assertThat(courseVisibility.getCourseByID(COURSEID,memberID).getCourseName().equals("UNAUTHORIZED"));
+    }
 
     @Test
     void getCourseMembers() {
