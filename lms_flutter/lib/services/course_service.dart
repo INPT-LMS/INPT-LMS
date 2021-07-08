@@ -68,12 +68,27 @@ class CourseService extends BaseService {
 
         return courseMembers;
       }
-
-
-
       return courseMembers ;
     }).catchError((err){
       log("Erorr");
+    });
+  }
+
+  Future<List<CourseData>> searchCourses(String name){
+    return client.get("/class/course/discover/$name").then((value) {
+      List<CourseData> coursesList  = <CourseData>[];
+      if(value.statusCode == 200){
+        List responseBody = value.data;
+        for(int i = 0 ; i< responseBody.length ; i++){
+          coursesList.add(CourseData.fromJson(responseBody[i]));
+          log(responseBody[i].toString());
+        }
+        return coursesList ;
+      }
+      else{
+        return <CourseData>[];
+      }
+
     });
   }
 }
