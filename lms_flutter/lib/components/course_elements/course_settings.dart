@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lms_flutter/model/course/member.dart';
+import 'package:lms_flutter/model/discussion/discussion_data.dart';
+import 'package:lms_flutter/model/user_infos.dart';
 
 class SettingsWidget extends StatelessWidget {
-  final List<Member> members;
+  final List<UserInfos> members;
   const SettingsWidget(this.members, {Key key}) : super(key: key);
 
   @override
@@ -41,7 +43,8 @@ class SettingsWidget extends StatelessWidget {
                         return Dialog(
                             child: Column(children: [
                           for (int i = 0; i < members.length; i++)
-                            Text(members[i].memberID.toString())
+                            Text(members[i].nom
+                            )
                         ]));
                       });
                 },

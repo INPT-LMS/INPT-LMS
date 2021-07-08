@@ -4,15 +4,20 @@ import 'package:dio/dio.dart';
 import 'package:lms_flutter/model/add_course_form.dart';
 import 'package:lms_flutter/model/course/course_data.dart';
 import 'package:lms_flutter/model/course/member.dart';
+import 'package:lms_flutter/model/user_infos.dart';
 import 'package:lms_flutter/services/base_service.dart';
+import 'package:lms_flutter/services/compte_service.dart';
 import 'package:lms_flutter/services/exceptions/forbidden_exception.dart';
+import 'package:lms_flutter/services/service_locator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Service chargé des interactions liées aux cours
 class CourseService extends BaseService {
   CourseService(SharedPreferences sharedPreferences, Dio client)
-      : super(sharedPreferences, client);
-
+      : super(sharedPreferences, client){
+   compteService = getIt.get<CompteService>();
+  }
+  CompteService compteService  ;
   Future<CourseData> getCours(String idCours) {
     return client.get("/class/course/$idCours").then((response) {
       if (response.data.toString() == "UNAUTHORIZED")
@@ -50,15 +55,21 @@ class CourseService extends BaseService {
     });
   }
 
-  Future<List<Member>> getCourseMembers(String courseID){
+  Future<List<UserInfos>> getCourseMembers(String courseID){
     return client.get("/class/course/$courseID/members").then((response){
 
       List responseBody = response.data;
-      List<Member> courseMembers = new List.empty(growable: true);
+      List<UserInfos> courseMembers = new List.empty(growable: true);
       for (int i = 0; i < responseBody.length; i++) {
-        courseMembers.add(Member.fromJson(responseBody[i]));
-        log(courseMembers[i].memberID.toString());
+        Member mem = Member.fromJson(responseBody[i]);
+        compteService.getUserInfos(mem.memberID).then((value) {
+          courseMembers.add(value);
+        });
+
+        return courseMembers;
       }
+
+
 
       return courseMembers ;
     }).catchError((err){

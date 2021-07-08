@@ -7,6 +7,7 @@ import 'package:lms_flutter/components/posts/post.dart';
 import 'package:lms_flutter/model/course/course_data.dart';
 import 'package:lms_flutter/model/course/member.dart';
 import 'package:lms_flutter/model/post/post_data.dart';
+import 'package:lms_flutter/model/user_infos.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
 import 'package:lms_flutter/screens/utils.dart';
 import 'package:lms_flutter/screens/view_models/liste_data_model.dart';
@@ -30,7 +31,7 @@ class _CoursePageState extends State<CoursePage> {
   CourseService courseService;
   PostService postService;
   Future<CourseData> courseData;
-  Future<List<Member>> courseMembers;
+  Future<List<UserInfos>> courseMembers;
   @override
   void initState() {
     super.initState();
@@ -68,11 +69,11 @@ class _CoursePageState extends State<CoursePage> {
                         ),
                         child: Column(children: [
                           Align(
-                              child: FutureBuilder<List<Member>>(
+                              child: FutureBuilder<List<UserInfos>>(
                                   builder: (context, snapshot) {
                                     var members = snapshot.hasData
                                         ? snapshot.data
-                                        : <Member>[];
+                                        : <UserInfos>[];
                                     return SettingsWidget(members);
                                   },
                                   future: courseMembers)),
