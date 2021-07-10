@@ -1,7 +1,9 @@
 package inpt.lms.stockage.business.impl;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 import com.amazonaws.SdkClientException;
@@ -40,8 +42,14 @@ public class GestionnaireIOFichierAWSImpl implements GestionnaireIOFichier {
 	public byte[] lireFichier(String chemin) throws IOException {
 		try (S3Object object =
 				s3Client.getObject(new GetObjectRequest(directory,chemin))){
-           
-            return object.getObjectContent().readAllBytes();
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			
+			InputStream in = object.getObjectContent();
+			byte[] b = new byte[2048];
+			int totalRead;
+			while ( (totalRead = in.read(b)) != -1)
+				out.write(b, 0, totalRead);
+			return out.toByteArray();
         } catch (SdkClientException e) { throw new IOException(); } 
 	}
 

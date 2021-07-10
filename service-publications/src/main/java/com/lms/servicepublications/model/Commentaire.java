@@ -17,12 +17,14 @@ import java.util.Date;
 @Document(collection = "commentaire")
 public class Commentaire {
     @Id
-    private String idCommentaire;
+    private String id;
     private String idPublication;
+    private String nomUser;
+    private String prenomUser;
     @CreatedDate
     private Date dateCommentaire;
     private String contenuCommentaire;
-    private String idProprietaire;
+    private Long idProprietaire;
 
 
 

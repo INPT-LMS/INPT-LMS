@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -32,10 +33,9 @@ import inpt.lms.stockage.proxies.ProxyUnavailableException;
 import inpt.lms.stockage.util.ControllerResponseUtils;
 
 @RestController
-@RequestMapping(path = "/storage/class", produces = "application/json",
-consumes = "application/json")
+@RequestMapping(path = "/storage/class")
 public class ClassStockageController {
-	@Value("${inpt.lms.stockage.max-size}")
+	@Value("${inpt.lms.stockage.max-file-size}")
 	protected long maxSize;
 	@Autowired
 	protected GestionnaireFichier gestionnaireFichier;
@@ -56,6 +56,8 @@ public class ClassStockageController {
 			@RequestBody @Valid ParamAssocId assocId, 
 			@RequestHeader(name = "X-USER-ID") long userId) throws NotFoundException, UnauthorizedException, ProxyUnavailableException{
 		authService.isClassOwner(getCoursUUID(coursId), userId);
+		gestionnaireFichier.isAssociationPresent(assocId.getAssocId(), 
+				String.valueOf(userId), TypeAssociation.SAC);
 		return gestionnaireFichier.ajoutDansCours(coursId, assocId.getAssocId());
 	}
 	
@@ -64,7 +66,7 @@ public class ClassStockageController {
 			@PathVariable String coursId, @RequestHeader(name = "X-USER-ID") long userId)
 					throws NotFoundException, UnauthorizedException, ProxyUnavailableException{
 		authService.isClassOwner(getCoursUUID(coursId), userId);
-		gestionnaireFichier.retraitCours(assocId);
+		gestionnaireFichier.retraitCours(assocId,coursId);
 	}
 
 	@GetMapping("{coursId}/files")
@@ -83,6 +85,8 @@ public class ClassStockageController {
 			@PathVariable String coursId,@RequestHeader(name = "X-USER-ID") long userId)
 					throws NotFoundException, UnauthorizedException, ProxyUnavailableException{
 		authService.isClassMemberOrOwner(getCoursUUID(coursId), userId);
+		gestionnaireFichier.isAssociationPresent(assocId, 
+				coursId, TypeAssociation.COURS);
 		return gestionnaireFichier.getFichierByAssocId(assocId);
 	}
 
@@ -91,8 +95,21 @@ public class ClassStockageController {
 			@PathVariable String coursId,@RequestHeader(name = "X-USER-ID") long userId)
 					throws NotFoundException, IOException, UnauthorizedException, ProxyUnavailableException{
 		authService.isClassMemberOrOwner(getCoursUUID(coursId), userId);
+		gestionnaireFichier.isAssociationPresent(assocId, 
+				coursId, TypeAssociation.COURS);
 		return ControllerResponseUtils.lireFichier(
 				gestionnaireFichier.lireFichier(assocId));
+	}
+	
+	@GetMapping("{coursId}/search")
+	public Page<AssociationFichier> searchFichiers(@RequestHeader(name = "X-USER-ID")
+			long userId,@RequestParam(name = "name",required = true) String partieNom,
+			@PathVariable String coursId, Pageable page) throws UnauthorizedException,
+			ProxyUnavailableException, NotFoundException{
+		authService.isClassMemberOrOwner(getCoursUUID(coursId), userId);
+		return gestionnaireFichier.getFichierParNom(partieNom,coursId,
+				TypeAssociation.COURS,page)
+				.map(AssociationFichier::masquerProprietes);
 	}
 	
 	public long getMaxSize() {

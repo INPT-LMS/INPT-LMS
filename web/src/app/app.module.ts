@@ -1,5 +1,7 @@
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { StoreModule } from '@ngrx/store';
+import userReducer from './reducers/userReducer';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,9 +16,9 @@ import { AgendaItemComponent } from './components/pages/homepage/agenda/agenda-i
 import { HomepageComponent } from './components/pages/homepage/homepage.component';
 import { CourseComponent } from './components/pages/course/course.component';
 import { CourseCoverComponent } from './components/pages/course/course-cover/course-cover.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AboutCourseComponent } from './components/pages/course/about-course/about-course.component';
-import { AddCourseComponent } from './components/pages/course/add-course/add-course.component';
+import { AddPostComponent } from './components/pages/course/add-post/add-post.component';
 import { MessagingComponent } from './components/pages/messaging/messaging.component';
 import { MessagesComponent } from './components/pages/messaging/messages/messages.component';
 import { ConversationComponent } from './components/pages/messaging/conversation/conversation.component';
@@ -34,6 +36,22 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiInterceptor } from './utils/api.interceptor';
 import { MyErrorsHandler } from './utils/myerrorshandler';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { MessageItemComponent } from './components/pages/messaging/messages/message-item/message-item.component';
+import { AddCourseItemComponent } from './components/pages/homepage/fast-links/add-course-item/add-course-item.component';
+import { UserComponent } from './components/pages/user/user.component';
+import { UserLinkComponent } from './components/user-link/user-link.component';
+import { CourseFeedComponent } from './components/pages/course/course-feed/course-feed.component';
+import { CourseMembersComponent } from './components/pages/course/course-members/course-members.component';
+import { CourseMembersListComponent } from './components/pages/course/course-members/course-members-list/course-members-list.component';
+import { CourseMembersListItemComponent } from './components/pages/course/course-members/course-members-list/course-members-list-item/course-members-list-item.component';
+import { AddMemberComponent } from './components/pages/course/course-members/add-member/add-member.component';
+import { AddAssignmentComponent } from './components/pages/course/add-assignment/add-assignment.component';
+import { CourseAssignmentsComponent } from './components/pages/course/course-assignments/course-assignments.component';
+import { CourseAssignmentInfosComponent } from './components/pages/course/course-assignment-infos/course-assignment-infos.component';
+import { CourseAssignmentsAllComponent } from './components/pages/course/course-assignments-all/course-assignments-all.component';
+import { CourseAssignmentAnswerItemComponent } from './components/pages/course/course-assignment-infos/course-assignment-answer-item/course-assignment-answer-item.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +68,7 @@ import { MyErrorsHandler } from './utils/myerrorshandler';
     CourseComponent,
     CourseCoverComponent,
     AboutCourseComponent,
-    AddCourseComponent,
+    AddPostComponent,
     MessagingComponent,
     MessagesComponent,
     ConversationComponent,
@@ -64,6 +82,20 @@ import { MyErrorsHandler } from './utils/myerrorshandler';
     SignupFormComponent,
     LoginComponent,
     LoginFormComponent,
+    MessageItemComponent,
+    AddCourseItemComponent,
+    UserComponent,
+    UserLinkComponent,
+    CourseFeedComponent,
+    CourseMembersComponent,
+    CourseMembersListComponent,
+    CourseMembersListItemComponent,
+    AddMemberComponent,
+    AddAssignmentComponent,
+    CourseAssignmentsComponent,
+    CourseAssignmentInfosComponent,
+    CourseAssignmentsAllComponent,
+    CourseAssignmentAnswerItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,6 +104,11 @@ import { MyErrorsHandler } from './utils/myerrorshandler';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({ User: userReducer }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
   ],
   providers: [
     {
@@ -79,10 +116,10 @@ import { MyErrorsHandler } from './utils/myerrorshandler';
       useClass: ApiInterceptor,
       multi: true,
     },
-    {
-      provide: ErrorHandler,
-      useClass: MyErrorsHandler,
-    },
+    // {
+    //   provide: ErrorHandler,
+    //   useClass: MyErrorsHandler,
+    // },
   ],
   bootstrap: [AppComponent],
 })

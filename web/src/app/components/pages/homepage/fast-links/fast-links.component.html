@@ -1,12 +1,15 @@
 <div class="container">
   <h2 class="text-center">Fast Links</h2>
   <hr />
-  <ul>
+  <!-- Modal here -->
+  <app-add-course-item [courses]="courses"></app-add-course-item>
+  <hr />
+  <ul *ngIf="courses !== []">
     <li>
-      <app-link-item></app-link-item>
-      <app-link-item></app-link-item>
-      <app-link-item></app-link-item>
-      <app-link-item></app-link-item>
+      <app-link-item
+        *ngFor="let course of courses"
+        [course]="course"
+      ></app-link-item>
     </li>
   </ul>
 </div>

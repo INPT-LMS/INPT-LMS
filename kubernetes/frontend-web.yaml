@@ -6,7 +6,8 @@ metadata:
   labels:
     app: angular-depl
 spec:
-  replicas: 2
+  replicas: 1
+  # replicas: 2
   selector:
     # Has to match the container label
     matchLabels:
@@ -19,6 +20,7 @@ spec:
       containers:
         - name: angular-pod
           image: aminerachyd/projetlms-frontend-web
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
 ---

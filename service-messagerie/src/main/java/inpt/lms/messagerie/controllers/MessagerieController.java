@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import feign.RetryableException;
 import inpt.lms.messagerie.business.interfaces.MessagerieService;
 import inpt.lms.messagerie.business.interfaces.exceptions.NotFoundException;
 import inpt.lms.messagerie.forms.MessageForm;
 import inpt.lms.messagerie.model.Discussion;
 import inpt.lms.messagerie.model.Message;
 import inpt.lms.messagerie.proxies.GestionCompteProxyService;
-import inpt.lms.messagerie.proxies.ProxyUnavailableException;
+import inpt.lms.messagerie.proxies.NoSuchUserException;
 
 @RestController
 @RequestMapping(path="/messagerie",
@@ -61,20 +60,17 @@ public class MessagerieController {
 	}
 	
 	@PostMapping(path="/discussion",consumes=MediaType.APPLICATION_JSON_VALUE)
-	public void envoyerMessage(@RequestHeader(name = "X-USER-ID") long userId,
+	public Message envoyerMessage(@RequestHeader(name = "X-USER-ID") long userId,
 			@Valid @RequestBody  MessageForm messageForm) 
-					throws ProxyUnavailableException{
-		try {
-			compteService.userExists(userId);
-		} catch (RetryableException e) {
-			throw new ProxyUnavailableException();
-		}
+					throws NoSuchUserException{
+		if (messageForm.getIdDestinataire().equals(userId))
+			throw new NoSuchUserException();
 		
 		Message message = new Message();
 		message.setIdEmetteur(userId);
 		message.setIdDestinataire(messageForm.getIdDestinataire());
 		message.setContenu(messageForm.getContenu());
-		messagerieService.envoyerMessage(message);
+		return messagerieService.envoyerMessage(message);
 	}
 
 	public MessagerieService getMessagerieService() {

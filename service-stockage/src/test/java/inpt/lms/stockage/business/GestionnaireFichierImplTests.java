@@ -63,33 +63,14 @@ class GestionnaireFichierImplTests {
 		assoc.setIdCorrespondantAssociation("10");
 		assoc.setTypeAssociation(TypeAssociation.SAC);
 		assoc.setFichierInfo(fInfo);
-	}
-	
-	@Test
-	void testShouldAddSac() throws NotFoundException {
-		when(assocDAO.findById(5l)).thenReturn(Optional.of(assoc));
 		
-		gFichier.ajoutDansSac(10l, 5l);
-		
-		ArgumentCaptor<AssociationFichier> assocCaptured = ArgumentCaptor.forClass(AssociationFichier.class);
-		verify(assocDAO).save(assocCaptured.capture());
-		AssociationFichier captured = assocCaptured.getValue();
-		
-		assertEquals(TypeAssociation.SAC, captured.getTypeAssociation());
-		assertEquals("10",captured.getIdCorrespondantAssociation());
-		assertEquals(fInfo.getNom(),captured.getFichierInfo().getNom());
-	}
-	
-	@Test
-	void testShouldThrowAddSac() throws NotFoundException {
-		when(assocDAO.findById(5l)).thenReturn(Optional.empty());
-		
-		assertThrows(NotFoundException.class, () -> gFichier.ajoutDansSac(10l, 5l));
+		gFichier.setMaxUserSpace(52428800);
 	}
 	
 	@Test
 	void testShouldRemoveSacAndDelete() throws NotFoundException, IOException {
-		when(assocDAO.findById(5l)).thenReturn(Optional.of(assoc));
+		when(assocDAO.findByIdAndIdCorrespondantAssociationAndTypeAssociation(
+				5l, "10", TypeAssociation.SAC)).thenReturn(Optional.of(assoc));
 		when(assocDAO.existsById(5l)).thenReturn(true);
 		
 		gFichier.retraitSac(10l, 5l);
@@ -100,7 +81,8 @@ class GestionnaireFichierImplTests {
 	}
 	@Test
 	void testShouldThrowWhenDeleteFromSac() throws NotFoundException, IOException {
-		when(assocDAO.findById(5l)).thenReturn(Optional.of(assoc));
+		when(assocDAO.findByIdAndIdCorrespondantAssociationAndTypeAssociation(
+				5l, "10", TypeAssociation.SAC)).thenReturn(Optional.of(assoc));
 		when(assocDAO.existsById(5l)).thenReturn(true);
 		doThrow(IOException.class).when(gestionnaireIO).supprimerFichier(fInfo.getChemin());
 		
@@ -126,7 +108,7 @@ class GestionnaireFichierImplTests {
 	
 	@Test
 	void testShouldThrowLimitExceed() throws StorageLimitExceededException, IOException {
-		when(fDAO.getUsedSpaceUser(10l)).thenReturn(GestionnaireFichierImpl.MAX_SPACE_PER_USER+1);
+		when(fDAO.getUsedSpaceUser(10l)).thenReturn(52428801l);
 		byte[] fakeFile = new byte[20];
 		new Random().nextBytes(fakeFile);
 		assertThrows(StorageLimitExceededException.class, 

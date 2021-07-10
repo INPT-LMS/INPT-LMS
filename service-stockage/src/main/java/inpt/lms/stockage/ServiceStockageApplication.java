@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
@@ -14,6 +15,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import inpt.lms.stockage.business.impl.GestionnaireIOFichierAWSImpl;
 import inpt.lms.stockage.business.impl.GestionnaireIOFichierLocalImpl;
 import inpt.lms.stockage.business.interfaces.GestionnaireIOFichier;
+import inpt.lms.stockage.proxies.CustomErrorDecoder;
 
 @EnableFeignClients
 @SpringBootApplication
@@ -49,5 +51,15 @@ public class ServiceStockageApplication{
 			@Value("${inpt.lms.stockage.directory}") String directory) {
 		
 		return new GestionnaireIOFichierLocalImpl(directory);
-	}	
+	}
+	
+	@Bean
+	public CustomErrorDecoder getErrorDecoder() {
+		return new CustomErrorDecoder();
+	}
+
+	@Bean
+	public ShallowEtagHeaderFilter shallowEtagHeaderFilter() {
+	    return new ShallowEtagHeaderFilter();
+	}
 }

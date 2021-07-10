@@ -7,10 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import inpt.lms.stockage.business.interfaces.exceptions.NotFoundException;
 import inpt.lms.stockage.business.interfaces.exceptions.StorageLimitExceededException;
 import inpt.lms.stockage.controller.exceptions.FileTooBigException;
+import inpt.lms.stockage.controller.exceptions.InvalidFileTypeException;
+import inpt.lms.stockage.controller.exceptions.NoContentException;
 import inpt.lms.stockage.controller.exceptions.UnauthorizedException;
 import inpt.lms.stockage.proxies.ProxyUnavailableException;
 
@@ -23,9 +26,17 @@ public class StockageControllerAdvice {
 	}
 	
 	@ExceptionHandler(FileTooBigException.class)
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	@ResponseStatus(code = HttpStatus.PAYLOAD_TOO_LARGE)
 	public ResponseEntity<String> handleTooBigException(FileTooBigException e){
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.PAYLOAD_TOO_LARGE);
+	}
+	
+	@ExceptionHandler(MaxUploadSizeExceededException.class)
+	@ResponseStatus(code = HttpStatus.PAYLOAD_TOO_LARGE)
+	public ResponseEntity<String> handleMaxUploadSizeExceededException(
+			MaxUploadSizeExceededException e){
+		return new ResponseEntity<>(e.getMostSpecificCause().getMessage(),
+				HttpStatus.PAYLOAD_TOO_LARGE);
 	}
 	
 	@ExceptionHandler(IOException.class)
@@ -54,5 +65,18 @@ public class StockageControllerAdvice {
 			ProxyUnavailableException e){
 		return new ResponseEntity<>("Server error please retry later",
 				HttpStatus.SERVICE_UNAVAILABLE);
+	}
+	
+	@ExceptionHandler(InvalidFileTypeException.class)
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	public ResponseEntity<String> handleInvalidFileTypeException(InvalidFileTypeException e){
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(NoContentException.class)
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	public ResponseEntity<String> handleNoContentException(NoContentException e){
+		return new ResponseEntity<>("There is no response to this assignment",
+				HttpStatus.BAD_REQUEST);
 	}
 }

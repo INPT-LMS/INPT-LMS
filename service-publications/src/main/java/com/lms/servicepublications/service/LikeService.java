@@ -1,66 +1,69 @@
 package com.lms.servicepublications.service;
+import com.lms.servicepublications.beans.UserBean;
 import com.lms.servicepublications.dto.LikeDTO;
-import com.lms.servicepublications.exceptions.RessourceNotFoundException;
+import com.lms.servicepublications.exceptions.ResourceAlreadyExists;
+import com.lms.servicepublications.exceptions.ResourceNotFoundException;
 import com.lms.servicepublications.exceptions.UnauthorizedException;
 import com.lms.servicepublications.model.Like;
 import com.lms.servicepublications.model.Publication;
+import com.lms.servicepublications.proxies.GestionCompteProxy;
 import com.lms.servicepublications.repository.LikeRepository;
 import com.lms.servicepublications.repository.PublicationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-// TODO Vérification de l'identité pour la suppression/Modification
 @Service
 @AllArgsConstructor
 
 public class LikeService {
-    private LikeRepository likeRepository;
-    private PublicationRepository publicationRepository;
+    private final GestionCompteProxy gestionCompteProxy;
+    private final LikeRepository likeRepository;
+    private final PublicationRepository publicationRepository;
 
-
-    public String ajouterLike(String user_id, LikeDTO likeDTO){
+    /**
+     * Fonction pour ajouter un LIKE
+     * @return String
+     */
+    public Like ajouterLike(Long user_id, LikeDTO likeDTO){
+        UserBean userBean = gestionCompteProxy.getNameById(user_id);
+        if(likeRepository.existsByIdProprietaireAndIdPublication(user_id, likeDTO.getIdPublication())) throw new ResourceAlreadyExists("You've already liked this post");
+        Publication publication = publicationRepository.findById(likeDTO.getIdPublication()).orElseThrow(()->new ResourceNotFoundException("Publication not found"));
         Like like = new Like();
         like.setIdProprietaire(user_id);
         like.setIdPublication(likeDTO.getIdPublication());
+        like.setNomUser(userBean.getUser().getNom());
+        like.setPrenomUser(userBean.getUser().getPrenom());
+        List<Like> likes = publication.getLikes();
+        likes.add(like);
+        publication.setLikes(likes);
         likeRepository.insert(like);
-        Publication publication = publicationRepository.findById(likeDTO.getIdPublication()).orElseThrow(()->new RessourceNotFoundException("Publication not found"));
-
-        if(publication.getLikes() == null){
-            List<Like> likes = new ArrayList<>();
-            likes.add(like);
-            publication.setLikes(likes);
-        }
-        else{
-            List<Like> likes = publication.getLikes();
-            likes.add(like);
-            publication.setLikes(likes);
-        }
-
         publicationRepository.save(publication);
-        return "Like ajouté avec succèes";
+        return like;
     }
 
 
-    public String supprimerLike(String id_user, String idLike){
-        Like like = likeRepository.findById(idLike).orElseThrow(()->new RessourceNotFoundException("Like not found"));
+
+
+    public String supprimerLike(Long id_user, String idLike){
+        Like like = likeRepository.findById(idLike).orElseThrow(()->new ResourceNotFoundException("Like not found"));
         String idPublication = like.getIdPublication();
         if(!like.getIdProprietaire().equals(id_user)) throw new UnauthorizedException("Action not authorized");
-        Publication publication = publicationRepository.findById(idPublication).orElseThrow(()->new RessourceNotFoundException("Publication not found"));
+        Publication publication = publicationRepository.findById(idPublication).orElseThrow(()->new ResourceNotFoundException("Publication not found"));
         List<Like> likes = publication.getLikes();
         for(int i =0; i<likes.size();i++){
-            if (likes.get(i).getIdLike().equals(idLike)){
+            if (likes.get(i).getId().equals(idLike)){
                 likes.remove(i);
             }
         }
         likeRepository.deleteById(idLike);
         publicationRepository.save(publication);
-        return "Like supprimé avec succèes";
+        return "{\"Message\":\"Like supprimé avec succès\"}";
     }
 
     public void supprimerLikesInPublication(List<Like> likes){
         likeRepository.deleteAll(likes);
     }
+
 }

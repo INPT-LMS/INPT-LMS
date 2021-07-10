@@ -1,20 +1,26 @@
-<app-course-cover></app-course-cover>
+<app-course-cover
+  [title]="class.courseName ? class.courseName : ''"
+  [deleteClass]="deleteClass.bind(this)"
+  [ownerId]="ownerId"
+  [classId]="class.courseID!"
+></app-course-cover>
 <div class="course-color">
   <div class="container">
     <div class="row my-3">
       <div class="col-3 mt-5">
         <!-- About course -->
-        <app-about-course></app-about-course>
+        <app-about-course
+          [about]="class.courseDescription ? class.courseDescription : ''"
+        ></app-about-course>
       </div>
       <div class="col-6">
-        <!-- Add post -->
-        <app-add-course></app-add-course>
-        <!-- Feed -->
-        <app-feed></app-feed>
+        <router-outlet></router-outlet>
       </div>
       <div class="col-3 mt-5">
         <!-- Agenda -->
-        <app-agenda></app-agenda>
+        <ng-container *ngIf="class.devoirs">
+          <app-agenda [devoirs]="class.devoirs"></app-agenda>
+        </ng-container>
       </div>
     </div>
   </div>

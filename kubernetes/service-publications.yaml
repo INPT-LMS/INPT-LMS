@@ -1,0 +1,47 @@
+# Deployment for the containers/pods
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-deployment
+  labels:
+    app: posts-depl
+spec:
+  replicas: 1
+  # replicas: 2
+  selector:
+    # Has to match the container label
+    matchLabels:
+      app: posts-pod
+  template:
+    metadata:
+      labels:
+        app: posts-pod
+    spec:
+      containers:
+        - name: posts-pod
+          image: mohammedaymane/service-publications
+          imagePullPolicy: Always
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+            - name: INPT_LMS_URL_SERVICE_COURS
+              value: "http://cours-service"
+
+          ports:
+            - containerPort: 8080
+---
+# Service for the containers/pods
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: posts-service
+  name: posts-service
+spec:
+  # Has to match the container label
+  selector:
+    app: posts-pod
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP

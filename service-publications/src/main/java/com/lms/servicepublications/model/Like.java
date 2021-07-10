@@ -17,11 +17,13 @@ import java.util.Date;
 @Document(collection = "like")
 public class Like {
     @Id
-    private String idLike;
+    private String id;
+    private String nomUser;
+    private String prenomUser;
     private String idPublication;
     @CreatedDate
     private Date dateLike;
-    private String idProprietaire;
+    private Long idProprietaire;
 
 
 

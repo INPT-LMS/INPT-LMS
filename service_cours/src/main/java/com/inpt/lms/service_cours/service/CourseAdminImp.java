@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -23,14 +24,41 @@ public class CourseAdminImp implements CourseAdministration{
     MemberInterface memberInterface ;
     @Override
     public Course createCourse(Course course, long ownerID) {
-        Professor creator = professorInterface.findById(ownerID).orElse(new Professor(ownerID));
-        course.setOwner(creator);
-        professorInterface.save(creator);
+        Optional<Professor> creator = professorInterface.findById(ownerID);
+        Professor creator1 = new Professor();
+        if(creator.isPresent()){
+            creator1 = creator.get();
+        }
+        else {
+            creator1.setProfessorID(ownerID);
+        }
+        professorInterface.save(creator1);
+        course.setOwner(creator1);
+
+
+        Optional<Member> member = memberInterface.findById(ownerID);
+        Member member1 = new Member();
+        if(!member.isPresent()){
+            member1.setMemberID(ownerID);
+        }
+        else {
+            member1 = member.get();
+        }
+
+        Set<Member> students = course.getStudents();
+        students.add(member1);
+
+        member1.getCourses().add(course);
+
+
         courseInterface.save(course);
         return course;
-
     }
 
+    @Override
+    public List<Course> getAllCourses() {
+        return courseInterface.findAll();
+    }
 
 
     @Override
@@ -65,8 +93,9 @@ public class CourseAdminImp implements CourseAdministration{
         }
         Optional<Course> course = courseInterface.findById(courseID);
         if(course.isPresent()){
+            System.out.println("found course");
             Course course1 = course.get();
-            List<Course> memberCourses = member1.getCourses();
+            Set<Course> memberCourses = member1.getCourses();
             if(memberCourses.contains(course1)){
                 return true ;
             }
@@ -89,7 +118,7 @@ public class CourseAdminImp implements CourseAdministration{
         Optional<Course> course = courseInterface.findById(courseID);
         if(course.isPresent()){
             Course course1 = course.get();
-            List<Course> memberCourses = member.getCourses();
+            Set<Course> memberCourses = member.getCourses();
             if(memberCourses.contains(course1)){
                memberCourses.remove(course1);
             }

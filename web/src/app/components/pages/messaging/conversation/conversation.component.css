@@ -28,3 +28,8 @@ i {
 .your-message {
   width: 100%;
 }
+
+.conversation-inner {
+  height: 400px;
+  overflow: auto;
+}

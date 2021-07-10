@@ -10,11 +10,6 @@
     "description": "Boolean qui détermine si le mode local doit être utilisé"
   },
   {
-    "name": "inpt.lms.stockage.max-size",
-    "type": "java.lang.Integer",
-    "description": "Taille maximum d'un fichier en bytes"
-  },
-  {
     "name": "inpt.lms.url.service.cours",
     "type": "java.lang.String",
     "description": "Url du service cours"
@@ -23,5 +18,25 @@
     "name": "inpt.lms.url.service.publication",
     "type": "java.lang.String",
     "description": "Url du service publication"
+  },
+  {
+    "name": "inpt.lms.url.service.devoir",
+    "type": "java.lang.String",
+    "description": "Url du service devoir"
+  },
+  {
+    "name": "inpt.lms.url.service.gestioncompte",
+    "type": "java.lang.String",
+    "description": "Url du service gestion de compte"
+  },
+  {
+    "name": "inpt.lms.stockage.max-file-size",
+    "type": "java.lang.Integer",
+    "description": "Taille maximum d'un fichier en bytes"
+  },
+  {
+    "name": "inpt.lms.stockage.max-user-space",
+    "type": "java.lang.Integer",
+    "description": "Capacité de stockage d'un utilisateur en bytes"
   }
 ]}

@@ -22,7 +22,7 @@ public class MessagerieControllerAdvice {
 	@ExceptionHandler(NoSuchUserException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	public ResponseEntity<String> handleNotFoundException(NoSuchUserException e){
-		return new ResponseEntity<>("No user with idDestinataire",
+		return new ResponseEntity<>("Invalid idDestinataire",
 				HttpStatus.BAD_REQUEST);
 	}
 	

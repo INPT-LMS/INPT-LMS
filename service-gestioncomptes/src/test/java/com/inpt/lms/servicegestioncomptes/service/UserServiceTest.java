@@ -100,6 +100,7 @@ class UserServiceTest {
         User user = new User();
         user.setEmail("amine@gmail.com");
         user.setPassword(underTest.encryptPassword("123456"));
+        user.setFullName(userInfos.getNom()+" "+userInfos.getPrenom());
 
         user.setUserInfos(userInfos);
         //userInfos.setUser(user);

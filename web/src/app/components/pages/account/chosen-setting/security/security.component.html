@@ -8,30 +8,33 @@
   </div>
 
   <div class="card-footer">
-    <h5 class="mb-3">Change password :</h5>
-    <form>
+    <h5 class="mb-3">Changer le mot de passe:</h5>
+    <form [formGroup]="passwordForm" (ngSubmit)="onSubmit($event)">
       <div class="mx-3 d-flex align-items-center mb-4">
-        <label>Your old password</label>
+        <label>Votre ancien mot de passe</label>
         <input
-          type="text"
+          type="password"
           class="form-control"
-          placeholder="Your old password"
+          placeholder="Votre ancien mot de passe"
+          formControlName="oldPassword"
         />
       </div>
       <div class="mx-3 d-flex align-items-center mb-4">
-        <label>Your new password</label>
+        <label>Votre nouveau mot de passe</label>
         <input
-          type="text"
+          type="password"
           class="form-control"
-          placeholder="Your new password"
+          placeholder="Votre nouveau mot de passe"
+          formControlName="newPassword"
         />
       </div>
       <div class="mx-3 d-flex align-items-center mb-4">
-        <label>Repeat your password</label>
+        <label>Confimer votre mot de passe</label>
         <input
-          type="text"
+          type="password"
           class="form-control"
-          placeholder="Repeat your password"
+          placeholder="Confimer votre mot de passe"
+          formControlName="confirmedPassword"
         />
       </div>
 

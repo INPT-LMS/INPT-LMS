@@ -1,8 +1,10 @@
 package com.inpt.lms.service_cours.service;
 
 import com.inpt.lms.service_cours.model.Course;
+import com.inpt.lms.service_cours.model.Member;
 import com.inpt.lms.service_cours.model.Visibility;
 import com.inpt.lms.service_cours.repository.CourseInterface;
+import com.inpt.lms.service_cours.repository.MemberInterface;
 import com.inpt.lms.service_cours.repository.VisibilityInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class CourseVisibilityImp implements CourseVisibility{
     VisibilityInterface visibilityInterface;
     @Autowired
     CourseInterface  courseInterface ;
+    @Autowired
+    MemberInterface memberInterface ;
     ArrayList<String> visibilitiess= new ArrayList<>(Arrays.asList("PUBLIC","CODE_ACCESS","PRIVATE"));
      @PostConstruct
     public void setupVisibilities(){
@@ -38,6 +42,16 @@ public class CourseVisibilityImp implements CourseVisibility{
         return  null;
     }
 
+    @Override
+    public Course getCourseByID(UUID courseID,long userID) {
+         Optional<Course> optionalCourse = courseInterface.findById(courseID);
+         Optional<Member> optionalMember = memberInterface.findById(userID);
+         if(!optionalCourse.isPresent() || !optionalMember.isPresent() ||
+                 ! optionalCourse.get().getStudents().contains(optionalMember.get()) ){
+             return null;
+         }
+        return optionalCourse.get();
+    }
 
 
     @Override

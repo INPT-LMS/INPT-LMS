@@ -1,0 +1,11 @@
+<ng-container *ngIf="user.id">
+  <app-user-link [userId]="user.id">
+    <div class="card my-1 w-100">
+      <div class="card-body">
+        <span>{{ user.nom }} {{ user.prenom }}</span>
+        <span class="badge badge-primary ml-2" *ngIf="isOwner">Professor</span>
+        <span class="badge badge-danger ml-2" *ngIf="isMe">You</span>
+      </div>
+    </div>
+  </app-user-link>
+</ng-container>

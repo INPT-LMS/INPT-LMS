@@ -2,23 +2,18 @@ package com.inpt.lms.service_cours.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+
 @Entity
 public class Course implements Serializable{
 	@Id
+	@Type(type="uuid-char")
+	@Column( columnDefinition= "VARCHAR(64)")
 	private UUID courseID = UUID.randomUUID();
 	private String courseName;
 	private String courseDescription ;
@@ -28,11 +23,10 @@ public class Course implements Serializable{
 	private Visibility visibility = new Visibility() ;
 	 @ManyToOne(fetch = FetchType.LAZY, optional = false)
 	 @JoinColumn(name = "professorid", nullable = false)
-	 @JsonIgnore
-	private Professor owner ;
-	 @ManyToMany(mappedBy="courses" , fetch = FetchType.LAZY)
 
-	private List<Member> students = new ArrayList<>();
+	private Professor owner ;
+	 @ManyToMany(mappedBy="courses" , fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+	private Set<Member> students = new HashSet<>();
 
 	public Course() {
 		super();
@@ -77,11 +71,11 @@ public class Course implements Serializable{
 		this.owner = owner;
 	}
 
-	public List<Member> getStudents() {
+	public Set<Member> getStudents() {
 		return students;
 	}
 
-	public void setStudents(List<Member> students) {
+	public void setStudents(Set<Member> students) {
 		this.students = students;
 	}
 

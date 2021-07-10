@@ -1,6 +1,7 @@
 package inpt.lms.stockage.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,9 +18,25 @@ public interface AssociationFichierDAO
 	List<AssociationFichier> findAllByFichierInfo_IdAndTypeAssociation(Long id,
 			TypeAssociation typeAssociation);
 	
+	Page<AssociationFichier> findAllByFichierInfo_NomIgnoreCaseContainingAndIdCorrespondantAssociationAndTypeAssociation(
+			String partieNom,String idCorrespondant, TypeAssociation typeAssociation,
+			Pageable page);
+	
 	Long deleteByFichierInfo_IdAndTypeAssociation(Long idFichier,
 			TypeAssociation type);
 
-	Page<AssociationFichier> findAllByIdCorrespondantAssociationAndTypeAssociation(String idAssocie,
-			TypeAssociation typeAssociation, Pageable pagination);
+	Page<AssociationFichier> findAllByIdCorrespondantAssociationAndTypeAssociationOrderByFichierInfo_DateCreationDesc(
+			String idAssocie,TypeAssociation typeAssociation, Pageable pagination);
+	
+	boolean existsByIdAndIdCorrespondantAssociationAndTypeAssociation(
+			Long idAssoc, String idAssocie,TypeAssociation typeAssociation);
+	
+	Optional<AssociationFichier> findByIdAndIdCorrespondantAssociationAndTypeAssociation(
+			Long idAssoc, String idAssocie,TypeAssociation typeAssociation);
+	
+	Optional<AssociationFichier> findByIdCorrespondantAssociationAndTypeAssociation(
+			String idAssocie,TypeAssociation typeAssociation);
+
+	Optional<AssociationFichier> findByIdCorrespondantAssociationAndTypeAssociationAndFichierInfo_IdProprietaire(
+			String idCorrespondant, TypeAssociation typeAssociation ,long id);
 }

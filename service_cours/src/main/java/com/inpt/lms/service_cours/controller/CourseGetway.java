@@ -3,6 +3,7 @@ package com.inpt.lms.service_cours.controller;
 import com.inpt.lms.service_cours.model.Course;
 import com.inpt.lms.service_cours.service.CourseAdminImp;
 import com.inpt.lms.service_cours.service.CourseDetailsImp;
+import com.inpt.lms.service_cours.service.CourseVisibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +19,20 @@ public class CourseGetway {
 	CourseAdminImp courseAdminImp ;
 	@Autowired
 	CourseDetailsImp courseDetailsImp;
-
-	@GetMapping("/courses/owner/")
+	@Autowired
+	CourseVisibility courseVisibility ;
+	@GetMapping("/courses/owner")
 	public List<Course> getProfessorCourses( @RequestHeader("X-USER-ID") long ownerid) {
 		return courseDetailsImp.getProfessorCourses(ownerid);
 	}
-	@PostMapping("/course/owner/")
+	@GetMapping("/course/{courseID}")
+	public Serializable getCourseByID(@PathVariable UUID courseID, @RequestHeader("X-USER-ID") long userID) {
+		if(courseDetailsImp.isMember(courseID,userID)){
+			return courseVisibility.getCourseByID(courseID,userID);
+		}
+		return HttpStatus.UNAUTHORIZED;
+	}
+	@PostMapping("/course/owner")
 	public Course addCourse(@RequestBody Course course, @RequestHeader("X-USER-ID") long ownerid){
 		return courseAdminImp.createCourse(course,ownerid);
 	}
@@ -40,6 +49,11 @@ public class CourseGetway {
 			return courseDetailsImp.getCourseProfessor(courseid);
 		}
 		return HttpStatus.UNAUTHORIZED ;
+	}
+
+	@GetMapping("/course/discover/{courseName}")
+	public List<Course> getCoursesByName(@PathVariable String courseName){
+		return courseDetailsImp.getCoursesByName(courseName,1);
 	}
 	/* @GetMapping("/course/{courseid}/owner/{ownerid}")
 	public boolean checkProfessor(@PathVariable UUID courseid,@PathVariable long ownerid){

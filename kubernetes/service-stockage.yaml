@@ -1,0 +1,64 @@
+# Deployment for the containers/pods
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stockage-deployment
+  labels:
+    app: stockage-depl
+spec:
+  replicas: 1
+  # replicas: 2
+  selector:
+    # Has to match the container label
+    matchLabels:
+      app: stockage-pod
+  template:
+    metadata:
+      labels:
+        app: stockage-pod
+    spec:
+      containers:
+        - name: stockage-pod
+          image: tobadarichard/service-stockage
+          imagePullPolicy: Always
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://database-lms-gestioncomptes.cdbanxnsyfzq.us-east-2.rds.amazonaws.com:3306/stockage"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "stockage"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "stockage"
+            - name: AWS_ACCESS_KEY_ID
+              value: ""
+            - name: AWS_SECRET_ACCESS_KEY
+              value: ""
+            - name: INPT_LMS_URL_SERVICE_COURS
+              value: "http://cours-service"
+            - name: INPT_LMS_URL_PUBLICATION_COURS
+              value: "http://posts-service"
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://database-lms-gestioncomptes.cdbanxnsyfzq.us-east-2.rds.amazonaws.com:3306/stockage"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "stockage"
+            - name: spring_datasource_PASSWORD
+              value: "stockage"
+          ports:
+            - containerPort: 8080
+---
+# Service for the containers/pods
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: stockage-service
+  name: stockage-service
+spec:
+  # Has to match the container label
+  selector:
+    app: stockage-pod
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP

@@ -1,7 +1,6 @@
 package com.inpt.lms.servicegestioncomptes.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -15,10 +14,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name="user_infos_id")
     private UserInfos userInfos;
-
+    private String fullName;
     private String email;
     private String password;
 }

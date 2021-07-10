@@ -1,4 +1,4 @@
-package com.lms.servicepublications.model;
+/*package com.lms.servicepublications.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,3 +24,4 @@ public class Fichier {
     private String idProprietaire;
 
 }
+*/

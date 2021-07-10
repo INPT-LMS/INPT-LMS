@@ -1,15 +1,39 @@
 <div class="cover">
   <div class="container">
-    <h1 class="course-title text-center">Introduction machine learning</h1>
+    <h1 class="course-title text-center">{{ title }}</h1>
     <div ngbDropdown class="d-inline-block settings">
       <button class="btn btn-secondary" ngbDropdownToggle>
         <i class="fas fa-cog"></i>
       </button>
       <div ngbDropdownMenu>
-        <button ngbDropdownItem>Contact Professor</button>
-        <button ngbDropdownItem>Share Course</button>
-        <button ngbDropdownItem>Members</button>
+        <a
+          class="btn link"
+          [routerLink]="['/user', ownerId]"
+          routerLinkActive="router-link-active"
+          ngbDropdownItem
+          >Contact Professor</a
+        >
+        <a
+          class="btn link"
+          [routerLink]="['/course', classId, 'members']"
+          [state]="{ classId: classId }"
+          routerLinkActive="router-link-active"
+          ngbDropdownItem
+          >Members</a
+        >
+        <a
+          class="btn link"
+          [routerLink]="['/course', classId, 'assignments']"
+          [state]="{ classId: classId }"
+          routerLinkActive="router-link-active"
+          ngbDropdownItem
+          >Assignments</a
+        >
+        <!-- <button ngbDropdownItem>Share Course</button> -->
         <button ngbDropdownItem>Edit Course</button>
+        <button ngbDropdownItem (click)="deleteClass()">
+          <span class="text-danger">Delete Course</span>
+        </button>
         <button ngbDropdownItem>
           <span class="text-danger">Quit Course</span>
         </button>

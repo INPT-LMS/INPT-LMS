@@ -2,32 +2,63 @@
   <div class="card-body">
     <div class="d-flex align-items-start">
       <div class="mx-3 align-self-center flex-grow-1">
-        <h5>Personal information</h5>
+        <h5>Informations personnelles</h5>
       </div>
     </div>
   </div>
 
   <div class="card-footer">
-    <form>
+    <form [formGroup]="informationsForm" (ngSubmit)="onSubmit($event)">
       <div class="mx-3 d-flex align-items-center mb-4">
-        <i class="fas fa-graduation-cap"></i>
-        <label>School</label>
-        <input type="text" class="form-control" placeholder="Your school" />
+        <i class="fas fa-user"></i>
+        <label>Nom</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Votre nom"
+          formControlName="nom"
+        />
       </div>
       <div class="mx-3 d-flex align-items-center mb-4">
         <i class="fas fa-user"></i>
-        <label>Name</label>
-        <input type="text" class="form-control" placeholder="Your school" />
+        <label>Prenom</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Votre prénom"
+          formControlName="prenom"
+        />
       </div>
       <div class="mx-3 d-flex align-items-center mb-4">
-        <i class="fas fa-mobile-alt"></i>
-        <label>Phone</label>
-        <input type="text" class="form-control" placeholder="Your school" />
+        <i class="fas fa-graduation-cap"></i>
+        <label>Ecole</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Votre école"
+          formControlName="etudieA"
+        />
       </div>
+      <!-- 
+      <div class="mx-3 d-flex align-items-center mb-4">
+        <i class="fas fa-mobile-alt"></i>
+        <label>Telephone</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Your school"
+          formControlName="email"
+        />
+      </div> -->
       <div class="mx-3 d-flex align-items-center mb-4">
         <i class="far fa-envelope"></i>
         <label>Email</label>
-        <input type="text" class="form-control" placeholder="Your school" />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Votre email"
+          formControlName="email"
+        />
       </div>
       <input type="submit" class="form-control d-block w-100 btn" />
     </form>

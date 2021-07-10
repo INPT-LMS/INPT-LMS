@@ -1,48 +1,92 @@
 <div class="card">
   <div class="card-body">
-    <div class="d-flex align-items-start">
+    <div class="d-flex justify-content-between align-items-start">
       <!-- Profile pic -->
-      <img
-        class="rounded-circle"
-        width="70px"
-        src="https://picsum.photos/200"
-        alt=""
-      />
-      <div class="mx-3 align-self-center flex-grow-1">
-        <!-- Profile -->
-        <h5 class="card-title">John Doe</h5>
-        <!-- Course -->
-        <span class="from">from : Flutter course community</span>
+
+      <app-user-link [userId]="post.idProprietaire!">
+        <img
+          class="rounded-circle"
+          width="70px"
+          src="https://picsum.photos/200"
+          alt=""
+        />
+        <div class="mx-3 align-self-center flex-grow-1">
+          <!-- Profile -->
+          <h5 class="card-title">{{ post.nomUser }} {{ post.prenomUser }}</h5>
+          <!-- <span class="from">from : {{ class.courseName }}</span> -->
+        </div>
+      </app-user-link>
+      <div class="d-flex">
+        <!-- Date -->
+        <span class="date mt-2 text-muted">
+          {{ post.datePublication | date }}
+        </span>
+
+        <!-- Options menu -->
+        <div *ngIf="myPost" ngbDropdown class="d-inline-block settings">
+          <button class="btn link" ngbDropdownToggle></button>
+          <div ngbDropdownMenu>
+            <button (click)="deletePost()" ngbDropdownItem>
+              Supprimer la publication
+            </button>
+          </div>
+        </div>
       </div>
-      <!-- Date -->
-      <span class="date mt-2 text-muted">14 juin 2021</span>
     </div>
     <p class="card-text mt-4">
       <!-- body -->
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab eaque
-      repellendus tempora fuga incidunt repellat doloremque voluptatum...
+      {{ post.contenuPublication }}
     </p>
-    <a href="#" class="read-more">Read more</a>
+    <!-- <a href="#" class="read-more">Read more</a> -->
   </div>
-  <img class="card-img-bottom" src="https://via.placeholder.com/150" alt="" />
+  <img
+    *ngIf="post.image != undefined"
+    class="card-img-bottom"
+    src="https://via.placeholder.com/150"
+    alt=""
+  />
   <div class="card-footer d-flex">
     <!-- Number of likes -->
     <div class="d-flex align-items-center">
-      <a href="">
+      <button
+        (click)="like()"
+        [ngClass]="{ 'btn-danger': isLiked }"
+        class="btn btn-link"
+      >
         <i class="fa fa-heart"></i>
-      </a>
-      <span class="number text-muted mx-2">17</span>
+      </button>
+      <span class="number text-muted mx-2">{{
+        post.likes == null ? 0 : post.likes.length
+      }}</span>
     </div>
     <!-- Number of comments -->
     <div class="d-flex align-items-center">
-      <a href="">
+      <button class="btn btn-link">
         <i class="far fa-comment-dots"></i>
-      </a>
-      <span class="number text-muted mx-2">2</span>
+      </button>
+      <span class="number text-muted mx-2">
+        {{ post.commentaires == null ? 0 : post.commentaires.length }}
+      </span>
     </div>
   </div>
   <!-- comments -->
-  <app-comment></app-comment>
-  <app-comment></app-comment>
+  <app-comment
+    *ngFor="let commentaire of post.commentaires"
+    [commentaire]="commentaire"
+    [deleteCommentById]="deleteCommentById.bind(this)"
+  ></app-comment>
+  <form class="w-100" [formGroup]="commentForm" (ngSubmit)="onSubmit($event)">
+    <div class="card-footer d-flex align-items-center">
+      <textarea
+        class="form-control your-message"
+        formControlName="comment"
+        placeholder="Ecris ton commentaire ..."
+      ></textarea>
+      <button type="submit" class="btn link">
+        <i class="fas fa-paper-plane mx-2"></i>
+      </button>
+    </div>
+  </form>
 </div>
+
 <hr />

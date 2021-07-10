@@ -30,10 +30,9 @@ import inpt.lms.stockage.model.TypeAssociation;
 import inpt.lms.stockage.proxies.ProxyUnavailableException;
 import inpt.lms.stockage.util.ControllerResponseUtils;
 @RestController
-@RequestMapping(path = "/storage/publication", produces = "application/json",
-consumes = "application/json")
+@RequestMapping(path = "/storage/publication")
 public class PublicationStockageController {
-	@Value("${inpt.lms.stockage.max-size}")
+	@Value("${inpt.lms.stockage.max-file-size}")
 	protected long maxSize;
 	@Autowired
 	protected GestionnaireFichier gestionnaireFichier;
@@ -46,6 +45,8 @@ public class PublicationStockageController {
 			@RequestBody @Valid ParamAssocId assocId, 
 			@RequestHeader(name = "X-USER-ID") long userId) throws NotFoundException, UnauthorizedException, ProxyUnavailableException{
 		authService.isPublicationOwner(publicationId, userId);
+		gestionnaireFichier.isAssociationPresent(assocId.getAssocId(), 
+				String.valueOf(userId), TypeAssociation.SAC);
 		return gestionnaireFichier.ajoutDansPublication(publicationId, assocId.getAssocId());
 	}
 	
@@ -54,7 +55,7 @@ public class PublicationStockageController {
 			@PathVariable String publicationId, @RequestHeader(name = "X-USER-ID") long userId)
 					throws NotFoundException, UnauthorizedException, ProxyUnavailableException{
 		authService.isPublicationOwner(publicationId, userId);
-		gestionnaireFichier.retraitPublication(assocId);
+		gestionnaireFichier.retraitPublication(assocId,publicationId);
 	}
 	
 	@GetMapping("{publicationId}/files")
@@ -67,12 +68,14 @@ public class PublicationStockageController {
 				.map(AssociationFichier::masquerProprietes);
 	}
 	
-	@GetMapping("publicationId}/files/{assocId}/info")
+	@GetMapping("{publicationId}/files/{assocId}/info")
 	@JsonView(AssociationFichier.Public.class)
 	public AssociationFichier getInfoFichierpublication(@PathVariable Long assocId,
 			@PathVariable String publicationId,@RequestHeader(name = "X-USER-ID") long userId)
 					throws NotFoundException, UnauthorizedException, ProxyUnavailableException{
 		authService.isPublicationClassMemberOrOwner(publicationId, userId);
+		gestionnaireFichier.isAssociationPresent(assocId, 
+				publicationId, TypeAssociation.PUBLICATION);
 		return gestionnaireFichier.getFichierByAssocId(assocId);
 	}
 	
@@ -81,6 +84,8 @@ public class PublicationStockageController {
 			@PathVariable String publicationId,@RequestHeader(name = "X-USER-ID") long userId)
 					throws NotFoundException, IOException, UnauthorizedException, ProxyUnavailableException{
 		authService.isPublicationClassMemberOrOwner(publicationId, userId);
+		gestionnaireFichier.isAssociationPresent(assocId, 
+				publicationId, TypeAssociation.PUBLICATION);
 		return ControllerResponseUtils.lireFichier(
 				gestionnaireFichier.lireFichier(assocId));
 	}

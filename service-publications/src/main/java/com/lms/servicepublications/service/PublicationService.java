@@ -1,25 +1,28 @@
 package com.lms.servicepublications.service;
 
 
+import com.lms.servicepublications.beans.CoursBean;
+import com.lms.servicepublications.beans.UserBean;
 import com.lms.servicepublications.dto.PublicationDTO;
-import com.lms.servicepublications.exceptions.RessourceNotFoundException;
+import com.lms.servicepublications.exceptions.ResourceNotFoundException;
 import com.lms.servicepublications.exceptions.UnauthorizedException;
-import com.lms.servicepublications.model.Commentaire;
-import com.lms.servicepublications.model.Like;
 import com.lms.servicepublications.model.Publication;
-import com.lms.servicepublications.repository.CommentaireRepository;
+import com.lms.servicepublications.proxies.GestionCompteProxy;
 import com.lms.servicepublications.repository.PublicationRepository;
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.text.StrBuilder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 
 public class PublicationService {
 
+    private final GestionCompteProxy gestionCompteProxy;
     private final PublicationRepository publicationRepository;
     private final CommentaireService commentaireService;
     private final LikeService likeService;
@@ -31,7 +34,7 @@ public class PublicationService {
      * @return Publication
      */
     public Publication recupererPublication(String id_publication){
-        return publicationRepository.findById(id_publication).orElseThrow(()->new RessourceNotFoundException("Requested publication is not found."));
+        return publicationRepository.findById(id_publication).orElseThrow(()->new ResourceNotFoundException("Requested publication is not found."));
     }
 
     /**
@@ -46,21 +49,39 @@ public class PublicationService {
      * Fonction pour récupérer les publications par cours
      * @return Publication
      */
-    public List<Publication> recupererPublicationsParCours(String idCours){
-        return publicationRepository.findByidCours(idCours);
+    public List<Publication> recupererPublicationsParCours(UUID idCours){
+        return publicationRepository.findByidCoursOrderByDatePublicationDesc(idCours);
+    }
+
+    public HashMap<UUID,List<Publication>> recupererPublicationsParCours2(List<CoursBean> cours){
+        HashMap<UUID,List<Publication>> PublicationsParCours = new HashMap<>();
+        if(!(cours==null)){
+            for (CoursBean cour : cours) {
+                if (!(cour == null)) {
+                    PublicationsParCours.put(cour.getCourseID(), publicationRepository.findByidCoursOrderByDatePublicationDesc(cour.getCourseID()));
+                    //  PublicationsParCours.put(cours.get(i).getCourseID(),publicationRepository.findByidCoursOrderByDatePublicationDesc(cours.get(i).getCourseID()).subList(0,limit-1));
+                }
+            }
+         return PublicationsParCours;
+        }
+        return PublicationsParCours;
     }
 
     /**
      * Fonction pour ajouter une publications
      * @return String
      */
-    public String ajouterPublication(String id_user, PublicationDTO publicationDTO){
+    public Publication ajouterPublication(long id_user, PublicationDTO publicationDTO){
+        UserBean userBean = gestionCompteProxy.getNameById(id_user);
         Publication publication = new Publication();
         publication.setContenuPublication(publicationDTO.getContenuPublication());
         publication.setIdCours(publicationDTO.getIdCours());
+        publication.setNomUser(userBean.getUser().getNom());
+        publication.setPrenomUser(userBean.getUser().getPrenom());
         publication.setIdProprietaire(id_user);
-        publicationRepository.insert(publication);
-        return "Publication ajoutée avec succées";
+        publication.setCommentaires(new ArrayList<>());
+        publication.setLikes(new ArrayList<>());
+        return publicationRepository.insert(publication);
     }
 
 
@@ -68,13 +89,13 @@ public class PublicationService {
      * Fonction pour supprimer une publications par son id
      * @return String
      */
-    public String supprimerPublication(String id_user, String idPublication){
-        Publication publication = publicationRepository.findPublicationByid(idPublication);
-        if(!publication.getIdProprietaire().equals(id_user)) throw new UnauthorizedException("Action not authorized");
+    public String supprimerPublication(long id_user, String idPublication){
+        Publication publication = publicationRepository.findById(idPublication).orElseThrow(()->new ResourceNotFoundException("Requested publication is not found."));
+        if(!(publication.getIdProprietaire().equals(id_user))) throw new UnauthorizedException("Action not authorized");
         commentaireService.supprimerCommentairesInPublication(publication.getCommentaires());
         likeService.supprimerLikesInPublication(publication.getLikes());
         publicationRepository.deleteById(idPublication);
-        return "Publication supprimée avec succées";
+        return "{\"Message\":\"Publication supprimée avec succès\"}";
     }
 
 
@@ -82,12 +103,11 @@ public class PublicationService {
      * Fonction pour modifier une publications par son id
      * @return String
      */
-    public String modifierPublication(String user_id,String publication_id,PublicationDTO publicationDTO){
-        Publication publication = publicationRepository.findById(publication_id).orElseThrow(()->new RessourceNotFoundException("Requested publication is not found."));
-        if(!publication.getIdProprietaire().equals(user_id)) throw new UnauthorizedException("Action not authorized");
+    public Publication modifierPublication(Long user_id,String publication_id,PublicationDTO publicationDTO){
+        Publication publication = publicationRepository.findById(publication_id).orElseThrow(()->new ResourceNotFoundException("Requested publication is not found."));
+        if(!(publication.getIdProprietaire().equals(user_id))) throw new UnauthorizedException("Action not authorized");
         publication.setContenuPublication(publicationDTO.getContenuPublication());
         publication.setIdCours(publicationDTO.getIdCours());
-        publicationRepository.save(publication);
-        return "Publication modifiée aves succès";
+        return publicationRepository.save(publication);
     }
 }

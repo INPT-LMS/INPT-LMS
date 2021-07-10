@@ -1,8 +1,10 @@
 package com.inpt.lms.service_cours.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +19,7 @@ public class Professor implements Serializable{
 	private long professorID ;
 	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-	
+	@JsonIgnore
 	private List<Course> ownedCourses;
 	public Professor(@JsonProperty long professorID){
 		this.professorID = professorID;
@@ -37,7 +39,7 @@ public class Professor implements Serializable{
 	}
 
 	public List<Course> getOwnedCourses() {
-		return ownedCourses;
+		return ownedCourses== null ? new ArrayList<>() : ownedCourses;
 	}
 
 	public void setOwnedCourses(List<Course> ownedCourses) {

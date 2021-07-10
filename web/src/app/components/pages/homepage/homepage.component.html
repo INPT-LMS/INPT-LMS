@@ -10,7 +10,7 @@
       </div>
       <div class="col-6">
         <!-- Feed -->
-        <app-feed></app-feed>
+        <app-feed *ngIf="posts" [posts]="posts"></app-feed>
       </div>
       <div class="col-3">
         <!-- Agenda -->

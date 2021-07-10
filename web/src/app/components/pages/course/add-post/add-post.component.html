@@ -1,0 +1,40 @@
+<form [formGroup]="postForm" (ngSubmit)="onSubmit($event)">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex align-items-start">
+        <div class="mx-3 align-self-center flex-grow-1">
+          <!-- Profile -->
+          <h5 class="card-title">Add a new post</h5>
+          <div class="form-group">
+            <textarea
+              class="form-control"
+              placeholder="Express yourself ..."
+              rows="3"
+              formControlName="content"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer d-flex flex-column">
+      <div class="d-flex justify-content-around">
+        <!-- Join a file -->
+        <a href="">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-paperclip"></i>
+            <span class="number mx-2">Join file</span>
+          </div>
+        </a>
+        <!-- Join a photo -->
+        <a href="">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-image"></i>
+            <span class="number mx-2">Join photo</span>
+          </div>
+        </a>
+      </div>
+      <input class="btn btn-submit mt-3" type="submit" />
+    </div>
+  </div>
+  <hr />
+</form>
