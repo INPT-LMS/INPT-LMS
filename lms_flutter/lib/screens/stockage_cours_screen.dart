@@ -98,7 +98,7 @@ class _StockageCoursScreenState extends State<StockageCoursScreen> {
   void ajouterFichier(BuildContext context, String url, Fichier fichier) {
     stockageService.ajoutFichierCours(url, fichier.id).then((idFichier) {
       fichier.id = idFichier;
-      showSnackbar(context, "Fichier enregistré dans le sac !");
+      showSnackbar(context, "Fichier enregistré dans le cours !");
       Navigator.pop(context, fichier);
     }).catchError((e) {
       var code = e.response.statusCode;

@@ -5,7 +5,6 @@ import 'package:lms_flutter/components/course_elements/AddPost.dart';
 import 'package:lms_flutter/components/course_elements/course_settings.dart';
 import 'package:lms_flutter/components/posts/post.dart';
 import 'package:lms_flutter/model/course/course_data.dart';
-import 'package:lms_flutter/model/course/member.dart';
 import 'package:lms_flutter/model/post/post_data.dart';
 import 'package:lms_flutter/model/user_infos.dart';
 import 'package:lms_flutter/screens/scaffold_app_bar.dart';
@@ -35,7 +34,6 @@ class _CoursePageState extends State<CoursePage> {
   CompteService compteService;
   Future<CourseData> courseData;
   Future<List<UserInfos>> courseMembers;
-  Future<UserInfos> userInfos ;
   @override
   void initState() {
     super.initState();
@@ -117,15 +115,10 @@ class _CoursePageState extends State<CoursePage> {
                             (postData) => postData.id),
                         child: Column(
                           children: [
-                            if(snapshot.hasData &&
-                                (courseService.isMember(snapshot.data ) ||
-                                    courseService.isProfessor(snapshot.data)))
-                              Container(
-                                padding: EdgeInsets.all(24),
-                                child:  AddPost(idCours),
-                              )
-
-                            ,
+                            Container(
+                              padding: EdgeInsets.all(24),
+                              child: AddPost(idCours),
+                            ),
                             Center(
                               child: ElevatedButton(
                                   onPressed: () {

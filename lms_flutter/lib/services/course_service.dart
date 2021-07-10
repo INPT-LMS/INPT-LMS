@@ -90,19 +90,16 @@ class CourseService extends BaseService {
       }
     });
   }
-  bool isMember(CourseData courseData){
-    int memberID = compteService.getUserLoggedInfos().id;
-    courseData.students.map((e)  {
+
+  bool isMember(CourseData courseData, int memberID) {
+    courseData.students.map((e) {
       log(e.memberID.toString());
-      if(e.memberID == memberID) return true;
+      if (e.memberID == memberID) return true;
     });
-     return false ;
-  }
-  bool isProfessor(CourseData courseData){
-    int id = compteService.getUserLoggedInfos().id;
-    return courseData.owner.professorID == id ;
-
+    return false;
   }
 
-
+  bool isProfessor(CourseData courseData, int id) {
+    return courseData.owner.professorID == id;
+  }
 }

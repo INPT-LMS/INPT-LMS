@@ -50,20 +50,6 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
             pushRoute("/stockage-sac", "/stockage-sac");
           }),
       ListTile(
-          title: Row(
-            children: [
-              Icon(Icons.person, color: Colors.blue),
-              Container(
-                child: Text('Mon profil'),
-                padding: EdgeInsets.only(left: 10),
-              )
-            ],
-          ),
-          onTap: () {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text("Vers mon profil")));
-          }),
-      ListTile(
           title: Text('Se deconnecter'),
           onTap: () {
             getIt.get<CompteService>().logout();
@@ -78,7 +64,7 @@ class _BaseScaffoldAppBarState extends State<BaseScaffoldAppBar> {
         separatorBuilder: (context, index) => Divider(
           color: Colors.black,
         ),
-        itemCount: 4,
+        itemCount: 3,
         itemBuilder: (context, index) => liste[index],
       ),
     );
