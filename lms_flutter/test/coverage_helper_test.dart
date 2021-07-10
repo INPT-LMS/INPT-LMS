@@ -10,6 +10,7 @@ import 'package:lms_flutter/components/discussions/message.dart';
 import 'package:lms_flutter/components/my_courses/addCourseElement.dart';
 import 'package:lms_flutter/components/my_courses/courseBanner.dart';
 import 'package:lms_flutter/components/my_courses/coursePicture.dart';
+import 'package:lms_flutter/components/my_courses/searchCourses.dart';
 import 'package:lms_flutter/components/posts/comment.dart';
 import 'package:lms_flutter/components/posts/like_comment.dart';
 import 'package:lms_flutter/components/posts/post.dart';
